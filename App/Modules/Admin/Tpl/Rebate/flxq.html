@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>我应收返利详情</title>
+    <include file="Public/header_v2"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/rebate.css">
+    <style>
+      body {
+      background: url(__PUBLIC__/Admin_v2/images/bg01.jpg) #fbfbfb no-repeat;
+      background-color:#fbfbfb;
+      background-size: cover;      
+      }
+     .tel_title {   background: transparent; } 
+ 
+    </style>
+    <script type="text/javascript" src="__PUBLIC__/js/my_dd.js"></script>
+    </head>
+    <body>
+    
+    <header class="header">
+    <a href="javascript:history.go(-1);" class="a"></a>
+    <p>我应收的返利详情</p>
+    </header>
+    <div class="order-section">
+        <div class="order-content">
+            <p class="order-num">推荐人信息</p>
+            <div class="order-detail">
+                <p>推荐人：{$list.x_info.recommendID|toAgent=###}</p>
+                <p>推荐经销商名称：{$list.x_info.name}</p>
+                <p>推荐经销商级别：{$list.x_info.levname}</p>
+                <p>推荐时间：{$list.time|date="Y-m-d H:i",###}</p>
+            </div>
+        </div>
+    </div>
+        
+    <div class="order-section">
+        <div class="order-content">
+            <p class="order-num">返利信息</p>
+            <div class="order-detail">
+                <p>返利金额：{$list.money}</p>
+            </div>
+        </div>
+    </div>
+            
+    <div class="order-section">
+        <div class="order-content">
+            <p class="order-num">我的返利</p>
+            <div class="order-detail">
+                <p><eq name="list.status" value="0">待付款</eq><eq name="list.status" value="1">已付款，未确认</eq><eq name="list.status" value="2">已付款，已确认</eq></p>
+            </div>
+        </div>
+    </div>
+    
+    <notempty name="list.img">
+        <div class="order-section">
+            <div class="order-content">
+                <p class="order-num">支付截图</p>
+                <div class="order-detail">
+                <img src="{$list.img}" alt="" style="width:100%">
+                </div>
+            </div>
+        </div>
+    </notempty>
+    
+    <eq name="list.status" value="1">
+        <div class="order-section">
+            <div class="order-content">
+                <p class="order-num">确认收款</p>
+                <div class="order-detail">
+                <input value="确认收款" onclick="shoukuan({$list.id})" type="button" class="pid weui-btn weui-btn_primary"/>
+                </div>
+            </div>
+        </div>
+    
+        <div class="order-section"></div>
+    </eq>
+    
+    
+        
+    <script>
+        function shoukuan(id){
+            if(confirm("您确认收款？")){
+                var pid = '2';
+                $.post("__URL__/shoukuan",{id:id,pid:pid},function(data){
+                    if(data == 1){
+                        tusi("提交成功！");
+                        window.location.href='__URL__/ys_fl';
+                    }else{
+                        tusi("提交失败!");
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>

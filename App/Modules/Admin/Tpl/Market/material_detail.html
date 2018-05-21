@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>素材详情</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/light7.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/light7-swiper.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/material_detail.css">
+    <script src="__PUBLIC__/Admin_v3/js/material_detail.js"></script>
+  </head>
+	<body>
+		<div class="page">
+			<div class="content">
+				<!-- header start -->
+				<include file="Public/header_features_v3" />
+				<!-- header end-->
+				<!--main start -->
+				<empty name="material_detail">
+            <include file="Public/empty" />
+            <else />
+				<div id="main">
+						<volist name="material_detail" id="m">
+							<div class="details">
+								<div class="headline-wrapper">
+									<div class="avatar">
+										<img src="__PUBLIC__/Admin_v3/images/marketing/5.jpg" width="37px">
+									</div>
+									<div class="headline">
+										<div>{$m.title}</div>
+										<span>{$m.time|date="Y-m-d H:i:s",###}</span>
+									</div>
+								</div>
+								<div class="text-wrapper" style="white-space: pre-line;">
+										{$m.descirbe}
+								</div>
+								<div class="img-wrapper">
+									<ul>
+										<volist name="m.image" id="vo">
+											<li class="pb-standalone"><img src="{$vo}" alt=""></li>
+										</volist>
+									</ul>
+								</div>
+								<div class="btn-wrapper">
+									<button data-clipboard-action="copy" data-clipboard-text="" class="copytext color-material-detail-text">
+                                        <img src="__PUBLIC__/Admin_v3/images/marketing/8.png" height="16" alt="">
+                                        复制方案
+                                    </button>
+                                </div>
+							</div>
+						</volist>
+              </div>
+        </empty>
+
+        </div>
+        <!--main end-->
+      </div>
+    </div>
+
+    <!--script start-->
+    <script src="__PUBLIC__/Admin_v3/js/jquery.js"></script>
+    <script src='__PUBLIC__/Admin_v3/js/light7.min.js'></script>
+    <script src='__PUBLIC__/Admin_v3/js/light7-swiper.js'></script>
+    <script src="__PUBLIC__/Admin_v3/js/clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+    <!--script end-->
+  </body>
+
+</html>

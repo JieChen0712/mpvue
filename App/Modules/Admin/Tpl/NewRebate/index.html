@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>奖励管理</title>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/light7.min.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/header_v1.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/award_manager.css" />
+    
+    <!--script start-->
+    <script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <!--script end-->
+    <style type="text/css">
+    	.infinite-scroll-preloader { 
+        margin-top:-20px;
+      }
+    </style>
+    <!--判断返利是否开启/关闭数组-->
+    <script>
+      var rebatekind = <php>echo json_encode($rebate, JSON_FORCE_OBJECT)</php>;
+//      var team_rebatekind = <php>echo json_encode($team_rebate_ratio, JSON_FORCE_OBJECT)</php>;
+      var personal_rebatekind = <php>echo json_encode($personal_rebate_ratio, JSON_FORCE_OBJECT)</php>;
+      var rebate = '__GROUP__/newRebate/get_other_rebate';
+      var team_rebate = '__GROUP__/newRebate/get_team_rebate';
+    </script>
+  </head>
+
+  <body>
+    <!--第一个页面-->
+    <div class="page page-current" id="page1">
+      <!-- header start-->
+      <include file="Public/header_features_v3" />
+      <!-- header end-->
+      <div class="content infinite-scroll">
+        <nav class="award-menu">
+          <ul>
+            <li>
+              <a href="1" class="active">订单奖励</a>
+            </li>
+            <li>
+              <a href="2">充值奖励</a>
+            </li>
+            <li>
+              <a href="3">一次性奖励</a>
+            </li>
+            <li>
+              <a href="4">团队奖励</a>
+            </li>
+          </ul>
+        </nav>
+
+        <section class="award-manager1" data-empty="false" data-page="1">
+          <div class="award-show">
+            <div class="select-date">
+              <input type="text" id='datetime-picker1' placeholder="请选择日期" value="<?php echo date('Y-m-d H:i');?>"/>
+              <i class="icon icon-down"></i>
+            </div>
+            <div class="award-num"></div>
+            <div class="list-wrapper"></div>
+            <div class="infinite-scroll-preloader" data-load="false">
+              <div class="preloader"></div>
+          </div>
+          </div>
+        </section>
+
+        <section class="award-manager2" data-empty="false" data-page="1">
+          <div class="award-show">
+            <div class="select-date">
+              <input type="text" id='datetime-picker2' placeholder="请选择日期" value="<?php echo date('Y-m-d H:i');?>"/>
+              <i class="icon icon-down"></i>
+            </div>
+            <div class="award-num"></div>
+            <div class="list-wrapper"></div>
+            <div class="infinite-scroll-preloader" data-load="false">
+              <div class="preloader"></div>
+          </div>
+          </div>
+          
+        </section>
+
+        <section class="award-manager3" data-empty="false" data-page="1">
+          <div class="award-show">
+            <div class="select-date">
+              <input type="text" id='datetime-picker3' placeholder="请选择日期" value="<?php echo date('Y-m-d H:i');?>"/>
+              <i class="icon icon-down"></i>
+            </div>
+            <div class="award-num"></div>
+            <div class="list-wrapper"></div>
+            <div class="infinite-scroll-preloader" data-load="false">
+              <div class="preloader"></div>
+          </div>
+          </div>
+        </section>
+        <section class="award-manager4" data-empty="false" data-page="1">
+          <div class="award-show">
+            <div class="select-date">
+              <input type="text" id='datetime-picker4' placeholder="请选择日期" value="<?php echo date('Y-m-d H:i');?>"/>
+              <i class="icon icon-down"></i>
+            </div>
+            <div class="award-num"></div>
+            <div class="list-wrapper"></div>
+            <div class="infinite-scroll-preloader" data-load="false">
+              <div class="preloader"></div>
+          </div>
+          </div>
+        </section>
+        
+      </div>
+
+    </div>
+    <script src="__PUBLIC__/Admin_v3/js/award-manager.js" type="text/javascript" charset="utf-8"></script>
+  </body>
+
+</html>

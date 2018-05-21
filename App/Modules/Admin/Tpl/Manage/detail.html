@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>代理个人信息</title>
+    <include file="Public/header_v3"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/agency_message.css" />
+    
+</head>
+<body>
+<div class="page">
+    <div class="content">
+        <div class="detail color-agency-detail-bg">
+            <div class="avatar">
+                <div class="wrapper">
+                    <img src="{$row.headimgurl}" alt="">
+                </div>
+                
+            </div>
+            <div class="text">
+                <div class="text-wrapper">
+                    <p>{$row.name}</p>
+                    <p>微信号：{$row.wechatnum}</p>
+                    <p><span>级</span>别：{$row.levname}</p>
+                </div>
+            </div>
+        </div>
+        <div class="message">
+            <p>手机：{$row.phone}</p>
+            <p>身份证：{$row.idennum}</p>
+            <p>地址：{$row.address}</p>
+            <if condition="($Think.config.IS_SUBMIT_ID_CARD_IMG eq 1) OR ($Think.config.IS_SUBMIT_ID_CARD_IMG eq 2)">
+            <div class="img-wrapper">
+                <span>身份证图片：</span>
+                <img src="{$row.idennumimg}" alt="">
+            </div>
+            </if>
+            <if condition="($Think.config.IS_SUBMIT_ID_CARD_IMG eq 1) OR ($Think.config.IS_SUBMIT_ID_CARD_IMG eq 3)">
+            <div class="img-wrapper">
+                    <span>保证金：</span>
+                    <img src="{$row.liveimg}" alt="">
+            </div>
+            </if>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/Admin_v3/js/recharge_apply.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

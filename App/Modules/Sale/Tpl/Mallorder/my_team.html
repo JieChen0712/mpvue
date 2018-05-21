@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>我的团队</title>
+
+		<include file="Public/header_v3" />
+
+		<link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/myteam.css" type="text/css" />
+		<script type="text/javascript">
+			var agenturl='__APP__/sale/mallorder/get_my_team'
+		</script>
+	</head>
+
+	<body>
+		<div class="page">
+			<header class="bar bar-nav">
+				<div class="title">
+					<div class="search-wrap">
+						<i class="icon icon-search">搜索名字、授权号、手机号</i>
+						<form action="" method="post">
+							<input type="search" name="agent-search" class="agent-search" style="height: 2.1rem;margin: 0;"/>
+						</form>
+					</div>
+<!--					<div class="buttons-tab">
+						<a href="#tab1" class="tab-link active button" data-type="under" data-flag="false">我推荐的代理</a>
+						<a href="#tab2" class="tab-link button" data-type="recommend" data-flag="false">我直属的代理</a>
+					</div>-->
+				</div>
+			</header>
+			<div class="content infinite-scroll">
+				<div class="content-block content-wrapper" data-distance="100">
+					<div class="tabs">
+						<div id="tab1" class="tab active">
+							<div class="content-block myteam-items">
+								<empty name="recommend_info">
+									<include file="Public/empty" />
+									<else />
+									<ul id="items1">
+										
+									</ul>
+									<div class="divid-page">
+										{$page}
+									</div>
+								</empty>
+							</div>
+						</div>
+						<div id="tab2" class="tab">
+							<div class="content-block myteam-items">
+								<empty name="recommend_info">
+									<include file="Public/empty" />
+									<else />
+									<ul id="items2">
+										
+									</ul>
+									<div class="divid-page">
+										{$page}
+									</div>
+								</empty>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="infinite-scroll-preloader">
+					<div class="preloader"></div>
+				</div>
+			</div>
+			
+		</div>
+
+		<!--script start-->
+		<script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/Admin_v3/js/myteam.js" type="text/javascript" charset="utf-8"></script>
+		<!--script end-->
+	</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>配送单</title>
+        <link rel="stylesheet" href="__PUBLIC__/Radmin_v3/css/send_order.css" />
+        <script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+
+    <body>
+        <div class="btn-wrapper">
+            <button class="btn-print">打印</button>
+        </div>
+        <volist name="applyList" id="vo">
+            <div class="order-wrapper">
+                <div class="title">配送单</div>
+                <div class="top-wrapper">
+                    <div class="top-left">
+                        <p>收货人姓名：<span>{$vo.s_name}</span></p>
+                        <p>付款方式：<span>余额支付</span></p>
+                        <p>收货地址：<span>{$vo.s_addre}</span></p>
+                    </div>
+                    <div class="top-right">
+                        <p>下单时间：<span>{$vo.time|date="Y-m-d H:i",###}</span></p>
+                        <p>订单编号：<span>{$vo.order_num}</span></p>
+                        <p>快递编号：<span><if condition="$vo.ordernumber neq ''">{$vo.ordernumber}({$vo.shipper})</if></span></p>
+                    </div>
+                </div>
+                <div class="bottom-wrapper">
+                    <table cellpadding="0" cellspacing="0">
+                        <tr>
+                            <th width="10%">序号</th>
+                            <th width="20%">产品编号</th>
+                            <th width="50%">商品名称</th>
+                            <th width="10%">规格</th>
+                            <th width="10%">数量</th>
+                        </tr>
+                        <volist name="vo['row']" id="vv" key="i">
+                        <tr>
+                            <td>{$i}</td>
+                            <td>{$vv.p_id}</td>
+                            <td>{$vv.pr_name}</td>
+                            <td>{$vv.style}</td>
+                            <td>{$vv.num}</td>
+                        </tr>
+                        </volist>
+                    </table>
+                </div>
+                <div class="footer">棠小一 用心呈现，品尝生活的味道！</div>
+            </div>
+        </volist>
+    </body>
+<script type="text/javascript">
+	$(function(){
+	    // 标题1/5 = 170  860-170=690
+//	    if($('.bottom-wrapper tr').length){
+//	        
+//	    }
+	   $('.btn-print').click(function(){
+	       window.print();
+	   });
+	});
+</script>
+</html>

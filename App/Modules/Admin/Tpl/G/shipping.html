@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>扫码发货</title>
+        <include file="Public/header_v3"/>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/shipping.css" />
+        <script>
+            var gactionURL = '__GROUP__/admin/Gaction';
+        </script>
+	</head>
+	<body>
+		<div class="page">
+			<div class="content">
+                <div class="shipping-detail">
+                    <div class="search-wrapper">
+                        <div class="select">
+                            <span class="open-popover">订单号</span>
+                            <i class="icon icon-down"></i>
+                        </div>
+                        <div class="search-input">
+                            <label class="icon icon-search" for="search"></label>
+                            <input type="search" id='search' class="search" placeholder='搜索订单号' />
+                        </div>
+                    </div>
+                    <div class="scan-code" id="scan-code">
+                        <div>连扫</div>
+                        <p>( 注：扫描发货时请不要超过15人标哦！)</p>
+                    </div>
+                    <div class="order-detail">
+                        <div class="select">
+                            <div class="name-title">代理姓名：</div>
+                            <div class="name-select">
+                                <div class="name"></div>
+                                <div class="choose" id="name-choose">
+                                    请选择
+                                    <span class="icon icon-down"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="select">
+                            <div class="num-title"><span>订单号</span> ：</div>
+                            <div class="num-select">
+                                <div class="num"></div>
+                                <div class="choose" id="order-choose">
+                                    请选择
+                                    <span class="icon icon-down"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-count">
+                        <div class="all-count">总订单数：100</div>
+                        <div class="processed">
+                            已处理:
+                            <span>50</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bar-code">
+                    <div class="search-wrapper">
+                        <div class="select">
+                            <span >大标</span>
+                            <i class="icon icon-down"></i>
+                        </div>
+                        <div class="search-input">
+                            <input type="text" id="input1" class="search" placeholder='请输入条码' />
+                        </div>
+                        <button class="btn">提交</button>
+                    </div>
+                </div>
+                
+
+                <div class="order-message">
+                    <ul class="message-title">
+                        <li>编号</li>
+                        <li>条码</li>
+                        <li>标号</li>
+                        <li>删除</li>    
+                    </ul>
+                    <div class="message-list">
+                        <ul class="message-detail">
+                            <li>1</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                        <ul class="message-detail">
+                            <li>1</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                        <ul class="message-detail">
+                            <li>1</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                        <ul class="message-detail">
+                            <li>1</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                        <ul class="message-detail">
+                            <li>1</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                        <ul class="message-detail">
+                            <li>1</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                        <ul class="message-detail">
+                            <li>1</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                        <ul class="message-detail">
+                            <li>1</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                        <ul class="message-detail">
+                            <li>1</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                        <ul class="message-detail">
+                            <li>1</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                        <ul class="message-detail">
+                            <li>1</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                        <ul class="message-detail">
+                            <li>23</li>
+                            <li>321321321321</li>
+                            <li>---</li>
+                            <li><img src="__PUBLIC__/Admin_v3/images/information/16.png" height="17" alt=""></li>    
+                        </ul>
+                    </div>
+                </div>  
+                <div class="btn-wrapper">
+                    <div class="shipping">
+                        <button>发货</button>
+                    </div>
+                    <div class="scan">
+                        <button>扫码</button>
+                    </div>
+                </div>
+                <div class="mask-order">
+                    <div class="order-wrapper order-scroll">
+                        <ul class="order-title">
+                        	
+                            <li>订单号</li>
+                            <li>收货人</li>   
+                        </ul>
+                        <div class="detail-list" id="order_item">
+                            <ul class="detail">
+                                <li>
+                                    <p>32111000111111</p>   
+                                    <p>2017.8.31</p>
+                                </li>
+                                <li>Darin1</li>
+                            </ul>
+                        </div>
+                        <!-- preloader -->
+										    <div class="infinite-scroll-preloader">
+										        <div class="preloader"></div>
+										    </div>
+                    </div>
+                    <div class="mask-close">
+                        <img src="__PUBLIC__/Admin_v3/images/information/19.png" height="25" alt="">
+                    </div>
+                </div>
+                <div class="mask-username">
+                    <div class="order-wrapper name-scroll">
+                        <ul class="order-title">
+                            <li>授权号</li>
+                            <li>经销商姓名</li>
+                            <li>经销商级别</li> 
+                        </ul>
+                        <div class="detail-list" id="agent_item">
+                            
+                        </div>
+                        <!-- preloader -->
+										    <div class="infinite-scroll-preloader">
+										        <div class="preloader"></div>
+										    </div>
+                    </div>
+                    <div class="mask-close">
+                        <img src="__PUBLIC__/Admin_v3/images/information/19.png" height="25" alt="">
+                    </div>
+                </div>
+			</div>
+        </div>
+
+        <div class="popover popover-links" >
+            <!-- Popover's angle arrow -->
+            <!-- Popover content -->
+            <div class="popover-inner">   
+            <!-- Any HTML content here -->
+                <ul class="close-popover select-list">
+                    <li data-search="搜索订单号">订单号</li>
+                    <li data-search="搜索代理商">代理商</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mask-select">
+            <dl class="list">
+                <dt class="triangle"></dt>
+                <dd data-id="1">大标</dd >
+                <dd data-id="2">小标</dd>
+            </dl>
+        </div>
+
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/Admin_v3/js/shipping.js" type="text/javascript" charset="utf-8"></script>
+
+		<script type="text/javascript">
+			var agenturl='__GROUP__/G/show_agent';
+			var u_page=1;
+			var u_flag=false;
+			
+			var orderurl='__GROUP__/G/get_agent_order';
+			var o_page=1;
+			var o_flag=false;
+			var o_id='';
+		</script>
+	</body>
+</html>

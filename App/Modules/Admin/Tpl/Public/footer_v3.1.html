@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/footer_v3.1.css">
+
+<footer id="footer" class="row">
+	<a href="__GROUP__/index" class="col-25 wrapper external team">
+		<!-- < img class="img" src="__PUBLIC__/Admin_v3/images/footer-1.jpg" width="20"> -->
+		<p class="text">团队管理</p>
+	</a>
+	<a href="__GROUP__/market/index" class="col-25 wrapper external market">
+		<!-- < img class="img" src="__PUBLIC__/Admin_v3/images/footer-2.jpg" width="20"> -->
+		<p class="text">营销</p>
+	</a>
+	<a href="__GROUP__/order/index" class="col-25 wrapper external order">
+		<!-- < img class="img" src="__PUBLIC__/Admin_v3/images/footer-3.jpg" width="20"> -->
+		<p class="text">下单</p>
+	</a>
+	<a href="__GROUP__/user/index" class="col-25 wrapper external personal">
+		<!-- < img class="img" src="__PUBLIC__/Admin_v3/images/footer-4.jpg" width="20"> -->
+		<p class="text">个人信息</p>
+	</a>
+</footer>
+<script type="text/javascript">
+	$(function() {
+		var active = window.location.href;
+		active = active.toLowerCase();
+		if(active.indexOf("market") != -1) {
+			$(".market").addClass("active").children("p").addClass("active");
+		} else if(active.indexOf("order") != -1) {
+			$(".order").addClass("active").children("p").addClass("active");
+		} else if(active.indexOf("user") != -1) {
+			$(".personal").addClass("active").children("p").addClass("active");
+		} else {
+			$(".team").addClass("active").children("p").addClass("active");
+		}
+	});
+</script>

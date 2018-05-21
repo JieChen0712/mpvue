@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="__PUBLIC__/Radmin_v3/js/audit.js"></script>
+    <script type="text/javascript">
+        var auditUrl = '{:U(GROUP_NAME . "/Stockorder/audit_order")}';
+//        var auditUrl = '{:U(GROUP_NAME . "/funds/apply_refund_pass")}/';
+        //var delUrl = '{:U(GROUP_NAME . "/Order/delorder")}/';
+
+    </script>
+
+</head>
+
+<body>
+<section class="layui-container">
+    <div class="content">
+        <header class="header">
+            <h3> 审核订单</h3>
+            <div class="pull-right">
+                <input type="button" class="layui-btn layui-btn-radius layui-btn-normal" id="audit" data-status="1" value="通过审核"/>
+                <!--<input type="button" class="layui-btn layui-btn-radius layui-btn-danger" id="delete" data-status="2" value="取消订单"-->
+                <!--/>-->
+                <!--<input type="button" class="layui-btn layui-btn-radius" id="audit" onclick="new_orderaudit()" value="通过审核">-->
+                <!--<a href="__URL__/expUser?pd=orderapply&con_url={$con_url}" class="layui-btn layui-btn-radius layui-btn-normal">导出Excel</a>-->
+            </div>
+        </header>
+        <form class="layui-form form layui-row form-search" action="__SELF__" method="get" onsubmit="return false">
+            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="start_time">开始时间</label>
+                <div class="time-wrapper site-demo-laydate">
+                    <input type="text" class="layui-input blue" name="start_time" id="start_time" readonly="readonly" placeholder="开始时间" autocomplete="on">
+                    <i class="fa fa-angle-down"></i>
+                </div>
+            </div>
+            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="end_time">结束时间</label>
+                <div class="time-wrapper site-demo-laydate">
+                    <input type="text" class="layui-input blue" name="end_time" id="end_time" readonly="readonly" placeholder="结束时间" autocomplete="on">
+                    <i class="fa fa-angle-down"></i>
+                </div>
+            </div>
+            <div class="search-btn">
+                <button type="submit" class="layui-btn layui-btn-radius">搜索</button>
+            </div>
+        </form>
+        <div class="table-wrapper">
+            <table class="layui-table" lay-skin="row" lay-size="sm">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="checkAll"/>
+                    </th>
+                    <th>订单号</th>
+                    <th>订货经销商</th>
+                    <th>接单经销商</th>
+                    <th>级别</th>
+                    <th>产品名称</th>
+                    <th>数量</th>
+                    <th>单价</th>
+                    <th>总价</th>
+                    <th>申请时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="applyList">
+                    <tr><td colspan="15">对不起,暂时没有任何的订单!</td></tr>
+                    <else />
+                    <volist name="applyList" id="m">
+                        <tr>
+                            <td class="checkItem">
+                                    <input type="checkbox" name="mid" value="{$m.order_num}" />
+                            </td>
+                            <td>
+                                {$m.order_num}
+                            </td>
+                            <td>{$m.name}</td>
+                            <td>{$m.o_name}</td>
+                            <td>{$m.levname}</td>
+                            <td>
+                                <volist name="m['row']" id="vv">
+                                    {$vv.pr_name} {$vv.style}x{$vv.num}<br>
+                                </volist>
+                            </td>
+                            <td>
+                                {$m.total_num}
+                            </td>
+                            <td>
+                                <volist name="m['row']" id="vv">
+                                    {$vv.price}<br>
+                                </volist>
+                            </td>
+                            <td>{$m.sum}</td>
+                            <td>{$m.time|date="Y-m-d H:i",###}</td>
+                            <td>
+                                <if condition="$m.status eq 1">
+                                    <p class="layui-bg-red">待审核</p>
+                                    <elseif condition="$m.status eq 2"/>
+                                    <p class="layui-bg-orange">配送中</p>
+                                    <elseif condition="$m.status eq 6"/>
+                                    <p class="layui-bg-green">已审核，未配送</p>
+                                    <else/>
+                                    <p class="layui-bg-blue">已收货</p>
+                                </if>
+                                <!--<button type="button"   class="layui-btn layui-btn-radius layui-btn-normal" data-toggle="modal" data-target=".bs-example-modal-lg-{$m.id}" >详情</button>-->
+                                <button type="button" data-iframe="__URL__/detail?id={$m.id}&status={$m.status}" data-title='详情' class="layui-btn layui-btn-radius layui-btn-normal">详情</button>
+                                <!--<button type="button" data-iframe="__URL__/detail?id={$m.id}&status={$m.status}" data-title='详情' class="layui-btn layui-btn-radius layui-btn-normal">详情</button>-->
+                                <!--<button type="button" class="btn btn-danger" onclick="sc('{$m.order_num}', '__URL__/delOrder/id/{$m.order_num}')">删除</button>-->
+                            </td>
+                        </tr>
+                    </volist>
+                    <include file="Public/page" />
+                    <!-- <div id="page"></div> -->
+                    <!--<tr><td colspan="14"><div class="pull-right">{$page}</div></td></tr>-->
+                </empty>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+<script>
+
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#start_time'
+        });
+        laydate.render({
+            elem: '#end_time'
+        });
+    })
+</script>
+    </body>
+</html>

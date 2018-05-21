@@ -1,0 +1,80 @@
+<layout name="Public/public" />
+
+
+<h1 class="page-header">
+    订单限制
+</h1>
+
+<div class="row">
+    <div class="col-md-10">
+        <!--搜索表单-->
+        <form class="form-inline" role="form" method="get" action="__URL__/order_limit">
+            <div class="form-group">
+<!--                <label class="sr-only" for="type">扣费类型</label>
+                <select name="type" id="type"  class="form-control">
+                    <option value="">选择扣费类型</option>
+                    <option value="1">订单扣费</option>
+                    <option value="2">提现扣费</option>
+                </select>-->
+            </div>
+
+            <!--<button type="submit" class="btn btn-default">搜索</button>-->
+        </form>
+        <!--end 搜索表单-->
+    </div>
+
+    <div class="col-md-2">
+        <input type="button" class="btn btn-info" onclick="location.href = '__URL__/order_limit_edit'" value="添加订单限制规则"/>
+    </div>
+</div>
+
+<div class="row">
+   <div class="col-md-12 col-xs-12">
+
+        <!--表格-->
+        <table class="table table-condensed table-hover table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>级别</th>
+                    <!--<th>是否首次下单限制</th>-->
+                    <th>订单产品总数量最小限制</th>
+                    <th>订单总金额最小限制</th>
+                    <th>修改时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            <empty name="list">
+                <tr><td colspan="12">对不起,没有找到信息! </td></tr>
+                <else />
+                <!--<tr><td colspan="12"><div class="pull-right">{$page}</div></td></tr>-->
+                <volist name="list" id="m">
+                    <tr>
+                        <td>{$m.id}</td>
+                        <td>{$m.levname}</td>
+<!--                        <td>
+                            <if condition="$m.is_first eq 1">
+                                <span class="label label-info">是</span>
+                                <else />
+                                <span class="label label-warning">否</span>
+                            </if>
+                        </td>-->
+                        <td>{$m.total_num_min}</td>
+                        <td>{$m.total_money_min}</td>
+                        <td>{$m.updated|date="Y-m-d H:i",###}</td>
+                        <td>
+                            <input type="button" class="btn btn-success" value="编辑" onClick="javascript:location.href = '__URL__/order_limit_edit?id={$m.id}'"/>
+                            <input type="button" class="btn btn-danger" value="删除" onClick="javascript:location.href = '__URL__/order_limit_delete?id={$m.id}'"/>
+                        </td>
+                    </tr>
+                </volist>
+                <tr><td colspan="12"><div class="pull-right">{$page}</div></td></tr>
+            </empty>
+            </tbody>
+        </table>
+        <!--end 表格-->
+
+
+    </div>
+</div>

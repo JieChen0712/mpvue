@@ -1,0 +1,109 @@
+.content {
+  color: #303030;
+  background-color: #fff;
+}
+.record {
+  display: flex;
+  width: 100%;
+  padding: 0 5%;
+  line-height: 3rem;
+  border-bottom: 1px solid #c9c9c9;
+}
+.record .text {
+  flex: 0 0 6.875rem;
+  position: relative;
+  margin: 0;
+  text-indent: 0.75rem;
+}
+.record .text::before {
+  content: '';
+  top: 0.9375rem;
+  left: 0;
+  position: absolute;
+  width: 0.25rem;
+  height: 1rem;
+  background-color: #303030;
+}
+.record .type {
+  flex: 1;
+  text-align: right;
+}
+.record .type .icon {
+  font-size: 0.75rem;
+  color: #959595;
+}
+.message-list {
+  width: 100%;
+  padding: 0 5%;
+}
+.message-list .message {
+  height: 4.0625rem;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid #c9c9c9;
+}
+.message-list .message .type {
+  display: flex;
+}
+.message-list .message .type p {
+  flex: 1;
+  margin: 0;
+}
+.message-list .message .type span {
+  flex: 1;
+  text-align: right;
+  color: #fd4634;
+}
+.message-list .message .status {
+  display: flex;
+  color: #959595;
+}
+.message-list .message .status p {
+  flex: 1;
+  margin: 0;
+  font-size: 0.875rem;
+}
+.message-list .message .status span {
+  flex: 1;
+  text-align: right;
+  font-size: 0.875rem;
+}
+.mask-select {
+  z-index: 99999;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+  color: #303030;
+}
+.mask-select .list {
+  position: fixed;
+  width: 7rem;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  border-radius: 0.625rem;
+}
+.mask-select .list .triangle {
+  position: absolute;
+  display: block;
+  top: -11px;
+  left: 48%;
+  margin-left: -0.3125rem;
+  width: 0;
+  height: 0;
+  border-bottom: 0.6875rem solid #fff;
+  border-left: 0.5rem solid transparent;
+  border-right: 0.5rem solid transparent;
+}
+.mask-select .list dd {
+  width: 4.5rem;
+  margin: 0 1.25rem;
+  line-height: 2.5rem;
+  text-align: center;
+}
+.mask-select .list dd+dd {
+  border-top: 1px solid #c9c9c9;
+}

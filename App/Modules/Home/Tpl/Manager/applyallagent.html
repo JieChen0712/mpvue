@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>申请{$Think.config.SYSTEM_NAME}经销商</title>
+    <include file="Public/header_v3"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/apply_agent.css" />
+    <script>
+        function setWidth(a){if(/Andriod/i.test(navigator.userAgent)){var c,b=window.innerWidth;(b!=a)&&(c=b/a),document.addEventListener("DOMContentLoaded",function(){var d = document.getElementsByTagName("body")[0];d.style.webkitTransformOrigin = "left top";d.style.webkitTransform="scale("+c+")"},!1)}}setWidth(640);
+    </script>
+    <script src="__PUBLIC__/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/my/common.js"></script>
+    <script src="__PUBLIC__/js/admin.js"></script>
+    <script src="__PUBLIC__/js/exif.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/css/back/apply.css">
+    <script type="text/javascript">
+        var  homeUrl = '__APP__/admin/login';
+        var applySAUrl = '__APP__/Home/Manager/e_apply';
+        var  uploadUrl = '__APP__/Home/Manager/uploadCanvas';
+        var alllevel = '__APP__/Home/Manager/all_levname';
+        var IS_SUBMIT_ID_CARD_IMG = '{$Think.config.IS_SUBMIT_ID_CARD_IMG}';
+        var ishome = true;
+        var agent_control = true;     //控制经销商的选择
+        var level_id = '{$level}'; //推荐的id
+    </script>
+
+</head>
+<body>
+<div class="page">
+    <div class="content">
+        <div class="inviter-wrapper">
+            <!--<div class="inviter-title">邀请人信息：</div>-->
+            <!--<div class="inviter-detail">-->
+                <!--&lt;!&ndash;<div class="inviter-avatar">&ndash;&gt;-->
+                    <!--&lt;!&ndash;&lt;!&ndash;<img src="__PUBLIC__/Admin_v3/images/information/avatar.png"  alt="">&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="text">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="inviter-name">总部</div>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="inviter-grade">总部</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="warrant">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<img src="__PUBLIC__/Admin_v3/images/manager-order/warrant.png" alt="">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<div class="check-warrant">授权证书</div>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+            <!--</div>-->
+            <div class="apply-grade">
+                <p>您申请的经销商级别为：</p>
+                <input type="text" id="picker"  value="总经销商">
+                <input type="text" id='mask-input' disabled="disabled"/>
+                <span class="icon icon-down"></span>
+            </div>
+        </div>
+        <div class="informatin">
+            <p class="informatin-title">填写资料（有*为必填项）</p>
+            <div class="username">
+                <div>* <span class="font2">姓</span>名：</div>
+                <input type="text" id="name" name="name">
+            </div>
+            <div class="Wechat">
+                <div>* <span class="font3">微信</span>号：</div>
+                <input type="text" id="wechatnum" name="wechatnum">
+            </div>
+            <div class="tel">
+                <div>* <span class="font2">电</span>话：</div>
+                <input type="text" id="phone"  name="phone">
+            </div>
+            <div class="email">
+                <div><span class="font2">邮</span>箱：</div>
+                <input type="text" name="email" id="email">
+            </div>
+            <div class="identity-card">
+                <div>* <span class="font3">身份</span>证：</div>
+                <input type="text" id="idennum2" name="idennum">
+            </div>
+            <div class="probably-address">
+                <em>*所在地址：</em>
+                <include file="./App/Public/city_picker.html" re_province="" re_city="" re_county=""/>
+            </div>
+            <input type="hidden" name="level" value="{$level}">
+            <div class="detail-address">
+                <input type="text" placeholder="请输入详细地址" id="addre"  name="addre">
+            </div>
+             <if condition="($Think.config.IS_SUBMIT_ID_CARD_IMG eq 1) OR ($Think.config.IS_SUBMIT_ID_CARD_IMG eq 2)">
+                <div class="uploading-img">
+                <div>
+                    * 添加身份证图片
+                    <span>（限一张）</span>
+                </div>
+                <span id="list1" style="float:left"></span>
+                <div class="imgUpload">
+                	<img src="__PUBLIC__/images/sq.png"/>
+                	<input type="button" id="btn1" onclick="myfile1.click();" value="" style="display:none">
+                	<input type="file" accept="image/*;capture=camera" id="myfile1"  name="idennumimg">
+                </div>
+                <input type="hidden" value="" id="idennum" name="idennumimg"/>
+                </div>
+            </if>
+            
+             <if condition="($Think.config.IS_SUBMIT_ID_CARD_IMG eq 1) OR ($Think.config.IS_SUBMIT_ID_CARD_IMG eq 3)">
+                <div class="uploading-img">
+                    <div>
+                        * 添加保证金截图
+                        <span>（限一张）</span>
+                    </div>
+                    <span id="list2" style="float:left"></span>
+                    <div class="imgUpload">
+                        <img src="__PUBLIC__/images/sq.png" />
+                        <input type="button" id="btn2" onclick="myfile2.click();" value="" style="display:none">
+                        <input type="file" accept="image/*;capture=camera" id="myfile2"  name="liveimg" >
+                    </div>
+                    <input type="hidden" value="" id="live" name="liveimg"/>
+                </div>
+
+            </if>
+
+            <input type="hidden" value="{$ct}" name="ct"/>
+            <div class="agreement" checked="checked" id="checked">
+                <span>本人已阅读并同意</span>
+                <a href="#">《{$list.name}条例》</a>
+            </div>
+            <div class="btn-wrapper">
+                <button  class="input1" onclick="applySA()">提交</button>
+            </div>
+            <div class="tip">
+                （注意：一个手机微信号只能申请一次，禁止替他人申请，避免造成不必要的麻烦！）
+            </div>
+        </div>
+
+        <!-- 图片遮罩层 -->
+        <div class="mask-img">
+            <div class="img-wrapper">
+                <img src="__PUBLIC__/Admin_v3/images/information/pay-screenshot.jpg" alt="">
+            </div>
+        </div>
+
+        <div class="mask-text">
+            <div class="text">
+                {$list.news}
+            </div>
+            <img src="__PUBLIC__/images/close.png" alt="">
+        </div>
+
+    </div>
+
+    <style>
+        .app-mask{
+            height: 100%;
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            position: fixed;
+            top: 0px;
+            text-align: center;
+            display: none;
+        }
+        .app-mask img{
+            width: 150px;
+            border-radius: 2em;
+            margin-top: 450px;
+        }
+    </style>
+    <div class="app-mask">
+        <img src="__PUBLIC__/images/1.gif" alt="">
+    </div>
+</div>
+
+<script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/Admin_v3/js/light7-city-picker.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/Admin_v3/js/apply_agent.js" type="text/javascript" charset="utf-8"></script>
+<if condition="$Think.config.IS_SUBMIT_ID_CARD_IMG egt 1">
+<script type="text/javascript" src="__PUBLIC__/js/pho.js"></script>
+
+</if>
+<script>
+    $(document).ready(function(){
+        $('.agreement a').click(function(){
+            $('.mask-text').show();
+        })
+        $('.mask-text img').click(function(){
+            $('.mask-text').hide();
+        })
+        $('.btn-wrapper').on('click', 'button', function(){
+            $(this).attr('disabled', true).css('backgroundColor', '#879FB7').text('提交中');
+            setTimeout(function(){
+                $('.btn-wrapper button').attr('disabled', false).css('backgroundColor', '#0E3E6E').text('提交');
+            }, 1000)
+        })
+    })
+</script>
+</body>
+</html>

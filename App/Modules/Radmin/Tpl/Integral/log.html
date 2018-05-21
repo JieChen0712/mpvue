@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  </head>
+
+  <body>
+    <section class="layui-container">
+      <div class="content">
+        <header class="header">
+          <h3>积分日志</h3>
+          <!--<a href="__URL__/expUser?pd=money_recharge_log" class="layui-btn layui-btn-radius layui-btn-normal">导出Excel</a>-->
+        </header>
+        <form class="layui-form form layui-row form-search" action="__SELF__" method="get" onsubmit="return false" role="form">
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="start_time">开始时间</label>
+            <div class="time-wrapper">
+              <input type="text" class="layui-input blue" name="start_time" id="start_time" readonly="readonly" placeholder="开始时间" autocomplete="on">
+              <i class="fa fa-angle-down"></i>
+            </div>
+          </div>
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="end_time">结束时间</label>
+            <div class="time-wrapper">
+              <input type="text" class="layui-input blue" name="end_time" id="end_time" readonly="readonly" placeholder="结束时间" autocomplete="on">
+              <i class="fa fa-angle-down"></i>
+            </div>
+          </div>
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="name">代理</label>
+            <div class="input-wrapper">
+              <input type="text" autocomplete="on" class="layui-input" name="name" id="name" placeholder="姓名">
+            </div>
+          </div>
+
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="type">日志类型</label>
+            <div class="select-wrapper">
+              <select name="type" id="type" lay-verify="required">
+                <option value="">选择积分类型</option>
+                <foreach name="integral_status" key="status_id" item="status_name">
+                  <option value="{$status_id}">{$status_name}</option>
+                </foreach>
+              </select>
+            </div>
+          </div>
+
+          <div class="search-btn">
+            <button type="submit" class="layui-btn layui-btn-radius">搜索</button>
+          </div>
+        </form>
+        <div class="table-wrapper">
+          <table class="layui-table" lay-skin="row" lay-size="sm">
+            <thead>
+              <tr>
+                <th>序号</th>
+                <th>代理名字</th>
+                <th>充入积分</th>
+                <th>充值类别</th>
+                <th>充值类型</th>
+                <th>备注</th>
+                <th>记录时间</th>
+              </tr>
+            </thead>
+            <tbody>
+              <empty name="list">
+                <tr style="position: relative;">
+                    <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                </tr>
+                <else />
+                <volist name="list" id="m">
+                  <tr>
+                    <td>{$m.id}</td>
+                    <td>{$m.dis_name}</td>
+                    <td>{$m.score}</td>
+                    <td>
+                      {$m.class_name}
+                    </td>
+                    <td>
+                      {$m.type_name}
+                    </td>
+                    <td>
+                      {$m.note_format}
+                    </td>
+                    <td>{$m.created_format}</td>
+                  </tr>
+                </volist>
+                <!-- <div id="page"></div> -->
+                <!--<tr><td colspan="14"><div class="pull-right">{$page}</div></td></tr>-->
+              </empty>
+            </tbody>
+          </table>
+        </div>
+        <include file="Public/page" />
+      </div>
+
+    </section>
+    <script>
+      layui.use('laydate', function() {
+        var laydate = layui.laydate;
+        laydate.render({
+          elem: '#start_time'
+        });
+        laydate.render({
+          elem: '#end_time'
+        });
+      })
+
+      function get_apply_info(apply_id) {
+
+        if(apply_id == null || apply_id == 0) {
+          return false;
+        }
+
+        $.ajax({
+          async: false,
+          type: "POST",
+          data: {
+            id: apply_id
+          },
+          dataType: "json",
+          url: '__URL__/get_apply_info',
+          success: function(res) {
+            if(res == null) {
+              layer.msg('获取错误！');
+            } else if(res.code != 1) {
+              layer.msg(res.msg);
+            } else {
+              //                    $("#apply_name").html(res.info.money);
+              $("#apply_id").html(res.info.id);
+              $("#apply_name").html(res.info.dis_info.name);
+              $("#apply_audit_name").html(res.info.audit_info.name);
+              $("#apply_money").html(res.info.apply_money);
+              $("#apply_created").html(res.info.created_format);
+
+              return true;
+            }
+          }
+        });
+
+        return false;
+      }
+
+      function get_order_info(order_num) {
+
+      }
+    </script>
+  </body>
+
+</html>

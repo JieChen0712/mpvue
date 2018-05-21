@@ -1,0 +1,425 @@
+#main_mindex {
+	overflow: scroll;
+}
+
+#content1,#content2,#content3,#content4{
+	/*display: none;*/
+}
+
+#main_mindex .nav {
+	background-color: #0e3e6e;
+	height: 4.125rem;
+	text-align: center;
+	/*display: flex;*/
+	/*min-width: 27rem;*/
+}
+
+#main_mindex .nav li {
+	position: relative;
+	display: inline-block;
+	/*max-width: 6.25rem;*/
+	width: 22%;
+	/*flex: 1;*/
+	line-height: 3.125rem;
+	color: #fff;
+	text-align: center;
+}
+#main_mindex .nav li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#main_mindex .nav li .triangle {
+	position: absolute;
+	display: none;
+	bottom: 0;
+	left: 50%;
+	margin-left: -0.3125rem;
+	width: 0;
+	height: 0;
+	border-bottom: 0.6875rem solid #efeff4;
+	border-left: 0.5rem solid transparent;
+	border-right: 0.5rem solid transparent;
+}
+
+#main_mindex .nav li .triangle.active {
+	display: block;
+}
+
+.order-content {
+	margin-bottom: 3.125rem;
+}
+
+.title-bg {
+	background: linear-gradient(#79d6ff, #2ab7f5);
+	text-align: center;
+}
+
+.title-bg span {
+	height: 1.125rem;
+	font-size: 0.875rem;
+	color: white;
+}
+
+.card {
+	overflow: hidden;
+	border-radius: .3rem;
+	border: none;
+	box-shadow: none;
+}
+
+.card-header {
+	padding: 1rem .75rem;
+}
+
+.agent-list {
+	list-style: none;
+	width: 100%;
+	height: 1.125rem;
+}
+
+.agent-list li {
+	width: 25%;
+	float: left;
+	text-align: center;
+	color: white;
+	font-size: 0.875rem;
+	border-right: solid 1px white;
+	line-height: 1.125rem;
+	font-weight: bold;
+}
+
+.agent-list li:last-child {
+	border-right: none;
+}
+
+.angent-detail {
+	padding-top: .5rem;
+	padding-bottom: 1.5rem;
+}
+
+.angent-detail li {
+	font-size: 0.875rem;
+	text-align: center;
+}
+
+.agent-level {
+	text-align: center;
+}
+
+.agent-level img {
+	width: 3.25rem;
+}
+
+.agent-level li {
+	width: 32%;
+	margin-bottom: 2rem;
+	display: inline-block;
+}
+
+.agent-level span {
+	font-size: .75rem;
+	display: block;
+}
+
+
+/*
+ *第二个页面
+ */
+
+#route2 .card {
+	background: transparent;
+	text-align: center;
+	margin: 0;
+	overflow: auto;
+}
+
+.certificate {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+	/*border: solid 2px red;*/
+}
+
+.certificate img {
+	/*position: relative;*/
+	width: 100%;
+}
+.certificate p{
+	display: none;
+}
+
+#route2 .agent-name {
+	position: absolute;
+	top: 167px;
+	left: 102px;
+	font-weight: bolder;
+	margin: 0;
+	/* border: solid 2px red; */
+	transform: scale(.8);
+}
+
+#route2 .agent-wechat {
+	transform: scale(.8);
+	font-weight: bolder;
+	position: absolute;
+	top: 168px;
+	left: 200px;
+	margin: 0;
+}
+
+#route2 .agent-idcard {
+	transform: scale(.8);
+	font-weight: bolder;
+	position: absolute;
+	top: 193.6px;
+	left: 85px;
+	margin: 0;
+}
+
+#route2 .agent-job {
+	color: #e57903;
+	font-size: 19px;
+	font-weight: bolder;
+	position: absolute;
+	top: 252px;
+	left: 128px;
+	margin: 0;
+}
+
+#route2 .authorize-num {
+	transform: scale(.6);
+	font-weight: bolder;
+	position: absolute;
+	top: 362px;
+	margin: 0;
+	left: 138.8px;
+}
+
+#route2 .authorize-date {
+	transform: scale(.6);
+	font-weight: bolder;
+	position: absolute;
+	top: 380.8px;
+	left: 120.2px;
+	margin: 0;
+}
+#downloadImageBtn{
+	font-size: 1rem;
+	font-weight: bold;
+	height: 2.5rem;
+	color: white;
+	background-color: #4cd964;
+	border-radius: .2rem;
+	padding:.3rem 1rem;
+	margin: .5rem auto;
+}
+
+/*
+ *第三个页面
+ */
+#content3 .col-33{
+	margin: 0;
+	width: 33%;
+}
+.agent-list3 {
+	list-style: none;
+	width: 100%;
+	height: 1.125rem;
+}
+
+.agent-list3 li {
+	width: 33.333%;
+	float: left;
+	text-align: center;
+	color: white;
+	font-size: 0.875rem;
+	border-right: solid 1px white;
+	line-height: 1.125rem;
+	font-weight: bold;
+}
+
+.agent-list3 li:last-child {
+	border-right: none;
+}
+
+.agent-select input {
+	float: left;
+	margin-top: .2rem;
+	background: orange;
+	border-color: orange;
+}
+
+.agent-select input[type="radio"] {
+	border: solid 1px orange;
+	background: orange;
+}
+
+.angent-detail3 .agent-link span{
+	font-size: 0.5625rem;
+	color: #fea21f;
+	display: block;
+}
+
+.angent-submit {
+	position: fixed;
+	bottom: 0;
+	margin-bottom: 3rem;
+	text-align: center;
+	width: 100%;
+}
+
+.angent-submit input {
+	width: 44.1%;
+	height: 3.125rem;
+	font-size: 1rem;
+	color: white;
+	border: none;
+}
+
+.angent-submit>.noselect {
+	background: #c9c9c9!important;
+}
+
+.angent-submit input:first-child {
+	background: linear-gradient(to right, #f9575c, #f8202d);
+	margin-right: -.15rem;
+}
+
+.angent-submit input:last-child {
+	background: linear-gradient(to left, #71cdfd, #3eb2f2);
+	margin-left: -.15rem;
+}
+
+.angent-detail3 {
+	display: flex;
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+	border-bottom: solid 1px #eee;
+	margin: 0 .2rem;
+}
+
+.angent-detail3 li {
+	flex: 1;
+	font-size: 0.875rem;
+	text-align: center;
+	word-wrap:break-word;
+	overflow: hidden;
+}
+
+
+/*
+ *第四个页面
+ */
+
+#route4 .card {
+	margin-bottom: 1rem;
+}
+
+#route4 .card:last-child {
+	margin-bottom: 3rem;
+}
+
+.header-title img {
+	width: 2.125rem;
+	vertical-align: middle;
+}
+
+.header-title span {
+	font-size: 1rem;
+	color: white;
+}
+
+
+/*.header-title a{
+	font-size: 0.875rem;
+}*/
+
+.card-header4 {
+	padding: .5rem;
+}
+
+.learn-more {
+	margin-top: .3rem;
+	text-align: right;
+}
+
+.learn-more a {
+	font-size: 0.875rem;
+	color: white;
+	vertical-align: bottom;
+}
+
+.learn-more a i {
+	margin-left: 1rem;
+	font-size: 0.438rem;
+}
+
+.angent-detail4 li {
+	font-size: 0.875rem;
+	text-align: center;
+}
+
+.title-bg-purple {
+	background: linear-gradient(#afa4ff, #8072ff);
+	text-align: center;
+}
+
+.title-bg-red {
+	background: linear-gradient(#ff9784, #ff6d52);
+	text-align: center;
+}
+
+.angent-detail4 p {
+	margin:1.2rem 0 .5rem;
+	font-size: 0.875rem;
+}
+
+.angent-detail4 span {
+	font-size: 1.375rem;
+	margin-bottom: .5rem;
+}
+
+.color-purple {
+	color: #8275ff;
+}
+
+.color-blue {
+	color: #2db8f6;
+}
+
+.color-red {
+	color: #ff6e54;
+}
+
+
+/*
+ *路由链接样式
+ */
+
+#main_mindex .nav a {
+	text-decoration: none;
+	color: white;
+}
+
+#main_mindex .nav a:link {
+	color: white;
+	text-decoration: none;
+}
+
+#main_mindex .nav a:hover {
+	color: white;
+	text-decoration: none;
+}
+
+#main_mindex .nav a:active {
+	color: white;
+	text-decoration: none;
+}
+
+/*
+ *改版的样式
+ */
+

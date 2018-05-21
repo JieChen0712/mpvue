@@ -1,0 +1,133 @@
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <script>
+            /**
+             * 使用图片上传接口需满足以下条件
+             * 1.容器选择器id=upload
+             * 2.设置name=image的input标签隐藏域
+             * 3.指定上传目录名称
+             */
+            //上传目录
+            var upload_dir_name = 'sale';
+            var root = '__PUBLIC__/';
+            var root2 = '__ROOT__';
+            var rand = "";
+            var urls = '__URL__';
+            var get_lunpan = '__URL__/get_lunpan_prize';
+            var postlunpan = '__URL__/lunpanset_post';
+            var dellunpan = '__URL__/lunpanset_del_ajax';
+            form.render();
+        </script>
+
+        
+        <style type="text/css">
+        	.edit-wrapper .layui-content .layui-form .layui-table .table-wrapper tr td .set .input-infs{min-height: 36px;height: auto;}
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container-fluid edit-wrapper layui-container">
+            <header class="edit-title">
+                <blockquote class="layui-elem-quote">
+                    <span class="title">轮盘抽奖设置</span>
+                </blockquote>
+            </header>
+
+            <div class="panel panel-default panel-intro">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#basic" data-toggle="tab" aria-expanded="false">基础设置</a>
+                        </li>
+
+                        <li class="">
+                            <a href="#award" data-toggle="tab" aria-expanded="false">奖品设置</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="panel-body">
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade active in" id="basic">
+                            <div class="widget-body no-padding">
+                                <div class="layui-content">
+                                    <form id="basic-form" role="form" class="layui-form layui-box" action="__URL__/lunpanbase_post" data-auto="false" method="post" >
+                                        <div class="layui-form-item items">
+                                            <label class="form-text">标题：</label>
+                                            <div class="form-right">
+                                                <input class="input-inf2" id="activity-title" required="" type="text" name="lunpan_title" lay-verify="title" autocomplete="off" value="{$list.lunpan_title.desc}" title="请输入标题" placeholder="请输入标题">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item items">
+                                            <label class="form-text">活动说明：</label>
+                                            <div class="form-right">
+                                                <include file="Public/ueditor" />
+                                                <textarea id="editor" class="ueditors" name="lunpan_active">{$list.lunpan_active.desc}</textarea>
+                                                <!--<textarea class="layui-textarea layui-hide" name="disc" lay-verify="disc" id="LAY_demo_editor"></textarea>-->
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item  items">
+                                            <label class="form-text">奖品信息：</label>
+                                            <div class="form-right">
+                                                <textarea id="editor2" class="ueditors" name="lunpan_prizesinfo">{$list.lunpan_prizesinfo.desc}</textarea>
+                                                <!--<textarea class="layui-textarea layui-hide" name="disc" lay-verify="disc" id="LAY_demo_editor"></textarea>-->
+
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item  items">
+                                            <label class="form-text"></label>
+                                            <div class="form-right">
+                                                <button class="layui-btn" type='submit'>确定</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="award">
+                            <div class="widget-body no-padding">
+                                <div class="layui-content">
+                                    <header>
+                                        <div class="pull-left">
+                                            <label for="add">添加奖项：</label>
+                                            <input type="button" class="layui-btn layui-btn-radius" name="prize-add" id="prize-add" value="添加" />
+                                            <input type='hidden' value="0" id='lunpancount' />
+                                        </div>
+                                    </header>
+                                    <form id="award-form" role="form" class="layui-form layui-box" action="__URL__/lunpanset_post" data-auto="false" method="post">
+                                        <table class="layui-table" lay-skin="line">
+                                            <tbody class="table-wrapper" id="form-all">
+                                                
+                                            </tbody>
+                                            <!--<tfooter>
+                                                <tr>
+                                                    <td>
+                                                        <div class="set"><button class="layui-btn btns" lay-submit="">提交</button><button class="layui-btn layui-btn-danger delete-form">删除</button></div>
+                                                    </td>
+                                                </tr>
+                                            </tfooter>-->
+                                        </table>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <script src="__PUBLIC__/sale_v1/js/lunpanset.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+            $(function() {
+                form.render();
+            })
+        </script>
+    </body>
+
+</html>

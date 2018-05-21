@@ -1,0 +1,281 @@
+<layout name="Public/public" />
+
+
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+<script type="text/javascript" src='__PUBLIC__/js/index.js'></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-1.11.0.min.js" ></script>
+<!-- 编辑器 -->
+<script type="text/javascript" src="__PUBLIC__/Admin/editor/plugins/code/prettify.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/editor/kindeditor.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/editor/lang/zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/editor/themes/default/default.css" />
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/editor/plugins/code/prettify.css" />
+
+<script type="text/javascript">
+
+    var editor;
+    KindEditor.ready(function (K) {
+        editor = K.create('textarea[pname="fm_content"]', {
+//		items : ['source','|','wordpaste','table','quickformat', '|','link',   'image', 'insertfile',   '|','code', 'preview', 'fullscreen'],
+            cssPath: '__PUBLIC__/Admin/editor/plugins/code/prettify.css',
+            uploadJson: '__PUBLIC__/Admin/editor/php/upload_json.php',
+            fileManagerJson: '__PUBLIC__/Admin/editor/php/file_manager_json.php',
+            allowFileManager: true,
+            width: '670px',
+            height: '300px'
+        });
+    });
+</script>
+
+<h1 class="page-header">
+    编辑产品信息
+</h1>
+
+
+<div class="row">
+   <div class="col-md-12 col-xs-12">
+        <form class="form-inline" method="post" action="__URL__/product_insert" enctype="multipart/form-data">
+            <table class='table table-condensed table-hover table-responsive table-bordered'>
+                <tbody>
+                    <tr>
+                        <td>图片：
+                        </td>
+                        <td>
+                            <input type="file" name="image"  id="file0" />
+                            <br><img style="width:50px;height:50px;margin-left:75px;"  src="" id="img0" >
+                            <br><span style="color:red">(请上传正方型的图片 图片大小为：188*188 )</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>名称:
+                        </td>
+                        <td>
+                            <input class="form-control" name="name" type="text" required placeholder="请输入产品名称" value="">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>优先级:
+                        </td>
+                        <td>
+                            <input class="form-control" name="sequence" type="text" required placeholder="请输入数字" value="0">
+                            <br><span style="color:red">(默认为0，数字越大，优先级越高)</span>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+                        <td>产品分类:
+                        </td>
+                        <td>
+                            <select class="form-control" name="category_id1" id="level_one">
+                            	<option value="a">请选择</option>
+														</select>
+														<select class="form-control" name="category_id2" id="level_two">
+															<option value="a">请选择</option>
+														</select>
+														<select class="form-control" name="category_id3" id="level_three">
+															<option value="a">请选择</option>
+														</select>
+                            <br><span style="color:red">备注：</span>二级分类不能添加产品喔！
+                        </td>
+
+                    </tr>
+                    
+                    <tr>
+                        <td>是否上架:
+                        </td>
+                        <td>
+                            <select  class="form-control" name="active">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </td>
+                    </tr>
+
+
+                    <!-- <tr>
+                      <td>积分:
+                       <input class="form-control" name="score" type="number" required placeholder="请输入产品积分" value="{$row.score}"><span style="color:#ff0000;">*经销商下单通过处理获得的积分</span>
+                      </td>
+                    </tr> -->
+                    <tr>
+                        <td>价格:
+                        </td>
+                        <td>
+                            <input class="form-control" name="price" type="text" required placeholder="请输入产品价格" value="">(元)
+                        </td>
+                    </tr>
+
+                    <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                        <tr>
+                            <td>
+                                {$level_name[$key_left_num]}拿货价格:
+                            </td>
+                            <td>
+                                <php>$price_key = 'price'.$key_left_num;</php>
+                                <input class="form-control" name="price{$key_left_num}" type="number" required placeholder="请输入价格" value="">（元）
+                            </td>
+                        </tr>
+                    </foreach>
+
+
+                    <tr>
+                    <td>描述:
+                    </td>
+                    <td>
+                        <input class="form-control" name="state" type="text" required placeholder="请输入产品描述" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td> 产品介绍：
+                    </td>
+                    <td>
+                        <textarea pname="fm_content" name="disc"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <!--确定按钮-->
+                    <td colspan="2">
+                        <input class="btn btn-default" id="确定" value="确定" type="submit">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+	var check_level = '__GROUP__/templet/get_product_ajax'
+		var get_level = '__GROUP__/templet/templet_category'
+		var get_son = '__GROUP__/templet/get_son_templet_category'
+		var param = window.location.search;
+    (function ($) {
+        $("#file0").change(function () {
+            var objUrl = getObjectURL(this.files[0]);
+            console.log("objUrl = " + objUrl);
+            if (objUrl) {
+                $("#img0").attr("src", objUrl);
+            }
+        });
+    })(jQuery);
+//建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+    
+    $(function() {
+		var c_id = param.substring(param.indexOf('=') + 1, param.length)
+		$.get(get_level, function(data) {
+			if(data.code == 1) {
+				$.each(data.info, function(key, value) {
+					var temp = new Array();
+					var aim = $('#level_one');
+					if(key!='one'){
+						return
+					}
+					$.each(value, function(k, val) {
+						var html = '';
+						html = '<option value="' + val.id + '">' + val.name + '</option>';
+						temp.push(html)
+					});
+					if(aim != '') {
+						aim.append(temp)
+					}
+				});
+			} else {
+				alert(data.msg);
+			}
+		});
+		$(document).on('change','#level_one',function(){
+			var p_id = $('#level_one').val();
+			if(p_id!='a'){
+				getTwo(p_id)
+			}else{
+				$('#level_two').empty().append('<option value="a">请选择</option>')
+				$('#level_three').empty().append('<option value="a">请选择</option>')
+			}
+		});
+		$(document).on('change','#level_two',function(){
+			var p_id = $('#level_two').val();
+			if(p_id!='a'){
+				getThree(p_id)
+			}else{
+				$('#level_three').empty().append('<option value="a">请选择</option>')
+			}
+		});
+	})
+    
+  function getTwo(p_id){
+  	$.post(get_son,{
+				pid:p_id
+			},function(data){
+				if(data.code==1){
+					var aim = $('#level_two')
+					var temp = []
+					aim.empty().append('<option value="a">请选择</option>')
+					$.each(data.info, function(key,value) {
+						if(key!='two'){
+							return
+						}
+						if(value==null){
+							return
+						}
+						$.each(value, function(k, val) {
+							var html = '';
+							html = '<option value="' + val.id + '">' + val.name + '</option>';
+							temp.push(html)
+						});
+						if(aim != '') {
+							aim.append(temp)
+						}
+					});
+				}else{
+					alert(data.msg)
+				}
+			});
+  }
+  function getThree(p_id){
+  	$.post(get_son,{
+				pid:p_id
+			},function(data){
+				if(data.code==1){
+					var aim = $('#level_three')
+					var temp = []
+					aim.empty().append('<option value="a">请选择</option>')
+					$.each(data.info, function(key,value) {
+						if(key!='two'){
+							return
+						}
+						if(value==null){
+							return
+						}
+						$.each(value, function(k, val) {
+							var html = '';
+							html = '<option value="' + val.id + '">' + val.name + '</option>';
+							temp.push(html)
+						});
+						if(aim != '') {
+							aim.append(temp)
+						}
+					});
+				}else{
+					alert(data.msg)
+				}
+			});
+  }
+</script>

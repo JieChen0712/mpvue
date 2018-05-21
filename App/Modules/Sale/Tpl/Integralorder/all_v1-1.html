@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>订单明细</title>
+        <include file="./App/Modules/Admin/Tpl/Public/header_v3.html" />
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/order-detail.css" type="text/css" />
+
+    </head>
+
+    <body>
+        <div class="page">
+            <!-- header start-->
+            <!--	        <header id="header" class="bar bar-nav">
+    <button class="back button button-link button-nav pull-left">
+        <a href="javascript:history.go(-1);" > <span class="icon icon-left">返回</span></a>
+    </button>
+    <button class="more button button-link button-nav pull-right">
+        <img class="img" src="__PUBLIC__/Admin_v3/images/clock.jpg" height="26">
+        <span class="text">10</span>
+        <i class="circle">●●●</i>
+    </button>
+    <h1 class="title">订单明细</h1>
+</header>-->
+            <div class="buttons-tab">
+                <a href="#tab1" class="tab-link active button btns">全部订单</a>
+                <a href="#tab2" class="tab-link button btns">待付款</a>
+                <a href="#tab3" class="tab-link button btns">待发货</a>
+                <a href="#tab4" class="tab-link button btns">已收货</a>
+            </div>
+            <div class="order-detail">
+                <div class="content">
+                    <div class="content-block wrappers">
+                        <div class="tabs">
+                            <div id="tab1" class="tab active">
+                                <div class="content-block wrappers">
+                                    <empty name="applyList">
+                                        <include file="./App/Modules/Admin/Tpl/Public/empty.html" />
+                                        <else />
+                                        <foreach name="applyList" item="vo">
+                                            <dl class="all-detail">
+                                                <dt>
+                                                <img src="{$vo.distributor_headimgurl}"/>
+                                                <span>{$vo.distributor_name}</span>
+                                                <p>
+                                            <if condition="$vo['status'] eq 3 "> 已收货
+                                                <elseif condition="$vo['status']  eq 2"/>待发货
+                                                <else /> 待付款
+                                            </if>
+                                            </p>
+                                            </dt>
+                                                <dd>
+                                                    <volist name="vo['row']" id="m">
+                                                        <div class="all-list">
+                                                            <img src="__ROOT__{$m.p_image}" alt="" />
+                                                            <div class="goods-detail">
+                                                                <div class="details-top">
+                                                                    <p>
+                                                                        {$m.p_name}
+                                                                    </p>
+                                                                    <p>￥{$m.price}<span>+{$m.total_integral}积分</span></p>
+                                                                </div>
+                                                                <div class="details-bottom">
+                                                                    <p></p>
+                                                                    <p>x{$m.num}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </volist>
+                                                    <p class="goods-sum"><span>共{$vo.total_num}件商品</span><span>合计:￥{$vo.total_price}（含运费:￥0.00）</span></p>
+                                                </dd>
+
+                                                <div class="order-btn">
+                                                    <if condition="$vo['status'] eq 3 ">
+
+                                                        <input type="button" value="查看物流" class="button button-dark" />
+                                                        <!-- <input type="button" data-id="{$vo.order_num}" value="删除订单" class="button button-dark del-order" /> -->
+                                                        <!-- <input type="button" value="评价" class="button button-danger" /> -->
+
+                                                        <elseif condition="$vo['status']  eq 2" />
+
+                                                        <!--<input type="button" value="申请退款" class="button button-dark" />-->
+                                                        <input type="button" value="查看物流" class="button button-dark" />
+                                                        <input type="button" data-id="{$vo.order_num}" value="确认收货" class="button button-danger shou" />
+
+                                                        <else />
+                                                        <!--<input type="button" value="提醒卖家发货" class="button button-dark" />-->
+                                                        <input type="button" value="付款" onclick="javascript:window.location.href='__GROUP__/integralpay/pay?order_num={$vo.order_num}'" data-id="{$vo.order_num}" class="button button-dark" />
+                                                        <input type="button" value="取消订单" data-id="{$vo.order_num}" class="button button-dark cancel-order" />
+                                                    </if>
+
+                                                </div>
+                                            </dl>
+                                        </foreach>
+                                    </empty>
+                                </div>
+                            </div>
+                            <div id="tab2" class="tab">
+                                <div class="content-block wrappers">
+                                    <foreach name="applyList" item="vo">
+                                        <if condition="$vo['status'] eq 1 ">
+                                            <dl class="all-detail">
+                                                <dt><img src="{$vo.distributor_headimgurl}"/><span>{$vo.distributor_name}	
+                                                </span><p>待付款</p>
+                                            </dt>
+                                                <dd>
+                                                    <volist name="vo['row']" id="m">
+                                                        <div class="all-list">
+                                                            <img src="__ROOT__{$m.p_image}" alt="" />
+                                                            <div class="goods-detail">
+                                                                <div class="details-top">
+                                                                    <p>{$m.p_name}</p>
+                                                                    <p>
+                                                                        <span>￥{$m.price}</span>
+                                                                        <span>+{$m.total_integral}积分</span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="details-bottom">
+                                                                    <p></p>
+                                                                    <p>x{$m.num}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </volist>
+                                                    <p class="goods-sum"><span>共{$vo.total_num}件商品</span><span>合计:￥{$vo.total_price}（含运费:￥0.00）</span></p>
+                                                </dd>
+
+                                                <div class="order-btn">
+                                                    <input type="button" value="付款" onclick="javascript:window.location.href='__GROUP__/integralpay/pay?order_num={$vo.order_num}'" data-id="{$vo.order_num}" class="button button-dark" />
+                                                    <!--<input type="button" value="提醒卖家发货" class="button button-dark" />-->
+                                                    <input type="button" value="取消订单" data-id="{$vo.order_num}" class="button button-dark cancel-order" />
+                                                </div>
+                                            </dl>
+                                        </if>
+                                    </foreach>
+                                </div>
+                            </div>
+                            <div id="tab3" class="tab">
+                                <div class="content-block wrappers">
+                                    <foreach name="applyList" item="vo">
+                                        <if condition="$vo['status'] eq 2 ">
+                                            <dl class="all-detail">
+                                                <dt><img src="{$vo.distributor_headimgurl}"/><span>{$vo.distributor_name}</span><p>卖家已发货</p></dt>
+                                                <dd>
+                                                    <volist name="vo['row']" id="m">
+                                                        <div class="all-list">
+                                                            <img src="__ROOT__{$m.p_image}" alt="" />
+                                                            <div class="goods-detail">
+                                                                <div class="details-top">
+                                                                    <p>{$m.p_name}</p>
+                                                                    <p>￥{$m.price}<span>+{$m.total_integral}积分</span></p>
+                                                                </div>
+                                                                <div class="details-bottom">
+                                                                    <p></p>
+                                                                    <p>x{$vo.num}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </volist>
+                                                    <p class="goods-sum"><span>共{$vo.total_num}件商品</span><span>合计:￥{$vo.total_price}（含运费:￥0.00）</span></p>
+                                                </dd>
+
+                                                <div class="order-btn">
+                                                    <!--<input type="button" value="申请退款" class="button button-dark" />-->
+                                                    <input type="button" value="查看物流" class="button button-dark" />
+                                                    <input type="button" data-id="{$vo.order_num}" value="确认收货" class="button button-danger shou" />
+                                                </div>
+                                            </dl>
+                                        </if>
+                                    </foreach>
+                                </div>
+                            </div>
+                            <div id="tab4" class="tab">
+                                <div class="content-block wrappers">
+                                    <foreach name="applyList" item="vo">
+                                        <input type="hidden" value="{$vo.order_num}">
+                                        <if condition="$vo['status'] eq 3 ">
+                                            <dl class="all-detail">
+                                                <dt><img src="{$vo.distributor_headimgurl}"/><span>{$vo.distributor_name}</span><p>交易成功</p></dt>
+                                                <dd>
+                                                    <volist name="vo['row']" id="m">
+                                                        <div class="all-list">
+                                                            <img src="__ROOT__{$m.p_image}" alt="" />
+                                                            <div class="goods-detail">
+                                                                <div class="details-top">
+                                                                    <p>{$m.p_name}</p>
+                                                                    <p>￥{$m.price}<span>+{$m.total_integral}积分</span></p>
+                                                                </div>
+                                                                <div class="details-bottom">
+                                                                    <p></p>
+                                                                    <p>x{$m.num}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </volist>
+                                                    <p class="goods-sum"><span>共{$vo.total_num}件商品</span><span>合计:￥{$vo.total_price}（含运费:￥0.00）</span></p>
+                                                </dd>
+                                                <div class="order-btn">
+                                                    <input type="button" value="查看订单" class="button button-dark" />
+                                                    <!-- <input type="button"  data-id="{$vo.order_num}" value="删除订单" class="button button-dark del-order"/>-->
+                                                    <!--<input type="button" value="评价" class="button button-danger"/>-->
+                                                </div>
+                                            </dl>
+                                        </if>
+                                    </foreach>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--script start-->
+        <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/order-detail.js" type="text/javascript" charset="utf-8"></script>
+        <!--script end-->
+    </body>
+    <script>
+        $(function() {
+            $('.del-order').click(function() {
+                var order_num = $(this).data('id');
+                console.log(order_num);
+                $.post('del_order', {
+                    order_num: order_num
+                }, function(res) {
+                    if(res) {
+                        tusi('删除成功');
+                        window.location.href = changeURLArg(window.location.href, "reloadtime", new Date().valueOf());
+                    } else {
+                        tusi('删除失败');
+                    }
+                });
+            })
+        });
+
+        $(function() {
+            $(document).on('click', '.cancel-order', function() {
+                $.confirm('是否取消订单？', function() {
+                    var order_num = $('.cancel-order').data('id');
+                    console.log(order_num);
+                    $.post('cancel_order', {
+                        order_num: order_num
+                    }, function(res) {
+                        if(res) {
+                            tusi('取消订单成功');
+                            window.location.href = changeURLArg(window.location.href, "reloadtime", new Date().valueOf());
+                        } else {
+                            tusi('取消订单失败');
+                        }
+                    });
+                })
+            });
+        });
+        $(function() {
+            $('.shou').click(function() {
+                var order_num = $(this).data('id');
+                console.log(order_num);
+                $.post('shouhuo', {
+                    order_num: order_num
+                }, function(res) {
+                    if(res) {
+                        tusi('确认收货成功');
+                        window.location.href = changeURLArg(window.location.href, "reloadtime", new Date().valueOf());
+                    } else {
+                        tusi('确认收货失败');
+                    }
+                });
+            })
+        });
+        //设置url参
+        function changeURLArg(url, arg, arg_val) {
+            var pattern = arg + '=([^&]*)';
+            var replaceText = arg + '=' + arg_val;
+            if(url.match(pattern)) {
+                var tmp = '/(' + arg + '=)([^&]*)/gi';
+                tmp = url.replace(eval(tmp), replaceText);
+                return tmp;
+            } else {
+                if(url.match('[\?]')) {
+                    return url + '&' + replaceText;
+                } else {
+                    return url + '?' + replaceText;
+                }
+            }
+            return url + '\n' + arg + '\n' + arg_val;
+        }
+    </script>
+
+</html>

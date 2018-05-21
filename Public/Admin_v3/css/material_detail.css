@@ -1,0 +1,117 @@
+body {
+  background-color: #f5f4f9;
+}
+.box{
+	overflow: scroll;
+	-webkit-overflow-scrolling:touch;
+}
+#main {
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100%;
+  padding-bottom: 3.125rem;
+  background-color: #f5f4f9;
+}
+.details{
+	margin-bottom: 1rem;
+	padding-bottom: .3rem;
+	background-color: white;
+}
+.details p,h1,span,embed,h2,h3,h4,h5,h6{background-color: white!important;}
+#main .headline-wrapper {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 0.9375rem;
+  display: flex;
+  height: 3.9375rem;
+  border-bottom: 0.0625rem solid #c9c9c9;
+}
+#main .headline-wrapper .avatar {
+  flex: 0 0 3.1875rem;
+}
+#main .headline-wrapper .headline {
+  flex: auto;
+  overflow: hidden;
+}
+#main .headline-wrapper .headline div {
+  width: 100%;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+#main .headline-wrapper .headline span {
+  display: block;
+  line-height: 0.2rem;
+  font-size: 0.75rem;
+  color: #b9b9b9;
+}
+#main .text-wrapper {
+  width: 90%;
+  margin: 0.1875rem auto 0 auto;
+  color: #979797;
+}
+#main .img-wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
+#main .img-wrapper ul {
+  margin-bottom: 0.625rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+#main .img-wrapper ul li {
+  width: 86px;
+  overflow: hidden;
+  margin-right: 0.625rem;
+  margin-top: 0.625rem;
+}
+#main .img-wrapper ul li img {
+  height: 120px;
+  display: block;
+  margin: 0 auto;
+}
+#main .btn-wrapper {
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 0.3125rem;
+  border-top: 0.0625rem solid #c9c9c9;
+}
+#main .btn-wrapper ul {
+  height: 2.8125rem;
+  display: flex;
+}
+#main .btn-wrapper {
+  text-align: right;
+}
+#main .btn-wrapper button {
+  margin-top: .3125rem;
+  margin-right: 5%;
+  white-space:nowrap;
+  width: 7rem;
+  z-index: 999;
+  height: 43px;
+  border: none;
+  color: #fff;
+  border-radius: .3125rem;
+  text-align: center;
+}
+#main .btn-wrapper button img {
+  margin-top: 3px;
+  vertical-align: top;
+}
+
+@media screen and (min-width: 350px) {
+    #main .img-wrapper ul li {
+        width: 5.9375rem;
+        overflow: hidden;
+    }
+}
+
+@media screen and (min-width: 400px) {
+    #main .img-wrapper ul li {
+        width: 6.875rem;
+        overflow: hidden;
+    } 
+}

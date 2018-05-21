@@ -1,0 +1,81 @@
+<layout name="Public/public" />
+
+
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+<script type="text/javascript" src='__PUBLIC__/js/index.js'></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-1.11.0.min.js" ></script>
+
+<h1 class="page-header">
+    编辑订单限制规则
+</h1>
+
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <form class="form-inline" method="post" action="__URL__/order_limit_post" enctype="multipart/form-data">
+            <table class='table table-condensed table-hover table-responsive table-bordered'>
+                <tbody>
+                    <tr>
+                        <td>经销商级别
+                        </td>
+                        <td>
+                            <label class="sr-only" for="level">经销商级别</label>
+                            
+                            <if condition="$id gt 0">
+                                    $level_name.$list.level
+                                <else />
+                                    <select name="level" id="level"  class="form-control">
+                                        <option value="0">所有级别</option>
+                                        <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                                        <option value="{$key_left_num}">{$vo_left_name}</option>
+                                        </foreach>
+                                    </select>
+                            </if>
+                        </td>
+                    </tr>
+                    
+<!--                    <tr>
+                        <td>是否首次下单<br />（即该条规则只在首次下单时触发，<br />并注意选择首次下单，<br />则首张订单未完成无法再下订单）:
+                        </td>
+                        <td>
+                            <if condition="$list.is_first eq 1">
+                                <input class="form-control" checked="checked" type="checkbox" name="is_first" value="1" />
+                                <else />
+                                <input class="form-control" type="checkbox" name="is_first" value="1" />
+                            </if>
+                        </td>
+                    </tr>-->
+                    
+                    <tr>
+                        <td>订单产品总数量最小限制（0则不做限制）：
+                        </td>
+                        <td>
+                            <input class="form-control" name="total_num_min" type="text" required placeholder="订单产品总数量最小限制" value="{$list.total_num_min}">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>订单总金额最小限制（0则不做限制）：
+                        </td>
+                        <td>
+                            <input class="form-control" name="total_money_min" type="text" required placeholder="订单总金额最小限制" value="{$list.total_money_min}">（元）
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <!--确定按钮-->
+                        <td colspan="2">
+                            <input class="btn btn-default" id="确定" value="确定" type="submit">
+                            <input value="{$list.id}" name="id" type="hidden">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+
+    </div>
+</div>
+

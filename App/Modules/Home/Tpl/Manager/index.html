@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>经销商信息查询</title>
+    <include file="Public/header" />
+    <script src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+    <script src="__PUBLIC__/js/my/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/manager.css" />
+  </head>
+
+  <body>
+    <div class="page">
+      <div class="containers">
+        <header>
+          <?php if( !empty($info['image']) ):?>
+          <img src="__ROOT__{$info.image}" style="width:100%">
+          <?php else:?>
+          <img src="__PUBLIC__/Home/images/manager_banner.jpg" style="width:100%">
+          <?php endif;?>
+        </header>
+        <div class="search-wrapper">
+          <input type="text" data-type="search" id="search" placeholder="请输入经销商手机号或微信号" />
+          <button id="btn-search"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
+        <div class="content">
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var searchUrl = '{:U(GROUP_NAME . "/manager/search")}';
+      var detailUrl = '{:U(GROUP_NAME . "/manager/detail/id")}';
+      var texta = "";
+      $(function() {
+          $('#btn-search').click(SeachData);
+      })
+
+      function SeachData() {
+        var val = $("#search").val();
+        if(val == "") {
+          tusi('请输入经销商手机号或微信号');
+          return false;
+        }
+        $.post(searchUrl, {
+          val: val
+        }, function(data, status) {
+          var html = "";
+          if(data == 'disable') {
+            tusi('您查询的经销商已经加入了禁用! 请联系相关工作人员！');
+          } else {
+            if(data != 'error') {
+              html = '<p class="title">您所查询的经销商为微商控价防伪授权正规经销商！</p><p class="name">姓名：'+ data['name']+'</p><p class="level">级别：'+ data['levname'] +'</p>'+
+                          '<a href="'+detailUrl+'/'+data['id']+'" name="btn-detail" id="btn-detail" class="btn-detail btn btn-danger">查看详情</a>'+
+                          '<span class="remark">备注：请每周一次查询经销商真实性，避免违规后取消合作和授权！</span>';
+              var text = "<li>您所查询的经销商为微商控价防伪授权正规经销商</li><li><a href='" + detailUrl + "/" + data['id'] + "'>姓名:" + data['name'] + "&nbsp;&nbsp;&nbsp;级别:" + data['levname'] + "<span style='position: absolute;right: 0;'>点击详情</span></a><br/><br/></li><li><span style='color:red;'>备注：请每周一次查询经销商真实性，避免违规后取消合作和授权！</span></li>";
+              $('.content').show();
+            } else {
+              tusi('抱歉,没有找到该经销商! ');
+            }
+          }
+          $('.content').empty().html(html);
+        });
+      }
+    </script>
+  </body>
+</html>

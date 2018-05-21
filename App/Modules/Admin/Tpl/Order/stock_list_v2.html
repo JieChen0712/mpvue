@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>库存详情</title>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/light7.min.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/header_v1.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/award_manager.css" />
+    
+    <!--script start-->
+    <script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	var geturls = '__URL__/get_stock_list';
+    	var typeList  = {
+    	    '1':'audit_charge',
+    	    '2':'recharge',
+    	    '3':'charge'
+    	}
+    </script>
+    <!--script end-->
+    <style type="text/css">
+    	.infinite-scroll-preloader { 
+        margin-top:-20px;
+      }
+    </style>
+    <!--判断返利是否开启/关闭数组-->
+  </head>
+
+  <body>
+    <!--第一个页面-->
+    <div class="page page-current" id="page1">
+      <!-- header start-->
+      <include file="Public/header_features_v3" />
+      <!-- header end-->
+      <div class="content infinite-scroll">
+        <nav class="award-menu">
+          <ul>
+            <li>
+              <a href="1" class="active">审核扣除</a>
+            </li>
+            <li>
+              <a href="2">库存充入</a>
+            </li>
+            <li>
+              <a href="3">提货扣除</a>
+            </li>
+          </ul>
+        </nav>
+
+        <section class="award-manager1" data-empty="false" data-page="1">
+          <div class="award-show">
+            <div class="select-date">
+              <input type="text" id='datetime-picker1' placeholder="请选择日期" value="<?php echo date('Y-m-d H:i');?>"/>
+              <i class="icon icon-down"></i>
+            </div>
+            <div class="award-num"></div>
+            <div class="list-wrapper"></div>
+            <div class="infinite-scroll-preloader" data-load="false">
+              <div class="preloader"></div>
+          </div>
+          </div>
+        </section>
+
+        <section class="award-manager2" data-empty="false" data-page="1">
+          <div class="award-show">
+            <div class="select-date">
+              <input type="text" id='datetime-picker2' placeholder="请选择日期" value="<?php echo date('Y-m-d H:i');?>"/>
+              <i class="icon icon-down"></i>
+            </div>
+            <div class="award-num"></div>
+            <div class="list-wrapper"></div>
+            <div class="infinite-scroll-preloader" data-load="false">
+              <div class="preloader"></div>
+          </div>
+          </div>
+          
+        </section>
+
+        <section class="award-manager3" data-empty="false" data-page="1">
+          <div class="award-show">
+            <div class="select-date">
+              <input type="text" id='datetime-picker3' placeholder="请选择日期" value="<?php echo date('Y-m-d H:i');?>"/>
+              <i class="icon icon-down"></i>
+            </div>
+            <div class="award-num"></div>
+            <div class="list-wrapper"></div>
+            <div class="infinite-scroll-preloader" data-load="false">
+              <div class="preloader"></div>
+          </div>
+          </div>
+        </section>
+        
+      </div>
+
+    </div>
+    <script src="__PUBLIC__/Admin_v3/js/stock-list.js" type="text/javascript" charset="utf-8"></script>
+  </body>
+
+</html>

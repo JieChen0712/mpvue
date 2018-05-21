@@ -1,0 +1,75 @@
+<layout name="Public/public" />
+
+<head>
+    <link href="__PUBLIC__/css/index.css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+    <script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+    <script type="text/javascript" src='__PUBLIC__/js/index.js'></script>
+    <script type="text/javascript">
+        function sc($name, $ulr) {
+            //利用对话框返回的值 （true 或者 false）
+            if (confirm("您确定要删除" + $name + "吗？")) {
+                window.location.href = $ulr;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<h1 class="page-header">
+    产品信息列表
+</h1>
+
+<div class="row">
+   <div class="col-md-12 col-xs-12">
+
+        <!--表格-->
+        <table class="table table-condensed table-hover table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>产品名称</th>
+                    <th>上架状态</th>
+                    <th>产品价格(元)</th>
+                    <th>产品积分</th>
+                    <th>产品描述</th>
+                    <th>产品介绍</th>
+                    <th>添加时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            <empty name="list">
+                <tr><td colspan="15">对不起,没有找到经销商! </td></tr>
+                <else />
+                <!--<tr><td colspan="12"><div class="pull-right">{$page}</div></td></tr>-->
+                <volist name="list" id="m">
+                    <tr>
+                        <td>{$m.id}</td>
+                        <td>{$m.name}</td>
+                        <td>
+                            <if condition="$m.active eq '0'">
+                                <span class="label label-danger">已下架</span>
+                            <else/>
+                                <span class="label label-info">上架中</span>
+                            </if>
+                        </td>
+                        <td>{$m.price}</td>
+                        <td>{$m.integral}</td>
+                        <td>{$m.state}</td>
+                        <td>{$m.disc}</td>
+                        <td>{$m.time|date="Y-m-d H:i",###}</td>
+                        <td><input type="button" class="wz2 btn" value="编辑" onClick="javascript:location.href = '__URL__/edit?id={$m.id}'"/></td>
+                    </tr>
+                </volist>
+                <tr><td colspan="15"><div class="pull-right">{$page}</div></td></tr>
+            </empty>
+            </tbody>
+        </table>
+        <!--end 表格-->
+
+
+    </div>
+</div>

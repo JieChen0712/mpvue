@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>邀请经销商</title>
+    <include file="Public/header_v2"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/create.css">
+    <script>
+        $(function () {
+            $(".create-btn-div").click(function () {
+                $(".create-mask-section").show();
+            });
+            $(".create-agents li").click(function () {
+                $(".create-btn-div").addClass("index3");
+            });
+            $(".close").click(function () {
+                $(".create-mask-section").hide();
+                $(".create-mask-btn-div").hide();
+                $(".create-btn-div").show();
+                $(".create-btn-div").removeClass("index3");
+            });
+        })
+    </script>
+</head>
+<div style='margin:0 auto;display:none;'>
+    <img src='__PUBLIC__/images/wx_logo.jpg' />
+</div>
+<body>
+
+
+    <style>
+        body {
+            background: url(__PUBLIC__/Admin_v2/images/bg.jpg) #fbfbfb no-repeat;
+            background-color:#fbfbfb;
+            background-size: cover;      
+        }
+        .tel_title {   background: transparent; } 
+    </style>
+
+
+
+
+    <header class="header">
+        <a href="javascript:history.go(-1);" class="a"></a>
+        <p>下级代理生成</p>
+    </header>
+    <section class="create-section" style="margin-top:6%;">
+        <div class="create-section-title">
+            <ul>
+                <li>代理名称</li>
+                <li>代理级别</li>
+                <li>授权号</li>
+                <li>状态</li>
+            </ul>
+        </div>
+        <ul>
+            <li>{$agentRow.name}</li>
+            <li>{$agentRow.levname}</li>
+            <li>{$agentRow.authnum}</li>
+            <li>正常</li>
+        </ul>
+        <div class="create-btn-div"><button class="create-btn">生成分享链接</button></div><!-- 跳转到signature/sharesign.html -->
+    </section>
+
+    <section  class="create-mask-section">
+        <div class="create-agents">
+            <ul>
+                <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+
+                    <!--默认，高发展低-->
+                    <if condition="($agentRow.level lt $key_left_num) AND ($Think.config.GROW_MODEL eq 1) "> 
+                        <a href="__APP__/Admin/Signature/sharesign/?id={$agentRow.id}&level={$key_left_num}&ct={$ct}">
+                            <li><img src="__PUBLIC__/Admin_v2/images/agent{$key_left_num}.png" alt=""><span>{$vo_left_name}</span></li>
+                        </a>
+
+                        <!--高发展低及平级推-->
+                        <elseif condition="($agentRow.level elt $key_left_num) AND ($Think.config.GROW_MODEL eq 2) " />
+                        <a href="__APP__/Admin/Signature/sharesign/?id={$agentRow.id}&level={$key_left_num}&ct={$ct}">
+                            <li><img src="__PUBLIC__/Admin_v2/images/agent{$key_left_num}.png" alt=""><span>{$vo_left_name}</span></li>
+                        </a>
+
+                        <!--任何级别都可以发展-->
+                        <elseif condition="$Think.config.GROW_MODEL eq 3" />
+                        <a href="__APP__/Admin/Signature/sharesign/?id={$agentRow.id}&level={$key_left_num}&ct={$ct}">
+                            <li><img src="__PUBLIC__/Admin_v2/images/agent{$key_left_num}.png" alt=""><span>{$vo_left_name}</span></li>
+                        </a>
+                    </if>
+
+                </foreach>
+            </ul>
+            <div class="close"></div>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,212 @@
+.content {
+    /*background-color: #F5F4F9;
+    background-image: url(../images/login/login_bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;*/
+    background:url(../images/login/login_bg.png) no-repeat;
+    background-size: cover;
+    background-position: center;
+ }
+
+.img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 45%;
+    overflow: hidden;
+}
+
+.img-wrapper .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.img-wrapper .bg img {
+    display: block;
+    max-width: 100%;
+}
+
+.img-wrapper .moon {
+    position: absolute;
+    top: 0.9375rem;
+    left: 4.6875rem;
+    z-index: 101;
+}
+
+.img-wrapper .cloud1 {
+    position: absolute;
+    top: 3%;
+    left: 3%;
+    z-index: 100;
+}
+
+.img-wrapper .cloud2 {
+    position: absolute;
+    top: 20%;
+    left: 25%;
+    z-index: 100;
+}
+
+.img-wrapper .cloud3 {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    z-index: 100;
+}
+
+.img-wrapper .cloud4 {
+    position: absolute;
+    top: 40%;
+    left: 60%;
+    z-index: 100;
+}
+
+.img-wrapper .cloud5 {
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    z-index: 100;
+}
+
+.img-wrapper .cloud6 {
+    position: absolute;
+    top: 60%;
+    left: 80%;
+    z-index: 100;
+}
+
+.form {
+    width: 100%;
+    padding: 0 10%;
+    text-align: right;
+}
+
+.form input {
+    background-color: transparent;
+    border: 1px solid #0e3e6e;
+    width: 100%;
+    height: 2.6rem;
+    color: #fff;
+    border-radius: 0.3125rem;
+    text-align: center;
+}
+
+.form input::-webkit-input-placeholder { /* WebKit browsers */ 
+color: #92cedc; 
+} 
+.form input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ 
+color: #92cedc; 
+} 
+.form input::-moz-placeholder { /* Mozilla Firefox 19+ */ 
+color: #92cedc; 
+} 
+.form input:-ms-input-placeholder { /* Internet Explorer 10+ */ 
+color: #92cedc; 
+} 
+
+.form .username {
+    margin-bottom: 1.25rem;
+    background-image: url("../images/login/input_icon.png");
+    background-size: 38px auto;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    border:none;
+    border-bottom: solid 1px #fff;
+    border-radius: 0;
+    /*text-indent: 3.4375rem;*/
+    /*color: #303030;*/
+    z-index: 1000;
+}
+
+.form .password {
+    margin-bottom: 0.3rem;
+    background-image: url("../images/login/input_icon.png");
+    background-size: 38px auto;
+    background-repeat: no-repeat;
+    background-position: 0 -50px;
+    border:none;
+    border-bottom: solid 1px #fff;
+    border-radius: 0;
+    /*text-indent: 3.4375rem;*/
+    z-index: 1000;
+}
+
+.form .forget-password {
+    color: #0e3e6e;
+    z-index: 1000;
+    font-size: .875rem
+}
+
+.form .login {
+    margin-top: 1rem;
+    background-color: #d27b14;
+    border:none;
+    color: #fff;
+    z-index: 1000;
+}
+
+.tip {
+    width: 100%;
+    /*padding: 0 10%;*/
+    font-size: 0.875rem;
+    color: #92cedc;
+    text-align: center;
+    margin: 0;
+}
+
+.verify-wrapper {
+    display: flex;
+    margin-top: 10px;
+}
+
+.verify-wrapper .verify-input {
+    flex: 1;
+}
+.verify-wrapper .verify-input input {
+    height: 2.5rem;
+    vertical-align: top;
+}
+
+.verify-wrapper .verify-img {
+    flex: 0 0 150px;
+}
+
+.verify-wrapper .verify-img a {
+    display: inline-block;
+    color: #0e3e6e;
+    vertical-align: top;
+    margin-top: .625rem;
+}
+
+
+
+@media screen and (max-width: 350px) {
+    .img-wrapper {
+        height: 15rem;
+    }
+    .form .username {
+        margin-bottom: .75rem;
+    }
+    .form .login {
+        margin-top: 2.0rem;
+    }
+    .tip {
+        margin-top: 5px;
+    }
+}
+@media screen and (max-width: 340px) {
+    .img-wrapper {
+        height: 14.5rem;
+    }
+}
+@media screen and (max-width: 330px) {
+    .img-wrapper {
+        height: 14rem;
+    }
+}
+@media screen and (max-width: 320px) {
+    .img-wrapper {
+        height: 13.8rem;
+    }
+}

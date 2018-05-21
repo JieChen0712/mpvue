@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <include file="./App/Modules/Admin/Tpl/Public/header_v2.html" />
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/order.css">
+        <title>我的订单</title>
+        <script type="text/javascript" src="__PUBLIC__/js/my_dd.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $(".order-toggle li").click(function() {
+                    $(this).addClass("active").siblings().removeClass("active");
+                    var index = $(this).index() + 1;
+                    $("#section" + index).show().siblings("section").hide();
+                });
+                $(".order-btn").click(function() {
+                    $(this).toggleClass("order-check-btn");
+                });
+                // 取消订单
+                $("#section1 .cancel-order").click(function() {
+                    $(this).closest(".order-section").remove();
+                });
+                $("#section3 .cancel-order").click(function() {
+                    if($(this).closest(".order-section").find(".order-btn").is(":checked")) {
+                        $(this).closest(".order-section").remove();
+                    }
+                });
+                // 购物车全选
+                $("#section3 .footer-left .order-btn").click(function() {
+                    if($(this).is(":checked")) {
+                        $("#section3 .order-btn").addClass("order-check-btn");
+                    } else {
+                        $("#section3 .order-btn").removeClass("order-check-btn");
+                    }
+
+                });
+                // 我要下单全选
+                $("#section2 .footer-left .order-btn").click(function() {
+                    if($(this).is(":checked")) {
+                        $("#section2 .order-btn").addClass("order-check-btn");
+                    } else {
+                        $("#section2 .order-btn").removeClass("order-check-btn");
+                    }
+
+                });
+                // mask
+                $(".order-address").click(function() {
+                    $(".mask").addClass("center-middle");
+                });
+                $("#cancel").click(function() {
+                    $(this).closest(".mask").removeClass("center-middle");
+                });
+            })
+
+            $(function() {
+                $('.mask1').click(function() {
+                    window.location.href = changeURLArg(window.location.href, "reloadtime", new Date().valueOf());
+                })
+            })
+
+            function btma(id, min_multiple) {
+
+                if(min_multiple == 0 || min_multiple == null) {
+                    min_multiple = 1;
+                }
+
+                var is_checked = $("#c" + id).is(':checked');
+
+                var old_money = $('.money').html();
+
+                var number = $('.number').html();
+
+                if(is_checked) {
+
+                    number++;
+                    var money = Number(old_money) + Number($("#s" + id).val()) * Number($('.price' + id).html());
+
+                    money = money.toFixed(2);
+
+                    $('.number').html(number);
+                    $('.money').html(money);
+
+                } else {
+                    number--;
+                    var money = Number(old_money) - Number($("#s" + id).val()) * Number($('.price' + id).html());
+                    money = money.toFixed(2);
+
+                    $('.number').html(number);
+                    $('.money').html(money);
+                }
+
+                //        alert(money);
+            }
+
+            //2016.10.17下单JS更改
+            function orderhand() {
+                var order_num = new Date().getTime();
+                var pd = 0;
+                var znumber = 0;
+                //tusi(time);
+                var j = '{$manager.count}';
+                j = Number(j);
+                var user_name = $('.p_name').html();
+                var phone = $('.p_phone').html();
+                var addre = $('.p_addre').html();
+                var textarea = $(".textarea").val();
+
+                if(phone == "") {
+                    tusi('请输入手机号码');
+                    return false;
+                }
+                var reg = /^0?1[3|4|5|7|8][0-9]\d{8}$/;
+                if(!reg.test(phone)) {
+                    tusi('请输入正确的手机号码');
+                    return false;
+                }
+
+                var p_ids = new Array();
+                var p_nums = new Array();
+
+                //        var _list_p_nums = {};
+                //        var _list_p_ids = {};
+                for(var i = 1; i <= j; i++) {
+                    var obl = document.getElementById('c' + i);
+                    //ar aaa = $('.aaa'+i+'.cc').val();
+                    if(obl.checked) {
+                        znumber = Number(znumber) + Number($('#s' + i).val());
+
+                        var pro_id = $('.id' + i).val();
+                        var pro_num = $('#s' + i).val();
+
+                        //            _list_p_ids["p_ids[" + i + "]"] = pro_id;  
+                        //            _list_p_nums["p_nums[" + i + "]"] = pro_num;  
+
+                        p_ids[i] = pro_id;
+                        p_nums[i] = pro_num;
+                    }
+                };
+
+                //        $.ajax({  
+                //            type:'post',  
+                //            traditional :true,
+                ////            dataType:"json",
+                //            url:'__APP__/Admin/Order/orderhand',  
+                //            data:{'p_ids':_list_p_ids,'p_nums':_list_p_nums,order_num:order_num,phone:phone,addre:addre,user_name:user_name,textarea:textarea}, 
+                //            success:function(data){  
+                //                if(data.code==1){
+                //                    $('.mask1').show();
+                //                }else{
+                //                    var msg = '下单失败！';
+                //                    if( data.msg != null ){
+                //                        msg = data.msg;
+                //                    }
+                //                    tusi(msg);
+                //                } 
+                //            }  
+                //        });  
+
+                $.post("__APP__/Sale/integralorder/orderhand", {
+                    "p_ids": p_ids,
+                    "p_nums": p_nums,
+                    order_num: order_num,
+                    phone: phone,
+                    addre: addre,
+                    user_name: user_name,
+                    textarea: textarea
+                }, function(data) {
+                    if(data.code == 1) {
+                        $('.mask1').show();
+                        window.setTimeout("window.location.reload()", 1500);
+                    } else {
+                        var msg = '下单失败！';
+                        if(data.msg != null) {
+                            msg = data.msg;
+                        }
+                        tusi(msg);
+                    }
+                });
+
+                //        for(var i = 1; i <= j; i++){
+                //            var obl = document.getElementById('c'+i);
+                //            //ar aaa = $('.aaa'+i+'.cc').val();
+                //            if(obl.checked){
+                //                pd++;
+                //                var pro_name = $('.name'+i).html();
+                //                var pro_num = $('#s'+i).val();
+                //                var pro_id = $('.id'+i).val();
+                //                var pro_money = $('.price'+i).html();
+                //                var textarea = $(".textarea").val();
+                //                //add by z
+                //                if(isNaN(money) || money<=0){
+                //                    tusi('金额合计异常,请重新下单');
+                //                    setTimeout(function(){
+                //                        location.href ="__APP__/Admin/Order/my_dd"
+                //                    },3000)
+                //                    return false;
+                //                }
+                //                //:add by z
+                //                $.post("__APP__/Admin/Order/orderhand",{user_name:user_name,pro_id:pro_id,pro_num:pro_num,pro_money:pro_money,phone:phone,addre:addre,money:money,order_num:order_num,textarea:textarea,znumber:znumber},function(data){
+                //                    if(data.code==1){
+                //                        $('.mask1').show();
+                //                    }else{
+                //                        var msg = '下单失败！';
+                //                        if( data.msg != null ){
+                //                            msg = data.msg;
+                //                        }
+                //                        tusi(msg);
+                //                    }
+                //                        
+                //                });
+                //            }
+                //        };
+
+                //        if(pd==0){
+                //            tusi("至少订购一件产品！");
+                //        }
+            }
+
+            function receiving() {
+                var name = $("input[name=name]").val();
+                var phone = $("input[name=phone]").val();
+                var addre = $("input[name=addre]").val();
+                var id = $("input[name=id]").val();
+                $.post("recehand", {
+                    name: name,
+                    phone: phone,
+                    addre: addre,
+                    id: id
+                }, function(data) {
+                    if(data) {
+                        $('.p_name').html(name);
+                        $('.p_phone').html(phone);
+                        $('.p_addre').html(addre);
+                        //                $('.mask').hide();
+                        $(".mask").removeClass("center-middle");
+                    } else {
+                        tusi("修改失败！");
+                    }
+                });
+            }
+
+            function csbtm(id, v) {
+                var nane = confirm("确定取消订单吗？？");
+                if(nane != false) {
+                    $.post("delorder", {
+                        id: id
+                    }, function(data) {
+                        if(data) {
+                            $('.dle' + v).remove();
+                        } else {
+                            tusi("删除失败！");
+                        }
+                    });
+
+                }
+            }
+
+            function conutmoney() {
+
+                var cont = '{$manager.count}';
+                cont = Number(cont);
+                money = 0;
+                var alert_info = '';
+                for(var a = 1; a <= cont; a++) {
+                    var obl = document.getElementById('c' + a);
+                    var min_multiple = $("#min_multiple_" + a).val();
+
+                    if(min_multiple == 0 || min_multiple == null) {
+                        min_multiple = 1;
+                    }
+
+                    var s = $("#s" + a).val();
+
+                    if(Number(s) % Number(min_multiple) != 0) {
+                        s = Number(s) - Number(s) % Number(min_multiple);
+
+                        if(s == 0 || s == null) {
+                            s = min_multiple;
+                        }
+
+                        $("#s" + a).val(s);
+                    }
+
+                    if(obl.checked) {
+
+                        //tusi($(".pria"+a).val());
+                        var b = Number($('.price' + a).html()) * Number(s);
+
+                        money = Number(money) + Number(b);
+                        money = money.toFixed(2);
+                    }
+                };
+                $('.money').html(money);
+                //tusi(money);
+            }
+            //设置url参
+            function changeURLArg(url, arg, arg_val) {
+                var pattern = arg + '=([^&]*)';
+                var replaceText = arg + '=' + arg_val;
+                if(url.match(pattern)) {
+                    var tmp = '/(' + arg + '=)([^&]*)/gi';
+                    tmp = url.replace(eval(tmp), replaceText);
+                    return tmp;
+                } else {
+                    if(url.match('[\?]')) {
+                        return url + '&' + replaceText;
+                    } else {
+                        return url + '?' + replaceText;
+                    }
+                }
+                return url + '\n' + arg + '\n' + arg_val;
+            }
+        </script>
+        <style>
+            body {
+                background: url(__PUBLIC__/Admin_v2/images/bg.jpg) #fbfbfb no-repeat;
+                background-color: #fbfbfb;
+                background-size: cover;
+            }
+            
+            .tel_title {
+                background: transparent;
+            }
+            
+            .mask1 {
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                position: fixed;
+                top: 0;
+                z-index: 10;
+                text-align: center;
+                padding-top: 360px;
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="mask1"><img src="__PUBLIC__/images/yes1.png" alt=""></div>
+
+        <header class="header">
+            <a href="javascript:history.go(-1);" class="a"></a>
+            <p>我的订单</p>
+        </header>
+
+        <!-- 我的订单 section1 -->
+        <section id="section1">
+            <volist name="row" id="vv">
+                <div class="order-section dle{$vv.or_num}">
+                    <div class="order-content">
+                        <div class="order-num"><span class="num">1</span>订单号：{$vv.order_num} <span class="order-status">{$status_name.$vv[status]}</span></div>
+                        <a href="{:U(GROUP_NAME.'/integralorder/ddxq?order_num='.$vv[order_num])}">
+                            <div class="order-detail">
+                                <p>收货人：{$vv.s_name}</p>
+                                <p>收货人电话号码：{$vv.s_phone}</p>
+                                <p>收货地址：{$vv.s_addre}</p>
+                                <p>订单日期：{$vv.time|toDate=###}</p>
+                                <p class="go"><img src="__PUBLIC__/Admin_v2/images/icon-go.png" alt=""></p>
+                            </div>
+                        </a>
+                        <div class="order-money">
+                            订单金额：<span class="red">￥{$vv.total_price}</span>
+                            <eq name="vv.status" value="1">
+                                <p style="float:right" class="cancel-order red border-red" onclick="csbtm({$vv.order_num},{$vv.or_num})">取消订单</p>
+                            </eq>
+                            <eq name="vv.status" value="2">
+                                <a href="__APP__/Sale/integralorder/ddxq?order_num={$vv.order_num}">
+                                    <p style="float:right" class="cancel-order red border-red">确认收货</p>
+                                </a>
+                            </eq>
+                        </div>
+
+                    </div>
+                </div>
+            </volist>
+        </section>
+
+    </body>
+
+</html>

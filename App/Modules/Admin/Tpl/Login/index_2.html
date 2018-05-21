@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>经销商登录</title>
+    <include file="Public/header"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/back/login.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+    <script>
+    	var loginUrl = '{:U(GROUP_NAME . "/Login/checkLogin")}';
+    	/* var managerUrl = '{:U(GROUP_NAME . "/Index/index?login=yes")}'; */
+    </script>
+    </head>
+    <body style="background-color:#f5f5f5">
+       <!--  <p style="text-align:center;color:#107ec8;font-size:25px;">经销商登录</p> -->
+        <section class="section8">
+            <div class="dl_icon1"><img src="__PUBLIC__/images/new/dl_icon1.png" alt=""></div>
+            <!-- <p class="dj" style="text-align:center;color:#107ec8;font-size:30px;">授权超时,请点击头像登录</p> -->
+            <div class="test">
+                <label><img src="__PUBLIC__/images/new/name.png" alt=""></label>
+                <input type="text" name="name" class="input"  placeholder="请输入微信" value="{$Think.session.loginName}"><br>
+                <label><img src="__PUBLIC__/images/new/password.png" alt=""></label>
+                <input type="password" name="password" class="input1" placeholder="请输入密码">
+                <h2 style="color:red;">温馨提示:登录密码为手机号码后六位,登录成功后请尽快修改密码！</h2>
+                <div><input type="submit" name="button" class="input2" value="登录"></div>
+            </div>
+            
+        </section>  
+		<script>
+	/*	$(".dl_icon1").click(function(){
+				$(".test").show();
+				$(".dj").hide();
+			});*/
+			
+			$(".input2").click(function(){
+				var name = $("input[name=name]").val();
+				var password = $("input[name=password]").val();
+				if(name == ""){
+					tusi("请输入微信号");
+					return false;
+				}
+				if(password == ""){
+					tusi("请输入密码");
+					return false;
+				}
+				$.post(loginUrl,{name:name,password:password},function(data){
+					if(data == 'none'){
+						tusi('微信号或者密码错误');
+						return;
+					}else if(data == 'nomanager'){
+						tusi('经销商还未通过审核,不能进入后台');
+						return;
+					}else if(data == 'disable'){
+                        tusi('经销商已被禁用，请联系品牌负责人！');
+                        return;
+                    }else{
+						location.href="__APP__/Admin/Login/successLogin/?uio="+data['uio']+"&jkl="+data['jkl'];
+					}
+				});
+			});
+		</script>
+    </body>
+    </html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>积分商城</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/light7-swiper.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/mall_index.css" />
+</head>
+
+<body>
+    <div class="page">
+        <div class="content mall-index">
+            <!--搜索及轮播图-->
+            <header class="header-wrapper">
+                <div class="top-header">
+                    <!-- <img src="__PUBLIC__/Admin_v3/images/manager-order/icons1.png" alt="" class="icon-logo" /> -->
+                    <input type="text" name="mall-search" id="mall-search" value="" />
+                    <label for="mall-search" class="search-placeholder"><i class="icon icon-search"></i>搜索商品</label>
+                    <img src="__PUBLIC__/Admin_v3/images/mallorder/bell.png" alt="" class="icon-bell" />
+                </div>
+                <div class="middle-header">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <foreach name="adv_info" item="vv">
+                            <div class="swiper-slide"><img src="__ROOT__{$vv.image}" alt="{$vv.name}" /></div>
+                            </foreach>
+                            <!--<div class="swiper-slide"><img src="__PUBLIC__/Admin_v3/images/mallorder/lunbo6.png" alt="" /></div>-->
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </div>
+                <!--					<div class="bottom-header">
+                                                            <p>登录查看积分 >></p>
+                                                    </div>-->
+            </header>
+            <!--分类菜单-->
+            <nav class="menus">
+                <ul class="menu-list">
+                    <!-- <li onclick="javascript:window.location.href='__APP__/sale/mallorder/index'"><img src="__PUBLIC__/Admin_v3/images/mallorder/kind4.png" alt="" /><span>优惠商城</span></li> -->
+                    <!--<li onclick="$.alert('暂未开放，敬请期待！')"><img src="__PUBLIC__/Admin_v3/images/mallorder/kind2.png" alt="" /><span>优惠券</span></li>-->
+                    <li class="signin"><img src="__PUBLIC__/Admin_v3/images/mallorder/kind3.png" alt="" /><span>签到</span></li>
+                    <!-- <li onclick="$.alert('暂未开放，敬请期待！')"><img src="__PUBLIC__/Admin_v3/images/mallorder/kind5.png" alt="" /><span>幸运抽奖</span></li> -->
+                    <li onclick="javascript:window.location.href='__APP__/sale/integralorder/goods_all'"><img src="__PUBLIC__/Admin_v3/images/mallorder/kind1.png" alt="" /><span>我要兑换</span></li>
+                </ul>
+                <div class="notice">
+                    <img src="__PUBLIC__/Admin_v3/images/mallorder/notic.png" />
+                    <p>我们的使命：微斯咖给您健康 给您美丽 给您财富 给您幸福</p>
+                </div>
+            </nav>
+            <!--活动专区-->
+            <!-- <section class="activity">
+                <div class="activity-left">
+                    <img src="__PUBLIC__/Admin_v3/images/mallorder/activity-left.png" alt="" />
+                </div>
+                <div class="activity-right">
+                    <a href="__APP__/sale/integralorder/goods_all" class="external">
+                        <div class="activity-detail">
+                            <p>积分专区<span style='font-family:"楷体";'>积分，大有所为</span></p>
+                            <img src="__PUBLIC__/Admin_v3/images/mallorder/icon.png" alt="" />
+                        </div>
+                    </a>
+                    <a href="__APP__/sale/mallorder/index" class="external">
+                        <div class="activity-detail">
+                            <p>优惠商城<span style='font-family:"楷体";'>省钱 赚钱</span></p>
+                            <img src="__PUBLIC__/Admin_v3/images/mallorder/money.png" alt="" />
+                        </div>
+                    </a>
+
+                </div>
+            </section> -->
+            <!--中间banner图-->
+            <section class="middle-banner">
+                    <img src="__ROOT__{$adv_hai.image}" alt="" />
+
+            </section>
+            <!--商品列表-->
+
+            <div class="goods-list">
+                <dl class="goods-area">
+                    <foreach name="catss" item="vo">
+                        <dt class="area-title"><p>{$vo.name}</p></dt>
+                        <section class="area-list">
+                            <foreach name="products" item="m">
+                                <if condition="$m['category_id'] eq $vo['id']">
+                                    <dd class="area-goods" data-id="{$m.id}">
+                                        <img src="__ROOT__{$m.image}" alt="" />
+                                        <p class="goods-title">{$m.name}</p>
+                                    <if condition="$m.integral neq 0">
+                                        <p class="goods-price">￥{$m.price}+{$m.integral}积分</p>
+                                        <else/>
+                                        <p class="goods-price">￥{$m.price}</p>
+                                    </if>
+                                    </dd>
+                                </if>
+                            </foreach>
+                        </section>
+                    </foreach>
+                </dl>
+<!--                <dl class="goods-area">
+ 
+                </dl>
+                <dl class="goods-area">
+                        <dt class="area-title"><p>新品上市</p></dt>
+                        <section class="area-list">
+                                <dd class="area-goods">
+                                        <img src="__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" alt="" />
+                                        <p class="goods-title">补水美白套装补水美白套装补水美白套装补水美白套装</p>
+                                        <p class="goods-price">400.00积分+￥300.00</p>
+                                </dd>
+                                <dd class="area-goods">
+                                        <img src="__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" alt="" />
+                                        <p class="goods-title">补水美白套装补水美白套装补水美白套装补水美白套装</p>
+                                        <p class="goods-price">400.00积分+￥300.00</p>
+                                </dd>
+                        </section>
+                        <section class="area-list">
+                                <dd class="area-goods">
+                                        <img src="__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" alt="" />
+                                        <p class="goods-title">补水美白套装补水美白套装补水美白套装补水美白套装</p>
+                                        <p class="goods-price">400.00积分+￥300.00</p>
+                                </dd>
+                                <dd class="area-goods">
+                                        <img src="__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" alt="" />
+                                        <p class="goods-title">补水美白套装补水美白套装补水美白套装补水美白套装</p>
+                                        <p class="goods-price">400.00积分+￥300.00</p>
+                                </dd>
+                        </section>
+                </dl>-->
+            </div>
+        </div>
+        <include file="Public/footer_v5" />
+    </div>
+    <!--script strat-->
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/light7-swiper.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/my/common.js"></script>
+    <script type="text/javascript">
+                        $().ready(function () {
+                            var swiper = new Swiper('.swiper-container', {
+                                pagination: '.swiper-pagination',
+                                paginationClickable: true,
+                                centeredSlides: true,
+                                autoplay: 1500,
+                                autoplayDisableOnInteraction: false
+                            });
+                            //搜索框的判定
+                            $("#mall-search").click(function () {
+                                $(this).focus().siblings(".search-placeholder").hide();
+                                $("#mall-search").blur(function () {
+                                    if ($(this).val() == '') {
+                                        $(this).siblings("label").show();
+                                    }
+                                });
+                            });
+                        })
+    </script>
+    <script>
+        var signurl = '__APP__/admin/integral/get_sign_up_state_ajax';
+        var signedurl = '__APP__/admin/integral/sign_up';
+
+        $(function () {
+            $('.area-goods').click(function () {
+                var id = $(this).data('id');
+                console.log(id);
+                window.location.href = 'goods_detail?id=' + id;
+            })
+
+            var flag = false;
+            $.get(signurl, function (data) {
+                if (data.is_sign_up == 1 && flag == false) {
+                    $(".signin").find("span").text("已签到");
+                    flag = true;
+                } else if (data.is_sign_up == 2 && flag == false) {
+                    $(".signin").bind("click", function () {
+                        $.get(signedurl, function (data, res) {
+                            if (!(data == null || data == undefined || data == "")) {
+                                if (data.code != 1) {
+                                    alert(data.msg);
+                                } else {
+                                    $(".signin").find("span").text("已签到");
+                                    flag = true;
+                                }
+                            } else {
+                                alert("数据传输错误，签到失败！");
+                            }
+                        });
+                        if (flag) {
+                            $(".signin").unbind("click");
+                        }
+                    });
+                } else {
+                    return false;
+                }
+            });
+
+        });
+    </script>
+    <!--script end-->
+</body>
+
+</html>

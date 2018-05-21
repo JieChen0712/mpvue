@@ -1,0 +1,61 @@
+<style>
+    .bg {
+        color: black;	
+        font-weight: bold;
+        margin-bottom: 100px;
+        /*font-size: 20px;*/
+        width:640px;
+        height:905px;background:url(__PUBLIC__/images/shouquan.jpg);margin:0 auto;
+    }
+    .agent-info{
+        padding-top: 220px;
+        color: black;
+        font-size: 16px;
+    }
+    .agent-info ul li{
+        float: left; 
+        list-style: none;
+    }
+    .num{
+        padding-top: 70px;
+    }
+    .num ul li{
+        list-style: none;
+        padding-bottom: 5px;
+        /*font-size: 15px;*/
+        color:#767573;
+    }
+    .name {
+        padding-top: 160px;
+        margin-left: 233px;
+    }
+    .levname {
+        padding-top: 115px;
+        margin-left: 250px;
+        color:#b79917;
+        font-size: 42px;
+    }
+    .underline{
+        text-decoration:underline;
+    }
+</style>
+<div class="bg">
+    <div class="name"> </div>
+    <div class="agent-info">
+        <ul>
+            <li style="width:100%;color:#ff4a8e;text-align: center;font-size:32px;">{$manager.levname}</li>
+            <li style="width:100%;margin-left:130px;margin-top:33px;">兹授权：<span style='border-bottom: 1px solid black;margin-left:10px;'>{$manager.name}</span></li>
+        </ul>
+    </div>
+    <div class="levname"></div>
+    <div class="num">
+        <ul>
+            <li style="margin-left:430px;"><img src="{$manager.headimgurl}" width="110px" height="110px" /></li>
+            <li style="width:100%;margin-left: 130px;margin-top:-100px;">授权电话：<span style="border-bottom: 1px solid black;">{$manager.phone}</sapn></li>
+            <li style="width:100%;margin-left: 130px;">身份证号：<span style="border-bottom: 1px solid black;">{$manager.idennum}</span></li>
+            <li style="width:100%;margin-left: 130px;">授权姓名：<span style="border-bottom: 1px solid black;">{$manager['name']}</span></li>
+            <li style="width:100%;margin-left: 130px;">授权微信：<span style="width:30px;border-bottom: 1px solid black;">{$manager['wechatnum']}</span></li>
+            <li style="width:100%;margin-left: 130px;">授权期限：<span style="border-bottom: 1px solid black;">{$manager.start_time|date='Y.m.d',###}一{$manager.end_time|date='Y.m.d',###}</span></li>
+        </ul>
+    </div>
+</div>

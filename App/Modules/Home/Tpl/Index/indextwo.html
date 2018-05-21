@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection"content="telephone=no, email=no" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="640">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="browsermode" content="application">
+    <meta name="x5-page-mode" content="app">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="width=640,target-densitydpi=device-dpi,maximum-scale=1.0, user-scalable=no">
+    <script>
+        function setWidth(a){if(/Andriod/i.test(navigator.userAgent)){var c,b=window.innerWidth;(b!=a)&&(c=b/a),document.addEventListener("DOMContentLoaded",function(){var d = document.getElementsByTagName("body")[0];d.style.webkitTransformOrigin = "left top";d.style.webkitTransform="scale("+c+")"},!1)}}setWidth(640);
+    </script>
+<title>微商控价防伪授权系统</title>
+<link href="__PUBLIC__/indextwo/css/styles.css" rel="stylesheet">  
+<script type="text/javascript" src="__PUBLIC__/indextwo/js/jquery-1.7.2.min.js"></script>
+</head>
+<script type="text/javascript">
+    $(document).ready(function(){
+         $('.btm').click(function(){
+           $('.mask_wrap').show();
+           $('.wrap').hide();  
+        })
+         $('.left_icon').click(function(){
+           $('.wrap').show();
+           $('.mask_wrap').hide(); 
+        })
+
+    })
+</script>
+<body>
+    <div class="wrap">
+        <ul>
+            <a href="{:U(GROUP_NAME . '/Product/index')}"><li class="li1"></li></a>
+            <a href="{:U(GROUP_NAME . '/Security/index')}"><li class="li2"></li></a>
+            <a href="{:U(GROUP_NAME . '/Manager/index')}"><li class="li3"></li></a>
+            <a href="__APP__/Admin/Index/index"><li class="li4"></li></a>
+            <a href="__APP__/Admin/Index/index"><li class="li5"></li></a>
+            <li class="btm"></li>
+        </ul>
+ 
+    </div>
+
+        <div class="mask_wrap">
+            <div class="left">
+                <div class="small_logo"><img src="__PUBLIC__/indextwo/images/small_logo.png" alt=""></div>
+                <ul>
+                    <a href="{:U(GROUP_NAME . '/Blacklist/index')}"><li><img src="__PUBLIC__/indextwo/images/btm_icon1.png" alt=""><span>微信违规</span></li></a>
+                    <a href="http://www.315ww.com/sm/"><li><img src="__PUBLIC__/indextwo/images/btm_icon2.png" alt=""><span>宣传图</span></li></a>
+                    <a href="###"><li><img src="__PUBLIC__/indextwo/images/btm_icon3.png" alt=""><span>卖家图片</span></li></a>
+                    <a href="http://www.315ww.com/kj/"><li><img src="__PUBLIC__/indextwo/images/btm_icon4.png" alt=""><span>官方网站</span></li></a>
+                    <a href="{:U(GROUP_NAME . '/Company/index')}"><li><img src="__PUBLIC__/indextwo/images/btm_icon5.png" alt=""><span>公司资质</span></li></a>
+                </ul>
+            </div>
+            <div class="right">
+                <div class="left_icon"><img src="__PUBLIC__/indextwo/images/left_icon.png" alt=""></div>
+            </div>
+        </div>
+</body>
+</html>

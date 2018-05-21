@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+      var TP_PUBLIC = '__PUBLIC__';
+      var agentseeurl = '__APP__/admin/manage/get_not_audit';
+      var agentpassurl = '__APP__/admin/manage/audit';
+      var agentimg = '__PUBLIC__/Home/images/amh/certificate.png';
+    </script>
+    <script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+    <style>
+      .certificate p {
+        display: none;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <div class="card" style="background-color: transparent; overflow: auto;">
+      <div class="certificate">
+        <canvas id="thecanvas" width="652" height="920" style="width:327px;height:460px;"></canvas>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var agentInf = {
+        certificateImg: agentimg,
+        agentName: '',
+        agentWeChatId: '',
+        agentIDcard: '',
+        agentLevelName: '',
+        certificateId: '',
+        dateTime: ''
+      }
+
+      $(document).ready(function() {
+//      var param = window.location.search;
+//      var p_id = '';
+//      if(param.indexOf('pid') != -1) {
+//        p_id = getQueryString('pid')
+//      }
+//      $.post('__APP__/home/manager/get_user_ajax', {
+//          id: p_id
+//        },
+//        function(data) {
+//          if(data.code == 1) {
+//            agentInf.agentName = data.info.name
+//            agentInf.agentWeChatId = data.info.wechatnum
+//            agentInf.agentIDcard = data.info.idennum
+//            agentInf.agentLevelName = data.info.levname;
+//            agentInf.certificateId = data.info.authnum;
+//            agentInf.dateTime = data.info.start_time_format1 + '-' + data.info.end_time_format1
+//            $('.inviter-name').text(agentInf.agentName)
+//            $('.inviter-grade').text(agentInf.agentLevelName)
+//            $('.inviter-avatar img').attr('src', data.info.headimgurl)
+//            //加载授权书图片
+              loadImg();
+//          } else {
+//            alert(data.msg)
+//          }
+//        })
+      })
+      //		绘画证书的canvas
+      function draw(img, data) {
+        var canvas = document.getElementById("thecanvas");
+        var ctx = canvas.getContext("2d");
+        //			context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+        //			context.drawImage(规定要使用的图像、画布或视频,截取图片开始的x轴,截取图片开始的y轴,图片显示内容的宽度,图片显示内容的高度,在canvas上的开始坐标x,在canvas上的开始坐标y,图片缩放 的宽度/决定图片在画布上的宽度,图片缩放的高度/决定图片在画布上的高度);
+        //			四个值的时候默认为开始的x,y坐标,图片在画布的大小width,height(默认是整张图片在画布上的缩放)
+        ctx.drawImage(img, 0, 0, 652, 920);
+        //		ctx.fillStyle = "#0cf";
+        //		ctx.fillRect(25, 25, 100, 100);
+        ctx.fillStyle = "#e5e5e4"; // black color  
+        ctx.font = "bold 15px Noto Sans S Chinese Medium";
+        ctx.fillText(data.agentName, 190, 395);
+        ctx.fillText(data.agentLevelName, 140, 425);
+//      ctx.fillText(data.agentWeChatId, 400, 365);
+//      ctx.fillText(data.agentIDcard, 220, 580);
+//      ctx.fillStyle = "orange";
+//      ctx.font = "bold 32px Noto Sans S Chinese Medium";
+        
+//      ctx.fillStyle = "black"; // black color
+//      ctx.font = "bold 16px Noto Sans S Chinese Medium";
+        ctx.fillText(data.certificateId, 220, 580);
+        ctx.fillText(data.dateTime1+' 至 '+data.dateTime2, 220, 620);
+        ctx.fillText(data.dateTime1, 435, 725);
+        ctx.restore(); //存储画布状态
+        canvas.style.display = "none";
+        var type = 'png'; //你想要什么图片格式 就选什么吧
+        var d = document.getElementById("thecanvas");
+        var imgdata = d.toDataURL(type);
+        var png = new Image();
+        $('.warrant img').attr('src',imgdata);
+        png.src = imgdata;
+        $('.warrant img').attr('src',imgdata);
+        $(png).attr("id", "imgtrue");
+        if(!$(".certificate").children("#imgtrue").length > 0) {
+          $(".certificate").append(png);
+        }
+
+      }
+
+      //加载授权书图片
+      function loadImg() {
+        var u_id = '{$manager.id}';
+
+        var userId = null;
+        if(u_id != "" && u_id != undefined && u_id != null) {
+          userId = u_id;
+        }
+        var agentInf = {
+          certificateImg: agentimg,
+          agentName: '',
+          agentWeChatId: '',
+          agentIDcard: '',
+          agentLevelName: '',
+          certificateId: '',
+          dateTime1:'',
+          dateTime2:'',
+          startTime: '',
+          endTime: ''
+        }
+        $.post('__APP__/home/manager/get_user_ajax', {
+            id: userId
+          },
+          function(data) {
+            if(data.code == 1) {
+              console.log(data);
+              agentInf.agentName = data.info.name;
+              agentInf.agentWeChatId = data.info.wechatnum;
+              agentInf.agentIDcard = data.info.idennum;
+              agentInf.agentLevelName = data.info.levname;
+              agentInf.certificateId = data.info.authnum;
+              agentInf.startTime = data.info.start_time_format1;
+              agentInf.endTime = data.info.end_time_format1;
+              agentInf.dateTime1 = data.info.start_time_format3;
+              agentInf.dateTime2 = data.info.end_time_format3;
+              var img = new Image();
+              img.src = agentInf.certificateImg;
+              //  console.log(img);
+              //      将图片设置为隐藏，并添加到页面上渲染
+              $(img).hide()
+              $('.certificate').append(img);
+              //        在证书背景图完全加载完后才开始绘画证书,和添加点击监听事件
+              img.onload = function() {
+                console.log(img);
+                draw(img, agentInf);
+              }
+              return false;
+            } else {
+              console.log(data.msg);
+            }
+          });
+        console.log(agentInf)
+      }
+
+      function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if(r != null) return unescape(r[2]);
+        return null;
+      }
+    </script>
+  </body>
+
+</html>

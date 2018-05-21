@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <include file="Public/header" />
+  <title>{$Think.config.SYSTEM_NAME}微商防伪系统</title>
+  <script src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+  <script src="__PUBLIC__/js/my/common.js"></script>
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="__PUBLIC__/Home/css/Security.css" />
+  <style type="text/css">
+    /*控制test代理商的标题背景色，字体色*/
+    .test .p{color: white;background: #676767;}
+    /*控制test详细信息的字体颜色*/
+    .test .test1{color: #000000;font-size: 30px;}
+    /*控制test详细信息的边框颜色*/
+    .test .test1 li{border-bottom: solid 1px #676767;}
+    .swiper-slide img{max-height: 450px!important;}
+  </style>
+</head>
+
+<body>
+<div class="page">
+  <div class="containers">
+    <header>
+      <?php if( !empty($info['image']) ):?>
+      <img src="__ROOT__{$info.image}" style="width:100%">
+      <?php else:?>
+      <img src="__PUBLIC__/Home/images/security_banner.jpg" style="width:100%">
+      <?php endif;?>
+    </header>
+    <div class="search-wrapper">
+      <div class="code-img"></div>
+      <input type="text" data-type="search" id="search" placeholder="请输入防伪码" />
+      <button id="find"><i class="glyphicon glyphicon-search"></i></button>
+    </div>
+    <div class="content">
+      <div class="desc-wrapper">
+        <p>
+          查询说明：<span>1.将与商品一起的防伪码输入到查询框内，点击查询即可查询商品的真伪。</span>
+          <span>2.同个防伪码不限查询次数，若查询到该防伪码已被多次查询，请根据页面提示及实际情况辨别真伪。</span>
+        </p>
+      </div>
+      <div class="result-wrapper">
+      </div>
+    </div>
+  </div>
+
+  <if condition="$state eq yes">
+    <div class="test" style="font-size: 30px;" >
+      <div class="p">
+        <p>代理商：{$res.dname}</p>
+      </div>
+      <ul class="test1">
+        <li><span>代理微信号：{$res.wechatnum}</span></li>
+        <li><span>代理电话：{$res.phone}</span></li>
+        <li><span>产品名称：{$res.tname}</span></li>
+        <li><span>全国统一零售价：{$res.price}</span></li>
+      </ul>
+    </div>
+  </if>
+  <if condition="$state eq no">
+    <div class="test" style="font-size: 30px;">
+      <div class="p"><p>代理商：产品未经授权</p ></div>
+      <ul class="test1">
+        <li><span>代理微信号：产品未经授权</span></li>
+        <li><span>代理电话：产品未经授权</span></li>
+        <li><span>产品名称：产品未经授权</span></li>
+        <li><span>全国统一零售价：产品未经授权</span></li>
+      </ul>
+    </div>
+  </if>
+</div>
+<script type="text/javascript">
+    var securityUrl = '{:U(GROUP_NAME . "/security/fwcode")}';
+
+    $(function() {
+        $('#find').click(function() {
+            var val = $("#search").val();
+            if(val == "") {
+                tusi('请输入防伪码');
+                return false;
+            }
+            $.post(securityUrl, {
+                fwcode: val
+            }, function(data) {
+                var html = "";
+                if(data == 'error') {
+                    tusi('未知错误!');
+                } else if(data == 'none') {
+                    tusi('您输入的防伪码不存在!');
+                } else {
+//            if(data['count'] == 1) {
+                    html = '<p class="p-red">您购买的产品是{$Think.config.SYSTEM_NAME}微商系统正品,感谢您的支持</p><p>首次查询时间：'+ data['first'] +'</p>'+
+                        '<p>共进行过'+ data['count'] +'次防伪查询</p><p>防伪记录如下：</p>';
+                    var str = "";
+                    $.each(data, function(key,value) {
+                        str+= '<p>'+ value.time +'</p>';
+                    });
+                    html+= str;
+
+//              var text = '<p class="p-red">您购买的产品是{$Think.config.SYSTEM_NAME}微商系统正品,感谢您的支持!</p><br />首次查询时间：" + data['first'] + "<br/>共进行过" + data['count'] + "次防伪查询。<br/>';
+//              text += "防伪记录如下：<br/>" + data[0]['time'];
+//            }
+//            if(data['count'] == 2) {
+//              var text = "<span style='color:red'>您购买的产品是{$Think.config.SYSTEM_NAME}微商系统正品,感谢您的支持!</span><br />首次查询时间：" + data['first'] + "<br/>共进行过" + data['count'] + "次防伪查询。<br/>";
+//              text += "防伪记录如下：<br/>" + data[0]['time'] + "<br/>" + data[1]['time'];
+//            }
+//            if(data['count'] == 3) {
+//              var text = "<span style='color:red'>您购买的产品是{$Think.config.SYSTEM_NAME}微商系统正品,感谢您的支持!</span><br />首次查询时间：" + data['first'] + "<br/>共进行过" + data['count'] + "次防伪查询。<br/>";
+//              text += "防伪记录如下：<br/>" + data[0]['time'] + "<br/>" + data[1]['time'] + "<br/>" + data[2]['time'];
+//            }
+//            if(data['count'] > 3) {
+//              var text = "<span style='color:red'>您购买的产品是{$Think.config.SYSTEM_NAME}微商系统正品,感谢您的支持!</span><br />首次查询时间：" + data['first'] + "<br/>共进行过" + data['count'] + "次防伪查询。<br/>";
+//              text += "防伪记录如下：<br/>" + data[0]['time'] + "<br/>" + data[1]['time'] + "<br/>" + data[2]['time'];
+//            }
+                    $('.result-wrapper').show();
+                }
+                $('.result-wrapper').empty().html(html);
+            });
+        });
+    });
+</script>
+</body>
+
+</html>

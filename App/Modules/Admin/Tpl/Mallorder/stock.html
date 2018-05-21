@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>库存管理</title>
+		<include file="Public/header_v3" />
+		<link rel="stylesheet" type="text/css" href="" />
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/stock.css" />
+	</head>
+
+	<body>
+		<div class="page">
+			<div class="buttons-tab">
+				<div class="buttons-wrap"><a href="#tab1" class="tab-link active button">库存管理</a></div>
+				<div class="buttons-wrap"><a href="#tab2" class="tab-link button">我要提货</a></div>
+			</div>
+			<div class="content stock infinite-scroll">
+				<div class="content-block">
+					<div class="tabs">
+						<div id="tab1" class="tab active">
+							<div class="content-block">
+								<ul class="stock-list">
+									<li>
+										<img src="__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" alt="" />
+										<div class="list-right">
+											<p>补水美白套装补水美白套装补水美白套装补水美白套装补水美白套装套装</p>
+											<p>库存：<span>23450件</span><input type="button" name="transfer" id="transfer" value="转移" data-id="" /></p>
+										</div>
+									</li>
+									<li>
+										<img src="__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" alt="" />
+										<div class="list-right">
+											<p>补水美白套装补水美白套装补水美白套装补水美白套装补水美白套装套装</p>
+											<p>库存：<span>23450件</span><input type="button" name="transfer" id="transfer" value="转移" data-id="" /></p>
+										</div>
+									</li>
+									<li>
+										<img src="__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" alt="" />
+										<div class="list-right">
+											<p>补水美白套装补水美白套装补水美白套装补水美白套装补水美白套装套装</p>
+											<p>库存：<span>23450件</span><input type="button" name="transfer" id="transfer" value="转移" data-id="" /></p>
+										</div>
+									</li>
+									<li>
+										<img src="__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" alt="" />
+										<div class="list-right">
+											<p>补水美白套装补水美白套装补水美白套装补水美白套装补水美白套装套装</p>
+											<p>库存：<span>23450件</span><input type="button" name="transfer" id="transfer" value="转移" data-id="" /></p>
+										</div>
+									</li>
+									<li>
+										<img src="__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" alt="" />
+										<div class="list-right">
+											<p>补水美白套装补水美白套装补水美白套装补水美白套装补水美白套装套装</p>
+											<p>库存：<span>23450件</span><input type="button" name="transfer" id="transfer" value="转移" data-id="" /></p>
+										</div>
+									</li>
+									<li>
+										<img src="__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" alt="" />
+										<div class="list-right">
+											<p>补水美白套装补水美白套装补水美白套装补水美白套装补水美白套装套装</p>
+											<p>库存：<span>23450件</span><input type="button" name="transfer" id="transfer" value="转移" data-id="" /></p>
+										</div>
+									</li>
+								</ul>
+								<!-- preloader -->
+							    <div class="infinite-scroll-preloader">
+							        <div class="preloader"></div>
+							    </div>
+							</div>
+						</div>
+						<div id="tab2" class="tab">
+							<div class="content-block">
+								<div class="take-title">
+									<p><img src="__PUBLIC__/Admin_v3/images/mallorder/take.png" alt="" />选择提货商品</p>
+								</div>
+								<ul class="take-list">
+									<li>
+										<div class="goods-infs">
+											<button class="btn-select" data-id="{$cart.id}"></button>
+											<img src="{$cart.product.image}__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" />
+											<p class="goods-title">补水美白套装补水美白套装补水美白套装补水美白套装{$cart.product.name}</p>
+											<p class="select-num">
+												库存：<span>23450</span>
+												<input  type="button" name="numadd" class="numadd pull-right" value="+" />
+												<input  type="number" name="shownum" class="shownum pull-right" value="{$cart.num}0" />
+												<input  type="button" name="reducenum" class="reducenum pull-right" value="-" />
+											</p>
+										</div>
+									</li>
+									<li>
+										<div class="goods-infs">
+											<button class="btn-select" data-id="{$cart.id}"></button>
+											<img src="{$cart.product.image}__PUBLIC__/Admin_v3/images/mallorder/goods.jpg" />
+											<p class="goods-title">补水美白套装补水美白套装补水美白套装补水美白套装{$cart.product.name}</p>
+											<p class="select-num">
+												库存：<span>23450</span>
+												<input  type="button" name="numadd" class="numadd pull-right" value="+" />
+												<input  type="number" name="shownum" class="shownum pull-right" value="{$cart.num}0" />
+												<input  type="button" name="reducenum" class="reducenum pull-right" value="-" />
+											</p>
+										</div>
+									</li>
+								</ul>
+								<section class="bottom-content">
+									<p class="loca-title"><img src="__PUBLIC__/Admin_v3/images/mallorder/location.png" alt="" />收货地址</p>
+									<div class="address-wrap">
+										<div class="wrapper-left">
+											<p><span class="fl">收货人：Darin</span><span class="fr">12345678910</span></p>
+											<p>广东省广州市萝岗区科创大夏1232654号广东省广州市萝岗区科创大夏1232654号</p>
+										</div>
+										<div class="wrapper-right">
+											<i class="icon icon-right"></i>
+										</div>
+									</div>
+								</section>
+								<button class="fr submit-take">提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--script start-->
+				<script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+				<script src="__PUBLIC__/Admin_v3/js/order-list.js" type="text/javascript" charset="utf-8"></script>
+				<script type="text/javascript">
+					var loading=false;
+					$(function(){
+						$.attachInfiniteScroll('.infinite-scroll')
+						
+						function addItems(){
+							$.get('__APP__/admin/order/get_stock_info_ajax',
+								function(data){
+									if(data.code==1){
+										console.log(data)
+									}else{
+										$.alert(data.msg)
+									}
+								}
+							)
+						}
+						
+						addItems();
+						
+						$(document).on('infinite', '.infinite-scroll',function() {
+
+					        // 如果正在加载，则退出
+					        if (loading) return;
+					
+					        // 设置flag
+					        loading = true;
+					
+					        setTimeout(function() {
+					            loading = false;
+					
+//					            if (lastIndex >= maxItems) {
+//					                $.detachInfiniteScroll($('.infinite-scroll'));
+//					                $('.infinite-scroll-preloader').remove();
+//					                return;
+//					            }
+								
+					            addItems(itemsPerLoad, lastIndex);
+					            lastIndex = $('.list-container li').length;
+					        }, 1000);
+					    });
+					});
+				</script>
+				<!--script end-->
+				
+	</body>
+
+</html>

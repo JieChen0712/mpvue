@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="ui-mobile">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--<base href="http://fraisefibre.fw-315.net/a/Feedback.aspx">--><base href=".">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>售后反馈</title>
+    
+    <link href="__PUBLIC__/css/jquery.mobile-1.4.2.min.css" rel="stylesheet">
+	
+	<style>
+	.ui-btn{ border-color:#ddd;}
+	</style>
+</head>
+<body class="ui-mobile-viewport ui-overlay-a">
+    <div data-role="page" id="page1" class="container ui-page ui-page-theme-a ui-page-active" data-url="page1" tabindex="0">
+        <div data-role="header" style="background-color:#000;border-color:#D2057F;box-shadow:0px 2px 3px #FDBAE2;" role="banner" class="ui-header ui-bar-inherit">
+            <a href="{:U(GROUP_NAME . '/Index/index')}" data-role="button" style="background:#97e0d7; color:#fff; border:#C20776; margin-top:2px;" data-icon="home" data-theme="b" data-rel="back" class="ui-link ui-btn-left ui-btn ui-btn-b ui-icon-home ui-btn-icon-left ui-shadow ui-corner-all" role="button">返回</a>
+            <h1 style="color:#fff;text-shadow:0 1px 0 #333;" class="ui-title" role="heading" aria-level="1">售后反馈</h1>
+        </div>
+
+        <!-- <div data-role="content" class="ui-content" role="main">
+    <div class="QueryPanl">
+        <form action="shouhou.html" method="post">
+           <input type="hidden" name="action" value="1">
+        <br>
+		
+		<div data-role="collapsible" data-collapsed="false" data-theme="d" class="ui-collapsible ui-collapsible-inset ui-corner-all ui-collapsible-themed-content">
+		<h3 class="ui-collapsible-heading">
+		<a href="#" class="ui-collapsible-heading-toggle ui-btn ui-icon-minus ui-btn-icon-left ui-btn-d" style="border-color:#ddd;">&nbsp;&nbsp;售后反馈 <span class="ui-collapsible-heading-status"> click to collapse contents</span></a>
+		</h3>
+		div class="ui-collapsible-content ui-body-inherit" aria-hidden="false">
+            
+            <p>
+                本问卷主要用于{$Think.config.SYSTEM_NAME}品牌产品的调查研究，以便推出更好的产品，您的回答我们会替您保密，谢谢您的参与。
+            </p>
+        </div>
+		</div>   -->
+
+      <!-- <fieldset>
+             <legend>1、您是通过哪些渠道了解到{$Think.config.SYSTEM_NAME}品牌的？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 朋友推荐</span><input type="checkbox" name="checkbox1" id="checkbox1_1" data-native-menu="true" value="朋友推荐"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 媒体广告</span><input type="checkbox" name="checkbox1" id="checkbox1_2" data-native-menu="true" value="媒体广告"></div>
+           
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">C 朋友圈</span><input type="checkbox" name="checkbox1" id="checkbox1_3" data-native-menu="true" value="朋友圈"></div>
+           
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">D 实体店了解</span><input type="checkbox" name="checkbox1" id="checkbox1_4" data-native-menu="true" value="实体店了解"></div>
+           
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">E 其他</span><input type="checkbox" name="checkbox1" id="checkbox1_5" data-native-menu="true" value="其他"></div>
+       </fieldset>
+        
+             <fieldset>
+             <legend>2、您选择WH MASK产品的主要原因是？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 品牌价值</span><input type="checkbox" name="checkbox2" id="checkbox2_1" data-native-menu="true" value="品牌价值"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 性价比</span><input type="checkbox" name="checkbox2" id="checkbox2_2" data-native-menu="true" value="性价比"></div>
+            
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">C 包装</span><input type="checkbox" name="checkbox2" id="checkbox2_3" data-native-menu="true" value="包装"></div>
+           
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">D 产品配套性</span><input type="checkbox" name="checkbox2" id="checkbox2_4" data-native-menu="true" value="产品配套性"></div>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">E 口碑</span><input type="checkbox" name="checkbox2" id="checkbox2_5" data-native-menu="true" value="口碑"></div>
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">F 其他</span><input type="checkbox" name="checkbox2" id="checkbox2_6" data-native-menu="true" value="其他"></div>
+       </fieldset>
+
+       <fieldset>
+             <legend>3、您对{$Think.config.SYSTEM_NAME}品牌的产品整体印象如何？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 很好</span><input type="radio" name="checkbox3" id="checkbox3_1" data-native-menu="true" value="很好"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 好</span><input type="radio" name="checkbox3" id="checkbox3_2" data-native-menu="true" value="好"></div>
+            
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">C 一般</span><input type="radio" name="checkbox3" id="checkbox3_3" data-native-menu="true" value="一般"></div>
+           
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">D 差</span><input type="radio" name="checkbox3" id="checkbox3_4" data-native-menu="true" value="差"></div> 
+       </fieldset>
+        
+          <fieldset>
+             <legend>4、您购买护肤品占消费比重是？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 5%</span><input type="radio" name="checkbox4" id="checkbox4_1" data-native-menu="true" value="5%"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 10%</span><input type="radio" name="checkbox4" id="checkbox4_2" data-native-menu="true" value="10%"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">C 15%</span><input type="radio" name="checkbox4" id="checkbox4_3" data-native-menu="true" value="15%"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">D 20%以上</span><input type="radio" name="checkbox4" id="checkbox4_4" data-native-menu="true" value="20%以上"></div> 
+       </fieldset>
+        
+               
+          <fieldset>
+             <legend>5、您能接受的护肤品价位是？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 99元以内</span><input type="radio" name="checkbox5" id="checkbox5_1" data-native-menu="true" value="99元以内"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 99-199元</span><input type="radio" name="checkbox5" id="checkbox5_2" data-native-menu="true" value="99-199元"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">C 199-299元</span><input type="radio" name="checkbox5" id="checkbox5_3" data-native-menu="true" value="199-299元"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">D 299-399元</span><input type="radio" name="checkbox5" id="checkbox5_4" data-native-menu="true" value="299-399元"></div> 
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">E 399元以上</span><input type="radio" name="checkbox5" id="checkbox5_5" data-native-menu="true" value="399元以上"></div> 
+       </fieldset>
+        
+            <fieldset>
+             <legend>6、您的皮肤类型？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 油性</span><input type="radio" name="checkbox6" id="checkbox6_1" data-native-menu="true" value="油性"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 干性</span><input type="radio" name="checkbox6" id="checkbox6_2" data-native-menu="true" value="干性"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">C 中性</span><input type="radio" name="checkbox6" id="checkbox6_3" data-native-menu="true" value="中性"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">D 混合性</span><input type="radio" name="checkbox6" id="checkbox6_4" data-native-menu="true" value="混合性"></div> 
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">E 其他</span><input type="radio" name="checkbox6" id="checkbox6_5" data-native-menu="true" value="其他"></div> 
+       </fieldset>
+        
+          <fieldset>
+             <legend>7、护肤品牌您倾向于购买？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 国产</span><input type="checkbox" name="checkbox7" id="checkbox7_1" data-native-menu="true" value="国产"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 外国产</span><input type="checkbox" name="checkbox7" id="checkbox7_2" data-native-menu="true" value="外国产"></div>             
+           </fieldset>
+        
+          <fieldset>
+             <legend>8、您一般购买化妆品的渠道是？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 品牌专柜</span><input type="checkbox" name="checkbox8" id="checkbox8_1" data-native-menu="true" value="品牌专柜"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 超市</span><input type="checkbox" name="checkbox8" id="checkbox8_2" data-native-menu="true" value="超市"></div>             
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">C 网购</span><input type="checkbox" name="checkbox8" id="checkbox8_3" data-native-menu="true" value="网购"></div>             
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">D 化妆品店</span><input type="checkbox" name="checkbox8" id="checkbox8_4" data-native-menu="true" value="化妆品店"></div>             
+
+           </fieldset>
+        
+         <fieldset>
+             <legend>9、您喜欢购买那种功效的护肤品？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A美白</span><input type="checkbox" name="checkbox9" id="checkbox9_1" data-native-menu="true" value="美白"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 保湿</span><input type="checkbox" name="checkbox9" id="checkbox9_2" data-native-menu="true" value="保湿"></div>             
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">C 祛痘</span><input type="checkbox" name="checkbox9" id="checkbox9_3" data-native-menu="true" value="祛痘"></div>             
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">D 去皱</span><input type="checkbox" name="checkbox9" id="checkbox9_4" data-native-menu="true" value="去皱"></div>             
+
+           </fieldset>
+        
+         <fieldset>
+             <legend>10、您购买护肤品主要考虑的因素？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 功效</span><input type="checkbox" name="checkbox10" id="checkbox10_1" data-native-menu="true" value="功效"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 质量</span><input type="checkbox" name="checkbox10" id="checkbox10_2" data-native-menu="true" value="质量"></div>             
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">C 品牌</span><input type="checkbox" name="checkbox10" id="checkbox10_3" data-native-menu="true" value="品牌"></div>             
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">D 价格</span><input type="checkbox" name="checkbox10" id="checkbox10_4" data-native-menu="true" value="价格"></div>             
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">E 时尚</span><input type="checkbox" name="checkbox10" id="checkbox10_5" data-native-menu="true" value="时尚"></div>             
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">F 其他</span><input type="checkbox" name="checkbox10" id="checkbox10_6" data-native-menu="true" value="其他"></div>             
+           </fieldset>
+        
+           <fieldset>
+             <legend>11、您喜欢哪一种化妆品促销方式？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 满减</span><input type="checkbox" name="checkbox11" id="checkbox11_1" data-native-menu="true" value="满减"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 送礼品</span><input type="checkbox" name="checkbox11" id="checkbox11_2" data-native-menu="true" value="送礼品"></div>             
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">C 现金返利</span><input type="checkbox" name="checkbox11" id="checkbox11_3" data-native-menu="true" value="现金返利"></div>             
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">D VIP专享</span><input type="checkbox" name="checkbox11" id="checkbox11_4" data-native-menu="true" value="VIP专享"></div>             
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">E 其他</span><input type="checkbox" name="checkbox11" id="checkbox11_5" data-native-menu="true" value="其他"></div>   
+           </fieldset>
+        
+           <fieldset>
+             <legend>12、您的收入水平？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 2000元以内</span>><input type="radio" name="checkbox12" id="checkbox12_1" data-native-menu="true" value="2000元以内"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 2000-3000元</span><input type="radio" name="checkbox12" id="checkbox12_2" data-native-menu="true" value="2000-3000元"></div>             
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">C 3000-5000元</span><input type="radio" name="checkbox12" id="checkbox12_3" data-native-menu="true" value="3000-5000元"></div>             
+               
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">D 5000元以上</span><input type="radio" name="checkbox12" id="checkbox12_4" data-native-menu="true" value="5000元以上"></div>             
+           </fieldset>
+ 
+           <fieldset>
+             <legend>13、您的性别？</legend>
+             
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">A 男</span><input type="radio" name="checkbox13" id="checkbox13_1" data-native-menu="true" value="男"></div>
+              
+              <div class="ui-checkbox" style="border:1px solid #ddd; border-radius:4px; padding:12px 0;"><span style="margin-left:40px;">B 女</span><input type="radio" name="checkbox13" id="checkbox13_2" data-native-menu="true" value="女"></div>             
+           </fieldset>
+        
+             <fieldset>
+             <legend>14、您对{$Think.config.SYSTEM_NAME}品牌有何建议？</legend>
+                 <textarea id="checkbox14" name="checkbox14" cols="20" rows="2" data-native-menu="true" class="ui-input-text ui-shadow-inset ui-body-inherit ui-corner-all ui-textinput-autogrow" style="height: 51px;"></textarea>
+           </fieldset> -->
+            
+            <!-- <div class="ui-btn ui-input-btn ui-btn-d ui-corner-all ui-shadow" style="border-color:#ddd;">提交<input id="FeedSubmit" type="button" value="提交" data-theme="d" onclick="sub()"></div>
+   </form>
+    </div>
+        </div> -->
+
+        <script type="text/javascript">
+            function sub() {
+                alert('提交成功！');
+                document.location.href = 'Default.aspx';
+            }
+        </script>
+    </div>
+
+
+</body>
+</html>

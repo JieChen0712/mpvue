@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>邀请代理</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/create_v1.css" />
+    
+  </head>
+
+  <body>
+    <div class="page">
+      <div class="content">
+        <div class="top-wrapper color-creat-bg">
+          <img src="{$agentRow.headimgurl}" class="avatar" alt="" />
+          <p class="name">{$agentRow.name}</p>
+          <p class="level">{$agentRow.levname}</p>
+          <p class="agent-id">{$agentRow.authnum}</p>
+          <div class="titles">邀请成为代理</div>
+        </div>
+        <div class="bottom-wrapper">
+          <?php 
+                                $cur_level = $agentRow['level'];
+                                $GROW_MODEL = C('GROW_MODEL');
+                                $GROW_MODEL_LEVEL = C('GROW_MODEL_LEVEL');
+                                $cur_grow_model_level = isset($GROW_MODEL_LEVEL[$cur_level])?$GROW_MODEL_LEVEL[$cur_level]:$GROW_MODEL_LEVEL[0]; 
+                                ?>
+          <ul class="agent-list">
+            <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+              <!--默认，高发展低-->
+              <if condition="($cur_level lt $key_left_num) AND ($GROW_MODEL eq 1) ">
+                <li data-link="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}">
+                  <img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/{$key_left_num}.png" alt="" />
+                  <p>{$vo_left_name}</p>
+                </li>
+                <!--高发展低及平级推-->
+                <elseif condition="($cur_level elt $key_left_num) AND ($GROW_MODEL eq 2) " />
+                <li data-link="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}">
+                  <img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/{$key_left_num}.png" alt="" />
+                  <p>{$vo_left_name}</p>
+                </li>
+                <!--任何级别都可以发展-->
+                <elseif condition="$GROW_MODEL eq 3" />
+                <li data-link="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}">
+                  <img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/{$key_left_num}.png" alt="" />
+                  <p>{$vo_left_name}</p>
+                </li>
+                <!--特定的级别发展逻辑-->
+                <elseif condition="($GROW_MODEL eq 4) AND ($cur_grow_model_level eq 1) AND ($cur_level lt $key_left_num)" />
+                <li data-link="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}">
+                  <img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/{$key_left_num}.png" alt="" />
+                  <p>{$vo_left_name}</p>
+                </li>
+                <elseif condition="($GROW_MODEL eq 4) AND ($cur_grow_model_level eq 2) AND ($cur_level elt $key_left_num)" />
+                <li data-link="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}">
+                  <img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/{$key_left_num}.png" alt="" />
+                  <p>{$vo_left_name}</p>
+                </li>
+                <elseif condition="($GROW_MODEL eq 4) AND ($cur_grow_model_level eq 3)" />
+                <li data-link="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}">
+                  <img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/{$key_left_num}.png" alt="" />
+                  <p>{$vo_left_name}</p>
+                </li>
+              </if>
+            </foreach>
+          </ul>
+        </div>
+      </div>
+      <div class="mask">
+          <div class="guide-wrapper">
+            <div class="guide-aim"></div>
+            <div class="guide-aim guide-aim2"></div>
+            <div class="guide-img"></div>
+            <span class="desc">点击邀请代理</span>
+            <button class="btn-close">知道了</button>
+          </div>
+          <div class="qrcode-wrapper">
+            <img src="" alt="" id="qrcode"/>
+          </div>
+        </div>
+      <div class="overlay_hole"></div>
+      <!--footer start-->
+      <include file="Public/footer_v3" />
+      <!--footer end-->
+    </div>
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Radmin_v3/js/qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+//    注册超过两天不显示指引页面
+      var guide = '{$show_guide}';
+      
+      $('.agent-list').on('click','li',function(){
+        var urls ='http://' + window.location.host + $(this).data('link');
+        $('.mask').slideDown().find('.qrcode-wrapper').fadeIn();
+        var images = QRCode.generatePNG(urls,{
+          ecclevel: "H",
+          format: "html",
+          fillcolor: "#FFFFFF",
+          textcolor: "#373737",
+          margin: 4,
+          modulesize: 8
+        })
+        $('#qrcode').attr('src',images);
+      })
+    </script>
+    <script src="__PUBLIC__/Admin_v3/js/create.js" type="text/javascript" charset="utf-8"></script>
+  </body>
+
+</html>

@@ -1,0 +1,108 @@
+<html>
+
+  <head>
+    <title>运费模板</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <style type="text/css">
+      .table-wrapper table tbody .operate span:nth-of-type(1) {
+        background-position: -129px 0;
+      }
+      .table-wrapper table tbody .operate span:nth-of-type(2) {
+        background-position: 0;
+      }
+      .table-wrapper table tbody .operate span:nth-of-type(3) {
+        background-position: -171px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section class="layui-container">
+      <div class="content">
+        <header class="header">
+          <h3>运费模板</h3>
+          <div class="pull-right">
+            <input type="button"  class="layui-btn" value="查看使用说明" data-iframe="__URL__/usage" data-title='查看使用说明'/>
+            <input type="button" class="layui-btn" data-open="__URL__/add" value="添加" data-title="添加" />
+          </div>
+        </header>
+
+        <div class="table-wrapper">
+          <table class="layui-table" lay-skin="row" lay-size="sm">
+            <thead>
+              <tr>
+                <th>序号</th>
+                <th>模板名称</th>
+                <!--<th>发货地区</th>-->
+                <th>计费方式</th>
+                <th>首件(个)</th>
+                <th>续件(个)</th>
+                <th>首重(kg)</th>
+                <th>续重(kg)</th>
+                <th>首体积(m³)</th>
+                <th>续体积(m³)</th>
+                <th>首费(元)</th>
+                <th>续费(元)</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <empty name="template_list">
+                <tr style="position: relative;">
+                  <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                </tr>
+                <else />
+                <volist id="template" name="template_list">
+                  <tr>
+                    <td>{$template.id}</td>
+                    <td>{$template.template_name}</td>
+                    <!--<td>{$template.province}{$template.city}{$template.district}</td>-->
+                    <td>
+                      <eq name="template.price_way" value="1">按件数</eq>
+                      <eq name="template.price_way" value="2">按重量</eq>
+                      <eq name="template.price_way" value="3">按体积</eq>
+                    </td>
+                    <td>
+                      <eq name="template.price_way" value="1">{$template.default.first_num}</eq>
+                    </td>
+                    <td>
+                      <eq name="template.price_way" value="1">{$template.default.continue_num}</eq>
+                    </td>
+                    <td>
+                      <eq name="template.price_way" value="2">{$template.default.first_num}</eq>
+                    </td>
+                    <td>
+                      <eq name="template.price_way" value="2">{$template.default.continue_num}</eq>
+                    </td>
+                    <td>
+                      <eq name="template.price_way" value="3">{$template.default.first_num}</eq>
+                    </td>
+                    <td>
+                      <eq name="template.price_way" value="3">{$template.default.continue_num}</eq>
+                    </td>
+                    <td>{$template.default.first_fee}</td>
+                    <td>{$template.default.continue_fee}</td>
+
+                    <input type="hidden" name="goods_id" value="{$vo.goods_id}" />
+
+                    <td class="operate">
+                      <span data-tips-text="查看该运费模板信息" data-iframe="__URL__/info?template_id={$template.id}" data-title='查看该运费模板信息'></span>
+                      <span data-tips-text="编辑该运费模板信息" data-open="__URL__/template_edit?template_id={$template.id}" data-title='编辑该运费模板信息'></span>
+                      <span data-tips-text="删除该运费模板" data-confirm="你确定要删除该运费模板？" data-load="__URL__/delete?template_id={$template.id}" data-title="删除该运费模板" class="layui layui-icon"></span>
+                    </td>
+
+                  </tr>
+                </volist>
+              </empty>
+            </tbody>
+            <include file="Public/page" />
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+  </body>
+
+</html>

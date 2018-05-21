@@ -1,0 +1,39 @@
+.content {
+  background-color: #f5f4f9;
+}
+.wrapper {
+  /* background-color: #fff; */
+  width: 90%;
+  margin: 6.25rem 5% 0 5%;
+}
+.text {
+  width: 100%;
+  /* padding: .625rem 10% .625rem 10%; */
+  font-family: '方正少儿简体';
+}
+.text span {
+  color: #fb4834;
+}
+.btn-wrapper {
+  width: 100%;
+  /* padding: 0 5%; */
+  text-align: right;
+  margin-top: 0.9375rem;
+}
+.btn-wrapper .return,
+.btn-wrapper .shipping {
+  width: 6.25rem;
+  height: 2.125rem;
+  background: transparent;
+  border-radius: 0.3125rem;
+}
+.btn-wrapper .return {
+  border: 1px solid #787878;
+  color: #787878;
+}
+.btn-wrapper .shipping {
+  border: 1px solid #fc4736;
+  color: #fff;
+  background-color: #fc4736;
+  margin-left: 0.75rem;
+}

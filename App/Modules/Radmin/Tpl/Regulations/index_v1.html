@@ -1,0 +1,35 @@
+<layout name="Public/public" />
+
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+    <script type="text/javascript" src='__PUBLIC__/js/index.js'></script>
+    <script type="text/javascript">
+    function sc($name,$ulr){
+        //利用对话框返回的值 （true 或者 false）
+        if(confirm("您确定要删除"+$name+"吗？")){
+            window.location.href=$ulr;
+        }else{
+            return false;
+        }
+    }
+    </script>
+
+
+<h1 class="page-header">
+    条例信息
+</h1>
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+      {$list.name}
+      <input type="button" class="btn btn-success pull-right" value="编辑" onClick="javascript:location.href='__URL__/edit'"/>
+  </div>
+  <div class="panel-body">
+    {$list.news}
+  </div>
+</div>
+
+

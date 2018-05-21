@@ -1,0 +1,106 @@
+.content {
+    background-color: #f5f4f9;
+}
+
+.content-top {
+    background-color: #fbfbfb;
+    margin: 5% 5% 0 5%;
+}
+
+.recharge-name {
+    padding-top: 3%;
+}
+
+.recharge-name,
+.WeChat,
+.grade,
+.withdraw-amount,
+.account,
+.account-balance,
+.btn-wrapper {
+    line-height: 1.875rem;
+    padding-left: 5%;
+}
+
+.withdraw-amount span {
+    color: #fe0000;
+}
+
+.account {
+    padding-bottom: 3%;
+}
+
+.account .account-type {
+    display: inline-block;
+}
+
+.account .account-number {
+    margin: 0;
+    text-indent: 85px;
+    color: #123e6d;
+}
+
+.content-bottom {
+    background-color: #fff;
+    margin: 0 5%;
+    padding: 3% 5% 8% 0;
+}
+
+.account-balance {
+    position: relative;
+}
+
+.account-balance .help-btn {
+    position: absolute;
+    top: .9375rem;
+    right: 0;
+}
+
+.account-balance .help-btn button {
+    -webkit-appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0;
+    padding: 0;
+    line-height: 1.25rem;
+    border: none;
+    color: #fff;
+    background-color: #e10000;
+    border-radius: 100rem;
+}
+
+.btn-wrapper .pass,
+.btn-wrapper .refuse,
+.btn-wrapper .passed,
+.btn-wrapper .refused {
+    margin-top: 0.875rem;
+    width: 100%;
+    height: 3.125rem;
+    line-height: 3.125rem;
+    border: none;
+    color: #fff;
+    border-radius: 0.3125rem;
+}
+
+.btn-wrapper .pass {
+    
+}
+
+.btn-wrapper .refuse {
+    
+}
+
+.btn-wrapper .passed,
+.btn-wrapper .refused {
+    background-color: #c9c9c9;
+}
+
+.modal {
+    width: 80%;
+    margin-left: -40%;
+}
+
+.modal .modal-inner {
+    padding: 1.875rem 1.25rem;
+    line-height: 1.875rem;
+}

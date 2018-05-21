@@ -1,0 +1,230 @@
+@import "comme.css";
+
+body {
+    width: 640px;
+    height: 1270px;
+    background: url(../images/bg.jpg) #fbfbfb no-repeat;
+    background-color:#fbfbfb;
+    background-size: cover;      
+}
+
+.index-section-title{
+    padding-left:40px;
+    padding-top:10px;
+    font-size:22px;
+    font-weight:600;
+    color:#0099ff;
+}
+/* .index-section-title p{
+    border-left:8px #0099ff solid;
+} */
+.tel_title {   background: transparent; } 
+/*index*/
+.index-panel{
+    width:100%;
+    padding-bottom: 23px;
+    margin:0 auto;
+}
+.index-header{
+    width:100%;
+    height:75px;
+    text-align:center;
+    overflow: hidden;
+    position:relative;
+    font-size: 18px;
+}
+.index-header .a{
+    position:absolute;
+    top:20px;
+    left:22px;
+    width:19px;
+    height:34px;
+    display: block;
+    background:url(../images/return.png) no-repeat;
+}
+.index-header p{
+    font-size:30px;
+    color:#fff;
+    line-height:75px;
+}
+.index-header .set-btm{
+    position:absolute;
+    top:20px;
+    right:25px;
+    width:33px;
+    height:35px;
+    background:url(../images/set_btm.png) no-repeat;
+}
+.index-header .set-btm a{
+    display: block;
+}
+.index-header_left{
+    float: left;
+    height: 75px;
+    line-height: 75px;
+    color:#cccccc;
+    margin-left:5%;
+}
+.index-header_left img{
+    height: 50%;
+    vertical-align:middle;
+}
+.index-header_right{
+    float: right;
+    margin-right: 12px;
+    width:40%;
+    text-align: right;
+    margin-top: 15px;
+}
+.index-header_right .span1{
+    color:white;
+    font-weight: bold;
+    width: 100%;
+}
+.index-header_right .span2{
+    color:#cccccc;
+    width: 100%;
+}
+
+.personal{
+    width:100%;
+    margin-top:48px;
+    position:relative;
+}
+.personal .hide-3s-later{
+    height:35px;
+    padding:0 12px;
+    font-size:20px;
+    color:#fff;
+    line-height:35px;
+    border-radius: 0 17.5px 17.5px 0;
+    background:#23bce8;
+    position:absolute;
+    top:170%;
+    left:0;
+}
+.personal .data{
+
+}
+.personal .data .head-img{
+    width:100%;
+    position:relative;
+}
+.personal .data .head-img .img{
+    width:160px;
+    height:160px;
+    margin:0 auto;
+    /*border:3px solid #fff;*/
+    border-radius:50%;
+}
+.personal .data .head-img .img img{
+    width:100%;
+}
+.personal .data .name{
+    margin-top:15px;
+    padding-left: 30%;
+    width:70%;
+    font-size:29px;
+    color:#fff;
+    text-align:center;
+    font-weight: bold;
+}
+.personal .data .wechatnum{
+    margin-top:10px;
+    padding-left: 30%;
+    width:70%;
+    font-size:21px;
+    color:#fff;
+    text-align:center;
+}
+
+.header_data{
+    margin-left: 10%;
+    margin-right: 10%;
+    width:80%;
+    position:relative;
+    margin-top: 170px;
+    height: 50px;
+}
+.header_data_left{
+    float: left;
+    width: 30%;
+    text-align: center;
+}
+.header_data_mid{
+    float: left;
+    border-left: 1px #cccccc solid;
+    border-right: 1px #cccccc solid;
+    width: 39%;
+    height: 100%;
+    text-align: center;
+}
+.header_data_right{
+    float: left;
+    width: 30%;
+    text-align: center;
+}
+.header_data_p1{
+    color: #0099ff;
+    font-weight: bold;
+    font-size: 24px;
+}
+.header_data_p2{
+    color:black;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/*内容块*/
+.index-section{
+    width:100%;
+    margin:0 auto;
+    /*margin-top:29%;*/
+    overflow: hidden;
+    margin-bottom:65px;
+}
+.index-section ul li{
+    width:33.3%;
+    height:170px;
+    float:left;
+    border-bottom:1px solid #f4f4f4;
+    border-right:1px solid #f4f4f4;
+    position:relative;
+}
+.index-section ul li:nth-child(3n){
+    border-right:none;
+}
+.index-section ul li img{
+    display: block;
+    margin:0 auto;
+    margin-top:24px;
+}
+.index-section ul li p{
+    margin-top:20px;
+    font-size:24px;
+    color:#686868;
+    text-align:center;
+}
+.index-section .order-tips{
+    margin:0;
+    width:63px;
+    height:63px;
+    background:url(../images/order-tips.png) no-repeat;
+    position:absolute;
+    top:0;
+    right:0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.index-section .order-tips span{
+    display: inline-block;
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    background:#e8423a;
+    font-size:14px;
+    color:#fff;
+    text-align: center;
+    line-height: 26px;
+}

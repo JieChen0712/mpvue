@@ -1,0 +1,101 @@
+<layout name="Public/public" />
+
+
+<link href="__PUBLIC__/Admin/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+<script type="text/javascript" src="__PUBLIC__/js/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-ui.js" ></script>
+
+
+
+
+<h1 class="page-header">
+    统计提货下单
+</h1>
+<div class="row">
+   <div class="col-md-12 col-xs-12">
+        <form class="form-inline" method="get" action="__URL__/cont" onsubmit="return checkTime();">
+            <div class="form-group">
+                <input type="hidden" name="type" value="systemtime"/>
+                <input type="hidden" name="typea" value="{$statusbm}"/>
+                <label class="sr-only" for="start_time">开始时间</label>
+                <input class="form-control" id="start_time" name="start_time" type="text" placeholder="开始时间" onClick="WdatePicker()"/>~
+                <label class="sr-only" for="end_time">结束时间</label>
+                <input class="form-control" id="end_time" name="end_time" type="text" placeholder="结束时间" onClick="WdatePicker()"/>
+                <label class="sr-only" for="name">请输入归属总部的经销商</label>
+                <input class="form-control" type="text" name="name" id="name" placeholder="请输入归属总部的经销商" onmouseup="this.select();" maxlength="80" />
+
+                <input class="btn btn-default" type="submit" value="搜索"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="row">
+   <div class="col-md-12 col-xs-12">
+        <!--表格-->
+        <table class="table table-condensed table-hover table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>归属总部的经销商</th>
+                    <th>该经销商总拿货金额(元)</th>
+                    <th>线下经销商总拿货金额(元)</th>
+                    <th>经销商线总拿货金额(元)</th>
+                </tr>
+            </thead>
+            <tbody>
+            <empty name="a">
+                <tr><td colspan="5">对不起,没有找到统计信息! </td></tr>
+                <else />
+                <volist name="a" id="m">
+                    <tr>
+                        <td>{$m.id}</td>
+                        <td>{$m.name}</td>
+                        <td>{$m.money}</td>
+                        <td>{$m.xmoney}</td>
+                        <td>{$m.zmoney}</td>
+                    </tr>
+                </volist>
+                <tr><td colspan="5"><div class="pull-right">{$page}</div></td></tr>
+            </empty>
+            </tbody>
+        </table>
+        <!--end 表格-->
+    </div>
+</div>
+
+<script>
+    $("#agent").autocomplete({
+        minLength: 1,
+        autoFocus: true,
+        source: function (request, response) {
+            $.ajax({
+                url: "__URL__/agent",
+                dataType: "json",
+                data: {
+                    term: request.term,
+                },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return {
+                            //            data: item,
+                            label: item.name + '---' + item.levname,
+                            //            value :item.agent_name,
+                            ID: item.id,
+                            XNAME: item.name,
+                            //            province: item.agent_province,
+                            //            city: item.agent_city,
+                        }
+                    }));
+                }
+            });
+        },
+        select: function (event, ui) {
+            //    $('#order_address').val(ui.item.address+item.agent_city);
+            $('#keywordid').val(ui.item.ID);
+        }
+    });
+</script>

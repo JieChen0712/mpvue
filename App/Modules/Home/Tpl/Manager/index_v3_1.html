@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="ui-mobile">
+
+<head lang="en">
+    <title>经销商信息查询</title>
+    <include file="Public/header" />
+    <script>
+        var searchUrl = '{:U(GROUP_NAME . "/manager/search")}';
+        var detailUrl = '{:U(GROUP_NAME . "/manager/detail/id")}';
+    </script>
+    <style>
+        .ui-page-theme-a .ui-btn,
+        html head+body .ui-btn.ui-btn-b:hover,
+        html head+body .ui-btn.ui-btn-b {
+            background: #97e0d7;
+            color: #fff;
+            border-color: #97e0d7;
+            text-shadow: 0 1px 0 #97e0d7;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <script src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+    <script src="__PUBLIC__/js/my/common.js"></script>
+    <script>
+        var texta = "";
+
+        function change() {
+            texta = "经销商";
+            init();
+        }
+
+        function init() {
+            watermark('canvas', '__PUBLIC__/images/shouquan-templet.jpg', texta);
+        }
+
+        function watermark(id, imgsrc, txt) {
+            canvas = document.getElementById(id);
+            //tusi(canvas);
+            if (canvas.getContext) {
+                ctx = canvas.getContext('2d');
+                var img1 = new Image();
+                img1.src = imgsrc;
+                img1.onload = function () {
+                    var imgWidth = img1.width;
+                    var imgHeight = img1.height;
+                    canvas.width = imgWidth;
+                    canvas.height = imgHeight;
+                    ctx.drawImage(img1, 0, 0);
+                    ctx.fillStyle = 'rgba(161, 161, 161, 0.25)';
+                    ctx.font = '30px sans-serif';
+                    /*ctx.fillText(txt, canvas.width-(txt.length*15),canvas.height-30);
+                    ctx.fillStyle    = 'rgba(255, 255, 255, 0.25)';
+                    ctx.fillText(txt, canvas.width-(txt.length*15)-2,canvas.height-32);*/
+                    //ctx.fillText(txt,200,30);
+                    //ctx.save();
+                    ctx.rotate(Math.PI / 6);
+                    for (var j = -640; j <= 640; j = j + 80) {
+                        for (var i = 0; i <= 875; i = i + 125) {
+                            ctx.fillText(txt, i, j);
+                        }
+                    }
+                    ctx.restore();
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="ui-mobile-viewport ui-overlay-a" onload="change()">
+    <div data-role="page" data-url="/a/QueryAgent.aspx" tabindex="0" class="ui-page ui-page-theme-a ui-page-active">
+        <script type="text/javascript">
+            function SeachData() {
+                /*  $.mobile.loading("show", { textVisible: true, textonly: true, text: '请等待...', theme: 'b' });
+                 $.ajax({
+                     type: "post",
+                     data: { Value: $("#search").val() },
+                     url: "QueryAgent.aspx?method=SeachData",
+                     success: function (item) {
+                         $.mobile.loading('hide');
+                         if(item){
+                             $("#listview").html(item);
+                             $('ul').listview('refresh');
+                         }
+                         else
+                             tusi("无结果!");
+                       }
+                 }); */
+                var val = $("#search").val();
+                if (val == "") {
+                    tusi('请输入经销商手机号或微信号');
+                    return false;
+                }
+                $.post(searchUrl, {
+                    val: val
+                }, function (data, status) {
+                    if (data == 'disable') {
+                        tusi('您查询的经销商已经加入了禁用! 请联系相关工作人员！');
+                    } else {
+                        if (data != 'error') {
+                            $("#listview").attr("class",
+                                "ui-listview ui-listview-inset ui-corner-all ui-shadow ui-group-theme-a");
+                            var text = "<li>您所查询的经销商为微商控价防伪授权正规经销商</li><li><a href='" + detailUrl + "/" + data[
+                                    'id'] + "'>姓名:" + data['name'] + "&nbsp;&nbsp;&nbsp;级别:" + data['levname'] + "<br/>"+ 
+                                "<span>点击详情</span><br/><br/></a></li><li><span style='color:red;'>备注：请每周一次查询经销商真实性，避免违规后取消合作和授权！</span></li>";
+                            $('#listview').html(text);
+                        } else {
+                            tusi('抱歉,没有找到该经销商! ');
+                        }
+                    }
+                });
+            }
+        </script>
+        <style type="text/css">
+            .header1 {
+                background-color: #eee;
+                color: #666;
+            }
+
+            .header1 a {
+                color: #666;
+                font-size: 40px;
+                text-decoration: none;
+            }
+
+            .inner-bar {
+                display: flex;
+                margin: 5%;
+                height: 60px;
+                background-color: #eee;
+                color: #666;
+            }
+
+            .inner-bar .line-bar {
+                flex: 0 0 10px;
+                height: 100%;
+                background-color: #c2b596;
+            }
+
+            .inner-bar span {
+                flex: 1;
+                text-indent: 20px;
+                line-height: 60px;
+                font-size: 24px;
+            }
+
+            .inner-bar img {
+                flex: 0 0 46px;
+                padding-right: 20px;
+            }
+
+            .search-wrapper {
+                width: 400px;
+                margin: 200px auto 0 auto;
+                color: #666;
+            }
+
+            .search-wrapper .search-text {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            .search-wrapper .search-input {
+                width: 400px;
+                height: 50px;
+                border: 1px solid #c2b596;
+                margin-bottom: 50px;
+                font-size: 24px;
+            }
+
+            .search-wrapper .search-btn button {
+                width: 400px;
+                height: 50px;
+                background-color: #c2b596;
+                border: none;
+                color: #666;
+                font-size: 24px;
+            }
+
+            #listview {
+                text-align: center;
+                margin-top: 30px;
+                font-size: 20px;
+            }
+
+            .ui-btn {
+                line-height: 1.4;
+                font-size: 27px;
+            }
+
+            .ui-input-search input {
+                font-size: 22px;
+                min-height: 3.2em;
+            }
+
+            .ui-input-search:after {
+                left: 1.3125em;
+            }
+        </style>
+        <header class="header1">
+            <a href="javascript:history.go(-1);" class="a">
+                <!-- <img src="__PUBLIC__/images/index/left_icon.png" alt=""> -->
+                &lt;
+            </a>
+            <p>经销商信息查询</p>
+        </header>
+        <div class="inner-bar">
+            <div class="line-bar"></div>
+            <span>经销商信息查询</span>
+            <img src="__PUBLIC__/images/home/logo01.png" alt="">
+        </div>
+        <div class="search-wrapper">
+            <!-- <p class="search-text">请输入产品包装上的"防伪数字码"查询</p> -->
+            <input type="number" class="search-input" id="search" placeholder="请输入经销商手机号或微信号">
+            <div class="search-btn">
+                <button id="find" onclick="SeachData()">查询</button>
+            </div>
+        </div>
+        <div id="listview"></div>
+
+    </div>
+</body>
+
+</html>

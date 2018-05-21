@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <title>{$list.lunpan_title.desc}</title>
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/sale/css/drawpage.css" />
+        <link rel="stylesheet" href="__PUBLIC__/sale/css/mobile-select-area.css" />
+        <script src="__PUBLIC__/sale/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/sale/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/sale/js/asyncjs.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/sale/js/scroll.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/sale/js/awardRotate.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/sale/js/dialog.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/sale/js/mobile-select-area.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v2/js/area/area.min.js"></script>
+        <script src="__PUBLIC__/Admin_v2/js/area/area.js"></script>
+    </head>
+    <script>
+        var lunpanurl = '__GROUP__/lunpan/get_prize_ajax'
+        var lotteryurl = '__GROUP__/lunpan/lottery_ajax'
+        var write_order_url = '__GROUP__/lunpan/write_order_ajax';
+        var flag1 = '{$userdetail.subscribe}';
+        var flag2 = '{$check_res.code}';
+        var flag3 = false;
+        var flag4 = false;
+        var record_id = '{$check_res.record_id}';
+        var areadata = '__PUBLIC__/sale/data/data.json';
+
+        $(function () {
+            function showfollow(flag) {
+                if (flag != '1') {
+                    $("#mask").fadeIn().children("#follow").fadeIn();
+                }
+            }
+            function showscan(flag) {
+                if (flag != '1') {
+                    $("#mask").fadeIn().children("#scan").fadeIn();
+                }
+            }
+            function showaward(flag) {
+                if (flag == true) {
+                    $("#mask").fadeIn().children("#mask-award").fadeIn();
+                }
+            }
+            function showaddress(flag) {
+                if (flag == true) {
+                    $("#mask").fadeIn().children("#address").fadeIn();
+                }
+            }
+
+            //showaddress(true);return;
+            
+            //是否关注
+            //showfollow(flag1);
+            if( flag1 == '1' ){
+                if( record_id != null && record_id != 0 ){
+                    $("#result").after('<p>{$check_res.record_info}</p>');
+                    $("#fill-inf").bind("click", function () {
+                        $("#mask-award").fadeOut().siblings("#address").fadeIn();
+                    });
+                    turnplate.bRotate = !turnplate.bRotate;
+                    $("#record_id").val(record_id);
+                    //中奖信息
+                    showaward(true);
+                }
+                else{
+                    //扫描二维码
+                    showscan(flag2);
+                }
+            }
+            
+            //中奖信息
+            //showaward(flag3);
+            //填写地址
+            //showaddress(flag4);
+        });
+
+    </script>
+    <style>
+        .hidden{
+            display: none;
+        }
+    </style>
+    <body>
+        <?php foreach( $lunpan_set as $val_set ):?>
+            <img src="{$val_set['img']}" class="hidden" />
+        <?php endforeach;?>
+        
+        <div class="container">
+            <!--遮盖层-->
+            <div id="mask">
+                <!--关注提示层-->
+                <div id="follow">
+                    <h1 class="mask-title">关注公众号</h1>
+                    <p>长按二维码关注公众号后再抽奖！</p>
+                    <img src="__PUBLIC__/sale/img/qrcode.png" />
+                    <p style="color: red;">您当前微信没有关注公众号</p>
+                </div>
+                <!--扫码抽奖提示层-->
+                <div id="scan">
+                    <h1 class="mask-title">扫码抽奖</h1>
+                    <p>{$check_res.msg}</p>
+                    <!--<input type="button" value="扫描" id="sc-btn" />-->
+                </div>
+                <!--提示中奖层-->
+                <div id="mask-award">
+                    <h1 class="mask-title" id="result">中奖信息</h1>
+                    <button id="fill-inf">填写信息</button>
+                </div>
+                <!--填写收货信息层-->
+                <div id="address">
+                    <h1>收货人信息</h1>
+                    <form onsubmit="return write_order()" id="address-form">
+                        <p><span>*</span>收货人：<br /><input name="s_name" id="s_name" type="text" placeholder="收货人姓名" required="required" /></p>
+                        <p><span>*</span>手机号码：<br /><input name="s_phone" id="s_phone" type="tel" placeholder="收货人联系电话" required="required" pattern="^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$"/></p>
+                        <!--<p><span>*</span>所在地区：<br /><input type="text" id="txt_area" required="required" placeholder="点击选择地区" /><input type="hidden" id="hd_area" /></p>-->
+                        <p><span>*</span>详细地址：<br /><input name="s_addre" id="s_addre" type="text" placeholder="收货的地址" required="required" /></p>
+                        <p>备注：<br /><input name="notes" id="notes" type="text" placeholder="备注信息" /></p>
+                        <!--<p class="inf-explain">注意：注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项</p>-->
+                        <input type="hidden" value="" name="p_id" id="p_id" />
+                        <input type="hidden" value="" name="record_id" id="record_id" />
+                        <input class="add-sub" type="submit" name="address-inf" id="address-inf" value="提交" />
+                    </form>
+                </div>
+            </div>
+            <!--抽奖转盘-->
+            <div class="turntable">
+                <div class="htmleaf-content">
+                    <div class="banner">
+                        <div class="turnplate" style="background-image:url(__PUBLIC__/sale/img/ly-plate-c.gif);background-size:100% 100%;">
+                            <canvas class="item" id="wheelcanvas" width="422px" height="422px"></canvas>
+                            <img class="pointer" src="__PUBLIC__/sale/img/turnplate-pointer.png" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--滚动的中奖信息-->
+            <div class="award-inf">
+                <dl>
+                    <dt>中奖信息</dt>
+                    <dd class="show-awinf">
+                        <?php foreach( $order_list as $v_order ){?>
+                        <div class="winning">
+                            <p><img src="__PUBLIC__/sale/img/1.png" alt="" /><span>恭喜<?php echo $v_order['s_phone_encrypt']?></span><span>获得<?php echo $v_order['p_name']?></span></p>
+                        </div>
+                        <?php };?>
+                    </dd>
+                </dl>
+            </div>
+            <!--奖品信息-->
+            <div class="award-list">
+                <h1>奖品信息</h1>
+                <div class="list-detail">
+                    {$list['lunpan_prizesinfo']['desc']}
+                </div>
+            </div>
+
+            <!--活动规则说明-->
+            <div class="activity-explain">
+                <h1>活动规则</h1>
+                <div class="explain-detail">
+                    {$list.lunpan_active.desc}
+                </div>
+            </div>
+            
+            <!--我的奖品按钮-->
+            <a id="my-award" href="__GROUP__/lunpan/myprize"></a>
+        </div>
+        <script src="__PUBLIC__/sale/js/draw.js" type="text/javascript" charset="utf-8"></script>
+    </body>
+
+    <script>
+        function write_order() {
+
+            var s_name = $("#s_name").val();
+            var s_phone = $("#s_phone").val();
+            var s_addre = $("#s_addre").val();
+            var notes = $("#notes").val();
+            var p_id = $("#p_id").val();
+            var record_id = $("#record_id").val();
+            var txt_area = $("#txt_area").val();
+
+            var reg = /^0?1[3|4|5|7|8][0-9]\d{8}$/;
+            if (!reg.test(s_phone)) {
+                alert('请输入正确的手机号码');
+                return false;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: write_order_url,
+                async: false,
+                data: {s_name: s_name, s_phone: s_phone, s_addre: s_addre, notes: notes, p_id: p_id,record_id:record_id,area:txt_area},
+                success: function (data) {
+                    if (data.code != 1) {
+                        alert(data.msg);
+                        return false;
+                    } else {
+                        alert('提交订单成功，请进行支付！');
+                        window.location.href = "__GROUP__/lunpanwxpay/pay?order_num="+data.order_num;
+                    }
+                }
+            })
+            return false;
+        }
+    </script>
+</html>

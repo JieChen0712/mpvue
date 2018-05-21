@@ -1,0 +1,139 @@
+#main {
+  width: 100%;
+  min-height: 100%;
+  padding-top: 2.8125rem;
+  padding-bottom: 3.125rem;
+  background-color: #fff;
+}
+#main .search-wrapper {
+  top: 0;
+  height: 3.4375rem;
+  border-bottom: .0625rem solid #c9c9c9;
+}
+#main .bar {
+  background-color: #fff;
+}
+#main .search-wrapper .searchbar {
+  background: #fff;
+  padding: 0 1.5625rem;
+}
+#main .search-wrapper .searchbar .icon-search {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -5.3125rem;
+}
+#main .search-wrapper .searchbar .search {
+  text-align: center;
+  margin-top: 0.625rem;
+  height: 2.125rem;
+  background-color: #eee;
+  border: 1px solid #c9c9c9;
+  font-size: .875rem
+}
+#main ul {
+  margin: 0 5%;
+}
+#main ul:nth-of-type(1) {
+  margin-top: .375rem;
+}
+#main ul li {
+  margin-left: 0;
+  margin-top: 1.4375rem;
+  width: 9.375rem;
+  height: 12.125rem;
+  overflow: hidden;
+  position: relative;
+}
+#main ul li:nth-of-type(2n-1) {
+  float: left;
+}
+#main ul li:nth-of-type(2n) {
+  float: right;
+}
+#main ul li .img {
+  display: block;
+}
+#main ul li .text {
+  line-height: 2.75rem;
+  text-align: center;
+  color: #fff;
+  background-color: #0e3e6e;
+}
+
+
+@media screen and (max-width: 320px) {
+    #main ul {
+        margin: 0 2%;
+    }
+}
+@media screen and (max-width: 330px) {
+    #main ul {
+        margin: 0 3%;
+    }
+}
+@media screen and (max-width: 340px) {
+    #main ul {
+        margin: 0 4%;
+    }
+    #main ul li {
+        width: 8.375rem;
+    }
+}
+@media screen and (max-width: 350px) {
+    #main ul {
+        margin: 0 5%;
+    }
+}
+@media screen and (min-width: 360px) {
+    #main ul {
+        margin: 0 6%;
+    }
+}
+
+@media screen and (min-width: 370px) {
+    #main ul {
+        margin: 0 7%;
+    }
+}
+@media screen and (min-width: 380px) {
+    #main ul {
+        margin: 0 8%;
+    }
+}
+@media screen and (min-width: 390px) {
+    #main ul {
+        margin: 0 9%;
+    }
+}
+@media screen and (min-width: 400px) {
+    #main ul {
+        margin: 0 10%;
+    }
+}
+@media screen and (min-width: 420px) {
+    #main ul {
+        margin: 0 11%;
+    }
+}
+
+@media screen and (min-width: 440px) {
+    #main ul {
+        margin: 0 12%;
+    }
+}
+@media screen and (min-width: 460px) {
+    #main ul {
+        margin: 0 13%;
+    }
+}
+@media screen and (min-width: 480px) {
+    #main ul {
+        margin: 0 14%;
+    }
+}
+@media screen and (min-width: 500px) {
+    #main ul {
+        margin: 0 15%;
+    }
+}

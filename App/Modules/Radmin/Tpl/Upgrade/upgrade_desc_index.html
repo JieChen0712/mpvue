@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+<section class="layui-container">
+    <div class="content">
+        <header class="header">
+            <h3>升级说明</h3>
+            <div class="pull-right">
+                <input type="button" class="layui-btn" value="添加" data-title="添加升级说明"  data-modal="__URL__/upgrade_desc_add"/>
+            </div>
+        </header>
+        
+        <div class="table-wrapper">
+            <table class="layui-table" lay-skin="row" lay-size="sm">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>等级</th>
+                    <th>金额</th>
+                    <th>描述</th>
+                    <!--<th>图标</th>-->
+                    <th>时间</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="list">
+                    <tr style="position: relative;">
+                        <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                    </tr>
+                    <else />
+                    <!--<tr><td colspan="10"><div class="pull-right">{$page}</div></td></tr>-->
+                    <volist name="list" id="m">
+                        <tr>
+                            <td>{$m.id}</td>
+                            <td>{$m.level_name}</td>
+                            <td>{$m.money}</td>
+                            <td>{$m.desc}</td>
+<!--                            <td>
+                                <img src="__ROOT__{$m.img}" alt="" style="width:80px;">
+                            </td>-->
+                            <td>{$m.created|date="Y-m-d H:i",###}</td>
+                            <td><notempty name="m.updated">{$m.updated|date="Y-m-d H:i",###}</notempty></td>
+                            <td>
+                                <input type="button" class="layui-btn layui-btn-radius layui-btn-normal" value="编辑" data-title="编辑升级说明" data-modal="__URL__/upgrade_desc_edit?id={$m.id}"/>
+                                <input type="button" class="layui-btn layui-btn-radius layui-btn-danger" value="删除" data-load="__URL__/upgrade_desc_delete?id={$m.id}" data-confirm="您确定删除吗？"/>
+                            </td>
+                        </tr>
+                    </volist>
+                    <include file="Public/page" />
+                    <!-- <div id="page"></div> -->
+                    <!--<tr><td colspan="14"><div class="pull-right">{$page}</div></td></tr>-->
+                </empty>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</section>
+</body>
+
+</html>

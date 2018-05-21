@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <!--<title>订单管理</title>
+        <include file="Public/header_v2"/>
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/header.css">-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>订单管理</title>
+
+    <include file="Public/header_v3" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/light7-swiper.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/manager-order_v3.1.css" />
+    <!--<style>
+      body {
+      background: url(__PUBLIC__/Admin_v2/images/bg.jpg) #fbfbfb no-repeat;
+      background-color:#fbfbfb;
+      background-size: cover;      
+      }
+     .tel_title {   background: transparent; } 
+ 
+    </style>-->
+    <style type="text/css">
+        *{
+            -webkit-overflow-scrolling: touch;
+            overflow-scrolling: touch;
+        }
+        .manager-order{
+            position: fixed;
+            width: 100%;
+        }
+        .container{
+            position: fixed!important;
+            top: 141px;
+            bottom: 50px;
+            height: calc(100% + 1px);
+            min-height: calc(100% + 1px);
+        }
+    </style>
+    <script>
+        var cat_url = '__URL__/index';
+        var orderNavURL = '__GROUP__/order/templet_category';
+        var orderNavSonURL = '__GROUP__/order/get_son_templet_category';
+        var orderDedetailURL = '__GROUP__/order/get_templet';
+        var orderSearchURL = '__GROUP__/order/get_search_order';
+        var getCountUrl = '__GROUP__/order/get_count';
+        var root = '__ROOT__';
+        //获取产品属性
+        var get_properties = '__GROUP__/product/get_properties';
+        var is_stock = '{$is_stock}';
+    </script>
+</head>
+
+<body>
+    <div class="page">
+        <!-- header start-->
+        <include file="Public/header_features_v3" />
+        <!-- header end-->
+        <div class="content order-contents infinite-scroll">
+            <div class="manager-order">
+                <div class="manager-kind color-order-index-bg">
+                    <?php if(!C('FUNCTION_MODULE')['STOCK_ORDER'] ): ?>
+                    <ul class="col-100 slidedown" id="kind-head">
+                        <!--<li><a href="__GROUP__/order/all" class="external"><img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind1.png"/><p>待付款</p><span>12</span></a></li>-->
+                        
+                        <li>
+                            <a href="__GROUP__/order/all?part=1" class="external ">
+                                <img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind1.png" />
+                                <p>全部订单</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="__GROUP__/order/all?part=2" class="external">
+                                <img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind2.png" />
+                                <p>待发货</p>
+                                <span class="tip-num no_delivery_count"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="__GROUP__/order/all?part=3" class="external">
+                                <img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind3.png" />
+                                <p>已发货</p>
+                                <span class="tip-num yes_delivery_count"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="__GROUP__/order/shopping_cart" class="external">
+                                <img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind4.png" />
+                                <p>购物车</p>
+                                <span class="tip-num cart_count"></span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+<?php endif;?>
+                    <div class="search col-100">
+                        <label class="icon icon-search" for="search"></label>
+                        <input type="search" id='search' placeholder='搜索商品名称' />
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+              <div class="hidden-scorll line">
+                    <nav class="shop-nav">
+
+                        <ul class="shop-nav-list">
+                            <li id="first-li">
+                                <a href="javascript:void(0);" class="external">
+                                    <p>产品分类</p>
+                                </a>
+                            </li>
+                            <li class="sales">
+                                <a href="javascript:void(0);" class="external">
+                                    <p>销量</p>
+                                </a>
+                            </li>
+                            <li class="price" data-sort="">
+                                <a href="javascript:void(0);" class="external">
+                                    <p>价格</p>
+                                </a>
+                            </li>
+                            <!-- <li>
+                                <a href="javascript:void(0);" class="external">
+                                    <p>筛选</p>
+                                </a>
+                            </li> -->
+                        </ul>
+                    </nav>
+                    </div>
+                <section class="shop-items">
+                    <!-- <ul id="products">
+                        <li class="s-items clearfloat">
+                            <a href="__URL__/goods_detail?id={$product.id}" class="external">
+                                <img src="__PUBLIC__/Admin_v3/images/manager-order/goods2x.jpg" alt="" />
+                                <div class="shop-details">
+                                    <p class="p-shopneme">{$product.name}</p>
+                                    <p class="p-area">广州<span>包邮</span></p>
+                                    <p class="p-price"><span>￥</span>{$product.price}<i class="icon icon-car"></i></p>
+                                </div>									</div>
+                            </a>
+                        </li>
+                    </ul> -->
+                    <ul id="products">
+                        <!-- <li>
+                            <a href="javascript:;" class="external">
+                                <div class="img-wrapper">
+                                    <img src="__PUBLIC__/Admin_v3/images/manager-order/goods1x.png" alt="">
+                                </div>
+                                <p class="goods-name">笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本</p>
+                                <p>￥5199</p>
+                                <p>96%好评</p>
+                                <i class="icon icon-car cart"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="external">
+                                <div class="img-wrapper">
+                                        <img src="__PUBLIC__/Admin_v3/images/marketing/markets-6.jpg" alt="">
+                                </div>
+                                <p class="goods-name">笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本</p>
+                                <p>￥5199</p>
+                                <p>96%好评</p>
+                                <i class="icon icon-car cart"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="external">
+                                <div class="img-wrapper">
+                                    <img src="__PUBLIC__/Admin_v3/images/marketing/markets-2.jpg" alt="">
+                                </div>
+                                <p class="goods-name">笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本</p>
+                                <p>￥5199</p>
+                                <p>96%好评</p>
+                                <i class="icon icon-car cart"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="external">
+                                <div class="img-wrapper">
+                                    <img src="__PUBLIC__/Admin_v3/images/manager-order/goods1x.png" alt="">
+                                </div>
+                                <p class="goods-name">笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本</p>
+                                <p>￥5199</p>
+                                <p>96%好评</p>
+                                <i class="icon icon-car cart"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="external">
+                                <div class="img-wrapper">
+                                        <img src="__PUBLIC__/Admin_v3/images/marketing/markets-5.jpg" alt="">
+                                </div>
+                                <p class="goods-name">笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本</p>
+                                <p>￥5199</p>
+                                <p>96%好评</p>
+                                <i class="icon icon-car cart"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="external">
+                                <div class="img-wrapper">
+                                    <img src="__PUBLIC__/Admin_v3/images/marketing/markets-1.jpg" alt="">
+                                </div>
+                                <p class="goods-name">笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本</p>
+                                <p>￥5199</p>
+                                <p>96%好评</p>
+                                <i class="icon icon-car cart"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="external">
+                                <div class="img-wrapper">
+                                    <img src="__PUBLIC__/Admin_v3/images/marketing/markets-3.jpg" alt="">
+                                </div>
+                                <p class="goods-name">笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本</p>
+                                <p>￥5199</p>
+                                <p>96%好评</p>
+                                <i class="icon icon-car cart"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="external">
+                                <div class="img-wrapper">
+                                    <img src="__PUBLIC__/Admin_v3/images/marketing/markets-4.jpg" alt="">
+                                </div>
+                                <p class="goods-name">笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本笔记本</p>
+                                <p>￥5199</p>
+                                <p>96%好评</p>
+                                <i class="icon icon-car cart"></i>
+                            </a>
+                        </li> -->
+                    </ul>
+                </section>
+                <!-- <ul id="apply-list"></ul> -->
+                <!-- <div class="infinite-scroll-preloader">
+                    <div class="preloader"></div>
+                </div> -->
+                <!-- 记录ID -->
+                <!-- <div id="mask" style="display: none;" data-id="0"></div> -->
+            </div>
+
+        </div>
+
+        <div class="sidebar">
+            <h2>
+                产品分类
+                <img src="__PUBLIC__/Admin_v3/images/manager-order/icon3.png" alt="" data-id="0">
+            </h2>
+            <div class="goods">
+                <div class="goods-title">
+                    <ul>
+                        <li data-id="0">全部</li>
+                    </ul>
+                    <!-- <div></div> -->
+                </div>
+                <div class="goods-list">
+                    <!-- <div class="goods-wrapper clearfix">
+                    <h3>美伊美饰</h3>
+                        <div>
+                            <img src="__PUBLIC__/Admin_v3/images/mallorder/car.jpg" alt="">
+                            <p>生活用品生活用品</p>
+                        </div>
+                        <div>
+                            <img src="__PUBLIC__/Admin_v3/images/mallorder/car.jpg" alt="">
+                            <p>生活用品</p>
+                        </div>
+                        <div>
+                            <img src="__PUBLIC__/Admin_v3/images/mallorder/car.jpg" alt="">
+                            <p>生活用品生活用品</p>
+                        </div>
+                        <div>
+                            <img src="__PUBLIC__/Admin_v3/images/mallorder/car.jpg" alt="">
+                            <p>生活用品</p>
+                        </div>
+                        <div>
+                            <img src="__PUBLIC__/Admin_v3/images/mallorder/car.jpg" alt="">
+                            <p>生活用品</p>
+                        </div>
+                    </div>
+                    </div> -->
+                </div>
+            </div>
+
+        </div>
+        <!--属性-->
+        <div class="shop_menu_wrapper">
+            <include file="./App/Public/shopping-menu.html"/>
+       </div>
+        <!--footer start-->
+        <include file="Public/footer_v3" />
+        <!--footer end-->
+
+        <!--script strat-->
+        <script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/light7-swiper.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/order-shop_v3.1.js" type="text/javascript" charset="utf-8"></script>
+        
+        <!--script end -->
+</body>
+
+</html>

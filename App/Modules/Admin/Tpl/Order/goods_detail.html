@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+  <head lang="en">
+    <!--<title>订单管理</title>
+    <include file="Public/header_v2"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/header.css">-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>产品详情</title>
+
+    <include file="Public/header_v3" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/light7-swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/show-detail.css" />
+    
+    <!--<style>
+      body {
+      background: url(__PUBLIC__/Admin_v2/images/bg.jpg) #fbfbfb no-repeat;
+      background-color:#fbfbfb;
+      background-size: cover;      
+      }
+     .tel_title {   background: transparent; } 
+ 
+    </style>-->
+    <script>
+      //获取产品属性
+      var get_properties = '__GROUP__/product/get_properties';
+    </script>
+  </head>
+
+  <body>
+    <div class="page">
+      <!-- header start-->
+      <include file="Public/header_features_v3" />
+      <!-- header end-->
+      <div class="content">
+        <section class="details-head">
+          <!--swiper start-->
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <empty name="product.many_image">
+              <div class="swiper-slide">
+                  <div class="swiper-zoom-container">
+                    <img src="{$product.image}">
+                  </div>
+                </div>
+              <else />
+              <volist name="product.many_image" id="vo">
+                <div class="swiper-slide">
+                  <div class="swiper-zoom-container">
+                    <img src="__ROOT__{$vo}">
+                    <!-- <img src="__PUBLIC__/Admin_v3/images/manager-order/goodslist1.png" alt=""> -->
+                  </div>
+                </div>
+              </volist>
+              </empty>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination swiper-pagination-white"></div>
+          </div>
+          <!--swiper end-->
+          <section class="shop-inf">
+            <div class="shop-title">
+              <p>{$product.name}</p>
+              <!--<div class="share-btn"><i class="icon icon-share"></i>分享</div>-->
+            </div>
+            <p class="detail-price">￥{$product.price}</p>
+            <p class="detail-spec"><span>库存：{$product.quantity}件</span></p> 
+            <p class="detail-num"><span>购买数量：</span><input type="button" name="reducenum" id="reducenum" value="-" /><input type="number" name="shownum" id="shownum" value="1" /><input type="button" name="numadd" id="numadd" value="+" /></p>
+            <?php if( C('ORDER_SHIPPING') == TRUE ): ?>
+             <p class="shipping">运费：
+              <span id='picker-way'></span>
+              <input type="hidden" name="shipping-way" id="shipping-way" value="" />
+              <input type="hidden" name="shipping-id" id="shipping-id" value=""/>
+            </p>
+            <if condition="$reduce_info neq ''">
+              <p class="shipping" style="color: red">注：
+                <if condition="$reduce_info.type eq 1">
+                  数量满{$reduce_info.need_num}件免运费
+                  <elseif condition="$reduce_info.type eq 2"/>
+                  金额满{$reduce_info.need_money}元免运费
+                  <elseif condition="$reduce_info.type eq 3"/>
+                  数量满{$reduce_info.need_num}件并且金额满{$reduce_info.need_money}元免运费
+                </if>
+              </p>
+            </if>
+            <?php endif;?>
+          </section>
+        </section>
+        <div class="goods-detail">
+          <dl class="goods-container">
+            <dt class="goods-head">产品详情</dt>
+            <dd class="goods-inf">{$product.disc}</dd>
+          </dl>
+        </div>
+        <input type="hidden" name="id" value="{$product.id}" />
+      </div>
+      <eq name="product.has_property" value="1">
+      <div class="shop_menu_wrapper">
+        <include file="./App/Public/shopping-menu.html"/>
+      </div>
+      </eq>
+      <footer class="bar bar-footer">
+        <eq name="product.has_property" value="1">
+          <?php if(C('FUNCTION_MODULE')['STOCK_ORDER'] ): ?>
+          <input type="button" value="下单到云仓" data-type="1" class="choose-property" />
+          <?php else: ?>
+              <input type="button" value="加入购物车" data-type="2" class="choose-property" />
+              <input type="button" value="立即购买" data-type="1" class="choose-property" />
+          <?php endif;?>
+          
+          <else />
+          <?php if(C('FUNCTION_MODULE')['STOCK_ORDER'] ): ?>
+              <input type="button" value="下单到云仓" id="buy" />
+          <?php else: ?>
+              <input type="button" value="加入购物车" id="cart" />
+          <input type="button" value="立即购买" id="buy" />
+          <?php endif;?>
+        </eq>
+      </footer>
+
+      <!--script strat-->
+      <script type="text/javascript">
+        var wayId;
+        var default_shipping = {
+          first_fee: 0,
+          first_num: 0,
+          continue_fee: 0,
+          continue_num: 0,
+          way_id:0,
+          product_parameter:1,
+          order_price:'{$product.price}',
+          reduce:true,
+            need_num:'',
+            need_money:'',
+        };
+        var p_id = getUrlParam('id')
+        var get_shipping = '__GROUP__/order/get_shipping_ajax';
+        var get_address = '__GROUP__/order/get_default_address';
+        var address = '';
+        var province = $('#province').text();
+        //取参
+        function getUrlParam(name) {
+          var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+          var r = window.location.search.substr(1).match(reg); //匹配目标参数
+          if(r != null) return unescape(r[2]);
+          return null; //返回参数值
+        }
+
+        $(function() {
+          $.get(get_address, function(data) {
+            if(data.code != 1) {
+              return;
+            } else {
+              address = data.info.province;
+              getFee();
+            }
+          });
+        });
+
+        function getFee() {
+          $.post(get_shipping, {
+            id: p_id
+          }, function(data) {
+              console.log(data);
+            if(data.code != 1) {
+              return;
+            } else {
+              if(!(data.info == null || data.info == "" || data.info == undefined)) {
+                wayId = data.info[0].shipping_way;
+                $.each(data.info, function(key, value) {
+                  if(value.shipping_way != wayId) {
+                    return;
+                  } else {
+                    if(value.area_name.indexOf(address) != -1 && default_shipping.first_fee == 0) {
+                      if(data.reduce_info == null || data.reduce_info == '' || data.reduce_info == undefined){
+                          default_shipping.first_fee = value.first_fee;
+                          default_shipping.first_num = value.first_num;
+                          default_shipping.continue_fee = value.continue_fee;
+                          default_shipping.continue_num = value.continue_num;
+                          default_shipping.way_id = value.id;
+                          default_shipping.product_parameter = data.product.product_parameter;
+                      }else{
+                          
+                          if(data.reduce_info.need_num <= 1 && data.reduce_info.need_money <= default_shipping.order_price){
+                              default_shipping.reduce=false;
+
+                          }else{
+                              default_shipping.first_fee = value.first_fee;
+                              default_shipping.first_num = value.first_num;
+                              default_shipping.continue_fee = value.continue_fee;
+                              default_shipping.continue_num = value.continue_num;
+                              default_shipping.way_id = value.id;
+                              default_shipping.product_parameter = data.product.product_parameter;
+                              default_shipping.need_num = data.reduce_info.need_num;
+                              default_shipping.need_money = data.reduce_info.need_money;
+                              default_shipping.order_price=default_shipping.order_price;
+                              default_shipping.reduce_info=data.reduce_info;
+                          }
+                      }
+                    }
+                  }
+                });
+                if(default_shipping.first_fee == 0) {
+                  default_shipping.first_fee = data.info[0].first_fee;
+                  default_shipping.first_num = data.info[0].first_num;
+                  default_shipping.continue_fee = data.info[0].continue_fee;
+                  default_shipping.continue_num = data.info[0].continue_num;
+                  default_shipping.way_id = data.info[0].id;
+                  default_shipping.product_parameter = data.product.product_parameter;
+                  if(data.reduce_info.need_num <= 1 && data.reduce_info.need_money <= default_shipping.order_price){
+                    default_shipping.reduce=false;
+                  }else{
+                    default_shipping.need_num = data.reduce_info.need_num;
+                    default_shipping.need_money = data.reduce_info.need_money;
+                  }
+                }
+                $('#shownum').val(1);
+                if(default_shipping.reduce == false){
+                    $('#picker-way').text('￥' + 0 + '.00');
+                }else{
+                    $('#picker-way').text('￥' + default_shipping.first_fee + '.00');
+                }
+
+                $('#shipping-id').val(default_shipping.way_id);
+              } else {
+                  $('#picker-way').text('￥0.00');
+              }
+            }
+          })
+        }
+      </script>
+      <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="__PUBLIC__/Admin_v3/js/light7-swiper.min.js" type="text/javascript" charset="utf-8"></script>
+      <script src="__PUBLIC__/Admin_v3/js/shop-detail.js" type="text/javascript" charset="utf-8"></script>
+      <!--script end-->
+    </div>
+  </body>
+
+</html>

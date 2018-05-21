@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/shopping-menu.css" />
+    <script>
+        var level = "{$manager.level}";
+    </script>
+    <script src="__PUBLIC__/Admin_v3/js/shopping-menu.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+
+  <body>
+    <div class="mask">
+      <div class="select-detail" id="skus-menu">
+        <div class="select-top">
+          <img class="select-img" src="" alt="" />
+          <p class="select-price">￥</p>
+          <p class="select-desc">请选择规格</p>
+          <span class="skus">库存：</span>
+          <i class="btn-close" id="close-hock"></i>
+        </div>
+        <div class="select-middle">
+          <dl>
+            <dt>规格</dt>
+            <dd class="active">套装一</dd>
+            <dd>套装二</dd>
+            <dd>套装三</dd>
+            <dd>套装四</dd>
+            <dd>套装五</dd>
+          </dl>
+          <dl>
+            <dt>颜色</dt>
+            <dd class="active">红色</dd>
+            <dd>蓝色</dd>
+            <dd>白色</dd>
+            <dd>黄色</dd>
+            <dd>绿色</dd>
+          </dl>
+        </div>
+
+        <div class="select-bottom">
+          <div class="detail-num">
+            <label for="btn-wrapper">购买数量：</label>
+            <div class="btn-wrapper">
+              <input type="button" name="btn_reduce" id="btn_reduce" value="-" />
+              <input type="number" name="btn_num" id="btn_num" value="1" />
+              <input type="button" name="btn_add" id="btn_add" value="+" />
+            </div>
+          </div>
+        </div>
+        <button class="btn-sure" id="property-sure">确定</button>
+      </div>
+    </div>
+    <input type="hidden" name="skus_id" id="skus_id" value="" />
+  </body>
+
+</html>

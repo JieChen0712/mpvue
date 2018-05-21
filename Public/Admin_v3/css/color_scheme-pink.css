@@ -1,0 +1,252 @@
+/*登录页面*/
+/* .color-login-bg {
+    background-image: url(../images/login/login_pink/bg.jpg);
+}
+
+.color-login-text {
+    color: #FE879B;
+}
+
+.color-login-btn {
+    background-color: #FE879B;
+}
+
+.color-login-input input {
+    color: #FE879B;
+}
+
+.color-login-input input {
+    border-bottom: 1px solid #FE879B !important;
+}
+
+.color-login-input input::-webkit-input-placeholder {
+    color: #FE879B;
+}
+
+.color-login-input input::-moz-placeholder {
+    color: #FE879B;
+}
+
+.color-login-input input:-ms-input-placeholder {
+    color: #FE879B;
+} */
+
+/* 主页面 */
+.color-index-bg {
+    background-image: url(../images/color-scheme/pink/index-bg.png);
+}
+
+/* 邀请代理 */
+
+.color-creat-bg {
+    background: url(../images/color-scheme/pink/invite-agent-bg.png) no-repeat;
+}
+
+
+/* 充值申请 */
+
+.color-recharge-apply-btn {
+    background-color: #FE879B;
+}
+
+
+/* 充值审核 */
+
+.color-recharge-check-passbtn {
+    border: none !important;
+    background-color: #FE879B;
+    color: #fff !important;
+}
+
+.color-recharge-check-refusebtn {
+    color: #FE879B !important;
+    background-color: #fff;
+    border: 1px solid #FE879B !important;
+}
+
+/*订单明细*/
+
+.color-all-nav.active {
+    color: #FE879B !important;
+}
+
+.color-all-nav.active::after {
+    border: 2px solid #FE879B;
+}
+
+.color-all-status {
+    color: #FE879B;
+}
+
+.color-all-btn {
+    color: #FE879B;
+    border-color: #FE879B;
+}
+
+
+/*代理个人信息*/
+
+.color-agency-detail-bg {
+    background-image: url(../images/color-scheme/pink/agent-detail-bg.png);
+}
+
+.colr-agency-detail-btn {
+    background-color: #FE879B;
+}
+
+
+/*处理下级订单*/
+
+.color-examine-nav.active {
+    color: #FE879B !important;
+}
+
+.color-examine-nav.active::after {
+    border: 2px solid #FE879B;
+}
+
+.color-examine-status {
+    color: #FE879B;
+}
+
+
+/*个人资料*/
+
+.color-info-exitbtn {
+    background-color: #FE879B;
+}
+
+
+/*个人信息*/
+
+.color-user-bg {
+    background: url(../images/color-scheme/pink/center-bg.png) no-repeat;
+}
+
+
+/* 商学院 */
+
+.color-business-index-nav.active {
+    border-bottom: 0.1875rem solid #FE879B;
+    color: #FE879B !important;
+}
+
+
+/* 审核代理 */
+
+.color-manage-index-bg {
+    background: #FE879B;
+}
+.color-manage-index-text {
+    color: #FE879B;
+}
+.color-manage-index-btn-right {
+    background: #FE879B;
+    color:#fff;
+	border:none;
+}
+.color-manage-index-btn-left {
+    background: #fff;
+    color:#FE879B;
+	border:1px solid #FE879B;
+}
+
+
+/*素材详情*/
+
+.color-material-detail-text {
+    background-color: #FE879B;
+}
+
+
+/*提现申请*/
+
+.color-refund-apply-btn {
+    background-color: #FE879B;
+}
+
+
+/*提现审核*/
+
+.color-refund-check-passbtn {
+    border: none !important;
+    background-color: #FE879B;
+    color: #fff !important;
+}
+
+.color-refund-check-refusebtn {
+    color: #FE879B !important;
+    background-color: #fff;
+    border: 1px solid #FE879B !important;
+}
+
+/*下单主页*/
+.color-order-index-bg {
+    background-image: url(../images/color-scheme/pink/order-bg.png) !important;
+}
+
+
+/*修改密码*/
+.color-edit-password-btn {
+    background-color: #FE879B;
+}
+
+
+/*审核申请*/
+.color-check-apply-nav.active {
+    color: #FE879B;
+}
+
+.color-check-apply-nav.active::after {
+    border: 1px solid #FE879B;
+}
+
+/*我的团队*/
+
+/* .color-team-index-nav.active {
+    color: #FE879B !important;
+}
+.color-team-index-nav.active::after {
+    border: solid 1px #FE879B !important;
+} */
+
+/*扫码发货*/
+.color-s-bg {
+    background-color: #FE879B !important;
+}
+
+/*升级申请*/
+.cololr-upgrade-apply-btn {
+    background-color: #FE879B;
+}
+
+/* footer */
+
+.color-footer-nav-icon.active:nth-of-type(1) {
+    background-image: url(../images/color-scheme/pink/footer1.png) !important;
+}
+
+.color-footer-nav-icon.active:nth-of-type(2) {
+    background-image: url(../images/color-scheme/pink/footer2.png) !important;
+}
+
+.color-footer-nav-icon.active:nth-of-type(3) {
+    background-image: url(../images/color-scheme/pink/footer3.png) !important;
+}
+
+.color-footer-nav-icon.active:nth-of-type(4) {
+    background-image: url(../images/color-scheme/pink/footer4.png) !important;
+}
+
+.color-footer-nav-text.active {
+    color: #FE879B !important;
+}
+
+/* 首页头部代理等级和代理姓名 */
+
+.banner .manager_name{
+    color: #303030;
+}
+.banner .manager_levname{
+    color:#303030;
+}

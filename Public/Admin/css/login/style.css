@@ -1,0 +1,98 @@
+body{ font-family: Lato,'Open Sans', sans-sarif; font-size: 16px; background-color: #1F1F1F; }
+*{margin: 0; padding: 0; box-sizing: border-box;}
+.container{margin: 0 auto; max-width: 1000px;}
+.row{width: 103%; float: left; margin: 110px -1.5%;}
+/*= common css to all effects =*/
+.single-member{width: 280px; float: left; margin: 30px 2.5%; background-color: #fff; text-align: center; position: relative;}
+.member-image img{max-width: 100%; vertical-align: middle;}
+
+.top h3{color:#fff;text-align:center;margin-top:8%;font-size: 18px}
+.icon {position: absolute; z-index: 1;margin-top: 2%}
+
+
+body .login_fields__user, body .login_fields__password {
+  position: relative;
+  text-align: center;
+  border-bottom: 1px solid #484b57;
+  width:68%;
+  margin:4% auto;
+}
+body .login_fields__submit {
+  position: relative;
+  top: 35px;
+  left: 0;
+  width: 70%;
+  right: 0;
+  margin: auto;
+}
+body .login_fields__submit .forgot {
+  font-size: 14px;
+  color:#e4e4e4;
+  line-height: 1.6;
+  margin-bottom:5%;
+  text-align:justify;
+  margin-top: -10%;
+}
+.login_fields__user input {
+  background-color: #323542;
+  font-size: 16px;
+  margin-left: 5%;
+  color: #fff;
+  margin-top:4%;
+  width:68%;
+  height: 20%;
+  border-radius: 2px;
+  -webkit-appearance: none;outline:none;
+  border:solid 1px #323542;
+
+}
+.login_fields__password input {
+  background-color: #323542;
+  font-size: 16px;
+  margin-left: 5%;
+  color: #fff;
+  margin-top:3%;
+  width:68%;
+  height: 20%;
+  border-radius: 2px;
+  -webkit-appearance: none;outline:none;
+  border:solid 1px #323542;
+
+}
+body .login_fields__submit .forgot a {
+  color: #606479;
+}
+body .login_fields__submit input {
+  width:100%;
+  margin-top: 4%;
+  font-size:15px;
+  border-radius: 10px;
+  background: transparent;
+  padding: 4% 0;
+  border: 2px solid #5bc92b;
+  color: #fff;
+  text-transform: uppercase;
+  -webkit-transition-property: background,color;
+          transition-property: background,color;
+  -webkit-transition-duration: .2s;
+          transition-duration: .2s;
+  background:#5bc92b;
+  -webkit-appearance: none;
+  outline:none;
+}
+body .login_fields__submit input:focus {
+  box-shadow: none;
+  outline: none;
+}
+body .login_fields__submit input:hover {
+  color: white;
+  background: #5bc92b;
+  cursor: pointer;
+  -webkit-transition-property: background,color;
+          transition-property: background,color;
+  -webkit-transition-duration: .2s;
+          transition-duration: .2s;
+  opacity: .5;         
+}
+
+

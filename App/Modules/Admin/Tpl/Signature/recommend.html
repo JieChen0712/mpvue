@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>推荐分享链接</title>
+    <include file="Public/header"/>
+    </head>
+    <script type="text/javascript">
+        $(function(){
+            $(".btm").click(function(){
+                $(".mask").show();
+            })
+        })
+    </script>
+    
+    <body id="aa" style="background-color:#f5f5f5">
+            <header class="header"><a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/new/left_icon.png" alt=""></a>推荐经销商生成</header>
+        <section class="section1">
+            <ul class="ul">
+                <li>经销商名称</li>
+                <li>级别</li>
+                <li>授权号</li>
+                <li>状态</li>
+            </ul>
+            <ul class="ul1">
+                <li>{$agentRow.name}</li>
+                <li>{$agentRow.levname}</li>
+                <li>{$agentRow.authnum}</li>
+                <li style="color:#4abcf2;">正常</li>
+                <div style="clear:both"></div>
+                <div class="btm">生成分享链接</div>
+            </ul>
+        </section>
+        <div class="mask" id="show">
+            <div class="test">
+                <p class="p1">级别列表</p>
+                <!--所有级别都能推荐最高级别经销商-->
+                
+                <a href="__APP__/Admin/Signature/sharesign/?id={$agentRow.id}&level=1&ct={$ct}"><p class="p2" style="margin-top:8px">{$level_name.1}<span>[点击生成]</span></p></a>
+                
+                
+<!--                <egt name="agentRow.level" value="2">
+                <a href="__APP__/Admin/Signature/sharesign/?id={$agentRow.id}&level=2&ct={$ct}"><p class="p2" style="margin-top:8px">{$level_name.2}<span>[点击生成]</span></p></a>
+                </egt>
+
+                <egt name="agentRow.level" value="3">
+                <egt name="level_num" value="3">
+                    <a href="__APP__/Admin/Signature/sharesign/?id={$agentRow.id}&level=3&ct={$ct}"><p class="p2" style="margin-top:8px">{$level_name.3}<span>[点击生成]</span></p></a>
+                </egt>
+                </egt>
+
+                <egt name="agentRow.level" value="4">
+                <egt name="level_num" value="4">
+                    <a href="__APP__/Admin/Signature/sharesign/?id={$agentRow.id}&level=4&ct={$ct}"><p class="p2" style="margin-top:8px">{$level_name.4}<span>[点击生成]</span></p></a>
+                </egt>
+                </egt>
+
+                <egt name="agentRow.level" value="5">
+                <egt name="level_num" value="5">
+                    <a href="__APP__/Admin/Signature/sharesign/?id={$agentRow.id}&level=5&ct={$ct}"><p class="p2" style="margin-top:8px">{$level_name.5}<span>[点击生成]</span></p></a>
+                </egt>
+                </egt>
+
+                <egt name="agentRow.level" value="6">
+                <egt name="level_num" value="6">
+                    <a href="__APP__/Admin/Signature/sharesign/?id={$agentRow.id}&level=6&ct={$ct}"><p class="p2" style="margin-top:8px">{$level_name.6}<span>[点击生成]</span></p></a>
+                </egt>
+                </egt>-->
+            </div>
+        </div>  
+	<script type="text/javascript">
+	$(function(){
+	    $('body').bind('click', function(event) {
+		    var evt = event.srcElement ? event.srcElement : event.target;    
+		    if(evt.id !== 'show' ){
+		    	return; // 如果是元素本身，则返回
+		    }else {
+            	$(".mask").hide(); // 如不是则隐藏元素
+            } 
+		});
+	});
+    </script>
+    </body>
+    </html>

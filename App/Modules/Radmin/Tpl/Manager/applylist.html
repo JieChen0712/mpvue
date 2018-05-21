@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script type="text/javascript">
+        //审核url
+        var auditUrl = '{:U(GROUP_NAME . "/manager/audit")}/';
+        var delUrl = '{:U(GROUP_NAME . "/manager/delete")}/';
+        
+        $(document).ready(function () {
+            form.render();
+        })
+    </script>
+    <!--引入审核js-->
+    <script src="__PUBLIC__/Radmin_v3/js/audit.js"></script>
+</head>
+
+<body>
+<section class="layui-container">
+    <div class="content">
+        <header class="header">
+            <h3>审核总部直属代理</h3>
+            <input type="button" class="layui-btn layui-btn-radius layui-btn-normal" id="audit" data-status="1" value="通过审核"/>
+            <input type="button" class="layui-btn layui-btn-radius layui-btn-danger" id="delete-agent" value="删除申请"/>
+        </header>
+        <div class="table-wrapper">
+            <table class="layui-table" lay-skin="row" lay-size="sm">
+                <thead>
+                <tr>
+                    <th><input type="checkbox" id="checkAll"/></th>
+                    <th>编号</th>
+                    <th>姓名</th>
+                    <th>微信号</th>
+                    <th>上级经销商</th>
+                    <th>推荐经销商</th>
+                    <th>电话</th>
+                    <!--<th>邮箱</th>-->
+                    <th>身份证</th>
+                    <th>详细地址</th>
+                    <th>申请时间</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="applyList">
+                    <tr style="position: relative;">
+                        <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                    </tr>
+                    <else />
+                    <volist name="applyList" id="m">
+                        <tr>
+                            <td class="checkItem"><input type="checkbox" name="mid" value="{$m.id}" /></td>
+                            <td>{$m.id}</td>
+                            <td>{$m.name}</td>
+                            <td>{$m.wechatnum}</td>
+                            <td>{$m.bossname}</td>
+                            <td>
+                                <if condition="$m.recommendID eq 0">
+                                    总部
+                                    <else />
+                                    {$m.recommendID|toAgent=###}
+                                </if>
+                            </td>
+                            <td>{$m.phone}</td>
+                            <!--<td>{$m.email}</td>-->
+                            <td>{$m.idennum}</td>
+                            <td>{$m.address}</td>
+                            <td>{$m.time|date="Y-m-d H:i",###}</td>
+                            <td>
+                                <button type="button" class="layui-btn layui-btn-warm" data-iframe="__URL__/detail?id={$m.id}" data-title="代理信息详情">详情信息</button>
+                            </td>
+                        </tr>
+                    </volist>
+                    <include file="Public/page" />
+                    <!-- <div id="page"></div> -->
+                    <!--<tr><td colspan="14"><div class="pull-right">{$page}</div></td></tr>-->
+                </empty>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</section>
+</body>
+
+</html>

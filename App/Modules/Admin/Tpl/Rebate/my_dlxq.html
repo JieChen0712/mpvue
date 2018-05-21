@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>我的推荐经销商</title>
+    <include file="Public/rebate"/>
+</head>
+<body style="background-color:#f5f5f5;">
+     <header class="header">
+        <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/index/left_icon.png" alt=""></a><p>我的推荐经销商</p>
+    </header>
+    <div class="wrap_bg1">
+        <div class="touxiang_box1">
+            <ul>
+               <li class="bg"><img src="__PUBLIC__/images/touxiang.png" alt=""></li>
+               <li class="test">
+                <h3>{$manager.name}</h3>
+                <p>等级：{$manager.levname}</p>
+               </li>
+               <li class="li">
+               <p class="p1"><span>{$manager.count}</span> <br>总订单下单</p>
+               </li> 
+            </ul>
+        </div>
+    </div>
+    <volist name="list" id="vo">
+        <div class="dl">
+        <div class="wrap dle1">
+            <div class="top">
+                <h2>{$vo.a}</h2><p class="p1">订单下单号：{$vo.order_num}</p>
+            </div>
+            <a href="__URL__/my_dlxqa?id={$vo.order_num}">
+            <div class="top2">
+                <p>订单下单日期：{$vo.time|date="Y:m:d H:i",###}</p>
+                <p>收货人:{$vo.s_name}</p>
+                <p>收货人电话：{$vo.s_phone}</p> 
+                <p>收货人地址：{$vo.s_addre}</p>
+                <img src="__PUBLIC__/images/dd_icon.jpg" alt="">
+            </div>
+            </a> 
+            <div class="top3">
+                <p>订单下单金额：<span class="span1">￥{$vo.total_price}</span></p>
+            </div> 
+            </div>
+        </div>
+    </volist>
+    
+</body>
+</html>

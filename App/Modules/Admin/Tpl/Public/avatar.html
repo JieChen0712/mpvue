@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>上传头像</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/avatar.css" />
+  </head>
+
+  <body>
+    <section class="select-avactar">
+      <div class="modal-mask"></div>
+      <div class="control-action">
+        <div class="group-action">
+          <button class="primary" onclick="javascript:document.getElementById('camera').click();">拍照</button>
+          <input type="file" accept="image/*" id="camera" capture="camera">
+          <button class="primary" id="choose_img">从手机相册选择</button>
+          <button class="primary">取消</button>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script type="text/javascript">
+    //监听点击后使用下面代码弹出操作层
+    $('.modal-mask').addClass('active').siblings('.control-action').addClass('active');
+  </script>
+
+</html>

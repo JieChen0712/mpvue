@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>提交订单</title>
+
+    <include file="Public/header_v3" />
+
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/order-list.css" />
+</head>
+<script>
+    var  uploadUrl = '__APP__/Home/Manager/uploadCanvas';
+</script>
+<body>
+    <div class="page">
+      <!-- header start-->
+      <include file="Public/header_features_v3" />
+      <!-- header end-->
+      <div class="content content-order">
+        <!--<section class="order-address">
+          <empty name="address">
+            <a href="__GROUP__/address/address_detail?return_url={$return_url}" class="address-link external"><i>+</i>选择收货地址<i class="icon icon-right"></i></a>
+            <else />
+            <a href="__GROUP__/address/address_detail?return_url={$return_url}" class="address-link external">
+              <input type="hidden" id="address_id" value="{$address.id}" />
+              <ul>
+                <li>收货人:{$address.name}</li>
+                <i class="icon icon-right"></i>
+                <li>手机号:{$address.phone}</li>
+                <li>地&nbsp;&nbsp;址: <span id="province">{$address.province}</span>{$address.city}{$address.area}{$address.address}</li>
+              </ul>
+            </a>
+          </empty>
+        </section>-->
+        <section class="order-alist">
+          <ul>
+            <li>
+              <!--<p class="seller-inf"><img src="{$manager.headimgurl}" alt="" />{$manager.name}</p>-->
+              <div class="goods-infs">
+                <img src="__ROOT__{$product.image}" />
+                <p class="goods-title">{$product.name}
+                    <span class="goods-format" style="display: inline;float: right;">x{$num}</span>
+                </p>
+                <notempty name="properties">
+                <p class="goods-format">规格：{$properties}</p>
+                </notempty>
+                <p class="goods-price">￥<span class="priceval">{$product.price}</span></p>
+                <!--<p class="goods-title" style="margin-top: 0px;"><span class="priceval" style="color: #787878;margin-left: 1px;">x{$num}</span> </p>-->
+              </div>
+              <!--<div class="count-num">
+                    <span>购买数量</span>
+                    <input type="number" name="shownum" class="shownum" value="{$num}" readonly="readonly" />
+                    <input type="hidden" name="product_id" value="{$product.id}"/>
+                </div>-->
+            </li>
+          </ul>
+          <input type="hidden" name="shownum" class="shownum" value="{$num}" readonly="readonly" />
+          <input type="hidden" name="product_id" value="{$product.id}" />
+          <input type="hidden" name="sku_ids" value="{$sku_id}" />
+        </section>
+<!--        <div class="picker-shipping">
+          <span class="desc">运费方式：</span>
+          <input type="text" id='picker-way' />
+          <input type="hidden" name="shipping-way" id="shipping-way" value="" />
+          <input type="hidden" name="shipping-id" id="shipping-id" value="" />
+          <i class="icon icon-right"></i>
+        </div>-->
+            <!--<div class="remark">
+                备注信息：
+                <textarea name="note" rows="3" placeholder="请输入备注" maxlength="50"></textarea>
+            </div>-->
+         <if condition="($myself_info_level gt 1) AND ($rec_info_level eq 1) AND (is_first_buy_order eq 0)">
+            <div class="pay-way">
+               <div>
+                    买货方式:
+                    <label>
+                        <input type="radio" name="buy_way" data-name="1" value="1"  <?php if(!$is_top_supply): ?>checked
+                        <?php endif;?> />向上级买货
+                    </label>
+                    <label>
+                        <input type="radio" name="buy_way" data-name="2" value="2" <?php if($is_top_supply): ?>checked
+                        <?php endif;?> />向厂家买货
+                    </label>
+                </div>
+            </div>
+         </if>
+         <div class="pay-way">
+                <div>
+                    支付方式:
+                    <label>
+                        <input type="radio" name="payWay" data-name="1" value="1" checked>虚拟币
+                    </label>
+                    <label>
+                        <input type="radio" name="payWay" data-name="2" value="2">支付截图
+                    </label>
+                </div>
+                
+                <div class="upLoadImg-wrapper" style="display:none;">
+                    <include file="Public/upLoadImg" />
+                </div>
+            </div>
+        </div>
+      
+        <footer class="submit-order">
+            <p>合计：￥
+                <span id="countprice">{$total_money}</span>
+            </p>
+            <input style="background-color: #0000FF" type="button" name="submit-order" id="submit-order1" value="云仓订单" />
+            <!--<input type="button" name="submit-order" id="submit-order" value="提交订单" />-->
+        </footer>
+    </div>
+    <script type="text/javascript">
+        var now_url = '__URL__/';
+        var wayId;
+        var p_id = getUrlParam('id')
+        var selectArr = [];
+        var get_shipping = '__GROUP__/order/get_shipping_ajax';
+        var province = $('#province').text();
+        var shipping_way;
+        var tempData;
+
+        $.ajax({
+            type: 'POST',
+            url: get_shipping,
+            data: {
+                id: p_id
+            },
+            async: false,
+            success: function (data) {
+                if (data.code == 1) {
+                    var temp = [];
+                    tempData = data;
+
+                    $.each(data.info, function (key, value) {
+                        if (value.shipping_way == 0 && $.inArray("快递", temp) == -1) {
+                            temp.push('快递')
+                            if ($('#shipping-way').val() == "") {
+                                $('#shipping-way').val(0)
+                            }
+                        } else if (value.shipping_way == 1 && $.inArray("EMS", temp) == -1) {
+                            temp.push('EMS')
+                            if ($('#shipping-way').val() == "") {
+                                $('#shipping-way').val(1)
+                            }
+                        } else if (value.shipping_way == 2 && $.inArray("邮政", temp) == -1) {
+                            temp.push('邮政')
+                            if ($('#shipping-way').val() == "") {
+                                $('#shipping-way').val(2)
+                            }
+                        }
+                    });
+                    switch (temp.length) {
+                        case 1:
+                            shipping_way = 2;
+                            break;
+                        case 2:
+                            shipping_way = 1;
+                            break;
+                        case 3:
+                            shipping_way = 0;
+                            break;
+                        default:
+                            break;
+                    }
+                    $.each(data.info, function (key, value) {
+                        if (value.area_name.indexOf(province) > 0 && value.shipping_way ==
+                            shipping_way) {
+                            $('#shipping-id').val(value.id)
+                        } else if (value.shipping_way == shipping_way && $('#shipping-id').val() ==
+                            "") {
+                            $('#shipping-id').val(value.id)
+                        }
+                    });
+                    selectArr = temp;
+                    $('#picker-way').val(selectArr[0]);
+                } else {
+                    alert(data.msg)
+                }
+            }
+        })
+        $(function () {
+            $(document).on('click', '.choose-way', function () {
+                var str = $('#picker-way').val();
+                switch (str) {
+                    case '快递':
+                        wayId = 0;
+                        break;
+                    case 'EMS':
+                        wayId = 1;
+                        break;
+                    case '邮政':
+                        wayId = 2;
+                        break;
+                    default:
+                        wayId = 0;
+                        break;
+                }
+                $('#shipping-way').val(wayId);
+                shipping_way = wayId;
+                $('#shipping-id').val("");
+                $.each(tempData.info, function (key, value) {
+                    if (value.area_name.indexOf(province) > 0 && value.shipping_way ==
+                        shipping_way) {
+                        $('#shipping-id').val(value.id)
+                    } else if (value.shipping_way == shipping_way && $('#shipping-id').val() ==
+                        "") {
+                        $('#shipping-id').val(value.id)
+                    }
+                });
+            })
+        })
+        //取参
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg); //匹配目标参数
+            if (r != null) return unescape(r[2]);
+            return null; //返回参数值
+        }
+        $('document').ready(function(){
+            $("input[name='payWay']").click(function(){
+                if($(this).val() == 2) {
+                    $('.upLoadImg-wrapper').fadeIn();
+                } else {
+                    $('.upLoadImg-wrapper').fadeOut();
+                }
+            })
+        })
+    </script>
+    <!--script strat-->
+    <script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/order-list-stock.js" type="text/javascript" charset="utf-8"></script>
+
+    <!--script end-->
+</body>
+
+</html>

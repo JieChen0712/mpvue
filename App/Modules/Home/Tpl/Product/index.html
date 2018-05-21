@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="ui-mobile">
+<head lang="en">
+    <title>产品系列</title>
+    <include file="Public/header"/>  
+    <style type="text/css">
+     .ui-btn{padding:1.7em 1em}
+     .ui-listview>li h2{font-size:25px;}
+     .ui-listview>li p{font-size:18px;}
+     .ui-listview .ui-li-has-thumb>.ui-btn>img:first-child{max-height: 7em;max-width: 7em;top: 10px;left: 8px;}
+     .ui-listview>.ui-li-has-thumb>.ui-btn{padding-left: 9.25em;}
+     .ui-btn-icon-left:after, .ui-btn-icon-right:after, .ui-btn-icon-top:after, .ui-btn-icon-bottom:after, .ui-btn-icon-notext:after{width:30px;height:30px;}
+    </style>
+    </head>
+    <body class="ui-mobile-viewport ui-overlay-a">
+        <div data-role="page" id="page1" data-url="page1" tabindex="0" class="ui-page ui-page-theme-a ui-page-active">
+            <header class="header1">
+            <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/index/left_icon.png" alt=""></a><p>产品系列</p>
+            </header>
+
+            <div data-role="content" class="ui-content" role="main">
+                <notempty name="list">
+                            <foreach name="list" item="vo">
+                                <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="搜索产品名" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+                                    <li class="ui-li-has-thumb ui-first-child ui-last-child">
+                                        <a href="__APP__/Home/Product/detail?pd={$vo.id}" style="border-color:#ddd;" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
+                                            <img src="__ROOT__{$vo.image}" style="width:200px;height:200px;">
+                                            <h2>{$vo.name}</h2>
+                                            <p>{$vo.presents}</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </foreach>
+                    <else/>
+                    <p>无产品信息！<a href="javascript:history.go(-1);">返回上一页</a></p>
+                </notempty>
+            </div>
+        </div>
+    </body>
+    </html>

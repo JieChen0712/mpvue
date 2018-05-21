@@ -1,0 +1,36 @@
+<layout name="Public/public" />
+
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script> 
+
+
+<h1 class="page-header">最低提现金额/最低申请充值金额设置</h1>
+
+
+<!--右边内容-->
+    <span>ps:如某经销商该级别门槛为1000，当前余额为2000，则可提现数为1000，可申请充值金额最低为1000</span>
+    <form class="form-inline" method="post" action="__URL__/min_refund_set_submit">
+        <table class="table">
+            <tbody>
+                <foreach name="level_name" key="key_left_num" item="vo_left_name">
+                <tr>
+                    <td>
+                        {$vo_left_name}金额门槛：
+                        <php>
+                            $money_key = 'level'.$key_left_num;
+                            $money_value = $set_info[$money_key];
+                        </php>
+                        <input class="form-control" name="level{$key_left_num}" value="{$money_value}" >元
+                    </td>
+                </tr>
+                </foreach>
+            <tr>
+                <td>
+                    <input class="btn1" id="确定" value="确定" type="submit">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>

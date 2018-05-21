@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <!--<title>订单管理</title>
+        <include file="Public/header_v2"/>
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/header.css">-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>商品详情</title>
+
+    <include file="Public/header_v3" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/light7-swiper.min.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/Mshow-detail.css" />
+    <!--<style>
+      body {
+      background: url(__PUBLIC__/Admin_v2/images/bg.jpg) #fbfbfb no-repeat;
+      background-color:#fbfbfb;
+      background-size: cover;      
+      }
+     .tel_title {   background: transparent; } 
+ 
+    </style>-->
+</head>
+
+<body>
+    <div class="page">
+        <!-- header start-->
+        <include file="Public/header_features_v3" />
+        <!-- header end-->
+        <div class="content goods-content">
+            <div class="mask">
+                <!--商品二维码-->
+                <div class="goods-qrcode">
+                    <!--<div class="goods-imf">-->
+                        <!--<img src="__PUBLIC__/Admin_v3/images/mallorder/goods1.png" alt="" />-->
+                        <!--<div class="goods-text">-->
+                            <!--<p>补水美白套装补水美白套装补水美白套装补水美白套装</p>-->
+                            <!--<p class="detail-price">￥209.00-->
+                                <!--<del>￥880.00</del>-->
+                            <!--</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="goods-qrimg">
+                        <img src="" alt="" />
+                        <p>截屏保存分享给您的朋友</p>
+                    </div>
+                    <div class="footer-title">
+                        <p>{$Think.config.SYSTEM_NAME}商城</p>
+                    </div>
+                </div>
+                <!--商品详细选择-->
+                <!--<div class="select-detail">
+						<div class="select-top">
+							<img src="__PUBLIC__/Admin_v3/images/mallorder/goods1.png" alt="" />
+							<p class="select-price">￥209.00</p>
+							<p class="select-detail">请选择规格</p>
+							<i class="icon icon-close"></i>
+						</div>
+						<dl>
+							<dt>规格</dt>
+							<dd>套装一</dd>
+							<dd>套装二</dd>
+							<dd>套装三</dd>
+							<dd>套装四</dd>
+							<dd>套装五</dd>
+						</dl>
+						<div>
+							<p class="detail-num"><span>购买数量：</span><input type="button" name="reducenum" id="reducenum" value="-" /><input type="number" name="shownum" id="shownum" value="1" /><input type="button" name="numadd" id="numadd" value="+" /></p>
+						</div>
+					</div>-->
+            </div>
+            <section class="details-head">
+                <!--swiper start-->
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <volist name="product.many_image" id="vo">
+                        <div class="swiper-slide">
+                            <div class="swiper-zoom-container">
+                                <img src="__ROOT__{$vo}">
+                            </div>
+                        </div>
+                        </volist>
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination swiper-pagination-white"></div>
+                </div>
+                <!--swiper end-->
+                <section class="shop-inf">
+                    <div class="shop-title">
+                        <p>{$product.name}</p>
+                        <div class="share-btn">
+                            <i class="icon icon-share"></i>分享</div>
+                    </div>
+                    <p class="detail-price">￥{$product.price}
+                        <!--<del>￥800.00</del>-->
+                    </p>
+                    <!--<p class="detail-spec">
+                        <span>邮费：￥{$shipping_fee}(满{$shipping_num}件包邮)</span>
+                    </p>-->
+                    <p class="detail-num">
+                        <span>购买数量：</span>
+                        <input type="button" name="reducenum" id="reducenum" value="-" />
+                        <input type="number" name="shownum" id="shownum" value="1" />
+                        <input type="button" name="numadd" id="numadd" value="+" />
+                    </p>
+                </section>
+                <div class="goods-safe">
+                    <span>
+                        <i class="icon-success"></i>企业认证</span>
+                    <span>
+                        <i class="icon-success"></i>担保交易</span>
+                </div>
+            </section>
+            <!-- <section class="select-wrapper">
+                <p>选中：尺寸
+                    <i class="icon icon-right"></i>
+                </p>
+                <p>
+                    <i class="icon-shop"></i>{$Think.config.SYSTEM_NAME}网上商城
+                    <span>进入店铺
+                        <i class="icon icon-right"></i>
+                    </span>
+                </p>
+            </section> -->
+            <div class="goods-detail">
+                <dl class="goods-container">
+                    <dt class="goods-head">商品详情</dt>
+                    <dd class="goods-inf">{$product.content}
+                    </dd>
+                </dl>
+            </div>
+            <input type="hidden" name="id" value="{$product.id}" />
+        </div>
+        
+    <!-- <section class="goods-qr">
+        <img src="__PUBLIC__/Admin_v3/images/mallorder/goods_qr.png" />
+    </section> -->
+    <!-- <div class="mask">
+            <img src="__PUBLIC__/images/guide.png" alt="">
+        </div> -->
+
+    <footer class="bar bar-footer">
+        <input type="button" value="立即购买" id="buy" />
+    </footer>
+
+    <!--script strat-->
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/light7-swiper.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/Mshop-detail.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        var buy_url = '__GROUP__/shop/buy_detail';
+    </script>
+    <!--script end-->
+    </div>
+</body>
+
+</html>

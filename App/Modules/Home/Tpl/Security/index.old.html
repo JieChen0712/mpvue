@@ -1,0 +1,93 @@
+ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="ui-mobile">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--<base href="http://fraisefibre.fw-315.net/a/Fwcx.aspx?f=">--><base href=".">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>{$Think.config.SYSTEM_NAME}防伪系统</title>
+   
+    <link href="__PUBLIC__/css/jquery.mobile-1.4.2.min.css" rel="stylesheet">
+    
+	
+	<style>
+	html head+body .ui-btn.ui-btn-b,html head+body .ui-btn.ui-btn-b:hover{background:#000; color:#fff; border-color:#000;text-shadow:0 1px 0 #000;}
+	</style>
+</head>
+<body class="ui-mobile-viewport ui-overlay-a">
+    <div data-role="page" id="page1" data-url="page1" tabindex="0" class="ui-page ui-page-theme-a ui-page-active">
+        <style type="text/css">
+            #result
+            {
+                 word-wrap: break-word !important;
+                 white-space: normal !important;
+            }
+        </style>
+		<script src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript">
+            function queryfw() {
+               /*  $.ajax({
+                    type: "GET",
+                    url: "" + $("#fwcode").val(),
+                    dataType: "jsonp",
+                    success: function (msg) {
+                        $("#result").html(msg.QueryResult);
+                        $("#colorfw").html("彩色防伪码：<br/><img src='" + msg.ccfile + "'/>");
+                        $("#qrcode").html("彩色二维码：<br/><img src='" + msg.ddfile + "'/>");
+                    }
+                }); */
+                var val = $("#fwcode").val();
+                $.post('fwcode',{fwcode:val},function(data){
+                	if(data == 'error'){
+                		alert('未知错误!');
+                	}else if(data == 'none'){
+                		alert('您输入的防伪码不存在!');
+                	}else{
+                		if(data['count'] ==1){
+                			var text ="<span style='color:red'>您购买的产品是{$Think.config.SYSTEM_NAME}正品,感谢您的支持!</span><br />首次查询时间："+data['first']+"<br/>共进行过"+data['count']+"次防伪查询。<br/>";
+                		    text+="防伪记录如下：<br/>"+data[0]['time'];
+                		}
+                		if(data['count'] ==2){
+                			var text ="<span style='color:red'>您购买的产品是{$Think.config.SYSTEM_NAME}正品,感谢您的支持!</span><br />首次查询时间："+data['first']+"<br/>共进行过"+data['count']+"次防伪查询。<br/>";
+                		    text+="防伪记录如下：<br/>"+data[0]['time']+"<br/>"+data[1]['time'];
+                		}
+                		if(data['count'] ==3){
+                			var text ="<span style='color:red'>您购买的产品是{$Think.config.SYSTEM_NAME}正品,感谢您的支持!</span><br />首次查询时间："+data['first']+"<br/>共进行过"+data['count']+"次防伪查询。<br/>";
+                		   		text+="防伪记录如下：<br/>"+data[0]['time']+"<br/>"+data[1]['time']+"<br/>"+data[2]['time'];
+                		}
+                		if(data['count'] >3){
+                			var text ="<span style='color:red'>您购买的产品是{$Think.config.SYSTEM_NAME}正品,感谢您的支持!</span><br />首次查询时间："+data['first']+"<br/>共进行过"+data['count']+"次防伪查询。<br/>";
+                		   		text+="防伪记录如下：<br/>"+data[0]['time']+"<br/>"+data[1]['time']+"<br/>"+data[2]['time'];
+                		}
+                		$('#result').html(text);
+                	}
+                		
+            	});
+            }
+        </script>
+
+        <div data-role="header" style="background-color:#000;border-color:#D2057F;box-shadow:0px 2px 3px #FDBAE2;" role="banner" class="ui-header ui-bar-inherit">
+            <h1 style="color:#fff;text-shadow:0 1px 0 #333;" class="ui-title" role="heading" aria-level="1">{$Think.config.SYSTEM_NAME}防伪系统</h1>
+        </div>
+
+        <div data-role="content" style="text-align:center" class="ui-content" role="main">
+            <img src="__PUBLIC__/images/fangwei.jpg" style="width:95%"><br>
+            <ul data-role="listview" data-inset="true" data-theme="a" class="ui-listview ui-listview-inset ui-corner-all ui-shadow ui-group-theme-a">
+                <li data-role="divider" style="text-align:center" class="ui-li-static ui-body-inherit ui-first-child">
+                    <b>消费者防伪查询</b><br>     
+                    <b style="color:red">(请刮开涂层输入完整的防伪码)</b>
+                </li>
+                <li class="ui-li-static ui-body-inherit ui-last-child">                    
+                    <div class="ui-input-text ui-body-a ui-corner-all ui-shadow-inset"><input type="text" id="fwcode" placeholder="请输入防伪码" data-theme="a" value=""></div>
+                    <div class="ui-btn ui-input-btn ui-btn-b ui-corner-all ui-shadow">查询<input type="button" value="查询" data-theme="b" onclick="queryfw()"></div>
+                    <div id="result"></div>
+                    <br>
+                    <div id="colorfw"></div>
+                    <br>
+                    <div id="qrcode"></div>
+                    <br>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

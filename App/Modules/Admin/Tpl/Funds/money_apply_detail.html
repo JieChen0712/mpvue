@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>充值申请详细</title>
+    <include file="Public/header_v2"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/order.css">
+    </head>
+    <body>
+     <header class="header">
+        <a href="javascript:history.go(-1);" class="a"></a>
+        <p>充值申请详细</p>
+    </header>
+    <div class="order-section">
+        <div class="order-content">
+            <p class="order-num">申请信息</p>
+            <div class="order-detail">
+                <p class="test">虚拟币：<span>￥{$list.apply_money}</span></p>
+                <p class="test">申请时间：{$list.created|toDate=###}</p>
+                <if condition="$vv.status neq 0">
+                <p class="test">审核时间：{$list.updated|toDate=###}</p> 
+                </if>
+                <p  class="test">申请状态：
+                    <span id="ddzt">
+                        <if condition="$list.status eq 0">待审核
+                            <elseif condition="$list.status eq 1"/>已通过
+                            <else/>不通过
+                        </if>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <?php if( $is_audit == 1 && $list['status'] == 0 ):?>
+    <div class="order-section">
+        <div class="order-content">
+            <p class="order-num">审核操作</p>
+            <div class="order-detail">
+                <input class="weui-btn weui-btn_primary" type="submit" value="审核通过" onclick="apply_pass('{$list.id}','1')" />
+                <input class="weui-btn weui-btn_primary" type="submit" value="审核不通过" onclick="apply_pass('{$list.id}','2')" />
+            </div>
+        </div>
+    </div>
+    <?php endif;?>
+        
+<script>
+    function apply_pass(id, pass) {
+        var pass_info;
+        if( pass=='2' ){
+            pass_info = '您确认审核不通过吗？';
+        }
+        else{
+            pass_info = '您确认审核通过吗？';
+        }
+        
+        if (confirm(pass_info)) {
+            $.post("__URL__/apply_pass", {id: id, pass: pass}, function (res) {
+                if (res.code='1') {
+                    tusi(res.msg);
+                    window.location.href = document.referrer;
+                } else {
+                    tusi(res.msg);
+                }
+            });
+
+        } else {
+            //否则说明下了
+            //tusi("您取消了确认收货");
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

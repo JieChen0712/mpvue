@@ -1,0 +1,76 @@
+.content {
+  padding: 5%;
+  background-color: #f5f4f9;
+}
+.account {
+  display: flex;
+  padding: 5%;
+  background-color: #fbfbfb;
+}
+.account p {
+  flex: 0 0 5.625rem;
+  margin: 0;
+  color: #303030;
+}
+.account div {
+  flex: 1;
+}
+.account div p:nth-of-type(2) {
+  color: #0f3d6e;
+}
+.account span {
+  flex: 0 0 0.75rem;
+  font-size: 0.75rem;
+  color: #959595;
+  line-height: 3rem;
+}
+.recharge-wrapper {
+  padding: 5% 5%;
+  background-color: #fff;
+}
+.recharge-wrapper p {
+  margin: 0;
+}
+.recharge-wrapper .recharge-money {
+  display: flex;
+  border-bottom: 0.0625rem solid #c9c9c9;
+}
+.recharge-wrapper span {
+  flex: 0 0 1.5625rem;
+  padding-top: 0.625rem;
+  font-size: 1.8125rem;
+}
+.recharge-wrapper input {
+  flex: 1;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  font-size: 2.8125rem;
+}
+.money {
+  display: flex;
+  padding: 0 5% 5% 5%;
+  background-color: #fff;
+}
+.money p {
+  flex: 0 0 60%;
+  margin: 0;
+  color: #a0a0a0;
+}
+.money a {
+  flex: 0 0 40%;
+  color: #0f3d6e;
+}
+.btn-wrapper {
+  width: 100%;
+  padding: 5%;
+  background-color: #fff;
+}
+.btn-wrapper button {
+  width: 100%;
+  height: 2.9375rem;
+  border: none;
+  background-color: #7ed7f5;
+  color: #fff;
+  border-radius: 0.3125rem;
+}

@@ -1,0 +1,83 @@
+<layout name="Public/public" />
+
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script> 
+<script>
+    function pd(rebatea, id) {
+        var rebate = $("input[name=ratio" + id + "]").val();
+        if (rebate < 0) {
+            alert("返利不能少于0");
+            $("input[name=ratio" + id + "]").val(rebatea);
+        }
+    }
+    function pda(mina, id) {
+        var rebate = $("input[name=min" + id + "]").val();
+        if (rebate < 0) {
+            alert("不能少于0");
+            $("input[name=min" + id + "]").val(mina);
+        }
+    }
+    function pdb(remoneya) {
+        var remoneyb = $("input[name=remoney]").val();
+        if (remoneyb < 0) {
+            alert("不能少于0");
+            $("input[name=remoney]").val(remoneya);
+        }
+    }
+</script>
+
+
+<h1 class="page-header">充值返利率设置</h1>
+
+
+<!--右边内容-->
+    <span style="font-size:16px;">根据各级别填写充值返利率即可，0则为不产生返利率</span><br/>
+    
+    <form class="form-inline" method="post" action="__URL__/apply_rebate_setting_submit">
+        <table class="table">
+
+            <tbody>
+            <tr>
+                <td>第二级别一级返利：
+                    <input class="form-control" name="rebate1_level2" type="text" value="{$set_info.rebate1_level2}" required placeholder="请输入第二级别一级返利">(%)
+                </td>
+
+
+            </tr>
+
+            <tr>
+                <td>第二级别二级返利：
+                    <input class="form-control" name="rebate2_level2" type="text" value="{$set_info.rebate2_level2}" required placeholder="请输入第二级别二级返利">(%)
+                </td>
+            </tr>
+
+            <tr>
+                <td>第三级别一级返利：
+                    <input class="form-control" name="rebate1_level3" type="text" value="{$set_info.rebate1_level3}" required placeholder="请输入第三级别一级返利">(%)
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>第四级别一级返利：
+                    <input class="form-control" name="rebate1_level4" type="text" value="{$set_info.rebate1_level4}" required placeholder="请输入第四级别一级返利">(%)
+                </td>
+            </tr>
+
+            <tr>
+                <td>第五级别一级返利：
+                    <input class="form-control" name="rebate1_level5" type="text" value="{$set_info.rebate1_level5}" required placeholder="请输入第五级别一级返利">(%)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input class="btn btn-default" id="确定" value="确定" type="submit">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+

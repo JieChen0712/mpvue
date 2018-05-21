@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <include file="Public/header_v3" />
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/address_detail.css">
+        <title>收货地址</title>
+        <script>
+            var return_url = "{$return_url}";
+        </script>
+    </head>
+
+    <body>
+        <div class="content">
+            <!-- header start-->
+            <include file="Public/header_features_v3" />
+            <!-- header end-->
+
+            <!--main start-->
+            <empty name="list">
+                <include file="Public/empty" />
+                <else />
+                <section id="main">
+
+                    <foreach name="list" item="vo">
+                        <input type="hidden" id="{$vo.id}">
+                        <div class="information">
+                            <div class="wrapperbox clearfix">
+                                <div class="name">{$vo.name}, {$vo.phone}</div>
+                                <!--<div class="tel">{$vo.phone}</div>-->
+                            </div>
+                            <div class="address">{$vo.province}{$vo.city}{$vo.area}{$vo.address}</div>
+                        </div>
+                        <div class="wrapper">
+                            <if condition="$vo['default'] eq 1 ">
+                                <span class="default-address active" style='background-image: url("__PUBLIC__/Admin_v3/images/information/10.png");' data-id="{$vo.id}">默认地址</span>
+                                <else/>
+                                <span class="default-address" data-id="{$vo.id}">默认地址</span>
+                            </if>
+                            <span class="edit"><a href="__URL__/address_edit?id={$vo.id}">编辑</a></span>
+                            <span class="delete"><a href='' data-vid="{$vo.id}">删除</a></span>
+                        </div>
+                    </foreach>
+                    <div class="mask">
+                        <p class="text">是否删除该地址？</p>
+                        <button class="btn-yes">是</button>
+                        <button class="btn-no">否</button>
+                    </div>
+            </empty>
+            </section>
+            <!--main end-->
+
+            <!--footer start-->
+            <footer id="footer">
+                <a href="__URL__/address_add?return_url={$base_return_url}"> <button class="add">新增收货地址</button></a>
+            </footer>
+
+            <!--footer end-->
+        </div>
+
+        <!--script start-->
+        <script src="__PUBLIC__/Admin_v3/js/jquery.js"></script>
+        <script src="__PUBLIC__/Admin_v3/js/light7.min.js"></script>
+        <script src="__PUBLIC__/Admin_v3/js/address_detail.js"></script>
+        <!--script end-->
+    </body>
+    <script>
+        var imgurl = "__PUBLIC__/Admin_v3";
+        var addressflag = false;
+
+        function del_addre(id) {
+            $.post('__GROUP__/malladdress/address_del', {
+                id: id
+            }, function(data) {
+                tusi(data.message);
+                setTimeout(function() {
+                    window.location.href = changeURLArg(window.location.href, "reloadtime", new Date().valueOf());
+                }, 2000);
+            });
+        }
+
+        $(function() {
+            $('.default-address').click(function() {
+                var address_id = $(this).data('id');
+                $.post('set_address_default', {
+                    address_id: address_id
+                }, function(res) {
+                    if(res.status == '1') {
+                        tusi('修改默认地址成功');
+                        setTimeout(function() {
+                            if(return_url) {
+                                window.location.href = return_url;
+                            }
+                        }, 2000);
+                    } else {
+                        tusi(res.message);
+                    }
+                });
+            })
+        });
+        //设置url参
+        function changeURLArg(url, arg, arg_val) {
+            var pattern = arg + '=([^&]*)';
+            var replaceText = arg + '=' + arg_val;
+            if(url.match(pattern)) {
+                var tmp = '/(' + arg + '=)([^&]*)/gi';
+                tmp = url.replace(eval(tmp), replaceText);
+                return tmp;
+            } else {
+                if(url.match('[\?]')) {
+                    return url + '&' + replaceText;
+                } else {
+                    return url + '?' + replaceText;
+                }
+            }
+            return url + '\n' + arg + '\n' + arg_val;
+        }
+    </script>
+
+</html>

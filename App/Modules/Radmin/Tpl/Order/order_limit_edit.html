@@ -1,0 +1,102 @@
+<script>
+  form.render();
+</script>
+<style>
+    @media screen and (max-width: 768px) {
+        .layui-form-item .layui-form-label {
+            width: 80%;
+            float: left;
+        }
+        .layui-input-block {
+           left: -99px;
+        }
+        .orange-text {
+            float: left;
+            padding-left: 10px; 
+        }
+    }
+</style>
+<div class="container-fluid edit-wrapper">
+  <div class="layui-content">
+    <form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__URL__/order_limit_post" data-auto="false" method="post">
+      <div class="layui-form-item form-item">
+        <label class="layui-form-label">经销商级别</label>
+        <div class="form-right">
+          <div class="layui-input-inline three-select">
+            <?php if( !empty($list['level']) ):
+                echo $level_name[$list['level']];
+            else:?>
+              <select name="level" id="level" lay-verify="required">
+                <option value="0">所有级别</option>
+                <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                    <option value="{$key_left_num}">{$vo_left_name}</option>
+                </foreach>
+              </select>
+            <?php endif;?>
+              <small class="orange-text">（如果有了已有了对应级别的规则，则全局级别的规则不起作用）</small>
+          </div>
+        </div>
+      </div>
+        
+        
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">是否首次下单</label>
+        <div class="layui-input-block">
+          <if condition="$list.is_first eq 1">
+            <input checked="checked" type="checkbox" lay-skin="primary" name="is_first" value="1" class="layui-input">
+            <else />
+            <input type="checkbox" lay-skin="primary" name="is_first" value="1" class="layui-input">
+          </if>
+        </div>
+        <small class="orange-text">（即该条规则只在首次下单时触发，并注意选择首次下单，则首张订单未完成无法再下订单）</small>
+      </div>
+        
+        
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品</label>
+        <div class="layui-input-block">
+            <div class="select-wrapper">
+                <?php if( $list['tid'] == NULL ):?>
+                <select name="tid" >
+                    <option value="0">不选择产品</option>
+                    <?php foreach( $list_temp as $v ):?>
+                    <option value="{$v.id}">{$v.name}</option>
+                    <?php endforeach;?>
+                </select>
+                <?php else:?>
+                <select name="tid" >
+                    <option value="0">{$list['tid_name']}</option>
+                </select>
+                <?php endif;?>
+            </div>
+        </div>
+        <small class="orange-text">（不选择产品则针对整张订单做限制）</small>
+      </div>
+      
+      <div class="layui-form-item">
+        <label class="layui-form-label">订单数量最小限制（0则不做限制）</label>
+        <div class="layui-input-block">
+          <input name="total_num_min" type="text" value='{$list.total_num_min}' required="" title="请输入订单产品总数量最小限制" placeholder="订单产品总数量最小限制" class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">订单金额最小限制（0则不做限制）</label>
+        <div class="layui-input-block">
+          <input name="total_money_min" type="text" value='{$list.total_money_min}' required="" title="请输入订单总金额最小限制" placeholder="订单总金额最小限制" class="layui-input">
+        </div>
+      </div>
+
+      <div class="hr-line-dashed"></div>
+
+      <div class="layui-form-item text-center">
+        <input value="{$list.id}" name="id" type="hidden">
+        <button class="layui-btn" value="提交" type="submit">提交</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消吗？" data-close>取消</button>
+      </div>
+
+    </form>
+  </div>
+
+</div>

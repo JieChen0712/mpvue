@@ -1,0 +1,36 @@
+.city_picker {
+    position: relative;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    //  height: 128px;
+    span {
+        position: absolute;
+        right: 0;
+        font-size: 0.75rem;
+    }
+    .select-wrapper {
+        .three-select {
+            margin: 10px 10px 0 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            &.hide {
+                display: none;
+            }
+            select {
+                flex: 1;
+                height: 30px;
+                margin: 2px 5px;
+            }
+        }
+        p {
+            flex: 1;
+            margin: 5px 10px 5px 0;
+            text-align: right;
+            font-size: 16px;
+            line-height: 16px;
+            color: #007AFF;
+        }
+    }
+}

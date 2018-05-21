@@ -1,0 +1,8 @@
+.ui-shadow { box-shadow: none !important; }
+.ui-shadow .list-wrapper { margin-bottom: 20px !important; }
+.ui-shadow .list-wrapper .list-item { display: flex !important; }
+.ui-shadow .list-wrapper .list-item .photo-show { flex: 0 0 100px; position: static !important; max-width: none !important; max-height: none !important; width: 110px; height: 150px; margin-right: 15px; }
+.ui-shadow .list-wrapper .list-item .introduction { flex: 1; overflow: hidden; }
+.ui-shadow .list-wrapper .list-item .introduction p { font-size: 22px; white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+
+/*# sourceMappingURL=template.css.map */

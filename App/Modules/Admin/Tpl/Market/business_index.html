@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>商学院</title>
+    <include file="Public/header_v3"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/business_index.css">
+    <script>
+        var cat_url = '__URL__/business_index';
+    </script>
+</head>
+
+<body>
+<div class="page">
+    <div class="content">
+        <!-- header start-->
+        <include file="Public/header_features_v3"/>
+        <!-- header end-->
+        <empty name="business_category">
+            <include file="Public/empty"/>
+            <else/>
+            <div id="main">
+                <div class="bar bar-header-secondary search-wrapper">
+                    <div class="searchbar">
+                        <div class="search-input">
+                            <label class="icon icon-search" for="search"></label>
+                            <input type="search" id='search' class="search" placeholder='搜索资料、课件、视频'/>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-wrapper">
+                    <nav class="nav">
+                        <ul class="nav-list">
+                            <li><a href="javascript:;" data-id="0" class="active color-business-index-nav">全部</a></li>
+                            <volist name="business_category" id="m">
+                                <!--./business_index.html?cat_id={$m.id}-->
+                                <li><a href="javascript:;" data-id="{$m.id}" class="color-business-index-nav">{$m.name}</a></li>
+                            </volist>
+                        </ul>
+                    </nav>
+                </div>
+                <ul class="nav-list nav-list-hidden">
+                    <li><a href="javascript:;" data-id="0" class="active color-business-index-nav">全部</a></li>
+                    <volist name="business_category" id="m">
+                        <!--./business_index.html?cat_id={$m.id}-->
+                        <li><a href="javascript:;" data-id="{$m.id}" class="color-business-index-nav">{$m.name}</a></li>
+                    </volist>
+                </ul>
+
+                <div id="business">
+
+                    <volist name="business" id="m">
+                        <a class="detail external" href="./business_detail.html?bus_id={$m.id}">
+                            <div class="detail-wrapper">
+                                <div class="title-wrapper">
+                                    <button></button>
+                                    <h3>{$m.title}</h3>
+                                    <span>查看详情</span>
+                                    <span class="icon icon-right"></span>
+                                </div>
+                                <div class="img-wrapper">
+                                    <img class="img" src="{$m.image}" alt="">
+                                    <!-- <img class="img" src="__PUBLIC__/Admin_v3/images/empty.jpg" alt=""> -->
+                                </div>
+                            </div>
+                        </a>
+                    </volist>
+                </div>
+            </div>
+        </empty>
+    </div>
+</div>
+
+
+
+<!--script start-->
+<script src="__PUBLIC__/Admin_v3/js/jquery.js"></script>
+<script src="__PUBLIC__/Admin_v3/js/light7.min.js"></script>
+<script src="__PUBLIC__/Admin_v3/js/business_index.js"></script>
+<!--script end-->
+</body>
+
+</html>

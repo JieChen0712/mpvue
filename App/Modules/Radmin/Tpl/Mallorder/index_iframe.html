@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="__PUBLIC__/Radmin_v3/css/iframe.css" />
+<div class="iframe-wrapper">
+    <table class="table-list" >
+        <tr>
+            <td>订单号：</td>
+            <td>{$order.order_num}</td>
+        </tr>
+        <tr>
+            <td>订单金额：</td>
+            <td>{$order.total_price}</td>
+        </tr>
+        <tr>
+            <td>订货代理头像：</td>
+            <td><img src="{$order_user.headimgurl}" style="width:70px;height:70px;" /></td>
+        </tr>
+
+        <tr>
+            <td>姓名：</td>
+            <td>{$order_user.name}</td>
+        </tr>
+        <tr>
+            <td>等级：</td>
+            <td>{$order_user.levname}</td>
+        </tr>
+        <tr>
+            <td>手机号：</td>
+            <td>{$order_user.phone}</td>
+        </tr>
+        <tr>
+            <td>微信号：</td>
+            <td>{$order_user.wechatnum}</td>
+        </tr>
+
+    </table>
+</div>

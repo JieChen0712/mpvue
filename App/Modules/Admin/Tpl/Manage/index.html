@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <title>审核代理申请</title>
+        <include file="Public/header_v3" />
+        <script src="__PUBLIC__/js/admin.js"></script>
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/manage.css">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <meta charset="UTF-8"/>
+
+        <script type="text/javascript">
+            var auditUrl = '{:U(GROUP_NAME . "/Manage/audit")}/';
+            var delUrl = '{:U(GROUP_NAME . "/Manage/delete")}/';
+            var url = '{:U(GROUP_NAME . "/Index/index")}/';
+        </script>
+        <script>
+            $(function() {
+                $(".review-btn").click(function() {
+                    $(this).toggleClass("review-check-btn");
+                });
+                $(".footer-left").click(function() {
+                    if($(".review-btn").is(":checked")) {
+                        $(".review-check-btn").closest("ul").remove();
+                    }
+                });
+            })
+        </script>
+        <style>
+            body {
+                /*background: url(__PUBLIC__/Admin_v2/images/bg.jpg) #fbfbfb no-repeat;*/
+                /*background-color:#fbfbfb;*/
+                background-size: cover;
+            }
+            
+            .tel_title {
+                background: transparent;
+            }
+            .toast{
+                font-size: 18px;
+                height: 3rem;
+                line-height: 3rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="page">
+            <div class="content">
+                <section class="manage-section">
+                    <div class="manage-section-title color-manage-index-bg">
+                        <ul>
+                            <li>代理名称</li>
+                            <li>代理级别</li>
+                            <li>授权号</li>
+                        </ul>
+                    </div>
+                    <empty name="pending_m">
+                        <h3 style="color:red">对不起,您没有要审核的经销商! </h3>
+                        <else />
+                        <volist name="pending_m" id="pm">
+                            <ul>
+                                <li>{$pm.name}</li>
+                                <li>{$pm.levname}</li>
+                                <li class="col3">
+                                    <p class="text">{$pm.authnum}</p>
+                                    <a href="{:U(GROUP_NAME.'/Manage/detail?id='.$pm[id])}" class="color-manage-index-text external ">查看资料</a>
+                                    <input type="checkbox" name="pend" id="pend" value="{$pm.id}" class="review-btn checkbox1">
+                                </li>
+                            </ul>
+                        </volist>
+                    </empty>
+                </section>
+                <footer class="footer">
+                        <input type="button" value="删除" class="footer-left color-manage-index-btn-left" onclick="del()">
+                        <input type="button" value="确定" class="footer-right color-manage-index-btn-right" onclick="audit()">
+                </footer>
+            </div>
+        </div>
+    </body>
+<script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+</html>

@@ -1,0 +1,103 @@
+<style type="text/css">
+    .layui-layer-content {
+        overflow: visible!important;
+    }
+
+</style>
+<form class="layui-form layui-box" role="form" action="__URL__/upgrade_post" data-auto="false" method="post">
+    <div class="modal-body">
+        <table class="table table-bordered">
+            <tbody><tr class="warning">
+                <td>代理姓名</td>
+                <td id="dis_upgrade_name"><b>{$agent.name}</b></td>
+            </tr>
+            <tr class="info">
+                <td>新代理级别</td>
+                <td>
+                    <select id="dis_upgrade_dis_info_select1" name="level" class="form-control" lay-search="">
+                        <eq name='type' value='up'>
+                            <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                                <if condition="$agent.level gt $key_left_num">
+                                    <option class="dis_upgrade_dis_info_select_down" value="{$key_left_num}">{$vo_left_name}</option>
+                                </if>
+                            </foreach>
+                        <else />
+                            <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                                <if condition="$agent.level lt $key_left_num">
+                                    <option class="dis_upgrade_dis_info_select_down" value="{$key_left_num}">{$vo_left_name}</option>
+                                </if>
+                            </foreach>
+                        </eq>
+                    </select>
+                </td>
+            </tr>
+            <tr class="info">
+                <td>上级级别</td>
+                <td>
+                    <select id="dis_upgrade_dis_info_select" name="levelone" class="form-control" lay-search="" lay-filter="levelone">
+                        <option value="-1">原上级</option>
+                        <eq name='type' value='up'>
+                            <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                                <if condition="$agent.level gt $key_left_num">
+                                    <option class="dis_upgrade_dis_info_select_down" value="{$key_left_num}">{$vo_left_name}</option>
+                                </if>
+                            </foreach>
+                        <else />
+                            <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                                <if condition="$agent.level lt $key_left_num">
+                                    <option class="dis_upgrade_dis_info_select_down" value="{$key_left_num}">{$vo_left_name}</option>
+                                </if>
+                            </foreach>
+                        </eq>
+                    </select>
+                </td>
+            </tr>
+            <tr class="info">
+                <td>上级经销商</td>
+                <td>
+                    <select name="b_id" id="dis_upgrade_dis_info_parent" class="form-control" lay-search="">
+                        <option value="-1">原上级</option>
+                        <option value="0">总部</option>
+                    </select>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <input id="dis_upgrade_mid" type="hidden" name="mid" value="{$agent.id}">
+        <input id="dis_upgrade_type" type="hidden" name="type" value="{$type}">
+        <input id="dis_upgrade_b_name" type="hidden" name="b_name" value="">
+        <input id="apply_id" type="hidden" name="upgrade_apply_id" value="{$upgrade_apply_id}">
+        <button type="submit" class="btn btn-success layui-btn" onclick="">提交</button>
+        <button type="button" class="btn btn-primary layui-btn layui-layer-close" style="position: relative;" data-dismiss="modal">关闭</button>
+    </div>
+</form>
+<!--<script src="__PUBLIC__/radmin/js/jquery.min.js"></script>-->
+<script>
+  form.render();
+  var level;
+  form.on('select(levelone)',function(data){
+    level = data.value;
+    get_dis_info()
+  })
+    function get_dis_info() {
+        level = $("#dis_upgrade_dis_info_select").val();
+        $.post("__GROUP__/stock/getAgent", {level: level}, function (data) {
+            var text = '<option value="-1">原上级</option><option value="0">总部</option>';
+            if (data != 'none') {
+                $.each(data, function (index, array) {
+                    text +=
+                        '<option class="dis_upgrade_dis_info_parent_option dis_upgrade_dis_info_parent_' +
+                        level + '" value="' + array["id"] + '">' + array["name"] + '</option>';
+                })
+            } else {
+                text += '<option class="dis_upgrade_dis_info_parent_option dis_upgrade_dis_info_parent_' +
+                    level + '" value="">无经销商信息</option>';
+            }
+            $("#dis_upgrade_dis_info_parent").empty().html(text);
+            form.render('select')
+        })
+    }
+</script>

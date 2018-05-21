@@ -1,0 +1,116 @@
+.content {
+    background-color: #f5f4f9;
+    color: #303030;
+}
+
+.message {
+    margin: 5% 5% 0 5%;
+    padding: 3% 5%;
+    background-color: #fbfbfb;
+    line-height: 2rem;
+}
+
+.message p {
+    margin: 0;
+}
+
+.recharge-wrapper {
+    margin: 5% 5% 0 5%;
+    padding: 5% 5%;
+    background-color: #fff;
+}
+
+.recharge-wrapper p {
+    margin: 0;
+}
+
+.recharge-wrapper .recharge-money {
+    display: flex;
+    border-bottom: 0.0625rem solid #c9c9c9;
+}
+
+.recharge-wrapper .recharge-money span {
+    flex: 0 0 1.5625rem;
+    font-size: 1.8125rem;
+}
+
+.recharge-wrapper .recharge-money input {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    font-size: 2.8125rem;
+}
+
+.uploading-img {
+    margin: 0 5% 10% 5%;
+    padding: 0 5% 8% 5%;
+    background-color: #fff;
+    position: relative;
+}
+
+.uploading-img .image-container {
+    position: absolute;
+    top: 31px;
+    left: 5%;
+    height: 4.6875rem;
+    display: inline-block;
+    z-index: 9;
+}
+
+.uploading-img .image-container img {
+    width: 4.6875rem;
+    height: 4.6875rem;
+}
+
+.uploading-img .picture {
+    position: absolute;
+    top: 31px;
+    left: 5%;
+    z-index: 10;
+}
+
+.uploading-img .select-img {
+    display: none;
+    position: absolute;
+    top: 5.375rem;
+    left: 6.5625rem;
+    margin-left: 0.3125rem;
+    background: #dcdcdc;
+    border: 1px solid #787878;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #303030;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 1rem;
+    font-size: 0.875rem;
+}
+
+.uploading-img .select-img input {
+    position: absolute;
+    font-size: 100px;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.uploading-img .text {
+    position: absolute;
+    display: inline-block;
+    top: 5.75rem;
+    left: 6.8125rem;
+    color: #787878;
+    font-size: 0.875rem;
+}
+
+.uploading-img .submit-apply {
+    width: 100%;
+    margin-top: 5%;
+    padding: 0 5%;
+    border: none;
+    border-radius: 0.3125rem;
+    line-height: 3.0625rem;
+    color: #fff;
+}

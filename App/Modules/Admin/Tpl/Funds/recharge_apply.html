@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>充值申请</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/recharge_apply.css" />
+    <link rel="stylesheet" href="__PUBLIC__/css/back/apply.css">
+    <script type="text/javascript" src="__PUBLIC__/Admin_v3/js/common.js"></script>
+    <script src="__PUBLIC__/js/exif.js"></script>
+    <script>
+      var uploadUrl = '__APP__/Home/Manager/uploadCanvas';
+    </script>
+    <style>
+      #btn1 {
+        background: url(__PUBLIC__/images/sq.png) no-repeat;
+        width: 110px;
+        height: 110px;
+        outline: none;
+      }
+      .type_wrapper {
+        margin-top: 15px;
+      }
+      .type_wrapper input[type=checkbox], input[type=radio]{
+        -webkit-appearance:radio;
+        appearance:radio;
+        width: 20px;
+        height: 20px;
+        margin-right:0;
+        top: 0;
+        vertical-align: text-bottom;
+      }
+      .type_wrapper .text{
+        margin-right: 20px;
+      }
+      .type_wrapper p{
+        font-weight: 900;
+        font-size:17px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <div class="content">
+        <!-- <div class="message">
+
+          <p class="name">充值者姓名： {$manager.name}</p>
+          <p class="Wechat">微信号：{$manager.wechatnum}</p>
+          <p class="grade">经销商等级：{$manager.levname}</p>
+          <p class="chech-name">充值审核人：
+            <if condition="$is_parent_audit eq 0">
+              总部
+              <else/> {$manager.bossname}
+            </if>
+          </p>
+
+        </div> -->
+        <div class="recharge-wrapper">
+          <p>充值虚拟币</p>
+          <div class="recharge-money">
+            <span>￥</span>
+            <input type="text" onkeyup="this.value=(this.value.match(/[0-9]\d*(\.\d{0,2})?/)||[''])[0]" name="money" id="money">
+          </div>
+          <div class="type_wrapper">
+            <if condition="$money_apply_pay_type eq '0' OR $money_apply_pay_type eq '' OR $money_apply_pay_type eq 2">
+              <input type="radio" name="pay_way" id="pay_check" value="1" checked/>
+              <span class="text">总部审核</span>
+            </if>
+            <if condition="$money_apply_pay_type eq 1  OR $money_apply_pay_type eq 2">
+              <input type="radio" name="pay_way" id="pay_online" value="2" />
+              <span class="text">在线支付</span>
+            </if>
+          </div>
+        </div>
+        <div class="uploading-img">
+          <div class="pay-tip">
+            * 添加支付截图信息
+            <span>（限一张）</span>
+          </div>
+          <div>
+            <div id="imgs">
+            <span id="list1" style="float:left"></span>
+
+            <div class="imgUpload">
+              <img src="__PUBLIC__/images/sq.png" />
+              <input type="button" id="btn1" onclick="myfile1.click();" value="" style="display:none">
+              <input type="file" accept="image/*;capture=camera" id="myfile1" name="idennumimg">
+            </div>
+
+            <div style="clear:both"></div>
+            <input type="hidden" value="" id="flimg" name="idennumimg" />
+            </div>
+            <!--<div class="image-container">-->
+            <!--<img src="" alt="" id="flimg" name="fljeimg">-->
+            <!--</div>-->
+            <!--&lt;!&ndash; 障眼法 &ndash;&gt;-->
+            <!--<div class="picture">-->
+            <!--<img src="__PUBLIC__/Admin_v3/images/manager-order/select-img.png" alt="" width="78">-->
+            <!--</div>-->
+            <!--&lt;!&ndash; 障眼法 &ndash;&gt;-->
+            <!--<div class="select-img">-->
+
+            <!--选择图片<input type="file"  id="myfile1" name="fljeimg">-->
+            <!--</div>-->
+            <!--<div class="text">未选择图片</div>-->
+
+            <div class="btn-wrapper">
+              <button class="submit-apply apply color-recharge-apply-btn">提交申请</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <style>
+        .app-mask {
+          height: 100%;
+          width: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          position: fixed;
+          top: 0px;
+          text-align: center;
+          display: none;
+        }
+
+        .app-mask img {
+          width: 150px;
+          border-radius: 2em;
+          margin-top: 450px;
+        }
+      </style>
+      <div class="app-mask">
+        <img src="__PUBLIC__/images/1.gif" alt="">
+      </div>
+    </div>
+
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/recharge_apply.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/uploadPicture/uploadImage.js" type="text/javascript" charset="utf-8"></script>
+
+    <script>
+      $(function() {
+        var applyflag = false;
+        var money_apply_pay_type='{$money_apply_pay_type}';
+          if(money_apply_pay_type == 1|| money_apply_pay_type == '1'){
+              $('.pay-tip').hide();
+              $('#imgs').hide();
+              $('#pay_online').attr("checked",true);
+          }
+        $('.apply').click(function() {
+          if(applyflag) {
+            return
+          }
+          applyflag = true
+        //   console.log($('.submit-apply').text('提交中...').css({
+        //     backgroundColor: '#a0a0a0'
+        //   }));
+          var money = $('#money').val();
+          var pay_way=$("input[name='pay_way']:checked").val();
+          if(pay_way == 1){
+              var imgval = $('#flimg').val();
+              if(imgval == "") {
+                  tusi('对不起，请上传图片');
+                  // console.log($('.submit-apply').text('提交申请').css({
+                  //   backgroundColor: '#00b8ee'
+                  // }));
+                  applyflag = false;
+                  return;
+              }
+          }
+
+          $.post('money_apply_submit', {
+            money: money,
+            imgval: imgval,
+            pay_way:pay_way,
+          }, function(res) {
+              $('.submit-apply').attr('disabled', 'true');
+            if(res.code == 1) {
+                if(res.pay_way == 1){
+                    tusi(res.msg);
+                    setTimeout(function() {
+                        window.location.href = '__GROUP__/user/assets'
+                    }, 2000);
+                }
+                else if(res.pay_way == 2){
+                    var money_apply_id=res.money_apply_id;
+                    window.location.href = '__GROUP__/fundspay/pay?money_apply_id'+money_apply_id;
+                }
+
+            } else if(res.code == 2) {
+              applyflag = false
+            //   console.log($('.submit-apply').text('提交申请').css({
+            //     backgroundColor: '#00b8ee'
+            //   }));
+                $('.submit-apply').removeAttr('disabled');
+              tusi(res.msg);
+            } else {
+              applyflag = false;
+                $('.submit-apply').removeAttr('disabled');
+//              console.log($('.submit-apply').text('提交申请').css({
+//                backgroundColor: '#00b8ee'
+//              }));
+              tusi(res.msg);
+            }
+          })
+        })
+
+          if($('#pay_online').is(':checked')){
+              $('.pay-tip').hide();
+              $('#imgs').hide();
+          }
+          $('.picture').click(function() {
+              $('#file-upload').click()
+          });
+          $('.image-container').click(function() {
+              $('#file-upload').click()
+          });
+          $('#pay_check').click(function(){
+              $('.pay-tip').show();
+              $('#imgs').show();
+          });
+          $('#pay_online').click(function(){
+              $('.pay-tip').hide();
+              $('#imgs').hide();
+          });
+      })
+    </script>
+    <script type="text/javascript" src="__PUBLIC__/js/pho1.js"></script>
+  </body>
+
+</html>

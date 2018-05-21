@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>地址管理</title>
+    <include file="Public/header_v2"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/grzx.css">
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/bootstrap.min.css">
+    <style>
+  
+        .table{
+            font-size:24px;
+            font-weight:bold;
+            margin-bottom: 90px;
+        }
+        .table1{
+            margin-top: 150px;
+        }
+        .am-g{
+            position:fixed;
+            bottom:0;
+            width: 100%;
+        }
+        
+    </style>
+
+    </head>
+    <body>
+        
+        <div class="index-panel">
+            <header class="index-header">
+                <a class="a" href="javascript:window.location.href='__GROUP__/index';"></a>
+    			<p>地址管理</p>
+            </header>
+                
+            
+        <div class="personal">
+            <div class="data">
+                <div class="head-img">
+                    <div class="img" style="margin-left:16%;"><img src="{$manager.headimgurl}" alt="头像"></div>
+                </div>
+                <p class="name" style="margin-left:12%;margin-top:-21%;">{$manager.name}</p>
+                <p class="wechatnum"  style="margin-left:8%;">微信号：{$manager.wechatnum}</p>
+                <p class="wechatnum"  style="margin-left:10%;">级别：{$manager.levname}</p>
+            </div>
+        </div>
+        </div>
+        
+<!--        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="lie">日期设置-1:<input  id="beginTime" class="kbtn" /></div>
+            </div>
+        </div>-->
+        
+    <div class="table1"></div>
+    <foreach name="list" item="vo">
+    <table class="table" id="table{$vo.id}">
+        <tr>
+            <td>
+                <p>姓名：{$vo.name}</p>
+                <p>手机：{$vo.phone}</p> 
+            </td>
+        </tr>
+        
+        <tr>
+            <td><p>详细地址：{$vo.area}{$vo.addre}</p></td>
+        </tr>
+        <tr>
+            <td>
+                <div style="float:left;color:red;">
+                <p id="default{$vo.id}">
+                    <if condition="$vo.default eq '1'">
+                    默认地址
+                    </if>
+                </p>
+                </div>
+                <div style="float:right;">
+                    <a style="margin-right:40px;" href="__URL__/address_edit?id={$vo.id}&return_url={$return_url}">编辑</a>
+                    <a style="margin-right:20px;" onclick="return del_addre('{$vo.id}');">删除</a>
+                </div>
+                
+            </td>
+        </tr>
+        <tr class="info"><td ></td> </tr>  
+    </table>
+    </foreach>
+
+    <div class="am-g">
+        <a style="height:90px;font-size:36px;" href="__URL__/address_edit?return_url={$return_url}" class="weui-btn weui-btn_primary">添加地址</a>
+    </div>
+    
+    </body>
+    <script>
+        function del_addre(id){
+            
+            
+            
+            $.post("__APP__/Admin/product/address_del", {id:id}, function (data) {
+                if (data.code == 1) {
+                    tusi(data.msg);
+                    $("#table"+id).html('');
+                    $("#default"+data.last_id).html('默认地址');
+                } else {
+                    tusi(data.msg);
+                }
+            });
+        }
+    </script>
+    </html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>个人业绩</title>
+
+    <include file="Public/header_v3" />
+
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/achievement.css" />
+    <script>
+        var data = '<?php echo json_encode($graph_data)?>';
+        var month = "{$month}";
+//        var person_money_url = "__GROUP__/team/person_money";
+//        var totalurl = '__GROUP__/team/last_month';
+//        var nowmonth = '__GROUP__/team/get_month';
+//        var personurl = '__GROUP__/team/get_person_money';
+        var personCountURL= '__APP__/admin/team/get_person_count_ajax';
+        var allurls = '__GROUP__/team/get_person_money_ajax';
+    </script>
+    <!--script start-->
+    <script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+    <!--<script src="../js/light7-swiper.min.js" type="text/javascript" charset="utf-8"></script>-->
+    <script src="__PUBLIC__/Admin_v3/js/p_achievement.js" type="text/javascript" charset="utf-8"></script>
+    <!--script end-->
+</head>
+
+<body>
+    <div class="page">
+        <!-- header start-->
+        <include file="Public/header_features_v3" />
+        <!-- header end-->
+        <section id="p_achievement">
+            <div class="content">
+                <div class="card">
+                    <div class="achiev-menu">
+                        <ul>
+                            <li><a class="active external" href="__GROUP__/team/person_money">个人业绩</a></li>
+                            <li><a href="__GROUP__/team/team_money" class="external">团队业绩</a></li>
+                        </ul>
+                    </div>
+                    <div class="income">
+                        <input type="text" id='datetime-picker' value="<?php echo date('Y-m-d H:i');?>" />
+                        <i class="icon icon-down"></i>
+                        <p class="income-title">当日业绩（元）</p>
+                        <p class="income-num">{$day_money|default='0.00'}</p>
+                        <div class="income-list">
+                            <ul>
+                                <li>
+                                    <p>本月业绩（元）</p><span id="month-money"></span></li>
+                                <li>
+                                    <p>上月业绩（元）</p><span id="total"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <section class="charts">
+                        <div id="mychart" style="width: 100%;height:300px;"></div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- <script>
+        $(document).ready(function(){
+            var id = window.location.search.split('=')[1];
+            $('.achiev-menu ul li a').removeClass('active');
+            if(id == 1) {
+                $('.achiev-menu ul li').eq(0).find('a').addClass('active');
+            } else if(id == 2) {
+                $('.achiev-menu ul li').eq(1).find('a').addClass('active');
+            }
+        })
+    </script> -->
+
+</body>
+
+</html>

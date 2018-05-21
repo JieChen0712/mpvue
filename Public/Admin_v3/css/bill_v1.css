@@ -1,0 +1,232 @@
+#main {
+    width: 100%;
+    min-height: 100%;
+    /*padding-top: 2.8125rem;*/
+    /* padding-bottom: 3.125rem; */
+    background-color: #fff;
+}
+
+#main .month-survey {
+    height: 9.375rem;
+    background-color: #ffa614;
+}
+
+#main .month-survey .select-date {
+    text-align: center;
+    padding-top: 1.1875rem;
+    color: #fff;
+    font-size: 0.875rem;
+}
+
+#main .month-survey .select-date input {
+    background-color: transparent;
+    height: 2.5rem;
+    border: none;
+    outline: none;
+    text-align: center;
+    color: white;
+    margin-left: -2.1875rem;
+    z-index: 10;
+}
+
+#main .month-survey .select-date i {
+    margin-left: -3rem;
+    font-size: .75rem;
+    color: white;
+    vertical-align: text-bottom;
+    z-index: 1;
+}
+
+#main .month-survey .select-date ::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: white;
+}
+
+#main .month-survey .select-date :-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: white;
+}
+
+#main .month-survey .select-date ::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: white;
+}
+
+#main .month-survey .select-date :-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: white;
+}
+
+#main .month-survey .wrapper {
+    display: flex;
+    margin-top: 10px;
+    height: 3.75rem;
+}
+
+#main .month-survey .wrapper .income {
+    flex: 1;
+    border-right: 0.0625rem solid #fff;
+}
+
+#main .month-survey .wrapper .income p {
+    margin: 0;
+    color: #fff;
+    text-align: center;
+}
+
+#main .month-survey .wrapper .income .text {
+    font-size: 1rem;
+}
+
+#main .month-survey .wrapper .income .num {
+    font-size: 1.625rem;
+}
+
+#main .month-survey .wrapper .expenses {
+    flex: 1;
+}
+
+#main .month-survey .wrapper .expenses p {
+    margin: 0;
+    color: #fff;
+    text-align: center;
+}
+
+#main .month-survey .wrapper .expenses .text {
+    font-size: 1rem;
+}
+
+#main .month-survey .wrapper .expenses .num {
+    font-size: 1.625rem;
+}
+
+#main .bill-title {
+    display: flex;
+    width: 100%;
+    padding-left: 5%;
+    height: 3.3125rem;
+    border-bottom: .0625rem solid #C9C9C9
+}
+
+#main .bill-title .text {
+    flex: 1;
+    text-indent: .75rem;
+    line-height: 3.3125rem;
+    color: #303030;
+    background-image: url(../images/marketing/orange_bg.jpg);
+    background-repeat: no-repeat;
+    background-size: .25rem .9375rem;
+    background-position: 0px 19px;
+}
+
+#main .bill-title .select-wrapper {
+    position: relative;
+    flex: 0 0 5.3125rem;
+    margin-top: 16px;
+}
+
+#main .bill-title .select-wrapper .select {
+    width: 3.4375rem;
+}
+
+#main .bill-title .select-wrapper .select em {
+    font-style: normal;
+}
+
+#main .bill-title .select .icon-down {
+    position: absolute;
+    font-size: .875rem;
+    top: 0;
+    left: 2.375rem;
+}
+
+#main .month-detail {
+    width: 95%;
+    margin-left: 5%;
+    background-color: #fff;
+}
+
+#main .month-detail .detail-list .detail {
+    display: flex;
+    height: 3.9375rem;
+}
+
+#main .month-detail .detail-list .detail+li {
+    border-top: 0.0625rem solid #c9c9c9;
+}
+
+#main .month-detail .detail-list .detail .date {
+    flex: 0 0 3.125rem;
+}
+
+#main .month-detail .detail-list .detail .date p {
+    margin: 0;
+    color: #959595;
+}
+
+#main .month-detail .detail-list .detail .date .week {
+    font-size: 1rem;
+    margin-top: 0.5625rem;
+}
+
+#main .month-detail .detail-list .detail .date .month {
+    font-size: 0.75rem;
+}
+
+#main .month-detail .detail-list .detail .avatar {
+    flex: 0 0 4.375rem;
+}
+
+#main .month-detail .detail-list .detail .avatar img {
+    display: block;
+    margin: 0.75rem auto 0 auto;
+}
+
+#main .month-detail .detail-list .detail .description-wrapper {
+    flex: 1;
+    padding-left: 0.625rem;
+}
+
+#main .month-detail .detail-list .detail .description-wrapper .money {
+    margin: 0.75rem 0 0 0;
+    line-height: 17px;
+    font-size: 1.0625rem;
+    color: #313131;
+}
+
+#main .month-detail .detail-list .detail .description-wrapper .user {
+    font-size: 0.875rem;
+    color: #707070;
+}
+
+#main .month-detail .detail-list .detail .description-wrapper .description {
+    font-size: 0.875rem;
+    color: #707070;
+}
+
+.popover {
+    top: 12.3125rem !important;
+}
+
+.popover-angle.on-top {
+    left: 56px !important;
+}
+
+.popover .popover-inner {
+    text-align: center;
+    line-height: 2.5rem;
+}
+
+.select-list li a {
+    display: block;
+    color: #303030
+}
+
+.popover .popover-inner li+li {
+    margin: 0 40px;
+    border-top: .0625rem solid #c9c9c9;
+}
+
+.select-list li {
+    padding: .4rem 0;
+}

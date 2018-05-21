@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>提现申请</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/apply_return.css" />
+
+</head>
+
+<body>
+    <div class="page">
+        <div class="content">
+            <a class="account" href="javascript:;">
+                <p>到账账户</p>
+                <div>
+                    <p>银行卡：招商银行</p>
+                    <p>3456 4564 4654 5465</p>
+                </div>
+                <span class="icon icon-right"></span>
+            </a>
+            <div class="recharge-wrapper">
+                <p>提现佣金</p>
+                <div class="recharge-money">
+                    <span>￥</span>
+                    <input type="text" onkeyup="this.value=(this.value.match(/\d+(\.\d{0,2})?/)||[''])[0]">
+                </div>
+            </div>
+            <div class="money">
+                <p>佣金总额：￥988.88</p>
+                <a href="javascript:;">全部提现</a>
+            </div>
+            <div class="btn-wrapper">
+                <button disabled="disabled">提交申请</button>
+            </div>
+    </div>
+    </div>
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/apply_return.js" type="text/javascript" charset="utf-8"></script>
+</body>
+
+</html>

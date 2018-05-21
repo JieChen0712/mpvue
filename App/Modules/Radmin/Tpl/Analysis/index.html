@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>首页</title>
+    <!--<link rel="stylesheet" href="__PUBLIC__/Radmin_v2/css/reset.css" />-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Radmin_v3/css/analysis.css" />
+
+    <script type="text/javascript">
+      var distributor = '__GROUP__/Analysis/count_distributor';
+      var order_money = '__GROUP__/Analysis/count_order_money';
+    </script>
+  </head>
+
+  <body>
+    <div class="container-fluid edit-wrapper layui-container">
+      <header class="edit-title">
+        <blockquote class="layui-elem-quote">
+          <span class="title">欢迎进入{$Think.config.SYSTEM_NAME}管理系统</span>
+        </blockquote>
+      </header>
+      <div class="layui-content clearfloat">
+        <dl class="analysis-wrapper clearfloat">
+          <dt class="analysis-top clearfloat">
+        	  <h1 class="title">经销商模块</h1>
+        	  <ul class="agent-count layui-row">
+        	    <li class="layui-col-xs12" style="margin-bottom: 15px;">
+        	        <img src="__PUBLIC__/Radmin_v3/images/icons-1_01.png" alt="" />
+          	      <p class="num">{$total_users}</p>
+          	      <p class="title">经销商总数量</p>
+        	    </li>
+        	    <li class="layui-col-xs12" style="margin-bottom: 15px;">
+        	      <img src="__PUBLIC__/Radmin_v3/images/icons-1_02.png" alt="" />
+                <p class="num">{$no_head_audited_users}</p>
+                <p class="title">待总部审核数量</p>
+        	    </li>
+                <li class="layui-col-xs12" style="margin-bottom: 15px;">
+        	      <img src="__PUBLIC__/Radmin_v3/images/icons-1_10.png" alt="" />
+                <p class="num">{$no_agent_audited_users}</p>
+                <p class="title">待上级审核数量</p>
+        	    </li>
+        	    <li class="layui-col-xs12" style="margin-bottom: 15px;">
+        	      <img src="__PUBLIC__/Radmin_v3/images/icons-1_03.png" alt="" />
+                <p class="num">{$yes_audited_users}</p>
+                <p class="title">已审核数量</p>
+        	    </li>
+        	    <li class="layui-col-xs12" style="margin-bottom: 15px;">
+        	      <img src="__PUBLIC__/Radmin_v3/images/icons-1_04.png" alt="" />
+                <p class="num">{$day_users}</p>
+                <p class="title">今日增长数量</p>
+        	    </li>
+        	  </ul>
+              
+              <ul class="agent-count layui-row">
+                  <volist name="level_name" id="vo">
+                      <elt name="i" value='5'>
+                        <li class="layui-col-xs12">
+                          <img src="__PUBLIC__/Radmin_v3/images/level{$i}.png" alt="" />
+                          <p class="num" id="total_orders">{$agent[$i]|default='0'}</p>
+                          <p class="title">{$vo}数量</p>
+                        </li>
+                      </elt>
+                  </volist>
+               </ul>
+              <if condition="$level_count gt 5">
+               <ul class="agent-count layui-row">
+                  <volist name="level_name" id="vo">
+                      <gt name="i" value='5'>
+                        <li class="layui-col-xs12">
+                          <img src="__PUBLIC__/Radmin_v3/images/other.png" alt="" />
+                          <p class="num" id="total_orders">{$agent[$i]|default='0'}</p>
+                          <p class="title">{$vo}数量</p>
+                        </li>
+                      </gt>
+                  </volist>
+                </ul>
+              </if>
+        	</dt>
+          <dd class="analysis-bottom clearfloat">
+              <div class="layui-input-inline timer">
+                <input type="text" class="layui-input green" id="agent" readonly="readonly">
+                <i class="fa fa-angle-down"></i>
+              </div>
+            <div id="charts1"></div>
+          </dd>
+        </dl>
+        
+        <dl class="analysis-wrapper clearfloat">
+          <dt class="analysis-top clearfloat">
+            <h1 class="title">订单模块</h1>
+            <ul class="agent-count layui-row">
+              <li class="layui-col-xs12">
+                <img src="__PUBLIC__/Radmin_v3/images/icons-1_05.png" alt="" />
+                <p class="num" id="total_orders">{$total_order_money}</p>
+                <p class="title">订单总金额</p>
+              </li>
+              <li class="layui-col-xs12">
+                <img src="__PUBLIC__/Radmin_v3/images/icons-1_06.png" alt="" />
+                <p class="num">{$no_audited_orders}</p>
+                <p class="title">待审核订单数量</p>
+              </li>
+              <li class="layui-col-xs12">
+                <img src="__PUBLIC__/Radmin_v3/images/icons-1_09.png" alt="" />
+                <p class="num">{$yes_audited_orders}</p>
+                <p class="title">已发货订单数量</p>
+              </li>
+              <li class="layui-col-xs12">
+                <img src="__PUBLIC__/Radmin_v3/images/icons-1_07.png" alt="" />
+                <p class="num">{$finished_orders}</p>
+                <p class="title">已收货订单数量</p>
+              </li>
+              <li class="layui-col-xs12">
+                <img src="__PUBLIC__/Radmin_v3/images/icons-1_08.png" alt="" />
+                <p class="num">{$day_orders}</p>
+                <p class="title">今日订单数量</p>
+              </li>
+            </ul>
+          </dt>
+          <dd class="analysis-bottom clearfloat">
+              <div class="layui-input-inline timer">
+                <input type="text" class="layui-input blue" id="order" readonly="readonly">
+                <i class="fa fa-angle-down"></i>
+              </div>
+            <div id="charts2"></div>
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <script src="__PUBLIC__/Radmin_v3/js/analysis.js" type="text/javascript" charset="utf-8"></script>
+  </body>
+
+
+</html>

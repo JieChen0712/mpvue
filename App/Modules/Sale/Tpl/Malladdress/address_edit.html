@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>编辑收货地址</title>
+        <include file="Public/header_v3" />
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/order_address.css" type="text/css" />
+        <!--script start-->
+        <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="__PUBLIC__/Admin_v3/js/light7-city-picker.min.js" charset="utf-8"></script>
+        <!--script end-->
+
+    </head>
+
+    <body>
+        <div class="page">
+            <section class="order-address">
+                <div class="content">
+                    <ul class="add-address">
+                        <input type="hidden" name="id" id="ids" value="{$list.id}" />
+                        <li><span>收货人:</span><input type="text" id="receiver" name="name" value="{$list.name}" required="required" /></li>
+                        <li><span>联系电话:</span><input type="tel" id="phone" name="phone" value="{$list.phone}" required="required" pattern="^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$" /></li>
+                        <li><span>所在地址:</span><input type="text" id='city-picker' value="{$list.province} {$list.city} {$list.area}" />
+                            <script>
+                                $("#city-picker").cityPicker({
+                                    toolbarTemplate: '<header class="bar bar-nav"><button class="button button-link pull-left close-picker">取消</button><button class="button button-link pull-right close-picker" id="sure">确定</button><h1 class="title">选择地址</h1></header>'
+                                });
+                                $(document).on("click", "#sure", function() {
+                                    console.log($("#city-picker").val());
+                                })
+                            </script>
+                        </li>
+                        <li><textarea name="address" id="address" value="{$list.address}" rows="2" cols="50" placeholder="请填写详细地址">{$list.address}</textarea></li>
+                        <input type="hidden" id="default" value="{$list.default}">
+                        <input type="button" class="save" onclick="edit()" value="保存" id="save" />
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+
+    </body>
+    <script>
+        var addressflag = false;
+
+        function edit() {
+            if(addressflag) {
+                return
+            }
+            addressflag = true;
+            var odata = {
+                id: $("#ids").val(),
+                name: $("#receiver").val(),
+                phone: $("#phone").val(),
+                province: $("#city-picker").val(),
+                address: $("#address").val(),
+                default: $("#default").val(),
+            };
+            $.post("__GROUP__/malladdress/address_edit_post", odata, function(data) {
+                tusi(data.message);
+                if(data.status == 1) {
+                    setTimeout(function() {
+                        window.location.href = 'address_detail';
+                    }, 2000);
+                }
+                setTimeout(function() {
+                    addressflag = false;
+                }, 2000);
+            });
+        }
+    </script>
+
+</html>

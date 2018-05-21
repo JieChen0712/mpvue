@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        /*小屏幕样式*/
+        @media screen and (max-width: 768px) {
+            .layui-btn+.layui-btn {
+                margin-left: 0;
+            }
+        }
+        a:hover {
+            text-decoration: none;
+        }
+    </style>
+    <script type="text/javascript">
+      form.render();
+    </script>
+</head>
+
+<body>
+<section class="layui-container layui-anim layui-anim-upbit">
+    <div class="content">
+        <header class="header">
+            <h3>产品模板</h3>
+            <input type="button" class="layui-btn" value="添加" data-open="__URL__/product_add"/>
+            <?php if( C('FUNCTION_MODULE')['BOSS_ORDER'] == TRUE ): ?>
+            <input type="button" class="layui-btn" value="购物车结算" data-open="__URL__/show_shopping_cart"/>
+            <?php endif;?>
+        </header>
+        <form class="layui-form form layui-row form-search" action="__SELF__" method="get" onsubmit="return false">
+            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="name">产品名称</label>
+                <div class="input-wrapper">
+                    <input type="text" autocomplete="on" class="layui-input" name="name" id="name"
+                           placeholder="请输入产品名称">
+                </div>
+            </div>
+
+            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="category_id1">一级产品类别</label>
+                <div class="select-wrapper">
+                    <select name="category_id1" id="category_id1" lay-verify="required">
+                        <option value="">一级产品类别</option>
+                        <volist name="dis_templet_List1" id="m">
+                            <if condition="$m.level eq 0">
+                                <option value="{$m.id}">{$m.name}</option>
+                            </if>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="category_id2">三级产品类别</label>
+                <div class="select-wrapper">
+                    <select name="category_id2" id="category_id2" lay-verify="required">
+                        <option value="">三级产品类别</option>
+                        <volist name="dis_templet_List1" id="m">
+                            <if condition="$m.level eq 2">
+                                <option value="{$m.id}">{$m.name}</option>
+                            </if>
+                        </volist>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="active">上架状态</label>
+                <div class="select-wrapper">
+                    <select name="active" id="active" lay-verify="required">
+                        <option value="">选择上架状态</option>
+                        <option value="0">下架</option>
+                        <option value="1">上架</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="search-btn">
+                <button type="submit" class="layui-btn layui-btn-radius">搜索</button>
+            </div>
+        </form>
+<!--        <div class="col-md-4 pull-right">
+            <div class="pull-right">
+                <input type="button" class="layui-btn layui-btn-radius layui-btn-normal" data-open="__URL__/product_add" value="添加"/>
+            </div>
+        </div>-->
+        <div class="table-wrapper">
+            <table class="layui-table" lay-skin="row" lay-size="sm">
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>产品名称</th>
+                    <th>产品价格(元)</th>
+                    <th>产品库存</th>
+                    <th>优先级</th>
+                    <th>产品类别</th>
+                    <?php if( C('ORDER_SHIPPING') == TRUE ): ?>
+                    <th>运费模板名称</th>
+                    <th>重量/体积</th>
+                    <?php endif;?>
+                    <th>上架状态</th>
+                    <!--<th>产品描述</th>-->
+                    <!--<th>产品介绍</th>-->
+                    <th>添加时间</th>
+                    <th>操作</th>
+                    <?php if( C('FUNCTION_MODULE')['BOSS_ORDER'] == TRUE ): ?>
+                    <th>下单</th>
+                    <?php endif;?>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="list">
+                    <tr style="position: relative;">
+                        <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                    </tr>
+                    <else />
+                    <!--<tr><td colspan="12"><div class="pull-right">{$page}</div></td></tr>-->
+                    <volist name="list" id="m">
+                        <tr>
+                            <td>{$m.id}</td>
+                            <td>{$m.name}</td>
+                            <td>{$m.price}</td>
+                            <td>{$m.quantity}</td>
+                            <td>{$m.sequence}</td>
+                            <td>{$m.category_name|default='无'}</td>
+                            <?php if( C('ORDER_SHIPPING') == TRUE ): ?>
+                            <td>
+                                <a data-iframe="__APP__/Radmin/Shipping/info?template_id={$m.template_id}">
+                                    {$m.template_name|default='无'}
+                                </a>
+                             </td>
+                            <td>
+                                <eq name="m.info.price_way" value="2">{$m.product_parameter}kg
+                                    <else />
+                                        <eq name="m.info.price_way" value="3">{$m.product_parameter}m³
+                                    <else />
+                                        无
+                                    </eq>
+                                </eq>
+                            </td>
+                            <?php endif;?>
+                            <td>
+                                <if condition="$m.active eq '0'">
+                                    <span class="label label-danger">已下架</span>
+                                    <else/>
+                                    <span class="label label-info">上架中</span>
+                                </if>
+                            </td>
+                            <!--<td>{$m.state}</td>-->
+                            <td>{$m.time|date="Y-m-d H:i",###}</td>
+                            <td><input type="button"  class="wz2 layui-btn layui-btn layui-btn-radius layui-btn-normal" value="编辑" data-open="__URL__/product_edit?id={$m.id}"/>
+                                <input type="button" class="layui-btn layui-btn layui-btn-radius layui-btn-danger" value="删除" data-load="__URL__/product_delete?id={$m.id}" data-confirm="您确定要删除‘{$m.name}’吗？删除产品将不可恢复，并可能影响到用到该产品的记录！"/>
+                            </td>
+                            <?php if( C('FUNCTION_MODULE')['BOSS_ORDER'] == TRUE ): ?>
+                            <td><input type="button" class="layui-btn layui-btn layui-btn-radius" value="加入购物车" data-title="加入购物车" data-modal="__URL__/goods_detail?id={$m.id}"/></td>
+                            <?php endif;?>
+                        </tr>
+                    </volist>
+                    <include file="Public/page"/>
+                    <!-- <div id="page"></div> -->
+                    <!--<tr><td colspan="14"><div class="pull-right">{$page}</div></td></tr>-->
+                </empty>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</section>
+</body>
+
+</html>

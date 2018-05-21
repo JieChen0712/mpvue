@@ -1,0 +1,85 @@
+<layout name="Public/public" />
+
+
+
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+
+
+<h1 class="page-header">
+    经销商统计
+</h1>
+
+<div class="row">
+<div class="col-md-3">
+<ul class="list-group">
+  <li class="list-group-item">
+    <span class="badge">{$count.a}</span>
+    经销商总数量
+  </li>
+  <li class="list-group-item">
+    <span class="badge">{$count.b}</span>
+    已审核
+  </li>
+  <li class="list-group-item">
+    <span class="badge">{$count.c}</span>
+    未审核
+  </li>
+</ul>
+</div>
+    
+<div class="col-md-3">
+<ul class="list-group">
+    
+    <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+  <li class="list-group-item">
+    <span class="badge">{$count.$key_left_num}</span>
+    {$vo_left_name}
+  </li>
+  </foreach>
+  
+</ul>
+</div>
+    
+</div>
+
+<div class="row">
+   <div class="col-md-12 col-xs-12">
+
+<!--表格-->
+<table class="table table-condensed table-hover table-responsive table-bordered">
+    <thead>
+        <tr>
+            <th>编号</th>
+            <th>经销商</th>
+            <th>经销商级别</th>
+            <th>共买货物数量</th>
+            <th>共花费价钱</th>
+            <th>共收的标签</th>
+            <th>共发的标签</th>
+        </tr>
+    </thead>
+    <tbody>
+    <empty name="mList">
+        <tr><td colspan="7">对不起,没有要审核的经销商!</td></tr>
+        <else />
+        <!--<tr><td colspan="10"><div class="pull-right">{$page}</div></td></tr>-->
+        <volist name="mList" id="m">
+            <tr>
+                <td>{$m.id}</td>
+                <td>{$m.name}</td>
+                <td>{$m.levname}</td>
+                <td>{$m.total_num}</td>
+                <td>{$m.total_price}</td>
+                <td>{$m.s_num}</td>
+                <td>{$m.f_num}</td>
+            </tr>
+        </volist>
+        <tr><td colspan="7"><div class="pull-right">{$page}</div></td></tr>
+    </empty>
+</tbody>
+</table>
+<!--end 表格-->
+
+</div>
+</div>

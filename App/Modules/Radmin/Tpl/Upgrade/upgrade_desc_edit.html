@@ -1,0 +1,78 @@
+<script>
+    /**
+     * 使用图片上传接口需满足以下条件
+     * 1.容器选择器id=upload
+     * 2.设置name=image的input标签隐藏域
+     * 3.指定上传目录名称
+     */
+        //上传目录
+    var upload_dir_name = 'Upgrade';
+    form.render();
+</script>
+<style type="text/css">
+    .layui-form-item span{
+        line-height: 38px!important;
+    }
+    @media screen and (max-width: 768px) {
+        .layui-input-block {
+            margin-left: 15px;
+        }
+    }
+
+</style>
+<script>
+    form.render();
+</script>
+<div class="container-fluid edit-wrapper layui-container">
+    <div class="layui-content">
+        <form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__URL__/upgrade_desc_update" data-auto="false" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">等级</label>
+                <div class="form-right">
+                    <div class="layui-input-inline three-select">
+                        <select name="level" lay-verify="required">
+                            <foreach name="keys"  item="vo">
+                                <if condition="$vo eq $row['level']">
+                       <option value="{$vo}" selected="selected">{$level_name[$vo]}</option>
+                                    <else/>
+                                    <option value="{$vo}">{$level_name[$vo]}</option>
+                                </if>
+                            </foreach>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">金额</label>
+                <div class="layui-input-inline">
+                    <input  autofocus name="money" type="number" value="{$row.money}"  required=""  title="请输入金额" placeholder="请输入金额" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-inline">
+                    <input  autofocus name="desc" type="text" value="{$row.desc}"  required=""  title="请输入描述" placeholder="请输入描述" class="layui-input">
+                </div>
+            </div>
+<!--            <div class="layui-form-item items" >
+                <label class="layui-form-label">图标</label>
+                引入图片页面
+                <div>
+                    <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
+                    <if condition="$row.img neq ''">
+                        <include> file="Public/image" image_name="image" is_show="1" img_url="{$row.img}"/>
+                        <else/>
+                        <include> file="Public/image" image_name="image" is_show="0" img_url="{$row.img}"/>
+                    </if>
+                </div>-->
+            <div class="hr-line-dashed"></div>
+
+            <div class="layui-form-item text-center">
+                <input type="hidden" name="id" value="{$row.id}">
+                <button class="layui-btn" lay-submit="">确认修改</button>
+                <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消吗？" data-close>取消</button>
+            </div>
+
+        </form>
+    </div>
+</div>

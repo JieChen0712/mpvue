@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <title>视频中心</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/movie_index.css">
+</head>
+
+<body>
+<div class="page">
+    <div class="content">
+        <!-- header start-->
+        <include file="Public/header_features_v3" />
+        <!-- header end-->
+
+        <!--main start-->
+        <empty name="movie">
+            <include file="Public/empty" />
+            <else />
+            <div id="main">
+
+                <div class="bar bar-header-secondary search-wrapper">
+                    <div class="searchbar">
+                        <div class="search-input">
+                            <label class="icon icon-search" for="search"></label>
+                            <input type="search" id='search' class="search" placeholder='搜索视频' />
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+
+                    <volist name="movie" id="m">
+                        <div class="detail-wrapper" href="">
+                            <div class="title-wrapper">
+                                <h3>{$m.title}</h3>
+                                <button ></button>
+                            </div>
+                            <div class="movie-wrapper">
+                                <iframe height='250' width="100%"  src='{$m.link}' frameborder=0 'allowfullscreen'></iframe>
+                            </div>
+                        </div>
+                    </volist>
+                </div>
+        </empty>
+    </div>
+
+    <!--main end-->
+</div>
+</div>
+
+
+
+    <!--script start-->
+    <script src="__PUBLIC__/Admin_v3/js/jquery.js"></script>
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js"></script>
+    <script src="__PUBLIC__/Admin_v3/js/movie_index.js"></script>
+    <!--script end-->
+</body>
+</html>

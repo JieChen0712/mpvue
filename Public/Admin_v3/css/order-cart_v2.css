@@ -1,0 +1,217 @@
+.content-order{
+	margin-bottom: 3.15rem;
+}
+.order-address{
+	padding:1rem 1.25rem;
+	background-color: white;
+}
+.address-link{
+	text-decoration: none;
+}
+.address-link i:first-of-type{
+	padding:0 0.3125rem;
+	background-color: #dd0000;
+	color: white;
+	font-size: 1.5625rem;
+	line-height: 1.5625rem;
+	vertical-align: middle;
+	margin-right: 1rem;
+}
+.address-link i:last-of-type{
+	float: right;
+}
+/*******订单列表********/
+.btn-select{
+	float: left;
+	transform: scale(.7);
+	vertical-align: middle;
+	margin-left: .6rem;
+	margin-top: 40px;
+	border: solid 1px #787878;
+	border-radius: 50%;
+	width: 2rem;
+	display: inline-block;
+	background: transparent;
+	height: 2rem;
+}
+.btn-sel{
+	transform: scale(.7);
+	vertical-align: middle;
+	border: solid 1px #787878;
+	border-radius: 50%;
+	width: 2rem;
+	display: inline-block;
+	background: transparent;
+	height: 2rem;
+}
+#btn-selall{
+	vertical-align: inherit;
+	float: left;
+    margin-top: .6rem;
+    font-size: 0;
+}
+.control-menu .actived{
+	background-image: url(../images/btn-select.png);
+	border: 1px solid transparent;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.normal{
+	color: black;
+	margin-left: .1rem;
+	float: left;
+	line-height: 53px;
+}
+.delete-orders{
+	margin-top: 15px;
+}
+.order-alist ul li .active{
+	background-image: url(../images/btn-select.png);
+	border: 1px solid transparent;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.order-alist ul li{
+	position: relative;
+	height: 130px;
+	margin-bottom: 1rem;
+	background-color: white;
+	padding-top: .5rem;
+}
+.order-alist ul li::after{
+	position:absolute;
+	bottom: 0;
+	right: 0;
+	content: "";
+	display: block;
+	width: 95%;
+	height: 1px;
+	float: right;
+	transform: scaleY(.5);
+	border-bottom:solid 1px #a0a0a0;
+	
+}
+.seller-inf{
+	display: inline-block;
+	padding:.5rem 1.25rem;
+	margin: 0;
+	/*border-bottom: solid 1px #c9c9c9;*/
+}
+.seller-inf img{
+	width: 2.1875rem;
+	vertical-align: middle;
+	margin-right: 1rem;
+}
+.goods-infs{
+	background-color: #fafafa;
+	margin:  0;
+	overflow: hidden;
+}
+.goods-infs img{
+	width: 5.84375rem;
+	height: 5.84375rem;
+	float: left;
+	margin:.5rem 1.2rem;
+}
+.goods-infs .goods-title{
+	font-weight: bold;
+	margin-bottom: 0rem;
+	margin-top: .5rem;
+	margin-right: 1rem;
+	display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    
+}
+.select-num{
+	margin: 0;
+	overflow: hidden;
+	margin-right: 1rem;
+}
+.goods-infs .goods-format{
+	margin: 0;
+	color: #a0a0a0;
+	transform: scale(.8);
+	margin-left: -7rem;
+}
+.goods-infs .goods-price{
+	color: #fc4735;
+	font-weight: bold;
+	margin-top: .2rem;
+	margin-bottom: 0;
+	margin-right: 1rem;
+}
+.goods-price input{
+	color: black;
+	font-weight: normal;
+	/*border-radius: 0;*/
+	height: 1.25rem;
+	padding: 0;
+}
+.shownum{
+	width: 3.4375rem;
+	background-color: #eee;
+	border: none;
+	outline: none;
+	text-align: center;
+	margin: 0 .1rem;
+}
+.numadd{
+	width: 1.25rem;
+	border: none;
+	background-color: #eee;
+}
+.reducenum{
+	width: 1.25rem;
+	border:none;
+	background-color: #eee;
+}
+.count-num input{
+	float: right;
+	margin: .1rem;
+}
+
+/*********底部提交订单***********/
+.submit-order{
+	display: flex;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: white;
+	height: 3.125rem;
+}
+.submit-order p{
+	flex: 2;
+	text-align: right;
+	color: #dd0000;
+	font-weight: bold;
+	border-top: solid 1px #c9c9c9;
+	line-height: 3.125rem;
+	margin:0;
+	padding:  0 1rem 0 0;
+}
+.settlement{
+	flex: .7;
+	background-color: #dd0000;
+	color: white;
+	font-weight: bold;
+	border: none;
+	outline: none;
+	border-radius: 0;
+}
+.control-menu{
+	background-color: white;
+	padding: 0 10px;
+	height: 53px;
+	background-color: white;
+	border-bottom: solid 1px #c9c9c9;
+	font-size: 0;
+}
+.control-menu button{
+	float: right;
+	font-size: 1rem;
+}

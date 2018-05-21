@@ -1,0 +1,70 @@
+.page {
+    display: block;
+    background-color: #f5f4f9;
+}
+.content {
+    width: 100%;
+    height: 100%;
+    padding: .9375rem 5%;
+}
+.content-wrapper {
+    width: 90%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.btn-wrapper {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #fff;
+    padding: .9375rem;
+}
+.btn-wrapper .bind {
+    width: 100%;
+}
+
+.btn-wrapper .bind input {
+    width: 100%;
+    height: 2.1875rem;
+}
+
+.btn-wrapper .bind button {
+    width: 100%;
+    height: 2.8125rem;
+    /* margin-top: .625rem; */
+    border-radius: .3125rem;
+    background-color: #28BB9C;
+    border: none;
+    color: #fff;
+    letter-spacing: 5px;
+}
+
+.btn-wrapper .unbind button {
+    width: 100%;
+    height: 2.8125rem;
+    margin-top: .625rem;
+    border-radius: .3125rem;
+    background-color: #FC4735;
+    border: none;
+    color: #fff;
+    letter-spacing: 5px;
+}
+
+.text {
+    background-color: #fff;
+    padding: .9375rem;
+}
+
+.text h3 {
+    text-align: center;
+    line-height: 2.5rem;
+}
+
+.text p {
+    margin-top: 0;
+    font-size: 14px;
+    line-height: 24px;
+}
+.text p:last-child {
+    margin-bottom: 0;
+}

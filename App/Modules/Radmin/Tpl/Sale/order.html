@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script type="text/javascript">
+        var orderauditUrl = '{:U(GROUP_NAME . "/sale/order_audit")}/';
+        //var delUrl = '{:U(GROUP_NAME . "/Order/delete")}/';
+        layui.use('laydate', function() {
+          var laydate = layui.laydate;
+          laydate.render({
+            elem: '#start_time'
+          });
+          laydate.render({
+            elem: '#end_time'
+          });
+        });
+        form.render()
+    </script>
+    <style>
+        .form-search input {
+            max-width: 117px;
+        }
+    </style>
+</head>
+
+<body>
+<section class="layui-container">
+    <div class="content">
+        <header class="header">
+            <h3>中奖订单</h3>
+            <?php if($status==1):?>
+            <button class="layui-btn" id="audit" onclick="sale_orderaudit()" value="通过审核">通过审核</button>
+            <?php endif;?>
+            <a href="__URL__/expUser?pd=saleorder&con_url={$con_url}" class="layui-btn layui-btn-radius layui-btn-normal">导出Excel</a>
+        </header>
+        <form class="layui-form form layui-row form-search" action="__SELF__" method="get" onsubmit="return false">
+            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="start_time">开始时间</label>
+                <div class="time-wrapper">
+                  <input type="text" class="layui-input blue" name="start_time" id="start_time" readonly="readonly" placeholder="开始时间" autocomplete="on">
+                  <i class="fa fa-angle-down"></i>
+                </div>
+            </div>
+            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="end_time">结束时间</label>
+                <div class="time-wrapper">
+                  <input type="text" class="layui-input blue" name="end_time" id="end_time" readonly="readonly" placeholder="结束时间" autocomplete="on">
+                  <i class="fa fa-angle-down"></i>
+                </div>
+            </div>
+
+            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="name">用户</label>
+                <div>
+                    <input type="text" autocomplete="on" class="layui-input" name="name" id="name" placeholder="姓名" >
+                </div>
+            </div>
+<!--            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="p_name">产品名</label>
+                <div>
+                    <input type="text" autocomplete="on" class="layui-input" name="p_name" id="p_name" placeholder="产品名">
+                </div>
+            </div>-->
+            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="order_num">订单号</label>
+                <div>
+                    <input type="text" autocomplete="on" class="layui-input" name="order_num" id="order_num" placeholder="订单号">
+                </div>
+            </div>
+            <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="sale_code">随机码</label>
+                <div>
+                    <input type="text" autocomplete="on" class="layui-input" name="sale_code" id="sale_code" placeholder="随机码">
+                </div>
+            </div>
+
+             <div class="layui-form-item form-item">
+                <label class="layui-form-label" for="status">订单状态</label>
+                <div class="select-wrapper">
+                    <select name="status" id="status" lay-verify="required">
+                        <option value="">选择订单状态</option>
+                        <?php foreach( $sale_order_status as $status_id => $status_name ):?>
+                        <option value="{$status_id}">{$status_name}</option>
+                        <?php endforeach;?>
+                    </select>
+                </div>
+            </div>
+            <input type="hidden" name="level" value="{$level}" />
+            <input type="hidden" name="p" value="" />
+            <div class="search-btn">
+                <button type="submit" class="layui-btn layui-btn-radius">搜索</button>
+            </div>
+        </form>
+
+        <div class="table-wrapper">
+            <table class="layui-table" lay-skin="row" lay-size="sm">
+                <thead>
+                <tr>
+                    <th>订单号</th>
+                    <th>头像</th>
+                    <th>用户名字</th>
+                    <th>产品名字</th>
+                    <th>支付金额</th>
+                    <th>订单状态</th>
+                    <th>收货人</th>
+                    <th>收货地址</th>
+                    <th>收货手机</th>
+                    <th>备注</th>
+                    <th>随机码</th>
+                    <th>下单时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <empty name="list">
+                    <tr style="position: relative;">
+                        <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                    </tr>
+                    <else />
+                    <volist name="list" id="m">
+                        <tr>
+                            <td>
+                                <?php if($status==1):?>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="mid" value="{$m.order_num}" />{$m.order_num}
+                                </label>
+                                <?php else:?>
+                                {$m.order_num}
+                                <?php endif;?>
+                            </td>
+                            <td><img src="{$m.sale_user.headimgurl}" alt="头像" style="width:40px;height:40px;" /></td>
+                            <td>{$m.sale_user.name}</td>
+                            <td>{$m.p_name}</td>
+                            <td>{$m.pay_money}</td>
+                            <td>{$m.status_name}</td>
+                            <td>{$m.s_name}</td>
+                            <td>{$m.s_addre}</td>
+                            <td>{$m.s_phone}</td>
+                            <td>{$m.notes}</td>
+                            <td>{$m.sale_code}</td>
+                            <td>{$m.time|date="Y-m-d H:i",###}</td>
+                        </tr>
+                    </volist>
+                    <include file="Public/page" />
+                    <!-- <div id="page"></div> -->
+                    <!--<tr><td colspan="14"><div class="pull-right">{$page}</div></td></tr>-->
+                </empty>
+                </tbody>
+            </table>
+            <td colspan="12">
+                <label class="control-label">
+                    <input type="checkbox" id="allpick" onclick="return allpick();" /> 全选
+                </label>
+            </td>
+        </div>
+
+    </div>
+
+</section>
+
+<script>
+    //订单审核
+    function sale_orderaudit()
+    {
+        var managers = document.getElementsByName("mid");
+        var mids = "";
+        for (var i = 0; i < managers.length; i++)
+        {
+            if (managers[i].checked) {
+                mids = mids + '_' + managers[i].value;
+            }
+        }
+        if (mids == '') {
+            layer.msg('请选择至少一个订单！');
+            return;
+        }
+
+        $("#audit").attr('disabled', 'disabled');
+        $("#audit").val('正在审核中');
+
+        $.post(orderauditUrl, {mids: mids}, function (res) {
+            $("#audit").attr('disabled', false);
+            $("#audit").val('通过审核');
+            if (res.status) {
+                layer.msg('订单审核成功！');
+                setTimeout(function () {
+                    location.reload();
+                }, 1000)
+            } else {
+                layer.msg('订单审核失败！');
+            }
+        }, 'json');
+    }
+
+
+    function allpick(){
+
+        var checkbox = $("#allpick").is(':checked');
+
+        if( checkbox == true ){
+            $("input[name='mid']").prop("checked",true);
+        }
+        else{
+            $("input[name='mid']").prop("checked",false);
+        }
+    }
+</script>
+</body>
+
+</html>

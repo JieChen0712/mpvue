@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>返利审核</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/recharge_check.css" />
+</head>
+
+<body>
+    <div class="page">
+        <div class="content">
+            <div class="content-top">
+                <eq name="type" value="rebate">
+                <div class="recharge-name">
+                    返利类型：
+                    <span>{$list.rebate_name}</span>
+                </div>
+                </eq>
+                <div class="recharge-name">
+                    获利人姓名：
+                    <span>{$list.uid_info.name}</span>
+                </div>
+                <div class="WeChat">
+                    手机号：
+                    <span>{$list.uid_info.phone}</span>
+                </div>
+                <div class="grade">
+                    等级：
+                    <span>{$list.uid_info.levname}</span>
+                </div>
+                <eq name="type" value="rebate">
+                <div class="recharge-name">
+                    被推荐人姓名：
+                    <span>{$list.rec_id_info.name}</span>
+                </div>
+                <div class="WeChat">
+                    手机号：
+                    <span>{$list.rec_id_info.phone}</span>
+                </div>
+                <div class="grade">
+                    等级：
+                    <span>{$list.rec_id_info.levname}</span>
+                </div>
+                </eq>
+                <div class="recharge-amount">
+                    返利金额：
+                    <eq name="type" value="rebate">
+                    <span>￥{$list.money}</span>
+                    <else />
+                    <span>￥{$list.rebate_money}</span>
+                    </eq>
+                </div>
+                <div class="grade">
+                    时间：
+                    <span>{$list.time}</span>
+                </div>
+<!--                <div class="pay-screenshot">
+                    支付截图：
+                    <div class="img-wrapper">
+                        <img src="{$money_apply.apply_img}" alt="" width="120">
+                    </div>
+                </div>-->
+            </div>
+            <div class="content-bottom">
+                <ul class="account-balance">
+                    <li class="now">
+                        当前账户金额：
+                        <span>￥{$recharge_money}</span>
+                    </li>
+                    <li class="after">
+                        审核后账户金额：
+                        <span>￥{$recharge_back}</span>
+                    </li>
+                    <li class="help-btn">
+                        <!--<button class="alert-text">?</button>-->
+                    </li>
+                </ul>
+                <div class="btn-wrapper">
+                    <if condition="$recharge_back gt 0">
+                        <button class="pass" onclick="apply_pass('{$list.id}','1', '{$type}')">审核通过</button>
+                        <!--<button class="refuse" onclick="apply_pass('{$list.id}','2')">拒绝</button>-->
+                        <else/>
+                        <button class="refuse" disabled="disabled">金额不足，无法操作</button>
+                    </if>
+                    <button class="passed" disabled="disabled">已通过</button>
+                    <button class="refused" disabled="disabled">已拒绝</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/recharge_check.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        function apply_pass(id, pass, type) {
+            var pass_info;
+            if (pass == '2') {
+                pass_info = '您确认审核不通过吗？';
+            } else {
+                pass_info = '审核通过后扣除相应的虚拟币，您确认审核通过吗？';
+            }
+            if (type == 'rebate') {
+                url = "__GROUP__/newRebate/audit_other_rebate"
+            } else if (type == 'team') {
+                url = "__GROUP__/newRebate/audit_team_rebate"
+            }
+            $.confirm(pass_info, function () {
+                if (pass_info) {
+                    $.post(url, {
+                        id: id,
+                        pass: pass,
+                    }, function (res) {
+                        if (res.code = '1') {
+                            tusi(res.msg);
+                            setTimeout(function () {
+                                window.location.href = document.referrer;
+                            },2000)
+                        } else {
+                            tusi(res.msg);
+                        }
+                    });
+
+                } else {
+                    return false;
+                }
+            });
+        }
+
+        $(function () {
+            var arr = window.location.search.split('&');
+            if (arr[1]) {
+                var type = arr[1].substring(5);
+            }
+            if (type != 'undefined') {
+                $('.btn-wrapper button').hide();
+                if (type == 1) {
+                    $('.passed').show();
+                } else if (type == 2) {
+                    $('.refused').show();
+                } else {
+                    $('.passed').remove();
+                    $('.refused').remove();
+                    $('.btn-wrapper button').show();
+                }
+            }
+        })
+    </script>
+</body>
+
+
+</html>

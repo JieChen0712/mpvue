@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>经销商后台</title>
+    <include file="Public/order"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/back/style.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+    </head>
+    <body style="background-color:#f5f5f5">
+    <header class="header">
+        <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/new/left_icon.png" alt=""></a>
+        <p>经销商后台<span id="loginout"><a href="__APP__/admin/Index/center" class="a1"><img src="__PUBLIC__/images/new/right_icon.png" alt=""></a></span></p>
+    </header>
+        <div class="index_bg">
+            <div class="wrap" style="margin-top:50px;">
+                <img src="{$manager.headimgurl}" alt="" style="max-width:110px;max-height:140px;">
+            </div>
+                <div class="wrap1">
+                <p class="p">{$manager.name}<p/>
+                <p>微信号：{$manager.wechatnum}<p/>
+                <p>虚拟币：{$recharge_money}</p>
+             </div>
+        </div>
+        <style>
+        .right_test{
+          width:62px;
+          background:#858686;
+          color:#fff;
+          float:right;
+          font-size:14px;
+          height:23px;
+          line-height:23px;
+          text-align: center;
+          position: relative;
+          left: -40px;
+          top: 15px;
+        }
+        .right_test p{
+          width:17px;height:17px;border-radius:17px;background:#f35c60;line-height:17px;position:absolute;
+              right: -9px;top: -8px;
+
+        }
+        </style>
+        <section class="section">
+            <ul>
+                <a href="__APP__/admin/G/index">
+                    <li>
+                        <div class="logo1"><img src="__PUBLIC__/images/new/icon_cx.png" alt=""></div>
+                        <p class="test1">查询单号<br><span>根据出货单号查询发货信息</span></p>
+                        <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                        <div class="hr"></div>
+                    </li> 
+                </a>
+               <a href="__APP__/admin/Order/my_dhj">
+                   <li>
+                       <div class="logo1"><img src="__PUBLIC__/images/new/icon_hj.png" alt=""></div>
+                       <p class="test1">我的订货价<br><span>查看本人的订货价格</span></p>
+                       <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                       <div class="hr"></div>
+                   </li>
+                   </a>
+                 <a href="__APP__/admin/Order/my_dd">  
+                   <li>
+                       <div class="logo1"><img src="__PUBLIC__/images/new/icon_dd.png" alt=""></div>
+                       <p class="test1">我的订单<br><span>我的订单信息，下单订货</span></p>
+                       <!-- <neq name="order_not" value="0"> -->
+                       <notempty name="order_not">
+                         <div class="right_test">
+                           未完成<p>{$order_not}</p>
+                         </div>
+                         </notempty>
+                       <!-- </neq> -->
+                       <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                       <div class="hr"></div>
+                   </li>
+                   </a>
+<!--                   <a href="__APP__/Admin/Order/xjdd">
+                   <li>
+                       <div class="logo1"><img src="__PUBLIC__/images/new/icon_xj.png" alt=""></div>
+                       <p class="test1">下级客户订单<br><span>我的下级客户的订单货</span></p>
+                        <neq name="order_not_next" value="0"> 
+                       <notempty name="order_not_next">
+                       <div class="right_test">
+                         未完成<p>{$order_not_next}</p>
+                       </div>
+                       </notempty>
+                      </neq> 
+                       <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                       <div class="hr"></div>
+                   </li>
+                   </a>-->
+                   
+                   <!--只有展现作用-->
+                   <a href="__APP__/admin/Order/xjdd_show">
+                   <li>
+                       <div class="logo1"><img src="__PUBLIC__/images/new/icon_xj.png" alt=""></div>
+                       <p class="test1">下级客户订单<br><span>我的下级客户的订单货</span></p>
+                     <!-- </neq> -->
+                       <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                       <div class="hr"></div>
+                   </li>
+                   </a>
+                   
+                   <!--只有展现作用-->
+                   <a href="__APP__/admin/Order/recommend_dd_show">
+                   <li>
+                       <div class="logo1"><img src="__PUBLIC__/images/new/icon_xj.png" alt=""></div>
+                       <p class="test1">我推荐的客户订单<br><span>我推荐的客户的订单货</span></p>
+                     <!-- </neq> -->
+                       <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                       <div class="hr"></div>
+                   </li>
+                   </a>
+                   
+                   <a href="__APP__/admin/Order/xjjg">
+                   <li>
+                       <div class="logo1"><img src="__PUBLIC__/images/new/icon_dljg.png" alt=""></div>
+                       <p class="test1">下级经销商价格<br><span>我的下级经销商进货价格</span></p>
+                       <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                       <div class="hr"></div>
+                   </li>
+                   </a> 
+            </ul>
+        </section>  
+		<script>
+		/*	$("#loginout").click(function(){
+				location.href = "__APP__/admin/Login/loginout";
+			})*/
+		</script>
+    </body>
+    </html>

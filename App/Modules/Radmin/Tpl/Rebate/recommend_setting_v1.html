@@ -1,0 +1,62 @@
+<layout name="Public/public" />
+
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script> 
+<script>
+    function pd(rebatea, id) {
+        var rebate = $("input[name=ratio" + id + "]").val();
+        if (rebate < 0) {
+            alert("返利不能少于0");
+            $("input[name=ratio" + id + "]").val(rebatea);
+        }
+    }
+    function pda(mina, id) {
+        var rebate = $("input[name=min" + id + "]").val();
+        if (rebate < 0) {
+            alert("不能少于0");
+            $("input[name=min" + id + "]").val(mina);
+        }
+    }
+    function pdb(remoneya) {
+        var remoneyb = $("input[name=remoney]").val();
+        if (remoneyb < 0) {
+            alert("不能少于0");
+            $("input[name=remoney]").val(remoneya);
+        }
+    }
+</script>
+
+
+<h1 class="page-header">推荐返利现金设置</h1>
+
+
+<!--右边内容-->
+    <span style="font-size:16px;">根据各级别填写推荐返利即可，0则为不产生返利</span><br/>
+    
+    <form class="form-inline" method="post" action="__URL__/recommend_setting_submit">
+        <table class="table">
+            <tbody>
+                <foreach name="level_name" key="key_left_num" item="vo_left_name">
+                <eq name="key_left_num" value="2">
+                <tr>
+                    <td>
+                        推荐{$vo_left_name}返利金额：
+                        <php>
+                            $money_key = 'level'.$key_left_num;
+                            $money_value = $set_info[$money_key];
+                        </php>
+                        <input class="form-control" name="level{$key_left_num}" value="{$money_value}" >元
+                    </td>
+                </tr>
+                </eq>
+                </foreach>
+            <tr>
+                <td>
+                    <input class="btn btn-default" id="确定" value="确定" type="submit">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>

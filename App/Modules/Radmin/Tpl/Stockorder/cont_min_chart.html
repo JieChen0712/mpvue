@@ -1,0 +1,98 @@
+<layout name="Public/public" />
+
+<head>
+<!--<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>统计提货下单</title>-->
+<link href="__PUBLIC__/Admin/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+<script type="text/javascript" src="__PUBLIC__/js/WdatePicker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-ui.js" ></script>
+
+</head>
+<style>
+	.title_bar5{
+		height:50px;
+	}
+</style>
+
+
+<h1 class="page-header">
+    最低消费统计
+</h1>
+<div class="row">
+    <div class="col-md-8">
+        <form class="form-inline" method="get" action="__URL__/cont_min_chart" onsubmit="return checkTime();">
+            <div class="form-group">
+            <label class="sr-only" for="month">选择月份</label>
+            <input class="form-control" value="{$month}" id="month" name="month" type="text" placeholder="选择月份" onClick="selectMonth()"/>
+            <label class="sr-only" for="name">经销商名字或微信号</label>
+            <input class="form-control" type="text" name="name" id="name" placeholder="经销商名字或微信号" onmouseup="this.select();" maxlength="80" />
+            
+            <label class="sr-only" for="level">级别</label>
+                <select name="level" id="level"  class="form-control">
+                    <option value="">选择级别</option>
+                    <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                    <option value="{$key_left_num}">{$vo_left_name}</option>
+                    </foreach>
+            </select>
+            
+            
+            <input type="submit" class="btn btn-default" value="搜索"/>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4"></div>
+</div>
+
+
+<!--表格-->
+<table class="table table-condensed">
+    <thead>
+        <tr>
+            <th>经销商</th>
+            <th>微信号</th>
+            <th>级别</th>
+            <th>进货量</th>
+            <th>最低消费差距</th>
+            <th>最低消费信息</th>
+        </tr>
+    </thead>
+    <tbody>
+    <empty name="list">
+        <tr><td colspan="6">对不起,没有找到统计信息! </td></tr>
+        <else />
+        <volist name="list" id="m">
+            <tr>
+                <td>{$m.name}</td>
+                <td>{$m.wechatnum}</td>
+                <td>{$m.levname}</td>
+                <td>{$m.order_total}</td>
+                <td>
+                    <empty name="m.min_dif">
+                        {$m.min_dif}
+                        <else />
+                        <span class="label label-danger">{$m.min_dif}</span>
+                    </empty>
+                </td>
+                <td>
+                    <empty name="m.alert_info">
+                        {$m.alert_info}
+                        <else />
+                        <span class="label label-info">{$m.alert_info}</span>
+                    </empty>
+                </td>
+            </tr>
+        </volist>
+        <tr><td colspan="6"><div class="pull-right">{$page}</div></td></tr>
+    </empty>
+</tbody>
+</table>
+<!--end 表格-->
+
+        
+<script>  
+    function selectMonth() {  
+        WdatePicker({ dateFmt: 'yyyyMM', isShowToday: false, isShowClear: false });  
+    }  
+</script>  

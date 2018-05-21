@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>订单详情</title>
+    <include file="Public/header_v2"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/order.css">
+    </head>
+    <body>
+     <header class="header">
+        <a href="javascript:history.go(-1);" class="a"></a>
+        <p>订单详情</p>
+    </header>
+    <div class="order-section">
+        <div class="order-content">
+            <p class="order-num">订单号：{$orderInfo.0.order_num}</p>
+            <div class="order-detail">
+                <volist name="orderInfo" id="vo"> 
+                    <p>产品名称：<span>{$vo.p_name}x{$vo.num}</span></p>
+                </volist> 
+                <p>订单代理：{$orderInfo.0.uInfo.name}</p>
+                <p>订单代理微信：{$orderInfo.0.uInfo.wechatnum}</p>
+                <p>订单金额：<span class="red">￥{$vo.total_price}</span></p>
+                <p>订单日期：{$vo.time|date="Y-m-d H:i",###}</p>
+                <p>订单状态： <span id="ddzt" class="blue">{$status_name.$vo[status]}</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="order-section">
+        <div class="order-content">
+            <p class="order-num">收货信息</p>
+            <div class="order-detail">
+                <p>收货人名称：{$orderInfo.0.s_name}</p>
+                <p>收货人电话：{$orderInfo.0.s_phone}</p>
+                <p>收货地址：{$orderInfo.0.s_addre}</p>
+            </div>
+        </div>
+    </div>
+        
+    <?php if( $orderInfo['0']['o_id'] == $manager['id'] ):?>
+    <div class="order-section shipper_info">
+        <div class="order-content">
+            <p class="order-num">填写物流信息</p>
+            <div class="order-detail">
+                <p>
+                    物流公司：
+                    <select id='shipper' class="form-control">
+                        <option value="">选择物流公司{$orderInfo[0]['shipper']}</option>
+                        <?php foreach( $shipper as $k => $v ):
+                            $select_value = $orderInfo[0]['shipper']==$k?'selected="selected"':NULL;
+                        ?>
+                        <option {$select_value} value="{$k}">{$k}-{$v}</option> 
+                        <?php endforeach;?>
+                    </select>
+                </p>
+                <p>物流单号：
+                    <input type="text" value="{$orderInfo[0]['ordernumber']}" placeholder="请填写快递单号" class="form-control" id="ordernumber" >
+                </p>
+                <?php if($orderInfo['0']['shipper'] != null && $orderInfo[0]['ordernumber'] != null):?>
+                    <foreach name="orderInfo[0]['ordernumber_arr']" item="a_ordernumber">
+                    <p><a style="color:red;" href="http://api.weisika.net/kd100/index/jump?ShipperCode={$orderInfo.0.shipper}&LogisticCode={$a_ordernumber}&callbackurl=http://{$Think.config.YM_DOMAIN}__GROUP__/order/ddxq?order_num={$orderInfo.0.order_num}">点击查询物流信息</a></p>
+                        </foreach>
+                    <?php endif;?>
+                <div class="order-content" >
+                    <p class="order-num" onclick="return edit_shipper('{$orderInfo.0.order_num}')" style="text-align: center;color:#00AAFF;">确认填写</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php else:?>
+        <div class="order-section">
+            <div class="order-content">
+                <p class="order-num">物流信息</p>
+                <div class="order-detail">
+                    <p>物流公司：{$orderInfo.0.shipper_name}</p>
+                    <p>物流单号：
+                    <eq name="express_count" value="1">{$orderInfo.0.ordernumber}
+                    <else />
+                        <volist name="express_no" id="vo">
+                            <span>{$vo}</span><br>
+                        </volist>
+                    </eq>
+                    </p>
+                    <?php if($orderInfo['0']['shipper'] != null && $orderInfo[0]['ordernumber'] != null):?>
+                    <p><a style="color:red;" href="http://api.weisika.net/kd100/index/jump?ShipperCode={$orderInfo.0.shipper}&LogisticCode={$orderInfo.0.ordernumber}&callbackurl=http://{$Think.config.YM_DOMAIN}__GROUP__/order/ddxq?order_num={$orderInfo.0.order_num}">点击查询物流信息</a></p>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+        
+    <div class="order-section">
+        <div class="order-content">
+            <p class="order-num">备注信息</p>
+            <div class="order-detail">{$orderInfo.0.notes}</div>
+        </div>
+    </div>
+    
+    <if condition="($vo.status eq 2) and ( $manager.id eq $vo.user_id )">
+    <div class="order-section shouhuo_box1">
+        <div class="order-content"  onclick="shouhuo('{$orderInfo.0.order_num}')">
+            <p class="order-num" style="text-align: center;color:#00AAFF;">确认收货</p>
+        </div>
+    </div>
+    </if>
+        
+<script>
+    function shouhuo(order_num){
+        if(confirm("您确认收货？")){
+            $.post("__URL__/shouhuo",{order_num:order_num},function(msg){
+            if(msg){
+                //tusi("以确定收货"); 
+                $("#ddzt").html("已收货"); 
+                $(".shouhuo_box1").hide();                          
+            }else{
+                tusi("收货处理失败");
+            }
+        });
+        
+         }else{
+            //否则说明下了
+          //tusi("您取消了确认收货");
+            return false;
+        }
+    }
+    
+    
+    function edit_shipper(order_num){
+        if( !confirm("确认修改？")){
+            return false;
+        }
+        
+        var shipper = $("#shipper").val();
+        var ordernumber = $("#ordernumber").val();
+        
+        if( shipper == '' || shipper == null || ordernumber == '' || ordernumber == null ){
+            tusi('快递公司以及快递单号都不能为空！');
+            return false;
+        }
+        
+        $.post("__URL__/ordernb",{order_num:order_num,shipper:shipper,ordernumber:ordernumber},function(result){
+            if(result.code == 1){
+                tusi(result.msg);                     
+            }else if( result.msg != null ){
+                tusi(result.msg);
+            }
+            else{
+                tusi('提交失败！');
+            }
+        });
+        
+        return true;
+    }
+    
+</script>
+</body>
+</html>

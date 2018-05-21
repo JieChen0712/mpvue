@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>申请{$Think.config.SYSTEM_NAME}经销商</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/apply_agent.css" />
+    <script>
+      function setWidth(a) {
+        if(/Andriod/i.test(navigator.userAgent)) {
+          var c, b = window.innerWidth;
+          (b != a) && (c = b / a), document.addEventListener("DOMContentLoaded", function() {
+            var d = document.getElementsByTagName("body")[0];
+            d.style.webkitTransformOrigin = "left top";
+            d.style.webkitTransform = "scale(" + c + ")"
+          }, !1)
+        }
+      }
+      setWidth(640);
+    </script>
+    <script type="text/javascript" src="__PUBLIC__/js/my/common.js"></script>
+    <script src="__PUBLIC__/js/admin.js"></script>
+    <script src="__PUBLIC__/js/exif.js"></script>
+    <script src="__PUBLIC__/Admin_v3/js/toast.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="__PUBLIC__/css/back/apply.css">
+    <script type="text/javascript">
+      var homeUrl = '__APP__/admin/login';
+      var applyUrl = '{:U(GROUP_NAME . "/Development/applyHandle")}/';
+      var uploadUrl = '__APP__/Home/Manager/uploadCanvas';
+      var getUser = '__APP__/Home/Manager/get_user_ajax'
+      var ishome = false;
+      var alllevel = ''
+      var IS_SUBMIT_ID_CARD_IMG = '{$Think.config.IS_SUBMIT_ID_CARD_IMG}';
+      var u_id = "{$manager.id}";
+      //弹出二维码：true为弹出，false为收起
+      var qrshow = '{$not_apply}';
+    </script>
+
+  </head>
+
+  <body>
+    <div class="page page-current">
+
+
+        <div class="content">
+            <div class="inviter-wrapper">
+                <div class="inviter-title">邀请人信息：</div>
+                <div class="inviter-detail">
+                    <div class="inviter-avatar">
+                        <img alt="" id="avatar">
+                        <div class="text">
+                            <div class="inviter-name"></div>
+                            <div class="inviter-grade"></div>
+                        </div>
+                    </div>
+                    <div class="warrant">
+                        <img src="" alt="">
+                        <div class="check-warrant">授权证书</div>
+                    </div>
+
+
+
+          </div>
+          <div class="apply-grade">
+            <p>您申请的经销商级别为：</p>
+            <input type="text" value="{$levname}" disabled="disabled">
+            <input type="hidden" name="level" value="{$level}">
+            <input type="hidden" name="pid" value="{$pid}">
+            <!--<span class="icon icon-down"></span>-->
+          </div>
+        </div>
+        <div class="informatin">
+          <p class="informatin-title">填写资料（有*为必填项）</p>
+          <div class="username">
+            <div>*
+              <span class="font2">姓</span>名：</div>
+            <input type="text" id="name" name="name">
+          </div>
+          <div class="Wechat">
+            <div>*
+              <span class="font3">微信</span>号：</div>
+            <input type="text" id="wechatnum" name="wechatnum">
+          </div>
+          <div class="tel">
+            <div>*
+              <span class="font2">电</span>话：</div>
+            <input type="text" id="phone" name="phone">
+          </div>
+          <div class="email">
+            <div>
+              <span class="font2">邮</span>箱：</div>
+            <input type="text" name="email" id="email">
+          </div>
+          <div class="identity-card">
+            <div>*
+              <span class="font3">身份</span>证：</div>
+            <input type="text" id="idennum2" name="idennum">
+          </div>
+          <div class="probably-address">
+                        <em>*所在地址：</em>
+                        <include file="./App/Public/city_picker.html" re_province="" re_city="" re_county=""/>
+                        <!--<span class="icon icon-right" name="addr" id="probably-address"></span>
+                        <div class="select_wrapper">-->
+                            <!--<input type="text" id='city-picker'>-->
+                            <!--<div class="three-select">
+                                <select name="province" id="province">
+                                    <option value=""></option>
+                                </select>
+                                <select name="city" id="city">
+                                    <option value=""></option>
+                                </select>
+                                <select name="county" id="county">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+
+                            <p>更换方式</p>
+                        </div>-->
+                    </div>
+          <input type="hidden" name="level" value="{$level}">
+          <div class="detail-address">
+            <input type="text" placeholder="请输入详细地址" id="addre" name="addre">
+          </div>
+          <if condition="($Think.config.IS_SUBMIT_ID_CARD_IMG eq 1) OR ($Think.config.IS_SUBMIT_ID_CARD_IMG eq 2)">
+            <div class="uploading-img">
+              <div>
+                * 添加身份证图片
+                <span>（限一张）</span>
+              </div>
+              <span id="list1" style="float:left"></span>
+              <div class="imgUpload">
+                <img src="__PUBLIC__/images/sq.png" />
+                <input type="button" id="btn1" onclick="myfile1.click();" value="" style="display:none">
+                <input type="file" accept="image/*;capture=camera" id="myfile1" name="idennumimg">
+              </div>
+              <input type="hidden" value="" id="idennum" name="idennumimg" />
+            </div>
+          </if>
+
+          <if condition="($Think.config.IS_SUBMIT_ID_CARD_IMG eq 1) OR ($Think.config.IS_SUBMIT_ID_CARD_IMG eq 3)">
+            <div class="uploading-img">
+              <div>
+                * 添加保证金截图
+                <span>（限一张）</span>
+              </div>
+              <span id="list2" style="float:left"></span>
+              <div class="imgUpload">
+                <img src="__PUBLIC__/images/sq.png" />
+                <input type="button" id="btn2" onclick="myfile2.click();" value="" style="display:none">
+                <input type="file" accept="image/*;capture=camera" id="myfile2" name="liveimg">
+              </div>
+              <input type="hidden" value="" id="live" name="liveimg" />
+            </div>
+
+            <!-- <div class="uploading-img">
+                    <div>
+                        * 添加身份证图片
+                        <span>（限一张）</span>
+                    </div>
+                    <div class="image-container">
+                        <img src="" alt="" id="preview">
+                    </div>
+                    &lt;!&ndash; 障眼法 &ndash;&gt;
+                    <div class="picture">
+                        <img src="__PUBLIC__/Admin_v3/images/manager-order/select-img.png" alt="" width="78">
+                    </div>
+                    &lt;!&ndash; 障眼法 &ndash;&gt;
+                    <div class="select-img">
+                        选择图片<input type="file" id="file-upload" name="idennumimg">
+                    </div>
+                    <p class="check-template">查看样例</p>
+                </div> -->
+          </if>
+
+          <input type="hidden" value="{$ct}" name="ct" />
+          <div class="agreement" checked="checked" id="checked">
+            <span>本人已阅读并同意</span>
+            <a href="#">《{$list.name}条例》</a>
+          </div>
+          <div class="btn-wrapper">
+            <?php if( !$not_apply ):?>
+            <button onclick="apply()" data-apply="1">提交</button>
+            <?php else:?>
+            <button disable="disable" data-apply="0" style="background: #879FB7;">推荐人无须提交</button>
+            <?php endif;?>
+          </div>
+          <div class="tip">
+            （注意：一个手机微信号只能申请一次，禁止替他人申请，避免造成不必要的麻烦！）
+          </div>
+        </div>
+
+        <!-- 图片遮罩层 -->
+        <div class="mask-img">
+          <div class="qrcode-wrapper">
+            <img src="" alt="" id="qrcode" />
+          </div>
+          <div class="img-wrapper">
+            <!--<img src="__PUBLIC__/Admin_v3/images/information/pay-screenshot.jpg" alt="">-->
+            <include file="./App/Public/authorization.html" />
+          </div>
+        </div>
+
+        <div class="mask-text">
+          <div class="text">
+            {$list.news}
+          </div>
+          <img src="__PUBLIC__/images/close.png" alt="">
+        </div>
+      </div>
+
+    </div>
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/light7-city-picker.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/apply_agent.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Radmin_v3/js/qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+    <if condition="$Think.config.IS_SUBMIT_ID_CARD_IMG egt 1">
+      <script type="text/javascript" src="__PUBLIC__/js/pho.js"></script>
+    </if>
+    <script>
+      var agentimg = '__PUBLIC__/Admin_v3/images/team-manager/team-certificate/certificate.jpg';
+      var userId = null;
+      if(typeof u_id != 'undefined') {
+        if(u_id != "" && u_id != undefined && u_id != null) {
+//        $('.inviter-avatar').find('img').attr("crossOrigin","Anonymous");
+          userId = u_id;
+          $.ajax({url:getUser, type:'POST',data:{
+            id: userId
+          },async:false, success:function(data) {
+            $('.inviter-avatar').find('img').attr({src:data.info.headimgurl});
+            $('.inviter-name').text(data.info.name).siblings('.inviter-grade').text(data.info.levname);
+          }})
+        }
+      }
+      $(document).ready(function() {
+        $('.agreement a').click(function() {
+          $('.mask-text').show();
+        })
+        $('.mask-text img').click(function() {
+          $('.mask-text').hide();
+        })
+        $('.btn-wrapper').on('click', 'button', function() {
+          if($(this).data('apply') == '0') {
+            return false;
+          }
+          $(this).attr('disabled', true).css('backgroundColor', '#879FB7').text('提交中');
+          setTimeout(function() {
+            $('.btn-wrapper button').attr('disabled', false).css('backgroundColor',
+              '#0E3E6E').text('提交');
+          }, 1000)
+        })
+
+        if(qrshow) {
+//        var str ='crossOrigin="Anonymous"';
+          $('.mask-img').slideDown().find('.img-wrapper').hide();
+          $('#avatar').bind("load",function(){
+            var images = QRCode.generatePNG(window.location.href, {
+              ecclevel: "H",
+              format: "html",
+              fillcolor: "#FFFFFF",
+              textcolor: "#373737",
+              margin: 4,
+              modulesize: 8
+            });
+            $('.qrcode-wrapper').find('#qrcode').attr('src', images);
+          })
+        }
+      })
+    </script>
+  </body>
+
+</html>

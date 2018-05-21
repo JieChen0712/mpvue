@@ -1,0 +1,134 @@
+<html xmlns="http://www.w3.org/1999/xhtml" class="ui-mobile">
+
+    <head>
+        <title>{$Think.config.SYSTEM_NAME}微商授权系统名片</title>
+        <meta charset="UTF-8">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="format-detection" content="telephone=no, email=no" />
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="MobileOptimized" content="640">
+        <meta name="screen-orientation" content="portrait">
+        <meta name="x5-orientation" content="portrait">
+        <meta name="full-screen" content="yes">
+        <meta name="x5-fullscreen" content="true">
+        <meta name="browsermode" content="application">
+        <meta name="x5-page-mode" content="app">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="width=640,target-densitydpi=device-dpi,maximum-scale=1.0, user-scalable=no">
+        <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js"></script>
+        <script>
+            function setWidth(a) {
+                if(/Andriod/i.test(navigator.userAgent)) {
+                    var c, b = window.innerWidth;
+                    (b != a) && (c = b / a), document.addEventListener("DOMContentLoaded", function() {
+                        var d = document.getElementsByTagName("body")[0];
+                        d.style.webkitTransformOrigin = "left top";
+                        d.style.webkitTransform = "scale(" + c + ")"
+                    }, !1)
+                }
+            }
+            setWidth(640);
+        </script>
+        <script src="__PUBLIC__/js/jquery-2.1.1.min.js"></script>
+        <script src="__PUBLIC__/js/my/common.js"></script>
+        <link href="__PUBLIC__/css/index/jquery.mobile-1.4.2.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/reset.css">
+        <!--<link href="__PUBLIC__/css/my/show.css" rel="stylesheet">-->
+        <style>
+            * {
+                overflow: hidden;
+                padding: 0;
+                margin: 0;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            
+            .header {
+                width: 100%;
+                height: 80px;
+                background: #4abcf2;
+                line-height: 80px;
+                text-align: center;
+                font-size: 26px;
+                color: #fff;
+                position: relative;
+            }
+            
+            .header .a {
+                position: absolute;
+                left: 0;
+                margin-left: 35px;
+            }
+            
+            .header .a1 {
+                font-size: 21px;
+                color: #fff;
+                position: absolute;
+                right: 0;
+                margin-right: 26px;
+            }
+            
+            #bg {
+                -webkit-transform: rotate(45deg);
+                -moz-transform: rotate(45deg);
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+                overflow: hidden;
+                z-index: 9999;
+                opacity: 0.1;
+                font-size: 30px;
+            }
+            
+            img {
+                width: 100%;
+                /*height: 100%;*/
+            }
+        </style>
+        <script>
+            //var texta;
+            function change() {
+                for(var i = 150; i <= 956; i = i + 155) {
+                    for(var j = 10; j <= 640; j = j + 172) {
+                        var mask_div = document.createElement('div');
+                        mask_div.id = 'bg';
+                        mask_div.appendChild(document.createTextNode('{$manager.name}'));
+                        mask_div.style.position = "absolute";
+                        mask_div.style.left = j + 'px';
+                        mask_div.style.top = i + 'px';
+                        document.body.appendChild(mask_div);
+                    };
+                };
+            }
+        </script>
+        <if condition="$top_type eq 1">
+            <style>
+                .header {
+                    background-color: black;
+                }
+            </style>
+        </if>
+
+    </head>
+    <div class="page">
+        <div id='wx_pic' style='margin:0 auto;display:none;'>
+            <img src='__PUBLIC__/images/wx_logo.jpg' />
+        </div>
+
+        <body onload="change()">
+            <div>
+                <div style="text-align:center;width: 100%;">
+                    <include file="./App/Public/authorization.html" />
+                </div>
+
+            </div>
+    </div>
+
+    </body>
+
+</html>

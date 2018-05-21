@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <title>下级客户订单</title>
+        <include file="Public/header_v2" />
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/order.css">
+        <script type="text/javascript" src="__PUBLIC__/js/my_dd.js"></script>
+        <script>
+            $(function() {
+                $(".toggle li").click(function() {
+                    var index = $(this).index() + 1;
+                    if(index == 1) {
+                        $(this).removeClass("dispose1").addClass("dispose1-active").siblings().removeClass("dispose2-active").addClass("dispose2");
+                    } else {
+                        $(this).addClass("dispose2-active").siblings().addClass("dispose1");
+                    }
+                    $("#section" + index).show().siblings("section").hide();
+                });
+            })
+        </script>
+        <style>
+            body {
+                background: url(__PUBLIC__/Admin_v2/images/bg01.jpg) #fbfbfb no-repeat;
+                background-color: #fbfbfb;
+                background-size: cover;
+            }
+            
+            .tel_title {
+                background: transparent;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <header class="header">
+            <a href="javascript:history.go(-1);" class="a"></a>
+            <p>下级客户订单</p>
+        </header>
+        <div class="bg-red center">
+            <p class="order-sum">总订单<br><span>{$res_count}</span></p>
+            <div class="next-order-panel clearfix flex-column">
+                <p class="left flex1">已处理<br>{$res_yes_count}</p>
+                <p class="right flex1">待处理<br>{$res_not_count}</p>
+            </div>
+        </div>
+        <div class="dispose bg-white center">
+            <ul class="flex-column toggle">
+                <li class="flex1 dispose1-active">已处理</li>
+                <li class="flex1 dispose2">待处理</li>
+            </ul>
+        </div>
+        <!--     <div class="G-panel next-order-search">
+       <p><input type="text" class="G-ordernum" placeholder="请输入订单号..."><input type="submit" class="G-search" value="搜索"></p>
+    </div>-->
+
+        <!-- 已处理 section1 -->
+        <section id="section1">
+            <volist name="res_yes" id="list">
+                <div class="order-section">
+                    <div class="order-content">
+                        <div class="order-num"><span class="num">1</span>订单号：{$list.order_num} <span class="order-status">已处理</span></div>
+                        <a href="ddxq?order_num={$list.order_num}">
+                            <div class="order-detail">
+                                <p class="name">收货人：{$list.s_name}</p>
+                                <p class="phone">收货人电话号码：{$list.s_phone}</p>
+                                <p class="address">收货地址：{$list.s_addre}</p>
+                                <p class="time">订单日期：
+                                    <php>echo date('Y年m月d日 H时i分',$list[time]);</php>
+                                </p>
+                                <p class="go"><img src="__PUBLIC__/Admin_v2/images/icon-go.png" alt=""></p>
+                            </div>
+                        </a>
+                        <div class="order-money">订单金额：<span>￥{$list.total_price}</span></div>
+                    </div>
+                </div>
+            </volist>
+
+        </section>
+
+        <!-- 待处理 section2 -->
+        <section id="section2">
+            <volist name="res_not" id="list">
+                <div class="order-section">
+                    <div class="order-content">
+                        <p class="order-num"><span class="num">1</span>订单号：{$list.order_num} <span class="order-status">未处理</span></p>
+                        <a href="ddxq?order_num={$list.order_num}">
+                            <div class="order-detail">
+                                <p class="name">收货人：{$list.s_name}</p>
+                                <p class="phone">收货人电话号码：{$list.s_phone}</p>
+                                <p class="address">收货地址：{$list.s_addre}</p>
+                                <p class="time">订单日期：
+                                    <php>echo date('Y年m月d日 H时i分',$list[time]);</php>
+                                </p>
+                                <p class="go"><img src="__PUBLIC__/Admin_v2/images/icon-go.png" alt=""></p>
+                            </div>
+                        </a>
+                        <div class="order-money">订单金额：<span>￥{$list.total_price}</span>
+                            <p class="right">
+                                <span class="cancel-order red border-red" id="chuli" onclick="chuli('{$list.order_num}')">通过审核</span>
+                            </p>
+                            <p style="display:none;" id="chuliing" class="right">
+                                <span class="cancel-order red border-red">正在审核...</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </volist>
+
+        </section>
+
+        <!--    <div class="mask_sh">
+        <div class="mask_sh1">
+            <p class="p1">订单审核</p>
+            <p class="p2">确认审核通过该订单？</p>
+            <div class="button">
+            <button type="button" class="button1">确定</button>
+            <button type="button" class="button2">取消</button>
+            </div>
+        </div>
+    </div>-->
+    </body>
+    <script>
+        function chuli(order_num) {
+            $('#chuliing').show();
+            $('#chuli').hide();
+
+            $.post("cldd", {
+                order_num: order_num
+            }, function(result) {
+                if(result.code == 1) {
+                    tusi("已处理订单");
+                    window.location.href = changeURLArg(window.location.href, "reloadtime", new Date().valueOf());
+                } else if(result.msg != null || result.msg != '') {
+                    tusi(result.msg);
+                } else {
+                    tusi("订单处理失败，请重试！");
+                    window.location.href = changeURLArg(window.location.href, "reloadtime", new Date().valueOf());
+                }
+
+                $('#chuliing').hide();
+                //            $('#chuli').show();
+            });
+        }
+
+        function search() {
+            var s_order_num = $("input[name=search]").val();
+            if(s_order_num == "") {
+                tusi('请输入订单号');
+                return false;
+            }
+            $.post("cxxjdd", {
+                s_order_num: s_order_num
+            }, function(msg) {
+                if(msg != 'none') {
+                    $('.wcl').hide();
+                    $('.dd2').hide();
+                    if(msg["status"] == 1) {
+                        var html = '';
+                        html += '<div class="dd2">';
+                        html += '<div class="wrap dle1">';
+                        html += '<div class="top">';
+                        html += '<h2>1</h2><p class="p1">订单号：' + msg["order_num"] + '</p>';
+                        html += '<p class="p2">未处理</p>';
+                        html += '</div>';
+                        html += '<a href="wsh.html?order=' + msg["order_num"] + '">';
+                        html += '<div class="top2">';
+                        html += '<p>订单人名称：' + msg["uInfo"]["name"] + '</p> ';
+                        html += '<p>订单人微信号：' + msg["uInfo"]["wechatnum"] + '</p>';
+                        html += '<p>订单人级别：' + msg["uInfo"]["levname"] + '</p>';
+                        html += '<img src="__PUBLIC__/images/dd_icon.jpg" alt="">';
+                        html += '</div>';
+                        html += '</a>';
+                        html += '<div class="top3">';
+                        html += '<p>订单金额：<span>￥' + msg["total_price"] + '</span></p>';
+                        html += '<p class="p2" onclick="chuli(' + msg["order_num"] + ')">通过审核</p>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        $(html).appendTo(".ycl");
+                    } else {
+                        var html = '';
+                        html += '<a href="ysh.html?order=' + msg["order_num"] + '">';
+                        html += '<div class="dd2">';
+                        html += '<div class="wrap dle1">';
+                        html += '<div class="top">';
+                        html += '<h2>1</h2><p class="p1">订单号：' + msg["order_num"] + '</p>';
+                        html += '<p class="p2">已处理</p>';
+                        html += '</div>';
+                        html += '<a href="wsh.html?order=' + msg["order_num"] + '">';
+                        html += '<div class="top2">';
+                        html += '<p>订单人名称：' + msg["uInfo"]["name"] + '</p> ';
+                        html += '<p>订单人微信号：' + msg["uInfo"]["wechatnum"] + '</p>';
+                        html += '<p>订单人级别：' + msg["uInfo"]["levname"] + '</p>';
+                        html += '<img src="__PUBLIC__/images/dd_icon.jpg" alt="">';
+                        html += '</div>';
+                        html += '</a>';
+                        html += '<div class="top3">';
+                        html += '<p>订单金额：<span>￥' + msg["total_price"] + '</span></p>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</a>';
+                        $(html).appendTo(".ycl");
+                    };
+
+                } else {
+                    tusi("暂无此订单");
+                }
+            });
+        }
+        //设置url参
+        function changeURLArg(url, arg, arg_val) {
+            var pattern = arg + '=([^&]*)';
+            var replaceText = arg + '=' + arg_val;
+            if(url.match(pattern)) {
+                var tmp = '/(' + arg + '=)([^&]*)/gi';
+                tmp = url.replace(eval(tmp), replaceText);
+                return tmp;
+            } else {
+                if(url.match('[\?]')) {
+                    return url + '&' + replaceText;
+                } else {
+                    return url + '?' + replaceText;
+                }
+            }
+            return url + '\n' + arg + '\n' + arg_val;
+        }
+    </script>
+
+</html>

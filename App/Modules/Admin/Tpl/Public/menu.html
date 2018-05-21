@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>公共菜单</title>
+		<script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/Admin_v3/js/blooming-menu.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.blooming-menu__item-btn {
+				transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1), opacity .28s cubic-bezier(.4, 0, .2, 1);
+				background-size: 50%;
+				background-position: center center;
+				background-repeat: no-repeat;
+				opacity: 0.8;
+			}
+			
+			.blooming-menu__item:nth-of-type(1) .blooming-menu__item-btn {
+				background-image: url(__PUBLIC__/Admin_v3/images/menu/language.svg);
+			}
+			
+			.blooming-menu__item:nth-of-type(2) .blooming-menu__item-btn {
+				background-image: url(__PUBLIC__/Admin_v3/images/menu/accessibility.svg);
+			}
+			
+			.blooming-menu__item:nth-of-type(3) .blooming-menu__item-btn {
+				background-image: url(__PUBLIC__/Admin_v3/images/menu/favorite.svg);
+			}
+			
+			.blooming-menu__item:nth-of-type(4) .blooming-menu__item-btn {
+				background-image: url(__PUBLIC__/Admin_v3/images/menu/find-in-page.svg);
+				background-size: 40%;
+			}
+			
+			.blooming-menu__item:nth-of-type(5) .blooming-menu__item-btn {
+				background-image: url(__PUBLIC__/Admin_v3/images/menu/get-app.svg);
+				background-size: 35%;
+			}
+			
+			.blooming-menu__item:nth-of-type(6) .blooming-menu__item-btn {
+				background-image: url(__PUBLIC__/Admin_v3/images/menu/grade.svg);
+			}
+			
+			.blooming-menu__item:nth-of-type(7) .blooming-menu__item-btn {
+				background-image: url(__PUBLIC__/Admin_v3/images/menu/home.svg);
+			}
+			
+			.blooming-menu__item:nth-of-type(8) .blooming-menu__item-btn {
+				background-image: url(__PUBLIC__/Admin_v3/images/menu/lock.svg);
+				background-size: 35%;
+			}
+			
+			.blooming-menu__item-btn:hover {
+				box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2);
+				opacity: 1;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="content">
+			
+		</div>
+		<script>
+			var menu=new BloomingMenu({
+				startAngle: 180, //开始旋转的区域
+				endAngle: 270,	//结束旋转的区域
+				radius: 90,	//子菜单与主菜单之间的半径
+				itemsNum: 4	//子菜单的个数
+			}).render()
+		</script>
+	</body>
+
+</html>

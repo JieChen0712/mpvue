@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script type="text/javascript">
+        var auditUrl = '{:U(GROUP_NAME . "/funds/apply_refund_pass")}/';
+        var delUrl = '{:U(GROUP_NAME . "/funds/apply_refund_pass")}/';
+    </script>
+    
+    <!--引入审核js-->
+    <script src="__PUBLIC__/Radmin_v3/js/audit.js"></script>
+</head>
+
+<body>
+    <section class="layui-container">
+        <div class="content">
+            <header class="header">
+                <h3>
+                    <eq name="status" value="1">已审核提现申请
+                        <else />审核提现申请</eq>
+                </h3>
+                <!--<a href="__URL__/expUser?pd=rrebate&st={$st}" class="layui-btn layui-btn-radius layui-btn-normal">导出Excel</a>-->
+                <!--<a href="__URL__/expUser?pd=manager&level={$level}" class="layui-btn layui-btn-radius layui-btn-normal">导出Excel</a>-->
+                <eq name="status" value="0">
+                <input type="button" class="layui-btn layui-btn-radius layui-btn-normal" id="audit" data-status="1" value="通过审核"
+                />
+                <input type="button" class="layui-btn layui-btn-radius layui-btn-danger" id="delete" data-status="2" value="不通过审核"
+                />
+                </eq>
+            </header>
+            <form class="layui-form form layui-row form-search" action="__SELF__" method="get" onsubmit="return false">
+                <div class="layui-form-item form-item">
+                    <label class="layui-form-label">开始时间</label>
+                    <div class="time-wrapper site-demo-laydate">
+                        <input type="text" class="layui-input blue" name="start_time" id="start_time" readonly="readonly" placeholder="开始时间" autocomplete="on">
+                        <i class="fa fa-angle-down"></i>
+                    </div>
+                </div>
+                <div class="layui-form-item form-item">
+                    <label class="layui-form-label">结束时间</label>
+                    <div class="time-wrapper">
+                        <input type="text" class="layui-input blue" name="end_time" id="end_time" readonly="readonly" placeholder="结束时间" autocomplete="on">
+                        <i class="fa fa-angle-down"></i>
+                    </div>
+                </div>
+                <div class="layui-form-item form-item">
+                    <label class="layui-form-label">代理</label>
+                    <div>
+                        <input type="text" class="layui-input" name="name" id="name" placeholder="姓名/微信号/手机号" autocomplete="on">
+                    </div>
+                </div>
+                <div class="layui-form-item form-item">
+                    <label class="layui-form-label" for="search_status">审核状态</label>
+                    <div class="select-wrapper">
+                        <select name="search_status" id="search_status" lay-verify="required">
+                            <option value="">选择审核状态</option>
+                            <option value="0">未审核</option>
+                            <option value="1">已审核</option>
+                            <option value="2">不通过</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="search-btn">
+                    <input type="hidden" name="status" value="{$status}">
+                    <button type="submit" class="layui-btn layui-btn-radius">搜索</button>
+                </div>
+            </form>
+            <div class="table-wrapper">
+                <table class="layui-table" lay-skin="row" lay-size="sm">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                <eq name="status" value="0">
+                                <input type="checkbox" id="checkAll" />
+                                </eq>
+                            </th>
+
+                            <th>序号</th>
+                            <th>代理名字</th>
+                            <th>审核人</th>
+                            <th>申请金额</th>
+                            <th>账户类型</th>
+                            <th>用户名/银行</th>
+                            <th>银行账户名</th>
+                            <th>账号/卡号</th>
+                            <!--<th>申请截图</th>-->
+                            <!--<th>代理备注</th>-->
+                            <th>总部备注</th>
+                            <th>状态</th>
+                            <th>申请时间</th>
+                            <th>审核时间</th>
+                            <eq name='status' value='0'>
+                                <!-- <th>操作</th> -->
+                            </eq>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <empty name="list">
+                            <tr style="position: relative;">
+                                <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                            </tr>
+                            <else/>
+                            <volist name="list" id="m">
+                                <tr>
+
+                                    <td class="checkItem">
+                                        <if condition="$m.status eq 0">
+                                            <input type="checkbox" name="mid" value="{$m.id}" />
+                                        </if>
+                                    </td>
+
+                                    <td>{$i}</td>
+                                    <td>{$m.dis_info.name}</td>
+                                    <td>{$m.audit_info.name}</td>
+                                    <td>{$m.apply_money}</td>
+                                    <td>{$m.pay_type}</td>
+                                    <td>{$m.card_name}</td>
+                                    <td>{$m.account_name}</td>
+                                    <td>{$m.card_number}</td>
+                                    <!--                <td>
+                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-lg-{$m.id}">支付截图</button>
+                                            </td>-->
+                                    <!--<td>{$m.apply_remark}</td>-->
+                                    <td style="word-break:break-all;">
+                                        <div id="change_order_info_{$m.id}">
+                                            {$m.audit_remark}
+                                        </div>
+
+                                        <if condition="$m.audit_id eq 0 and $m.status eq 0">
+                                            <button type="button" onclick="change_order('{$m.id}')" class="btn btn-info onb_update{$m.id}">更改
+                                            </button>
+
+                                            <input type="text" class="form-control change_order_dis change_order_{$m.id}" id="ordernumber_{$m.id}">
+                                            <input type="submit" onclick="change_remark('{$m.id}');" class="btn btn-success change_order_dis change_order_{$m.id}" value="提交"/>
+                                        </if>
+                                    </td>
+                                    <td>
+                                        {$m.status_name}
+                                    </td>
+                                    <td>{$m.created|date="Y-m-d H:i",###}</td>
+                                    <td>
+                                        <if condition="$m.status neq 0">
+                                            {$m.updated|date="Y-m-d H:i",###}
+                                        </if>
+                                    </td>
+                                </tr>
+                            </volist>
+                            <include file="Public/page" />
+                            <!-- <div id="page"></div> -->
+                            <!--<tr><td colspan="14"><div class="pull-right">{$page}</div></td></tr>-->
+                        </empty>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </section>
+
+    <script>
+
+      form.render();
+      layui.use('laydate', function() {
+        var laydate = layui.laydate;
+        laydate.render({
+          elem: '#start_time'
+        });
+        laydate.render({
+          elem: '#end_time'
+        });
+      })
+      
+      $(".change_order_dis").hide();
+
+      function change_order(id) {
+
+        $(".change_order_" + id).toggle();
+      }
+
+      function change_remark(id) {
+        var remark = $('#ordernumber_' + id).val();
+
+        $.post("__URL__/change_refund_audit_remark", {
+          id: id,
+          remark: remark
+        }, function(data) {
+          if(data.code == 1) {
+            layer.msg('填写成功！');
+            change_order(id);
+            $("#change_order_info_" + id).html(remark);
+          } else {
+              layer.msg(data.msg);
+          }
+        });
+      }
+
+    </script>
+</body>
+
+</html>

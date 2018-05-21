@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>钱包明细</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/brokerage_message.css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/money_detail.css" />
+    <style type="text/css">
+        .assets-list{background-color: white;}
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="content infinite-scroll">
+            <div class="record">
+                <p class="text">明细</p>
+                <div class="type">
+                    <span>提现申请</span>
+                    <span class="icon icon-down"></span>
+                </div>
+            </div>
+            <div class="message-list1 ">
+                <ul class="assets-list">
+
+                </ul>
+            </div>
+            <div class="message-list2 ">
+                <ul class="assets-list">
+
+                </ul>
+            </div>
+            <!-- preloader -->
+            <div class="infinite-scroll-preloader">
+                <div class="preloader"></div>
+            </div>
+        </div>
+
+        <div class="mask-select">
+            <dl class="list" id="select-btn">
+                <dt class="triangle"></dt>
+                <dd data-type="withdrawal">提现申请</dd>
+                <dd data-type="rechange">充值申请</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__PUBLIC__/Admin_v3/js/brokerage_message_v1.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var rechange = '__GROUP__/user/get_money_apply_detail';
+    var withdrawal = '__GROUP__/user/get_money_refund_detail';
+    var imgSrc = '__PUBLIC__/Admin_v3/images/empty.png';
+    //充值
+    $(function () {
+        $(document).on("click", '.rechange', function () {
+            var id = $(this).data('id');
+            console.log(id);
+            window.location.href = 'money_detail_info?apply_id=' + id;
+        })
+    });
+    //提现
+    $(function () {
+        $(document).on("click", '.withdrawal', function () {
+            var id = $(this).data('id');
+            console.log(id);
+            window.location.href = 'money_detail_info?refund_id=' + id;
+        })
+    });
+</script>
+</body>
+
+</html>

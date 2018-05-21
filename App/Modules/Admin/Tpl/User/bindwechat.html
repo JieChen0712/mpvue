@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/bindwechat.css">
+    <title>绑定微信</title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="content">
+            <div class="content-wrapper">
+                <div class="text">
+                    <h3>操作说明</h3>
+                    <p>1.未绑定微信帐号的直接点击“绑定微信”即可完成绑定！</p>
+                    <p>2.绑定过微信的帐号需要先点击“解除绑定”，输入当前帐号密码完成解除绑定，然后再按照上一步骤绑定微信即可！</p>
+                    <p>注：绑定完成后需要重新登录帐号！</p>
+                </div>
+                <div class="btn-wrapper">
+                    <div class="bind">
+                        <button>绑定微信</button>
+                    </div>
+                    <div class="unbind">
+                        <button>解除绑定</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        var bindWechatUrl = '__GROUP__/user/bind_wechat';
+        var unbindWechatUrl = '__GROUP__/user/unbind_wechat';
+        var loginUrl = '__GROUP__/login/loginout';
+    </script>
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js"></script>
+    <script src="__PUBLIC__/Admin_v3/js/bindwechat.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<html>
+
+  <head>
+    <title>运费模板详情页</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" href="__PUBLIC__/Radmin_v3/css/iframe.css" />
+    <style type="text/css">
+      .iframe-wrapper .table-list tr {
+        display: table-row;
+      }
+      
+      .iframe-wrapper .table-list tr:first-of-type th {
+        line-height: 60px;
+      }
+      .iframe-wrapper .table-list tr td{
+        text-align: center!important;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="iframe-wrapper">
+      <table class="table-list">
+        <tr>
+          <th colspan=3>模板名称：{$template_row.template_name}</th>
+          <th colspan=3>添加时间：
+            <php>echo date('Y-m-d',$template_row[create_date]);</php>
+          </th>
+        </tr>
+        <tr>
+          <th>运送方式</th>
+          <th>运送到</th>
+          <th>
+            <eq name="template_row.price_way" value="1">首件(个)</eq>
+            <eq name="template_row.price_way" value="2">首重(kg)</eq>
+            <eq name="template_row.price_way" value="3">首体积(m³)</eq>
+          </th>
+          <th>首费(元)</th>
+          <th>
+            <eq name="template_row.price_way" value="1">续件(个)</eq>
+            <eq name="template_row.price_way" value="2">续重(kg)</eq>
+            <eq name="template_row.price_way" value="3">续体积(m³)</eq>
+          </th>
+          <th>续费(元)</th>
+        </tr>
+
+        <volist id="way" name="way_list" empty="暂时没有数据">
+          <tr>
+            <td><eq name="way.shipping_way" value="0">快递</eq><eq name="way.shipping_way" value="1">EMS</eq><eq name="way.shipping_way" value="2">平邮</eq></td>
+            <td>{$way.area_name}</td>
+            <td>{$way.first_num}</td>
+            <td>{$way.first_fee}</td>
+            <td>{$way.continue_num}</td>
+            <td>{$way.continue_fee}</td>
+          </tr>
+        </volist>
+      </table>
+      <if condition="$reduce_info neq ''">
+      <table class="table-list">
+        <tr>
+          <th colspan=3>满减免运费名称：{$reduce_info.name}</th>
+        </tr>
+        <tr>
+          <th>类型</th>
+          <th>数量(大于或等于)</th>
+          <th>
+            金额(大于或等于)
+          </th>
+        </tr>
+
+          <tr>
+            <td>
+              <eq name="reduce_info.type" value="1">数量</eq>
+              <eq name="reduce_info.type" value="2">金额</eq>
+              <eq name="reduce_info.type" value="3">数量和金额</eq>
+            </td>
+            <td>{$reduce_info.need_num}</td>
+            <td>{$reduce_info.need_money}</td>
+          </tr>
+      </table>
+      </if>
+    </div>
+
+  </body>
+
+</html>

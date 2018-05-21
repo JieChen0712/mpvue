@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <title>我的推荐经销商详情</title>
+        <include file="Public/rebate" />
+        <style>
+            .test {
+                margin-left: 40px;
+            }
+            
+            .test_box .shouhuo_box1 {
+                background: #4abcf2;
+                width: 100%;
+                font-size: 25px;
+                color: #fff;
+                position: fixed;
+                bottom: 0;
+                text-align: center;
+                height: 60px;
+                line-height: 60px;
+            }
+            
+            .height {
+                height: 60px;
+            }
+        </style>
+        <script type="text/javascript" src="__PUBLIC__/js/my_dd.js"></script>
+    </head>
+
+    <body style="background-color:#f5f5f5;">
+        <header class="header">
+            <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/index/left_icon.png" alt=""></a>
+            <p>我的推荐经销商详情</p>
+        </header>
+        <div class="test_box">
+            <div class="test1 ">
+                <p class="p test">订单下单号：{$row.order_num}</p>
+            </div>
+            <div class="test_box1">
+                <volist name="rol" id="vo">
+                    <p class="test">{$vo.p_name}x{$vo.num}</p>
+                </volist>
+                <p class="test">订单下单金额：<span>￥{$row.total_price}</span></p>
+                <p class="test">订单下单日期：{$row.time|toDate=###}</p>
+                <!-- <p  class="test">订单下单状态：<span><eq name="row.status" value="1">待审核<else/>已审核</eq></span></p> -->
+                <p class="test">订单下单状态：<span id="ddzt"><if condition="$row.status eq 1">待审核<elseif condition="$row.status eq 2"/>已发货，物流已审核...<else/>已收货</if></span></p>
+            </div>
+            <div class="test1 ">
+                <p class="p1 test">收货信息</p>
+            </div>
+            <div class="test_box1">
+                <p class="test">订单下单人名称：{$row.s_name}</p>
+                <p class="test">电话：{$row.s_phone}</p>
+                <p class="test">地址：{$row.s_addre}</p>
+            </div>
+            <div class="test1 ">
+                <p class="p1 test">我的返利</p>
+            </div>
+            <div class="test_box1">
+                <if condition="$row.status eq 1">
+                    <p class="test">未审核，暂不知道有没有获得返利。</p>
+                    <elseif condition="$row.status eq 2" />
+                    <p class="test">对方未确认收货，暂不知道有没有获得返利。</p>
+                    <else/>
+                    <empty name="relist">
+                        <p class="test">此单没有获得返利</p>
+                        <else />
+                        <p class="test">返利金额：<span>￥{$relist.money}</span></p>
+                        <p class="test">返利日期：{$relist.time|toDate=###}</p>
+                        <p class="test">返利状态：<span id="ddzt"><if condition="$relist.state eq 0">待审核<elseif condition="$relist.state eq 1"/>总部已付款，请确认收款！<else/>已收款</if></span></p>
+                    </empty>
+                </if>
+            </div>
+            <div class="height"></div>
+            <eq name="relist.state" value="1">
+                <div class="shouhuo_box1" onclick="shoukuan({$relist.id})">
+                    <p class="test">确认收款</p>
+                    <input value="2" type="hidden" class="pid" />
+                </div>
+            </eq>
+        </div>
+    </body>
+    <script>
+        function shoukuan(id) {
+            if(confirm("您确认收款？")) {
+                var pid = $('.pid').val();
+                $.post("__URL__/shoukuan", {
+                    id: id,
+                    pid: pid
+                }, function(data) {
+                    if(data == 1) {
+                        tusi("提交成功！");
+                        window.location.href = changeURLArg(window.location.href, "reloadtime", new Date().valueOf());
+                    } else {
+                        tusi("提交失败!");
+                    }
+                });
+            }
+        }
+        //设置url参
+        function changeURLArg(url, arg, arg_val) {
+            var pattern = arg + '=([^&]*)';
+            var replaceText = arg + '=' + arg_val;
+            if(url.match(pattern)) {
+                var tmp = '/(' + arg + '=)([^&]*)/gi';
+                tmp = url.replace(eval(tmp), replaceText);
+                return tmp;
+            } else {
+                if(url.match('[\?]')) {
+                    return url + '&' + replaceText;
+                } else {
+                    return url + '?' + replaceText;
+                }
+            }
+            return url + '\n' + arg + '\n' + arg_val;
+        }
+    </script>
+
+</html>

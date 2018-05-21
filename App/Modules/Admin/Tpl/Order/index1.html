@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <!--<title>订单管理</title>
+        <include file="Public/header_v2"/>
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/header.css">-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>订单管理</title>
+
+    <include file="Public/header_v3" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/light7-swiper.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/manager-order.css" />
+    <!--<style>
+      body {
+      background: url(__PUBLIC__/Admin_v2/images/bg.jpg) #fbfbfb no-repeat;
+      background-color:#fbfbfb;
+      background-size: cover;      
+      }
+     .tel_title {   background: transparent; } 
+ 
+    </style>-->
+    <style type="text/css">
+        .page {
+            -webkit-overflow-scrolling: touch;
+        }
+    </style>
+    <script>
+        var cat_url = '__URL__/index';
+        var orderNavURL = '__GROUP__/order/templet_category';
+        var orderDedetailURL = '__GROUP__/order/get_templet';
+    </script>
+</head>
+
+<body>
+    <div class="page">
+        <!-- header start-->
+        <include file="Public/header_features_v3" />
+        <!-- header end-->
+        <div class="content order-contents infinite-scroll">
+            <div class="manager-order">
+                <div class="manager-kind">
+                    <ul class="col-100" id="kind-head">
+                        <!--<li><a href="__GROUP__/order/all" class="external"><img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind1.png"/><p>待付款</p><span>12</span></a></li>-->
+                        <li><a href="__GROUP__/order/all" class="external"><img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind1.png"/><p>待付款</p></a></li>
+                        <li><a href="__GROUP__/order/all" class="external"><img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind2.png"/><p>待发货</p></a></li>
+                        <li><a href="__GROUP__/order/all" class="external"><img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind3.png"/><p>已完成</p></a></li>
+                        <li><a href="__GROUP__/order/shopping_cart" class="external"><img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind4.png"/><p>购物车</p></a></li>
+                    </ul>
+
+                    <notempty name="products">
+                        <div class="search col-100">
+                            <label class="icon icon-search" for="search"></label>
+                            <input type="search" id='search' placeholder='搜索商品名称' />
+                        </div>
+                    </notempty>
+                </div>
+            </div>
+            <notempty name="products">
+                <div class="container">
+                    <div class="hidden-scorll line">
+                        <nav class="shop-nav">
+
+                            <ul class="shop-nav-list">
+                                <li id="first-li">
+                                    <a href="javascript:void(0);" class="active external" data-id="0">
+                                        <p>全部</p>
+                                    </a>
+                                </li>
+                                <!-- <volist name="cats" id="cat">
+                                    <li>
+                                        <a href="javascript:;" class="external" data-id="{$cat.id}">
+                                            <p>{$cat.name}</p>
+                                        </a>
+                                    </li>
+                                </volist>
+                                <li>
+                                    <a href="javascript:void(0);" class="external" data-id="0">
+                                        <p>全部全部</p>
+                                    </a>
+                                </li> -->
+                            </ul>
+                        </nav>
+                        <div class="more">●●●</div>
+                        <div class="mask"></div>
+                        <div class="all-nav-list">
+                            <ul></ul>
+                        </div>
+
+                    </div>
+
+                    <section class="shop-items">
+                        <ul id="products">
+                            <!-- <volist name="products" id="product"> -->
+                            <!-- <li class="s-items clearfloat">
+                                    <a href="__URL__/goods_detail?id={$product.id}" class="external">
+                                    <img src="{$product.image}" alt="" />
+                                    <img src="__PUBLIC__/Admin_v3/images/manager-order/goods2x.jpg" alt="" />
+                                    <div class="shop-details">
+                                        <p class="p-shopneme">{$product.name}</p>
+                                        <p class="p-area">广州<span>包邮</span></p>
+                                        <p class="p-price"><span>￥</span>{$product.price}<i class="icon icon-car"></i></p>									</div>
+                                </a>
+                                </li> -->
+
+                            <!-- </volist> -->
+                        </ul>
+                        <ul id="apply-list">
+
+                        </ul>
+
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                        <!-- 记录ID -->
+                        <div id="mask" style="display: none;">0</div>
+                </div>
+                <else/>
+                <include file="Public/empty" />
+            </notempty>
+
+        </div>
+
+
+
+        <!--footer start-->
+        <include file="Public/footer_v3" />
+        <!--footer end-->
+
+        <!--script strat-->
+        <script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/light7-swiper.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/order-shop.js" type="text/javascript" charset="utf-8"></script>
+        <!--script end-->
+</body>
+
+</html>

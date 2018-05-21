@@ -1,0 +1,80 @@
+@charset "utf-8";
+/* Reset */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td { margin:0; padding:0; }
+h1, h2, h3, h4, h5, h6 { font-size:100%; }
+ul, ol, li { list-style:none; }
+a { text-decoration:none; }
+a:hover { text-decoration:underline;text-decoration:none; }
+fieldset, img { border:0; }
+button, input, select, textarea { font-size:100%; }
+table { border-collapse:collapse; border-spacing:0; }
+body{font-family: "Microsoft YaHei", "微软雅黑", Helvetica, "黑体", Arial, Tahoma;}
+/*i_banner轮播*/
+.device{border-radius: 20px;position: relative;width:100%;}
+.swiper-container{height:427px;width:640px;-moz-box-shadow:0px 0px 20px #333333; -webkit-box-shadow:0px 0px 20px #333333; box-shadow:0px 0px 20px #333333;}
+.swiper-container img{width:100%;}
+.pagination {position: absolute;left: 0;text-align: center;bottom:16px;width: 100%;z-index: 9999; }
+.swiper-pagination-switch {display: inline-block;width: 10px;height: 10px;border-radius: 10px;background: #8ba281;margin: 0 9px;cursor: pointer;}
+.swiper-active-switch {background: #044d2a;}
+.swiper-container {margin:0 auto;position:relative;overflow:hidden;z-index:1;
+                  -webkit-backface-visibility:hidden;
+                  -moz-backface-visibility:hidden;
+                  -ms-backface-visibility:hidden;
+                  -o-backface-visibility:hidden;
+                  backface-visibility:hidden;
+                  /* Fix of Webkit flickering */}
+.swiper-wrapper {position:relative;width:100%;
+                -webkit-transition-property:-webkit-transform, left, top;
+                -webkit-transition-duration:0s;
+                -webkit-transform:translate3d(0px,0,0);
+                -webkit-transition-timing-function:ease;
+                
+                -moz-transition-property:-moz-transform, left, top;
+                -moz-transition-duration:0s;
+                -moz-transform:translate3d(0px,0,0);
+                -moz-transition-timing-function:ease;
+                
+                -o-transition-property:-o-transform, left, top;
+                -o-transition-duration:0s;
+                -o-transform:translate3d(0px,0,0);
+                -o-transition-timing-function:ease;
+                -o-transform:translate(0px,0px);
+                
+                -ms-transition-property:-ms-transform, left, top;
+                -ms-transition-duration:0s;
+                -ms-transform:translate3d(0px,0,0);
+                -ms-transition-timing-function:ease;
+                
+                transition-property:transform, left, top;
+                transition-duration:0s;
+                transform:translate3d(0px,0,0);
+                transition-timing-function:ease;
+
+                -webkit-box-sizing: content-box;
+                -moz-box-sizing: content-box;
+                box-sizing: content-box;}
+
+.swiper-free-mode > .swiper-wrapper {margin: 0 auto;
+                -webkit-transition-timing-function: ease-out;
+                -moz-transition-timing-function: ease-out;
+                -ms-transition-timing-function: ease-out;
+                -o-transition-timing-function: ease-out;
+                transition-timing-function: ease-out;}
+
+.swiper-slide {float: left;
+              -webkit-box-sizing: content-box;
+              -moz-box-sizing: content-box;
+              box-sizing: content-box;}
+
+/* IE10 Windows Phone 8 Fixes */
+.swiper-wp8-horizontal {
+    -ms-touch-action: pan-y;
+}
+.swiper-wp8-vertical {
+    -ms-touch-action: pan-x;
+}
+.wrap .wrap_img{text-align:center;margin-top:51px;}
+.wrap .wrap_img p{color:#636466;font-size:28px;margin-top:14px;margin-bottom:12px;}
+.wrap ul{width:377px;margin:0 auto;}
+.wrap ul li{width:33.3%;float:left;text-align: center;font-size:22px;color:#000;margin-top:57px;font-weight:bold;}
+.wrap .btm{text-align: center;padding-top:70px;clear:both;margin-bottom:30px;} 

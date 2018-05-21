@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .layui-container .content {
+            padding-bottom: 0px;
+        }
+    </style>
+</head>
+
+<body>
+<section class="layui-container">
+    <div class="content">
+        <header class="header">
+            <h3> 资金总统计</h3>
+            <a href="__URL__/expUser?pd=manager&level={$level}" class="layui-btn layui-btn-radius layui-btn-normal">导出Excel</a>
+        </header>
+        <div class="table-wrapper">
+            <table class="layui-table" lay-skin="row" lay-size="sm">
+                <thead>
+                <tr>
+                    <th>总充值数</th>
+                    <th>流通数</th>
+                    <th>可提取数</th>
+                    <th>总支出数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{$count_info.total_real_recharge_money}</td>
+                    <td>{$count_info.total_recharge_money}</td>
+                    <td>{$count_info.total_can_refund_money}</td>
+                    <td>{$count_info.total_pay_money}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+</body>
+</html>

@@ -1,0 +1,210 @@
+/* 主页面 */
+.color-index-bg {
+    background-image: url(../images/color-scheme/default/banner.png);
+}
+
+/* 邀请代理 */
+
+.color-creat-bg {
+    background: url(../images/color-scheme/default/banner.png) no-repeat;
+}
+
+
+/* 充值申请 */
+
+.color-recharge-apply-btn {
+    background-color: #0E3E6E;
+}
+
+
+/* 充值审核 */
+
+.color-recharge-check-passbtn {
+    border: none !important;
+    background-color: #0E3E6E;
+    color: #fff !important;
+}
+
+.color-recharge-check-refusebtn {
+    color: #0E3E6E !important;
+    background-color: #fff;
+    border: 1px solid #0E3E6E !important;
+}
+
+/*订单明细*/
+
+.color-all-nav.active {
+    color: #0E3E6E !important;
+}
+
+.color-all-nav.active::after {
+    border: 2px solid #0E3E6E;
+}
+
+.color-all-status {
+    color: #0E3E6E;
+}
+
+.color-all-btn {
+    color: #0E3E6E;
+    border-color: #0E3E6E;
+}
+
+
+/*代理个人信息*/
+
+.color-agency-detail-bg {
+    background-image: url(../images/color-scheme/default/banner.png);
+}
+
+.colr-agency-detail-btn {
+    background-color: #0E3E6E;
+}
+
+
+/*处理下级订单*/
+
+.color-examine-nav.active {
+    color: #0E3E6E !important;
+}
+
+.color-examine-nav.active::after {
+    border: 2px solid #0E3E6E;
+}
+
+.color-examine-status {
+    color: #0E3E6E;
+}
+
+
+/*个人资料*/
+
+.color-info-exitbtn {
+    background-color: #0E3E6E;
+}
+
+
+/*个人信息*/
+
+.color-user-bg {
+    background: url(../images/color-scheme/default/banner.png) no-repeat;
+}
+
+
+/* 商学院 */
+
+.color-business-index-nav.active {
+    border-bottom: 0.1875rem solid #0E3E6E;
+    color: #0E3E6E !important;
+}
+
+
+/* 审核代理 */
+
+.color-manage-index-bg {
+    background: #0E3E6E;
+}
+.color-manage-index-text {
+    color: #0E3E6E;
+}
+.color-manage-index-btn-right {
+    background: #0E3E6E;
+    color:#fff;
+	border:none;
+}
+.color-manage-index-btn-left {
+    background: #fff;
+    color:#0E3E6E;
+	border:1px solid #0E3E6E;
+}
+
+
+/*素材详情*/
+
+.color-material-detail-text {
+    background-color: #0E3E6E;
+}
+
+
+/*提现申请*/
+
+.color-refund-apply-btn {
+    background-color: #0E3E6E;
+}
+
+
+/*提现审核*/
+
+.color-refund-check-passbtn {
+    border: none !important;
+    background-color: #0E3E6E;
+    color: #fff !important;
+}
+
+.color-refund-check-refusebtn {
+    color: #0E3E6E !important;
+    background-color: #fff;
+    border: 1px solid #0E3E6E !important;
+}
+
+/*下单主页*/
+.color-order-index-bg {
+    background-image: url(../images/color-scheme/default/banner.png) !important;
+}
+
+
+/*修改密码*/
+.color-edit-password-btn {
+    background-color: #0E3E6E;
+}
+
+
+/*审核申请*/
+.color-check-apply-nav.active {
+    color: #0E3E6E;
+}
+
+.color-check-apply-nav.active::after {
+    border: 1px solid #0E3E6E;
+}
+
+/*我的团队*/
+
+/* .color-team-index-nav.active {
+    color: #0E3E6E !important;
+}
+.color-team-index-nav.active::after {
+    border: solid 1px #0E3E6E !important;
+} */
+
+/*扫码发货*/
+.color-s-bg {
+    background-color: #0E3E6E !important;
+}
+
+/*升级申请*/
+.cololr-upgrade-apply-btn {
+    background-color: #0E3E6E !important;
+}
+
+/* footer */
+
+.color-footer-nav-icon.active:nth-of-type(1) {
+    background-image: url(../images/color-scheme/default/footer1.png) !important;
+}
+
+.color-footer-nav-icon.active:nth-of-type(2) {
+    background-image: url(../images/color-scheme/default/footer2.png) !important;
+}
+
+.color-footer-nav-icon.active:nth-of-type(3) {
+    background-image: url(../images/color-scheme/default/footer3.png) !important;
+}
+
+.color-footer-nav-icon.active:nth-of-type(4) {
+    background-image: url(../images/color-scheme/default/footer4.png) !important;
+}
+
+.color-footer-nav-text.active {
+    color: #0E3E6E !important;
+}

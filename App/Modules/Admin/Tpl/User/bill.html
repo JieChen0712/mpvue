@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/bill.css">
+    <title>账单</title>
+    <script>
+        var billurll = '__GROUP__/user/get_bill_ajax';
+        var imgSrc = '__PUBLIC__/Admin_v3/images/empty.png'
+    </script>
+</head>
+
+<body>
+    <div class="page">
+        <div class="content infinite-scroll">
+            <include file="Public/header_features_v3" />
+            <div class="select-date">
+                <span class="color-bar"></span>
+                <!-- <div class="date-wrapper">
+                    <input type="text" placeholder="2017-12-11" class="start-date" id="start-date">
+                    至
+                    <input type="text" placeholder="2017-12-11" class="end-date" id="end-date">
+                    <label for="end-date">
+                        <img src="__PUBLIC__/Admin_v3/images/information/22.png" width="18" alt="">
+                    </label>
+                </div> -->
+                <div class="date-wrapper">
+                    <input type="text" id="date" placeholder="请选择要查看的时间范围">
+                    <label for="date">
+                        <img src="__PUBLIC__/Admin_v3/images/information/22.png" width="18" alt="">
+                    </label>
+                </div>
+                <div class="select-box">
+                    <div class="select open-popover" data-popover=".popover-links">
+                        <em>充值</em>
+                        <span class="icon icon-down"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="bill-detail">
+                <p id="income">收入（元）：{$money_funds.his_recharge_money}</p>
+                <p id="expend">支出（元）：{$money_funds.his_charge_money}</p>
+            </div>
+            <div class="month-detail">
+                <ul class="detail-list">
+                    <!-- <li>
+                        <div class="avatar-wrapper">
+                            <img src="__PUBLIC__/Admin_v3/images/index/avatar.png" alt="">
+                        </div>
+                        <div class="detail-message">
+                            <p>Darin-转账</p>
+                            <p>07-28</p>
+                        </div>
+                        <div class="money-wrapper">
+                            +580.00
+                        </div>
+                    </li> -->
+                </ul>
+                <ul id="apply-list"></ul>
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="popover popover-links">
+        <div class="popover-angle"></div>
+        <div class="popover-inner">
+            <ul class="close-popover select-list">
+                <?php foreach( $types as $type_key => $type ):?>
+                <li>
+                    <a name="{$type_key}" class="list-button item-link close-popover">{$type}</a>
+                </li>
+                <?php endforeach;?>
+            </ul>
+        </div>
+    </div>
+
+    <!--script start-->
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/daterangepicker.css">
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js"></script>
+    <script src="__PUBLIC__/Admin_v3/js/moment.min.js"></script>
+    <script src="__PUBLIC__/Admin_v3/js/jquery.daterangepicker.js"></script>
+    <!--script end-->
+
+    <script>
+        $(document).ready(function () {
+            var bLoading = false; //是否正在加载数据
+            var bIsNull = false; // 通过接口获取到数据是否为空
+            var sType = 'recharge'; // 类型：recharge || charge || refund 
+            var oDate = new Date();
+            var nPage = 1; // 页码
+            var sStartTime = new Date(parseInt(oDate.getTime())).format('yyyy-MM-dd'); // 开始时间
+            var sEndTime = new Date(parseInt(oDate.getTime())).format('yyyy-MM-dd'); // 结束时间
+            
+            // 页面刚加载时时间选择框添加当天日期
+            $('#date').val(sStartTime + '~' + sEndTime);
+
+            $.attachInfiniteScroll($('.infinite-scroll')); // 绑定滚动加载
+
+            // 下拉加载更多
+            $(document).on('infinite', '.infinite-scroll', function () { 
+                // 如果正在加载，则退出
+                if (bLoading) return;
+                // 设置flag
+                bLoading = true;
+                setTimeout(function () {
+                    bLoading = false;
+                    // 当获取的数据为空
+                    if (bIsNull) {
+                        $.detachInfiniteScroll($('.infinite-scroll')); // 解除滚动加载的绑定
+                        $('.infinite-scroll-preloader').remove(); //移除loading图标
+                        return;
+                    }
+                    nPage++;
+                    getBillData();
+                }, 1000);
+            });
+
+            // 时间选择器初始化
+            $('#date').dateRangePicker({
+                separator : '~',
+                format: 'YYYY-MM-DD',
+                maxDays: 90
+            }).bind('datepicker-apply',function(event,obj){ // 当时间选择器的时间变化时
+                sStartTime = obj.value.split('~')[0]; // 将变化后的开始时间重新赋值
+                sEndTime = obj.value.split('~')[1]; // 将变化后的结束时间重新赋值
+                resizeString();
+                getBillData();
+            });
+
+            // 切换type
+            $(document).on('click', '.list-button', function () {
+                var oText = $(this).html();
+                $('.select-box .select em').text(oText);
+                switch (oText) {
+                    case '充值':
+                        sType = 'recharge';
+                        break;
+                    case '扣费':
+                        sType = 'charge';
+                        break;
+                    case '提现':
+                        sType = 'refund';
+                        break;
+                }
+                resizeString();
+                getBillData();
+            });
+
+            // 重置数据
+            function resizeString() {
+                bIsNull = false;
+                nPage = 1;
+                $.attachInfiniteScroll($('.infinite-scroll')); // 绑定滚动加载
+                var sHtml ='<div class="infinite-scroll-preloader"><div class="preloader"></div></div>'; // loading图标
+
+                // 如果没有loading图标则添加上
+                if (!$('.infinite-scroll-preloader').find('div').hasClass('preloader')) {
+                    $('.month-detail').after(sHtml);
+                }
+
+                $('#apply-list').html('');
+                $('.detail-list').html('');
+            }
+
+            // 获取账单数据
+            getBillData();
+            function getBillData() {
+                var _sStartTime = sStartTime.split('-').join(''); // 格式化开始时间
+                var _sEndTime = sEndTime.split('-').join(''); // 格式化结束时间
+                // 调用ajax获取数据
+                $.ajax({
+                    url: billurll,
+                    dataType: 'json',
+                    type: 'post',
+                    data: {
+                        start_time: _sStartTime, // 开始时间：20171001
+                        end_time: _sEndTime,  // 结束时间：20171001
+                        type: sType,  // 类型：recharge || charge || refund 
+                        page_num: nPage // 页码：1
+                    },
+                    success: function(data) {
+                        // console.log(data);
+                        var aList = data.info.list;
+                        if(data.code == 1) {
+                            $('#income').text('收入（元）：' + data.income); // 渲染收入
+                            $('#expend').text('支出（元）：' + data.pay); // 渲染支出
+                            $('.emptyImg').remove(); // 删除empty图片
+                            if(aList == null || aList == undefined || aList == "") { // 当没有数据时
+                                // var sString =
+                                //     '<li class="not-string" style="font-size:1rem;border:none;text-align:center;background-color: #f5f4f9;"><span style="margin: 0 auto;">暂无更多数据！</span></li>';
+                                // $('.detail-list').append(sString); // 加入'没有数据'的提示语
+                                if($('.detail-list li').length > 10) {
+                                    tusi('暂无更多数据！');
+                                }
+                               
+                                $.detachInfiniteScroll($('.infinite-scroll')); // 解除滚动加载的绑定
+                                $('.infinite-scroll-preloader').remove(); //移除loading图标
+                                bIsNull = true;
+                                
+                            } else {
+                                var sHtml = ''; // 即将要渲染的数据模板
+
+                                // 遍历数据
+                                aList.forEach(function(value) {   
+                                    var i = ''; // 充值：'+', 扣费和提现：'-'
+                                    if(sType == 'recharge') {
+                                        i = '+';
+                                    } else {
+                                        i = '-'; 
+                                    }
+
+                                    // 数据模板
+                                    sHtml += '<li>'+
+                                                '<div class="avatar-wrapper">'+
+                                                    '<img src="'+ value.dis_headimgurl +'" alt="">'+
+                                                '</div>'+
+                                                '<div class="detail-message">'+
+                                                    '<p>'+ value.dis_name +'-'+ value.type_name +'</p>'+
+                                                    '<p>'+ value.created_format +'</p>'+
+                                                '</div>'+
+                                                '<div class="money-wrapper">'+
+                                                    i + value.money +
+                                                '</div>'+
+                                            '</li>'
+                                })
+
+                                // 将数据模板添加到'.detail-list'
+                                $('.detail-list').append(sHtml);
+
+
+                                // 当获取到的数据小于10时
+                                if ($('.detail-list li').length < 10 ) {
+                                    // var sString =
+                                    //     '<li class="not-string" style="font-size:1rem;border:none;text-align:center;background-color: #f5f4f9;"><span style="margin: 0 auto;">暂无更多数据！</span></li>';
+                                    // $('.detail-list').append(sString); // 加入'没有数据'的提示语
+                                    // tusi('暂无更多数据！');
+                                    $.detachInfiniteScroll($('.infinite-scroll'));// 解除滚动加载的绑定
+                                    $('.infinite-scroll-preloader').remove(); //移除loading图标 
+                                }
+                            }
+
+                            // 当页面没有一条数据时显示empty图片,删除'没有数据'的提示语
+                            if($('.detail-list li').length == 0) {
+                                if (!$('.emptyImg').length > 0) { 
+                                    var oImg = '<div class="emptyImg" style="margin-top: 150px;overflow:hidden; text-align: center; background:#F5F4F9;"><img src=' + imgSrc + ' style="width: 200px;"><div>'
+                                    // $('.not-string').remove();
+                                    $('.infinite-scroll').append(oImg);
+                                    // tusi('暂无更多数据！');
+                                } 
+                            }
+
+                        }
+                    }
+                })
+            }
+        })
+
+
+        // 日期格式化函数
+        Date.prototype.format = function(format) {
+            let o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "H+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "f+": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(format))
+                format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (let k in o)
+                if (new RegExp("(" + k + ")").test(format))
+                    format = format.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                return format;
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+.bar {
+  height: 3.3125rem;
+  border-bottom: none;
+  background-color: #f0eff7;
+}
+.bar .searchbar {
+  padding: 0 1.5625rem;
+  background: #f0eff7;
+}
+.bar .searchbar .icon-search {
+  position: absolute;
+  top: 50%;
+  left: 0.9375rem;
+  font-size: 1rem;
+}
+.bar .searchbar .search {
+  text-indent: 1.0625rem;
+  margin-top: 0.625rem;
+  height: 2.125rem;
+  border: 1px solid #c9c9c9;
+  font-size: 0.875rem;
+  background-color: #fff;
+  border-radius: 1.875rem;
+}
+.goods {
+  display: flex;
+  margin-top: 3.3125rem;
+}
+.goods .goods-title {
+  flex: 0 0 6.25rem;
+  background-color: #f0eff7;
+}
+.goods .goods-title li {
+  line-height: 3.9375rem;
+  color: #303030;
+  text-align: center;
+  border-bottom: 1px solid #c9c9c9;
+}
+.goods .goods-title li.active {
+  background-color: #fff;
+  border: none;
+}
+.goods .goods-list {
+  flex: 1;
+  background-color: #fff;
+  overflow: auto;
+}
+.goods .goods-list .goods-wrapper {
+  width: 100%;
+  padding: 0 5%;
+  border-bottom: 1px solid #c9c9c9;
+}
+.goods .goods-list .goods-wrapper:last-child {
+  border: none;
+}
+.goods .goods-list .goods-wrapper h3 {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 3.125rem;
+}
+.goods .goods-list .goods-wrapper div {
+  float: left;
+  display: inline-block;
+  width: 30%;
+  margin-bottom: 0.9375rem;
+  margin-left: 1%;
+  text-align: center;
+}
+.goods .goods-list .goods-wrapper div img {
+  height: 3.125rem;
+}
+.goods .goods-list .goods-wrapper div p {
+  margin: 0;
+  line-height: 1rem;
+  font-size: 0.875rem;
+  color: #787878;
+}
+@media screen and (max-width: 350px) {
+  .goods-title {
+    flex: 0 0 5.625rem !important;
+  }
+}
+@media screen and (max-width: 335px) {
+  .goods-title {
+    flex: 0 0 5rem !important;
+  }
+}

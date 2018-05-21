@@ -1,0 +1,173 @@
+<layout name="Public/public" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>待审核{$level_name.2}</title>
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+	<script type="text/javascript" src='__PUBLIC__/js/index.js'></script>
+	<script type="text/javascript">
+        var auditUrl = '{:U(GROUP_NAME . "/Manager/qtaudit")}/';
+        var delUrl = '{:U(GROUP_NAME . "/Manager/delete")}/';
+    </script>
+<style>
+/*控制弹出框的样式*/
+.bottom_box{
+    background:rgba(0, 0, 0, 0.5);/* 遮罩层的透明度 */
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 100;
+    height: 712px;
+    text-align: center;
+     /* 此处的图层要大于页面 */
+} 
+.bottom_box img{
+    width:150px;  
+}
+.bottom_box table{
+    text-align: center;
+    margin-top: 150px;
+    float: left;
+    color:#fff;
+}
+.bottom_box table td{
+    width: 150px;
+    height: 50px;
+    border-bottom: 1px solid #fff;
+}
+.tdbo{
+    border-right: 1px solid #fff;
+}
+</style>
+</head>
+<body class="zh_CN">
+         <div class="col_main">
+	<div class="main_hd">
+		<div class="title_tab" id="topTab">
+			<ul class="tab_navs mt title_tab">
+                  	<li class="tab_nav js_top  selected" data-id="send"><a href="#">待审核{$level_name.2}</a></li>
+                  	<li style="float:right;"><input style="height:35px;width:100px;" type="button" id="audit" onclick="audit()" value="通过审核"/></li>
+                  	<li style="float:right;"><input style="height:35px;width:100px;" type="button" id="delete" onclick="del()" value="删除申请"/></li>
+                	</ul>
+              </div>
+              
+              <div class="menu">
+			
+			
+		</div>
+
+	</div>
+	<!--右边内容--> 
+	<div class="main_bd">
+		<div class="mp_news_area notices_box" style="width:1220px;margin:0 auto;">
+			<div class="title_bar2" style="width:120px;"> 编号 </div>
+			<div class="title_bar2" style="width:100px;"> 姓名 </div>
+        			<div class="title_bar2" style="width:120px;"> 微信号 </div>
+        			<div class="title_bar2" style="width:120px;">电话 </div>
+        			<div class="title_bar2" style="width:120px;"> 邮箱 </div>
+        			<div class="title_bar2" style="width:200px;"> 身份证号</div>
+        			<div class="title_bar2" style="width:200px;"> 详细地址 </div>
+        			<div class="title_bar2" style="width:120px;"> 申请时间 </div>
+              <div class="title_bar2" style="width:110px;"> 操作 </div><br/>
+        			<ul class="mp_news_list">
+
+       			<!--第1列-->
+         			<li class="mp_news_item"> 
+         			<empty name="applyList">
+         			<h2 style="color:red;text-align:center;">对不起,没有要审核的经销商! </h2>
+         			<else />
+         			<volist name="applyList" id="m">
+         				<span class="title_bar5" style="width:120px; "><input type="checkbox" name="mid" value="{$m.id}" />{$m.id}</span>
+         				<span class="title_bar5" style="width:100px; ">{$m.name}</span>
+         				<span class="title_bar5" style="width:120px; ">{$m.wechatnum}</span>
+         				<span class="title_bar5" style="width:120px; ">{$m.phone}</span>
+         				<span class="title_bar5" style="width:120px; ">{$m.email}</span>
+         				<span class="title_bar5" style="width:200px; ">{$m.idennum}</span>
+         				<span class="title_bar5" style="width:200px; ">{$m.address}</span>
+         				<span class="title_bar5" style="width:120px; ">{$m.time|date="Y-m-d H:i",###}</span>
+                        <span class="title_bar5" style="width:110px; "><input class="wz2 btn" style="margin-top:18px;" value="详情信息" onClick="showqr('qr{$m.id}')" type="button"/></span>
+              	</volist>
+                </empty>
+             		</li>
+         			</ul>
+                <volist name="applyList" id="m">
+                    <div class="bottom_box" id="qr{$m.id}" style="position: absolute;top:0;left:0px;text-align:center;">
+                        <table style="margin-left:200px;">
+                            <tr>
+                                <td class="tdbo">姓名</td>
+                                <td>{$m.name}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">微信头像</td>
+                                <td><img src = "{$m.headimgurl}" style="width:70px;height:70px;" /></td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">微信号</td>
+                                <td>{$m.wechatnum}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">电话</td>
+                                <td>{$m.phone}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">邮箱</td>
+                                <td>{$m.email}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">身份证号</td>
+                                <td>{$m.idennum}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">详细地址</td>
+                                <td>{$m.address}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo" style="border-bottom:none;">申请时间</td>
+                                <td style="border-bottom:none;">{$m.time|date="Y-m-d H:i",###}</td>
+                            </tr>
+                        </table>
+                        <if condition="$Think.config.IS_SUBMIT_ID_CARD_IMG eq 1">
+                        <table>
+                            <tr>
+                                <td style="border-bottom:none;">身份证图片：</td>
+                                <td style="border-bottom:none;"><img src = "{$m.idennumimg}" /></td>
+                            </tr>
+                            <tr style="margin-top:20px;">
+                                <td style="border-bottom:none;">保证金截图：</td>
+                                <td style="border-bottom:none;"><img src = "{$m.liveimg}" /></td>
+                            </tr>
+                        </table>
+                        </if>
+                    </div>
+                </volist>	
+		</div>
+		<!--5行为一页，方便查看-->
+		 <div style="padding-left:33%; padding-top:10px;"> 
+			<span style="font-weight:bold; color:#ff2222;"> 
+			</span> 
+       	</div>
+	</div>
+</div> 
+</body>
+<!-- 弹出框 -->
+<script>
+    function showqr(img){
+        var qrimg = img;
+        $("#"+qrimg).show();
+    } 
+</script>
+<script>
+$(function () {
+    //点击关闭按钮的时候，遮罩层关闭
+    $(".bottom_box").click(function () {
+        $(".bottom_box").css("display", "none");
+    });
+});
+</script>
+</html>

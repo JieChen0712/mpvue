@@ -1,0 +1,28 @@
+.page {
+    display: block;
+    background-color: #f5f4f9;
+}
+.content {
+    padding: 5%;
+}
+.upgrade-form {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 90%;
+    background-color: #fff;
+    padding: 1.25rem 0;
+}
+.list-block {
+    margin: 0;
+}
+
+.item-content .label {
+    width: 20% !important;
+}
+.list-block ul {
+    border-top: none;
+}
+.list-block textarea {
+    height: 15rem;
+}

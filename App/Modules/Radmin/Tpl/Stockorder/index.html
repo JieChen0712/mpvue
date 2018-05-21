@@ -1,0 +1,345 @@
+<layout name="Public/public" />
+
+
+<!--<meta http-equiv="content-type" content="text/html; charset=UTF-8">-->
+
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<link href="__PUBLIC__/Admin/css/z/my.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+<script type="text/javascript" src='__PUBLIC__/js/index.js'></script>
+<script type="text/javascript">
+    var searchUrl = "{:U(GROUP_NAME . '/stockorder/search',array('id' => 8,'keyword' => '9'))}";
+</script>
+<script>
+    function sc($name, $ulr) {
+        //利用对话框返回的值 （true 或者 false）
+        if (confirm("请谨慎操作。删除后无法恢复！!!你确定要删除该提货下单" + $name + "吗？")) {
+            window.location.href = $ulr;
+        } else {
+            return false;
+        }
+    }
+</script>
+<style>
+    /*控制弹出框的样式*/
+    .bottom_box{
+        background:rgba(0, 0, 0, 0.7);/* 遮罩层的透明度 */
+        display: none;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        z-index: 100;
+        height: 712px;
+
+        text-align: center;
+        /* 此处的图层要大于页面 */
+    } 
+    .bottom_box img{
+        width:150px;  
+    }
+    .bottom_box table{
+        text-align: center;
+        margin-top: 0px;
+        float: left;
+        color:#fff;
+    }
+    .bottom_box table td{
+        width: 150px;
+        height: 50px;
+        border-bottom: 1px solid #fff;
+    }
+    .tdbo{
+        border-right: 1px solid #fff;
+    }
+</style>
+
+
+<h1 class="page-header">
+    经销商提货下单
+</h1>
+
+<div class="row">
+    <!--搜索表单-->
+    <div class="col-md-10">
+        <form class="form-inline" method="get" action="__URL__/index">
+            <div class="form-group">
+                <label class="sr-only" for="order_num">提货下单查询</label>
+                <input type="text" class="form-control" id="order_num" name="order_num" placeholder="提货下单号">
+                <label class="sr-only" for="name">经销商</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="接单经销商/订货经销商">
+                <label class="sr-only" for="status">提货下单状态</label>
+                <select name="status" id="status"  class="form-control">
+                    <option value="">选择提货下单状态</option>
+                    <option value="1">待审核</option>
+                    <option value="6">已审核</option>
+                    <option value="2">已审核</option>
+                    <option value="3">已收货</option>
+                </select>
+                <input type="submit" class="btn btn-default" value="搜索"/>
+            </div>
+        </form>
+    </div>
+    <!--end 搜索表单-->
+    <div class="col-md-2">
+        <!--<button type="button" onclick="location.href = '__URL__/expUser?pd=order'" class="btn btn-info pull-right">导出Excel</button>-->
+    </div>
+</div>
+
+<div class="row">
+   <div class="col-md-12 col-xs-12">
+        <!--表格-->
+        <table class="table table-condensed table-hover table-responsive table-bordered">
+            <thead>
+                <tr>
+                    <th>提货下单号</th>
+                    <th>订货经销商</th>
+                    <th>接单经销商</th>
+                    <th>级别</th>
+                    <th>产品名称</th>
+                    <th>数量</th>
+                    <th>单价</th>
+                    <th>总价</th>
+                    <th>收货人姓名</th>
+                    <th>收货人电话</th>
+                    <th>收货地址</th>
+                    <th>快递单号</th>
+                    <th>备注</th>
+                    <th>申请时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            <empty name="applyList">
+                <tr><td colspan="15">对不起,暂时没有任何的提货下单!</td></tr>
+                <else />
+                <volist name="applyList" id="m">
+                    <tr>
+                        <td>{$m.order_num}</td>
+                        <td>{$m.name}</td>
+                        <td>{$m.o_name}</td>
+                        <td>{$m.levname}</td>
+                        <td>
+                    <volist name="m['row']" id="vv">
+                        {$vv.pr_name}x{$vv.num}<br>
+                    </volist>
+                    </td>
+                    <td>
+                    <volist name="m['row']" id="vv">
+                        {$vv.num}<br>
+                    </volist>
+                    </td>
+                    <td>
+                    <volist name="m['row']" id="vv">
+                        {$vv.price}<br>
+                    </volist>
+                    </td>
+                    <td>{$m.sum}.00</td>
+                    <td>{$m.s_name}</td>
+                    <td>{$m.s_phone}</td>
+                    <td>{$m.s_addre}</td>
+                    <td>
+                        <div id="change_order_info_{$m.id}">
+                            <if condition="$m.ordernumber eq ''">
+                                未填写
+                                <else />
+                                {$m.ordernumber}
+                            </if>
+                        </div>
+
+                        <button type="button" onclick="change_order('{$m.id}')" class="btn btn-info onb_update{$m.id}">更新</button>
+
+                        <input type="text" class="form-control change_order_dis change_order_{$m.id}" id="ordernumber_{$m.id}" >
+                        <input type="submit" onclick="onumber('{$m.id}', '{$m.order_num}');" class="btn btn-success change_order_dis change_order_{$m.id}" value="提交" />
+
+                    </td>
+                    <td>{$m.notes}</td>
+                    <td>{$m.time|date="Y-m-d H:i",###}</td>
+                    <td>
+                    <if condition="$m.status eq 1">
+                        <p class="bg-danger">待审核</p>
+                        <elseif condition="$m.status eq 2"/>
+                        <p class="bg-warning">已发货</p>
+                        <elseif condition="$m.status eq 6"/>
+                        <p class="bg-warning">已审核，未配送</p>
+                        <else/>
+                        <p class="bg-primary">已收货</p>
+                    </if>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-lg-{$m.id}">详情</button>
+                    <!--<button type="button" class="btn btn-danger" onclick="sc('{$m.order_num}', '__URL__/delOrder/id/{$m.order_num}')">删除</button>-->
+                    </td>
+                    </tr>
+                </volist>
+
+                <tr><td colspan="15"><div class="pull-right">{$page}</div></td></tr>
+            </empty>
+            </tbody>
+        </table>
+        <!--end 表格-->
+        
+        
+        <volist name="applyList" id="m">
+            <!--提货下单详情-->
+            <div class="modal fade bs-example-modal-lg-{$m.id}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">提货下单详情</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>提货下单号</td>
+                                    <td>{$m.order_num}</td>
+                                </tr>
+                                <tr>
+                                    <td>订货经销商</td>
+                                    <td>{$m.name}</td>
+                                </tr>
+                                <tr>
+                                    <td>订货经销商电话</td>
+                                    <td>{$m.phone}</td>
+                                </tr>
+                                <tr>
+                                    <td>接单经销商</td>
+                                    <td>{$m.bossname}</td>
+                                </tr>
+                                <tr>
+                                    <td>接单经销商电话</td>
+                                    <td>{$m.bossphone}</td>
+                                </tr>
+                                <tr>
+                                    <td>订货产品</td>
+                                    <td><volist name="m['row']" id="vv">
+                                    {$vv.pr_name}x{$vv.num}<br>
+                                </volist></td>
+                                </tr>
+                                <!-- <tr>
+                                    <td class="tdbo">订货数量</td>
+                                    <td><volist name="m['row']" id="vv">
+                                      {$vv.num}<br>
+                                    </volist></td>
+                                </tr>
+                                <tr>
+                                    <td class="tdbo">订货单价</td>
+                                    <td><volist name="m['row']" id="vv">
+                                      {$vv.price}<br>
+                                    </volist></td>
+                                </tr>
+                                <tr>
+                                    <td class="tdbo">订货总价</td>
+                                    <td>{$m.sum}.00</td>
+                                </tr> -->
+                                <tr>
+                                    <td>收货人名称</td>
+                                    <td>{$m.s_name}</td>
+                                </tr>
+                                <tr>
+                                    <td>收货人电话</td>
+                                    <td>{$m.s_phone}</td>
+                                </tr>
+                                <tr>
+                                    <td>收货地址</td>
+                                    <td>{$m.s_addre}</td>
+                                </tr>
+                                <tr>
+                                    <td>提货下单时间</td>
+                                    <td>{$m.time|date="Y-m-d H:i",###}</td>
+                                </tr>
+                                <tr>
+                                    <td>提货下单备注：</td>
+                                    <td>{$m.notes}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end 提货下单详情-->
+
+
+            <!--<div class="modal fade bs-example-modal-sm change_order_{$m.id}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <form class="form-inline" method="post" action="__URL__/ordernb">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" id="myModalLabel">更新快递单号/物流号</h4>
+                        </div>
+                        
+                        <div class="modal-body">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>提货下单号</td>
+                                    <td>{$m.order_num}</td>
+                                </tr>
+                                <tr>
+                                    <td>经销商名字</td>
+                                    <td>{$m.name}</td>
+                                </tr>
+                                <tr>
+                                    <td>产品名称</td>
+                                    <td>
+                                        <volist name="m['row']" id="vv">
+                                        {$vv.pr_name}x{$vv.num}<br>
+                                        </volist>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>快递单号/物流号</td>
+                                    <td>
+                                        <label class="sr-only" for="ordernumber_{$m.id}">快递单号/物流号</label>
+                                        <input type="text" class="" id="ordernumber_{$m.id}" name="ordernumber" >
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="order_num" value="{$m.order_num}" >
+                            <input type="submit" class="btn btn-success" value="提交" />
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                        </div>
+                        
+                    </div>
+                </div>
+                </from>
+            </div>-->
+
+
+        </volist>
+
+    </div>
+</div>
+
+<script>
+
+    $(".change_order_dis").hide();
+
+    function change_order(id) {
+
+        $(".change_order_" + id).toggle();
+    }
+
+    function onumber(id, order_num) {
+        var ordernumber = $('#ordernumber_' + id).val();
+
+        $.post("__URL__/ordernb", {id: id, order_num: order_num, ordernumber: ordernumber}, function (data) {
+            if (data) {
+                alert('填写成功！');
+                change_order(id);
+                $("#change_order_info_" + id).html(ordernumber);
+            } else {
+                alert('填写失败！原因没改变过快递单号！');
+            }
+        });
+    }
+
+</script>

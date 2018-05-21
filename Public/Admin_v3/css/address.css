@@ -1,0 +1,88 @@
+body {
+  background-color: #f5f4f9;
+}
+#main {
+  width: 100%;
+  min-height: 100%;
+  padding-top: 2.8125rem;
+  padding-bottom: 3.125rem;
+  background-color: #fff;
+}
+#main .information {
+  width: 100%;
+  padding: 0 5% 0.625rem 5%;
+  color: #303030;
+  font-weight: 400;
+  border-bottom: 0.0625rem solid #c9c9c9;
+}
+#main .information .wrapperbox {
+  width: 100%;
+  margin-top: 0.9375rem;
+}
+#main .information .wrapperbox .name {
+  display: inline-block;
+  float: left;
+}
+#main .information .wrapperbox .tel {
+  display: inline-block;
+  float: right;
+}
+#main .wrapper {
+  display: flex;
+  width: 90%;
+  height: 2.8125rem;
+  line-height: 2.8125rem;
+  margin-left: 5%;
+}
+#main .wrapper .default-address {
+  flex: 1;
+  padding-left: 1.5625rem;
+  font-size: 0.75rem;
+  color: #303030;
+  background-image: url("../images/information/9.png");
+  background-repeat: no-repeat;
+  background-size: auto 1.25rem;
+  background-position: 0 13px;
+}
+#main .wrapper .default-address.active {
+  color: #fb4736;
+}
+#main .wrapper .edit {
+  flex: 0 0 5rem;
+  text-align: right;
+  font-size: 0.75rem;
+  color: #303030;
+  background-image: url("../images/information/8.png");
+  background-repeat: no-repeat;
+  background-size: auto 1.25rem;
+  background-position: 30px 11px;
+}
+#main .wrapper .delete {
+  flex: 0 0 5rem;
+  text-align: right;
+  font-size: 0.75rem;
+  color: #303030;
+  background-image: url("../images/information/7.png");
+  background-repeat: no-repeat;
+  background-size: auto 1.25rem;
+  background-position: 30px 11px;
+}
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 3.125rem;
+  background: #f3f3f3;
+  margin: -3.125rem auto 0 auto;
+  clear: both;
+  text-align: center;
+}
+#footer .add {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 3.125rem;
+  background-color: #fc4736;
+  color: #fff;
+  border: none;
+}

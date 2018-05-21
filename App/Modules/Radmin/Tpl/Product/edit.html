@@ -1,0 +1,139 @@
+  <style type="text/css">
+    .layui-layer-content{overflow: visible!important}
+
+    @media screen and (max-width: 768px) {
+        .layui-layer-content {
+            padding: 5%;
+        }
+        .layui-form-label {
+            float: none;
+            padding-left: 0;
+            text-align: left;
+        }
+        .layui-form-select .layui-input {
+            margin-bottom: 10px;
+        }
+    }
+    
+  </style>
+<script>
+    $(function () {
+        form.on('select(level)',function (data) {
+            var level = data.value;
+            var html = '<option value="0">请选择经销商</option>';
+            if (level == 0) {
+                $(".mylevel").html(html);
+                return;
+            }
+            $.post("__APP__/Radmin/Stock/getAgent", {level: level}, function (data) {
+                if (data != 'none') {
+                    var text = '';
+                    $.each(data, function (index, array) {
+                        text += '<option class="' + array["id"] + '" value="' + array["id"] + '">' + array["name"] + '</option>';
+                    })
+                    $(".mylevel").html(text);
+                } else {
+                    $(".mylevel").html(html);
+                }
+                form.render('select')
+            })
+        })
+    })
+</script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-ui.js"></script>
+<form class="layui-form layui-box" action="__URL__/change/?type=m" id="proform" data-auto="false" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">收货经销商</label>
+        <div class="layui-input-inline1 searchagent">
+            <select  name="level" id="level" lay-filter="level">
+                <option value="0">请选择经销商等级</option>
+                <egt name="level_num" value="1"><option value="1">{$level_name.1}</option></egt>
+                <egt name="level_num" value="2"><option value="2">{$level_name.2}</option></egt>
+                <egt name="level_num" value="3"><option value="3">{$level_name.3}</option></egt>
+                <egt name="level_num" value="4"><option value="4">{$level_name.4}</option></egt>
+                <egt name="level_num" value="5"><option value="5">{$level_name.5}</option></egt>
+                <egt name="level_num" value="6"><option value="6">{$level_name.6}</option></egt>
+                <egt name="level_num" value="7"><option value="7">{$level_name.7}</option></egt>
+                <egt name="level_num" value="8"><option value="8">{$level_name.8}</option></egt>
+            </select>
+        </div>
+        <div class="layui-input-inline1">
+            <select class="form-control mylevel" name="receive_id" >
+                <option value="0">请选择经销商</option>
+            </select>
+        </div>
+        <div>
+        </div>
+    </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">选择产品</label>
+                <div class="layui-input-inline">
+                    <select class="form-control" name="templet_id">
+                        <volist name="templet" id="t">
+                            <option value="{$t.id}">{$t.name}</option>
+                        </volist>
+                    </select>
+                    <input type="text" style="display:none" placeholder="默认不用选择" onmouseup="this.select();" maxlength="80" style="width:300px;"/>
+                </div>
+            </div>
+
+
+    <div class="hr-line-dashed"></div>
+
+    <div class="layui-form-item text-center">
+        <input type="hidden" name="id" value="{$id}"/>
+        <button class="layui-btn btn1" id="form_submit"  type='submit'>提交</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+    </div>
+
+</form>
+<script type="text/javascript">
+  form.render()
+    $(function () {
+        $("#templet").autocomplete({
+            minLength: 1,
+            autoFocus: true,
+            source: function (request, response) {
+                $.ajax({
+                    url: "__URL__/templet",
+                    dataType: "json",
+                    data: {
+                        term: request.term,
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                data: item,
+                                label: item.name,
+                                ID: item.id,
+                            }
+                        }));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#templet_id').val(ui.item.ID);
+            }
+        });
+
+        $("#level").change(function () {
+            var level = $(this).val();
+            var html = '<option value="0">请选择经销商</option>';
+            if (level == 0) {
+                $(".mylevel").html(html);
+                return;
+            }
+            $.post("__APP__/Radmin/Stock/getAgent", {level: level}, function (data) {
+                if (data != 'none') {
+                    var text = '';
+                    $.each(data, function (index, array) {
+                        text += '<option value="' + array["id"] + '">' + array["name"] + '</option>';
+                    })
+                    $(".mylevel").html(text);
+                } else {
+                    $(".mylevel").html(html);
+                }
+            })
+        })
+    })
+</script>

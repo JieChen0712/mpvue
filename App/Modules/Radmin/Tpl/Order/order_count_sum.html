@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script type="text/javascript" src="__PUBLIC__/js/WdatePicker.js"></script>
+</head>
+
+<body>
+    <section class="layui-container">
+        <div class="content">
+            <header class="header">
+                <h3>总部订单汇总</h3>
+            </header>
+            <div class="table-wrapper">
+                <table class="layui-table" lay-skin="row" lay-size="sm">
+                    <thead>
+                    <tr>
+                        <th>产品名称</th>
+                        <th>总部出货量</th>
+                        <th>总部出货总金额</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <empty name="list">
+                            <tr>
+                                <td colspan="10">对不起,没有找到统计信息! </td>
+                            </tr>
+                            <else />
+                        <foreach name="list" item="vo">
+                            <tr>
+                                <td>{$vo.p_name}</td>
+                                <td>{$vo.cost_num}</td>
+                                <td>{$vo.cost_money}</td>
+                            </tr>
+                        </foreach>
+                            <include file="Public/page" />
+                        </empty>
+                    </tbody>
+                </table>
+                <div class="col-md-4">
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+</body>
+
+</html>

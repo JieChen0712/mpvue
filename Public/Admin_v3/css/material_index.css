@@ -1,0 +1,81 @@
+#main {
+    width: 100%;
+    min-height: 100%;
+    padding-top: 2.8125rem;
+    padding-bottom: 3.125rem;
+    background-color: #F5F4F9;
+}
+
+#main .search-wrapper {
+    top: 0;
+    height: 3.4375rem;
+}
+
+#main .bar {
+    background-color: #fff;
+    border-bottom: none;
+}
+
+#main .search-wrapper .searchbar {
+    background: #fff;
+    padding: 0 3%;
+}
+
+
+#main .search-wrapper .searchbar .icon-search {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -2.75rem;
+}
+
+#main .search-wrapper .searchbar .search {
+    text-align: center;
+    margin-top: 0.625rem;
+    height: 2.125rem;
+    background-color: #EAEAEC;
+    font-size: .875rem;
+    color: #9F9F9F;
+}
+
+#main ul {
+    font-size: 0;
+    /* Column-count: 2;
+    Column-gap: .625rem; */
+    width: calc(100% - 1.25rem);
+    margin:1.25rem .625rem;
+}
+
+#main ul li {
+    display: inline-block;
+    width: calc(50% - .3125rem);
+    margin-bottom: .625rem;
+    padding: .625rem 0 0 0;
+    background-color: #fff; 
+    text-align: center;
+}
+
+#main ul li:nth-of-type(2n) {
+    margin-left: .625rem;
+}
+
+#main ul li a {
+    color: #333333;
+}
+
+#main ul li a .img-wrapper {
+    width: 100%;
+    height: 9.375rem;
+    overflow: hidden;
+}
+
+#main ul li a .img-wrapper .img {
+    width: 90%;
+}
+
+#main ul li a .text {
+    line-height: 2.75rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

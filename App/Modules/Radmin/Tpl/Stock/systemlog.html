@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+        <style>
+            @media screen and (max-width: 768px) {
+                .layui-container .content .form .form-item .layui-form-label {
+                    float: none;
+                    vertical-align: top;
+                }
+                .layui-container .content .form .form-item>div {
+                    float: none;
+                }
+            }
+        </style>
+  </head>
+
+  <body>
+    <section class="layui-container">
+      <div class="content">
+        <header class="header">
+          <h3>
+              <eq name="statusbm" value="system">系统出库记录</eq>
+              <eq name="statusbm" value="b">大标出库记录</eq>
+              <eq name="statusbm" value="m">小标出库记录</eq>
+              <eq name="is_sell" value="1">零售出库记录</eq>
+          </h3>
+        </header>
+          <form class="layui-form form layui-row form-search" action="__URL__/stock" method="get" onsubmit="return false">
+            <div class="layui-form-item form-item">
+              <!--<input type="hidden" name="is_sell" value="{$is_sell}"/>-->
+              <label class="layui-form-label" for="start_time">开始时间</label>
+              <div class="time-wrapper">
+                <input type="text" class="layui-input blue" name="start_time" id="start_time" readonly="readonly" placeholder="开始时间" autocomplete="on">
+                <i class="fa fa-angle-down"></i>
+              </div>
+              <span class="hidden-xs">~</span>
+              <label class="layui-form-label" for="end_time">结束时间</label>
+              <div class="time-wrapper">
+                <input type="text" class="layui-input blue" name="end_time" id="end_time" readonly="readonly" placeholder="结束时间" autocomplete="on">
+                <i class="fa fa-angle-down"></i>
+              </div>
+              <if condition="$statusbm eq 'm'">
+                <div class="layui-form-item form-item">
+                    <input type="hidden" name="type" value="m" />
+                    <label class="layui-form-label" for="mstock">小标签</label>
+                    <div class="input-wrapper">
+                      <input type="text" autocomplete="on" class="layui-input" id="mstock" name="mstock" placeholder="小标签" />
+                    </div>
+                </div>
+                <elseif condition="$statusbm eq 'b'" />
+                  <div class="layui-form-item form-item">
+                    <input type="hidden" name="type" value="b" />
+                    <label class="layui-form-label" for="begbigstock">起始大标签</label>
+                    <div class="input-wrapper">
+                      <input type="text" autocomplete="on" class="layui-input" id="begbigstock" name="begbigstock" placeholder="起始大标签" />
+                    </div>
+                    <span class="hidden-xs">~</span>
+                    <label class="layui-form-label" for="begbigstock">结束大标签</label>
+                    <div class="input-wrapper">
+                      <input type="text" autocomplete="on" class="layui-input" id="endbigstock" name="endbigstock" placeholder="结束大标签" />
+                    </div>
+                  </div>
+                <elseif condition="$statusbm eq 'system'" />
+                  <div class="layui-form-item form-item">
+                    <input type="hidden" name="type" value="system" />
+                    <label class="layui-form-label" for="mstock">小标签</label>
+                    <div class="input-wrapper">
+                      <input type="text" autocomplete="on" class="layui-input" id="mstock" name="mstock" placeholder="小标签" />
+                    </div>
+                  </div>
+                <elseif condition="$is_sell eq 1" />
+                  <div class="layui-form-item form-item">
+                    <input type="hidden" name="is_sell" value="{$is_sell}" />
+                    <label class="layui-form-label" for="sellname">零售客</label>
+                    <div class="input-wrapper">
+                      <input autocomplete="on" class="layui-input" type="text" id="keyword" name="keyword" placeholder="姓名/微信号/手机号" />
+                    </div>
+                  </div>
+              </if>
+              <div class="search-btn">
+                <button type="submit" class="layui-btn layui-btn-radius">搜索</button>
+              </div>
+            </div>
+        </form>
+
+      <div class="table-wrapper">
+        <table class="layui-table" lay-skin="row" lay-size="sm">
+          <thead>
+            <tr>
+              <th>序号</th>
+              <th>产品名称</th>
+              <th>小标签</th>
+              <th>所属大标签</th>
+              <th>数量</th>
+              <th>发货经销商</th>
+              <?php if( $is_sell != '1' ):?>
+              <th>收货经销商</th>
+              <?php else:?>
+              <th>零售顾客</th>
+              <?php endif;?>
+              <th>单号</th>
+              <th>出库时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <empty name="list">
+              <tr style="position: relative;">
+                <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+              </tr>
+              <else />
+              <!--<tr><td colspan="10"><div class="pull-right">{$page}</div></td></tr>-->
+              <volist name="list" id="m">
+                <tr>
+                  <td>{$m.id}</td>
+                  <td>{$m.templet_id|toName=###}</td>
+                  <td>{$m.mbeg|default="无"}~{$m.mend|default="无"}</td>
+                  <td>
+                    <if condition="$m.statusbm eq 'm'">无
+                      <else />{$m.ptag_name}</if>
+                  </td>
+                  <td>{$m.product_num}</td>
+                  <td>
+                    <if condition="$m.send_id eq 0">系统
+                      <else />{$m.send_id|toAgent=###}</if>
+                  </td>
+                  <td>
+                    <if condition="($m.is_sell eq 1)">
+                      顾客姓名：{$m.sellname}<br /> 顾客手机：{$m.sellphone}
+                      <br /> 备注：{$m.remark}
+                      <else /> {$m.receive_id|toAgent=###}
+                    </if>
+                  </td>
+                  <td>{$m.orderNumber|default="无"}</td>
+                  <td>{$m.time|toDate=###}</td>
+                  <td>
+                    <input type="button" class="btn btn-success" value="编辑" data-modal="__APP__/Radmin/Product/edit?id={$m.id}"/>
+                    <!-- <neq name="vo.mbeg" value="">
+                                    <input type="button" class="wz2 btn" value="编辑" onClick="javascript:location.href='__APP__/Radmin/Product/edit?id={$m.id}&type=system'"/>
+                                <else/>
+                                   <input type="button" class="wz2 btn" value="编辑" onClick="alert('小标签不能编辑');"/>
+                                </neq> -->
+                    <input type="button" class="btn btn-danger" value="删除" data-load="__APP__/Radmin/Product/delete?id={$m.id}" data-confirm="您确定要删除吗？"/>
+                  </td>
+                </tr>
+              </volist>
+              <include file="Public/page" />
+              <!-- <div id="page"></div> -->
+              <!--<tr><td colspan="14"><div class="pull-right">{$page}</div></td></tr>-->
+            </empty>
+          </tbody>
+        </table>
+      </div>
+
+      </div>
+
+    </section>
+      
+    <script type="text/javascript">
+      layui.use('laydate', function() {
+        var laydate = layui.laydate;
+        laydate.render({
+          elem: '#start_time'
+        });
+        laydate.render({
+          elem: '#end_time'
+        });
+      })
+
+    </script>
+  </body>
+
+</html>

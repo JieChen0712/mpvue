@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="ui-mobile">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--<base href="http://fraisefibre.fw-315.net/a/ProductList.aspx">--><base href=".">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>产品系列</title>
+    <!-- <script src="js/jquery-2.1.1.min.js"></script>  -->
+    <link href="__PUBLIC__/css/jquery.mobile-1.4.2.min.css" rel="stylesheet">
+    <!-- <script src="js/jquery.mobile-1.4.2.min.js"></script> -->
+</head>
+<body class="ui-mobile-viewport ui-overlay-a">
+    <div data-role="page" id="page1" data-url="page1" tabindex="0" class="ui-page ui-page-theme-a ui-page-active">
+        <div data-role="header" style="background-color:#000;border-color:#000;" role="banner" class="ui-header ui-bar-inherit">
+            <a href="{:U(GROUP_NAME . '/Index/index')}" style="background:#97e0d7; color:#fff; border:#36a50a; margin-top:2px;" data-role="button" data-icon="home" data-theme="b" data-rel="back" class="ui-link ui-btn-left ui-btn ui-btn-b ui-icon-home ui-btn-icon-left ui-shadow ui-corner-all" role="button">返回</a>
+            <h1 style="color:#fff;text-shadow:0 1px 0 #333;" class="ui-title" role="heading" aria-level="1">产品系列</h1>
+        </div>
+
+        <div data-role="content" class="ui-content" role="main"> <volist name="list" id="vo">
+            <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="搜索产品名" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+                <li class="ui-li-has-thumb ui-first-child ui-last-child">
+                    <a href="__APP__/Home/Product/detail?id={$vo.id}" style="border-color:#ddd;" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
+                        <img src="{$vo.image}" style="width:200px;height:200px;">
+                        <h2>{$vo.name}</h2>
+                        <p>{$vo.state}</p>
+                    </a>
+                </li>
+           </ul>
+           </volist>
+        </div>
+    </div>
+</body>
+</html>

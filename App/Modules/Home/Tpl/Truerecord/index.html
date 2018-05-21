@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="ui-mobile">
+<head lang="en">
+    <title>实体备案</title>
+    <include file="Public/header"/>
+    <style type="text/css">
+        .taobao img{width: 100%;margin: 0px;padding:0px;line-height:35px;}
+        .header1 p{margin-top:0px;}
+        .taobao p{margin-bottom:10px;}
+        .taobao{width:95%;margin:0 auto;text-align:justify;font-size:16px;color:#666;font-family:"微软雅黑";}
+    </style>
+</head>
+<body class="ui-mobile-viewport ui-overlay-a">
+    <div data-role="page" id="page1" data-url="page1" tabindex="0" class="ui-page ui-page-theme-a ui-page-active">
+        <header class="header1">
+        <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/index/left_icon.png" alt=""></a><p>实体备案</p>
+        </header>
+        <div class="taobao">
+            {$row.news}
+        </div>
+    </div> 
+</body>
+</html>

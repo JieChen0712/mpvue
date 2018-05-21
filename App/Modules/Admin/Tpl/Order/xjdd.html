@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <title>下级客户云仓库存订单</title>
+        <include file="Public/order" />
+        <script type="text/javascript" src="__PUBLIC__/js/my_dd.js"></script>
+    </head>
+
+    <body style="background-color:#f5f5f5;">
+        <header class="header">
+            <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/index/left_icon.png" alt=""></a>
+            <p>下级客户云仓库存订单</p>
+        </header>
+        <div class="wrap_bg">
+            <div class="touxiang_box1">
+                <p class="p1">{$res_count}<span><br>总云仓库存订单</span></p>
+                <p class="p2">已处理：{$res_yes_count}<br>待处理：{$res_not_count}</p>
+            </div>
+        </div>
+        <div class="my_dd1">
+            <ul>
+                <li class="li1"><span>已处理</span></li>
+                <li class="li2"><span>待处理</span></li>
+            </ul>
+        </div>
+        <div class="input_1"><input type="text" class="one" name="search" placeholder="请输入云仓库存订单号..."><input type="image" class="two" onclick="search()" src="__PUBLIC__/images/shousuo.png"></div>
+        <!--已处理的 -->
+        <div class="ycl">
+            <volist name="res_yes" id="list">
+                <a href="ysh.html?order={$list.order_num}">
+                    <div class="dd2">
+                        <div class="wrap dle1">
+                            <div class="top">
+                                <h2>{$list.id}</h2>
+                                <p class="p1">云仓库存订单号：{$list.order_num}</p>
+                                <p class="p2">已处理</p>
+                            </div>
+                            <div class="top2">
+                                <p>云仓库存订单人名称：{$list.uInfo.name}</p>
+                                <p>云仓库存订单人微信号：{$list.uInfo.wechatnum}</p>
+                                <p>云仓库存订单人级别：{$list.uInfo.levname}</p>
+                                <img src="__PUBLIC__/images/dd_icon.jpg" alt="">
+                            </div>
+                            <div class="top3">
+                                <p>云仓库存订单金额：<span>￥{$list.total_price}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </volist>
+        </div>
+        <!--未处理的 -->
+        <div class="wcl">
+            <volist name="res_not" id="list">
+                <div class="dd1">
+                    <div class="wrap dle1">
+                        <div class="top">
+                            <h2>1</h2>
+                            <p class="p1">云仓库存订单号：{$list.order_num}</p>
+                            <p class="p2">未处理</p>
+                        </div>
+                        <a href="wsh.html?order={$list.order_num}">
+                            <div class="top2">
+                                <p>云仓库存订单人名称：{$list.uInfo.name}</p>
+                                <p>云仓库存订单人微信号：{$list.uInfo.wechatnum}</p>
+                                <p>云仓库存订单人级别：{$list.uInfo.levname}</p>
+                                <img src="__PUBLIC__/images/dd_icon.jpg" alt="">
+                            </div>
+                        </a>
+                        <div class="top3">
+                            <p>云仓库存订单金额：<span>￥{$list.total_price}</span></p>
+                            <p class="p2" id="chuli{$list.order_num}" onclick="chuli({$list.order_num})">通过审核</p>
+                            <p style="display:none;" class="p2" id="chuliing{$list.order_num}">正在审核...</p>
+                        </div>
+                    </div>
+                </div>
+            </volist>
+        </div>
+        <div class="mask_sh">
+            <div class="mask_sh1">
+                <p class="p1">云仓库存订单审核</p>
+                <p class="p2">确认审核通过该云仓库存订单？</p>
+                <div class="button">
+                    <button type="button" class="button1">确定</button>
+                    <button type="button" class="button2">取消</button>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        function chuli(order_num) {
+            $('#chuliing').show();
+            $('#chuli').hide();
+
+            $.post("cldd", {
+                order_num: order_num
+            }, function(msg) {
+                if(msg.code == 1) {
+                    tusi("已处理云仓库存订单");
+                    window.location.href = changeURLArg(window.location.href, "reloadtime", new Date().valueOf());
+                } else if(msg.msg != '') {
+                    tusi(msg.msg);
+                } else {
+                    tusi("云仓库存订单处理失败");
+                }
+
+                $('#chuliing' + order_num).hide();
+                //$('#chuli'+order_num).show();
+            });
+        }
+    </script>
+    <script>
+        function search() {
+            var s_order_num = $("input[name=search]").val();
+            if(s_order_num == "") {
+                tusi('请输入云仓库存订单号');
+                return false;
+            }
+            $.post("cxxjdd", {
+                s_order_num: s_order_num
+            }, function(msg) {
+                if(msg != 'none') {
+                    $('.wcl').hide();
+                    $('.dd2').hide();
+                    if(msg["status"] == 1) {
+                        var html = '';
+                        html += '<div class="dd2">';
+                        html += '<div class="wrap dle1">';
+                        html += '<div class="top">';
+                        html += '<h2>1</h2><p class="p1">云仓库存订单号：' + msg["order_num"] + '</p>';
+                        html += '<p class="p2">未处理</p>';
+                        html += '</div>';
+                        html += '<a href="wsh.html?order=' + msg["order_num"] + '">';
+                        html += '<div class="top2">';
+                        html += '<p>云仓库存订单人名称：' + msg["uInfo"]["name"] + '</p> ';
+                        html += '<p>云仓库存订单人微信号：' + msg["uInfo"]["wechatnum"] + '</p>';
+                        html += '<p>云仓库存订单人级别：' + msg["uInfo"]["levname"] + '</p>';
+                        html += '<img src="__PUBLIC__/images/dd_icon.jpg" alt="">';
+                        html += '</div>';
+                        html += '</a>';
+                        html += '<div class="top3">';
+                        html += '<p>云仓库存订单金额：<span>￥' + msg["total_price"] + '</span></p>';
+                        html += '<p class="p2" onclick="chuli(' + msg["order_num"] + ')">通过审核</p>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        $(html).appendTo(".ycl");
+                    } else {
+                        var html = '';
+                        html += '<a href="ysh.html?order=' + msg["order_num"] + '">';
+                        html += '<div class="dd2">';
+                        html += '<div class="wrap dle1">';
+                        html += '<div class="top">';
+                        html += '<h2>1</h2><p class="p1">云仓库存订单号：' + msg["order_num"] + '</p>';
+                        html += '<p class="p2">已处理</p>';
+                        html += '</div>';
+                        html += '<a href="wsh.html?order=' + msg["order_num"] + '">';
+                        html += '<div class="top2">';
+                        html += '<p>云仓库存订单人名称：' + msg["uInfo"]["name"] + '</p> ';
+                        html += '<p>云仓库存订单人微信号：' + msg["uInfo"]["wechatnum"] + '</p>';
+                        html += '<p>云仓库存订单人级别：' + msg["uInfo"]["levname"] + '</p>';
+                        html += '<img src="__PUBLIC__/images/dd_icon.jpg" alt="">';
+                        html += '</div>';
+                        html += '</a>';
+                        html += '<div class="top3">';
+                        html += '<p>云仓库存订单金额：<span>￥' + msg["total_price"] + '</span></p>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</a>';
+                        $(html).appendTo(".ycl");
+                    };
+
+                } else {
+                    tusi("暂无此云仓库存订单");
+                }
+            });
+        }
+        //设置url参
+        function changeURLArg(url, arg, arg_val) {
+            var pattern = arg + '=([^&]*)';
+            var replaceText = arg + '=' + arg_val;
+            if(url.match(pattern)) {
+                var tmp = '/(' + arg + '=)([^&]*)/gi';
+                tmp = url.replace(eval(tmp), replaceText);
+                return tmp;
+            } else {
+                if(url.match('[\?]')) {
+                    return url + '&' + replaceText;
+                } else {
+                    return url + '?' + replaceText;
+                }
+            }
+            return url + '\n' + arg + '\n' + arg_val;
+        }
+    </script>
+
+</html>

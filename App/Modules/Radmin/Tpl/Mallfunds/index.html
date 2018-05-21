@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+    </head>
+
+    <body>
+        <section class="layui-container">
+            <div class="content">
+                <header class="header">
+                    <h3> 代理佣金记录</h3>
+                    <a href="__URL__/expUser?pd=funds_index" class="layui-btn layui-btn-radius layui-btn-normal">导出Excel</a>
+                </header>
+                <form class="layui-form form layui-row form-search" action="__SELF__" method="get" onsubmit="return false">
+                    <div class="layui-form-item form-item">
+                        <label class="layui-form-label">代理</label>
+                        <div>
+                            <input type="text" class="layui-input"  autocomplete="on" name="name" id="name" placeholder="姓名/微信号/手机号">
+                        </div>
+                    </div>
+                    <div class="search-btn">
+                        <button type="submit" class="layui-btn layui-btn-radius">搜索</button>
+                    </div>
+                </form>
+                <div class="table-wrapper">
+                    <table class="layui-table" lay-skin="row" lay-size="sm">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>经销商名字</th>
+                                <th>微信号</th>
+                                <th>手机号</th>
+                                <th>级别</th>
+                                <th>历史总金额</th>
+                                <!--<th>当前申请金额</th>-->
+                                <th>当前可提取金额</th>
+                                <!--<th>历史总充值金额</th>-->
+                                <!--<th>历史总扣费金额</th>-->
+                                <th>历史总提现金额</th>
+                                <!--<th>操作</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <empty name="list">
+                            <tr style="position: relative;">
+                                <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                            </tr>
+                            <else />
+                            <volist name="list" id="m">
+                                <tr>
+                                    <td>{$m.id}</td>
+                                    <td>{$m.dis_info.name}</td>
+                                    <td>{$m.dis_info.wechatnum}</td>
+                                    <td>{$m.dis_info.phone}</td>
+                                    <td>{$m.dis_info.levname}</td>
+                                    <!--<td>{$m.recharge_money}</td>-->
+                                    <!--<td>{$m.apply_money}</td>-->
+                                    <td>{$m.total_money}</td>
+                                    <td>{$m.no_refund_money}</td>
+                                    <td>{$m.yes_refund_money}</td>
+                                    <!--<td>{$m.his_refund_money}</td>-->
+                                    <!--<td class="operate">-->
+                                        <!--<button class="layui-btn layui-btn-small recharge-btn" data-modal='__URL__/charge_money?uid={$m.uid}' data-title='虚拟币扣费'>扣费</button>-->
+                                    <!--</td>-->
+                                </tr>
+                            </volist>
+                            <include file="Public/page" />
+                            <!-- <div id="page"></div> -->
+                            <!--<tr><td colspan="14"><div class="pull-right">{$page}</div></td></tr>-->
+                        </empty>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </section>
+    </body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>审核下级充值申请</title>
+    <include file="Public/order"/>
+    <!--<link rel="stylesheet" href="__PUBLIC__/css/back/apply.css">-->
+    <script type="text/javascript" src="__PUBLIC__/js/my_dd.js"></script>
+    <style>
+        .header{
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body style="background-color:#f5f5f5;">
+    <header class="header">
+        <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/index/left_icon.png" alt=""></a><p>审核下级充值申请</p>
+    </header>
+
+    <!--dd2-->
+    <div class="dd2">
+        <volist name="money_apply_info" id="vv">
+            <div class="wrap" style="height:340px;">
+                <div class="top">
+                    <h2></h2><p class="p1">申请虚拟币：￥{$vv.apply_money}</p>
+                    <p class="p2">
+                    <if condition="$vv.status eq 0">待审核
+                        <elseif condition="$vv.status eq 1"/>已通过
+                        <else/>不通过
+                    </if>
+                    </p>
+                </div>
+                <a href="__APP__/Admin/funds/money_apply_detail?id={$vv.id}">
+                    <div class="top2">
+                        <p>申请人：{$vv.uid_name}</p>
+                        <p>申请级别：{$vv.uid_levname}</p>
+                        <p>申请时间：{$vv.created|toDate=###}</p> 
+                        <p>审核时间：<if condition="$vv.status eq 0"><else />{$vv.updated|toDate=###}</if></p> 
+                    </div>
+                </a>
+                <div class="top3">
+                    <p>虚拟币：<span>￥{$vv.apply_money}</span></p>
+                    <eq name="vv.status" value="0"><a href="__APP__/Admin/funds/money_apply_detail?id={$vv.id}}"><p class="p2">进行审核</p></a></eq>
+                </div>
+            </div>
+        </volist>
+    </div>   
+    <!--end dd2-->
+</body>
+
+
+
+</html>

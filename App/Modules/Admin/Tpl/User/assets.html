@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/assets.css">
+    <title>钱包</title>
+  </head>
+
+  <body>
+    <div class="page">
+      <div class="content">
+        <div class="assets-wrapper">
+          <header class="total-assets">
+            <div class="titles">
+              <i></i>
+              <span>总资产（元）</span>
+            </div>
+            <div class="money">
+              <span>{$money_funds.recharge_money}</span>
+            </div>
+          </header>
+          <div class="chart-wrapper">
+            <div class="money-radio" id="moneyChart">
+
+            </div>
+            <div class="money-detail">
+              <div class="enable">
+                <i></i>
+                <span>可提取金额（元）</span>
+                <p>{$money_funds.can_refund_money}</p>
+              </div>
+              <div class="disable">
+                <i></i>
+                <span>不可提取金额（元）</span>
+                <p>{$not_can_refund_money}</p>
+              </div>
+            </div>
+          </div>
+          <section class="assets-func">
+            <a href="__GROUP__/funds/refund_apply" class="rechange external">
+              <i></i>
+              <span>提现</span>
+            </a>
+            <a href="__GROUP__/funds/recharge_apply" class="withdraw external">
+              <i></i>
+              <span>充值</span>
+            </a>
+          </section>
+
+          <div class="money-log">
+            <a class="rechange external" href="__GROUP__/user/money_detail?type=rechange">
+              <p class="desc">申请充值总金额 (元)</p>
+              <p class="money">{$money_apply|default='0.00'}</p>
+            </a>
+            <a class="charging external" href="__GROUP__/user/money_detail?type=withdrawal">
+              <p class="desc">申请提现总金额 (元)</p>
+              <p class="money">{$money_refund_apply|default='0.00'}</p>
+            </a>
+          </div>
+
+          <div class="money-log">
+            <a class="rechange external" href="__GROUP__/user/bill?type=rechange">
+              <p class="desc">历史总流入金额 (元)</p>
+              <p class="money">{$money_funds.his_recharge_money}</p>
+            </a>
+            <a class="charging external" href="__GROUP__/user/bill?type=charge">
+              <p class="desc">历史总流出金额 (元)</p>
+              <p class="money">{$money_funds.his_charge_money}</p>
+            </a>
+          </div>
+        </div>
+        <!--main start-->
+        <!--<section id="main">
+            <div class="img-wrapper">
+                <img src="__PUBLIC__/Admin_v3/images/information/11.png" height="125" alt="">
+            </div>
+            <p class="text">总资产(元)</p>
+            <p class="money">{$money_funds.recharge_money}</p>
+            <div class="detail">
+                <a href="__GROUP__/user/money_detail" class="external">查看明细</a>
+            </div>
+
+            <div class="btn-wrapper">
+                <button onclick="javascript:window.location.href='__GROUP__/funds/recharge_apply'" class="recharge">充值</button>
+                <button onclick="javascript:window.location.href='__GROUP__/funds/refund_apply'" class="withdraw">提现</button>
+            </div>
+
+        </section>-->
+        <!--main end-->
+
+      </div>
+    </div>
+    <!--script start-->
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js"></script>
+    <script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/assets.js" type="text/javascript" charset="utf-8"></script>
+    <!--script end-->
+  </body>
+
+</html>

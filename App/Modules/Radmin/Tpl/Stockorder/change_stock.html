@@ -1,0 +1,102 @@
+<style type="text/css">
+	.edit-wrapper .layui-content .layui-form .items .form-text{
+	    flex: 1.4;
+	}
+	.center-title{
+	    text-align: center;
+	}
+	.layui-field-title{
+	    margin: 0;
+	}
+	.layui-form-radio{
+	    margin: 0;
+	}
+	.fm-textarea{
+	    padding: 10px;
+	}
+</style>
+<div class="container-fluid edit-wrapper layui-container">
+	<div class="layui-content">
+	    <form class="layui-form layui-box " style="padding:25px 30px 20px 0" action="__URL__/change_stock_post" data-auto="false" method="post">
+	       <div class="layui-form-item items">
+	           <label class="form-text">经销商名字：</label>
+	           <div class="form-right">
+	               <input type="text" class="input-inf2" name="agentname" value="{$dis_info.name}" readonly="readonly"/>
+	           </div>
+	       </div>
+           <div class="layui-form-item items">
+               <label class="form-text">经销商等级：</label>
+               <div class="form-right">
+                   <input type="text" class="input-inf2" name="agentlevel" value="{$dis_info.levname}" readonly="readonly"/>
+               </div>
+           </div>
+           <div class="layui-form-item items">
+               <label class="form-text">微信号：</label>
+               <div class="form-right">
+                   <input type="text" class="input-inf2" name="wechatnum" value="{$dis_info.wechatnum}" readonly="readonly"/>
+               </div>
+           </div>
+               <fieldset class="layui-elem-field layui-field-title">
+                  <legend>产品信息</legend>
+                </fieldset>
+           <foreach name="list" item="vo">
+               <div class="layui-form-item items">
+                   <label class="form-text">{$vo.temp_info.name}：</label>
+                   <div class="form-right">
+                       <input type="number" class="input-inf2" name="tid_{$vo.temp_info.id}" id="tem_num{$vo.cal_id}" value="0"/>
+                       <small class="orange-text">（已有库存：{$vo.num}）</small>
+                       <input type="hidden" value="{$vo.temp_info.name}" id="name{$vo.cal_id}" />
+                       <input type="hidden" value="{$vo.num}" id="stock_point{$vo.cal_id}" />
+                   </div>
+               </div>
+           </foreach>
+           <div class="layui-form-item items">
+           	    <label class="form-text">操作：</label>
+           	    <div class="form-right">
+           	        <input type="radio" name="type" id="recharge" value="recharge" title="充入" checked/>
+           	        <input type="radio" name="type" id="charge" value="charge" title="扣除"/>
+           	    </div>
+           </div>
+           <div class="layui-form-item items">
+               <label class="form-text">备注：</label>
+               <div class="form-right">
+                   <textarea name="note" class="fm-textarea" placeholder="请控制在30字以内" maxlength="35"></textarea>
+               </div>
+           </div>
+           <div class="layui-form-item text-center">
+                <input name="all_pid" value="{$all_pid_str}" type="hidden" />
+                <input name="uid" value="{$dis_info.id}" type="hidden" />
+                <button class="layui-btn" lay-submit="">确认修改</button>
+           </div>
+	    </form>
+	</div>
+</div>
+
+
+
+
+<script>
+    form.render();
+//  function check_can_charge() {
+//
+//      var j = '{$templet_count.count}';
+//      j = Number(j);
+//
+//
+//      var p_ids = new Array();
+//      var p_nums = new Array();
+//
+////        var _list_p_nums = {};
+////        var _list_p_ids = {};
+//      for (var i = 1; i <= j; i++) {
+//          var tem_num = $("#tem_num" + i).val();
+//          var name = $("#name" + i).val();
+//          var stock_point = $("#stock_point").val();
+//
+//      }
+//      ;
+//
+//  }
+
+
+</script>

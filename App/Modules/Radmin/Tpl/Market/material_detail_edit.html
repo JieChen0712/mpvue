@@ -1,0 +1,76 @@
+<script>
+    /**
+     * 使用图片上传接口需满足以下条件
+     * 1.容器选择器id=upload
+     * 2.设置name=image的input标签隐藏域
+     * 3.指定上传目录名称
+     */
+        //上传目录
+    var upload_dir_name = 'Marker';
+    form.render();
+</script>
+<style>
+    @media screen and (max-width: 768px) {
+        .layui-input-block {
+            margin-left: 15px;
+        }
+    } 
+</style>
+<div class="container-fluid edit-wrapper layui-container">
+    <div class="layui-content">
+        <form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__URL__/material_detail_update" data-auto="false" method="post" enctype="multipart/form-data">
+            <div class="layui-form-item">
+                <label class="layui-form-label">标题</label>
+                <div class="layui-input-block">
+                    <input type="text" autofocus name="title" value='{$row.title}' required=""  title="请输入标题" placeholder="请输入标题" class="layui-input">
+                    <input type="hidden" name="id" value="{$id}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">所属分类</label>
+                <div class="form-right">
+                  <div class="layui-input-inline three-select">
+                    <select name="material_id" id="material_id"  lay-verify="required" lay-search="">
+                        <volist name="dis_market_material" id="m">
+                            <if condition="$m['id'] eq $row['material_id']">
+                                <option value="{$m.id}" selected="selected">{$m.title}</option>
+                                <else/>
+                                <option value="{$m.id}">{$m.title}</option>
+                            </if>
+                        </volist>
+                    </select>
+                  </div>
+                </div>
+                
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-block">
+                    <textarea style="height: 180px;" type="text" autofocus name="descirbe"  class="layui-input"  >{$row.descirbe}</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">图片</label>
+                <!--//is_show为图片是否显示，row.image为图片的数组-->
+                <div class="imgs-wrapper">
+                    <if condition="$row.image neq ''">
+                        <include file="Public/images" data-name="image[]" is_show="1" row_image="{$row.image}" row_arr="{$arr}"/>
+                        <else/>
+                        <include file="Public/images" data-name="image[]" is_show="0" row_image="{$row.image}" row_arr="{$arr}"/>
+                    </if>
+                  <small class="orange-text">(请上传正方型的图片 图片大小为：80*80-150*150 最合适80*80)</small>
+                </div>
+            </div>
+
+            <div class="hr-line-dashed"></div>
+
+            <div class="layui-form-item text-center">
+                <button class="layui-btn" type='submit'>确认修改</button>
+                <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+            </div>
+
+        </form>
+    </div>
+</div>

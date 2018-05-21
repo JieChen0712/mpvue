@@ -1,0 +1,59 @@
+.index-section{
+	width:640px;
+	margin:0 auto;
+	margin-top:29%;
+	overflow: hidden;
+	margin-bottom:65px;
+}
+.index-section ul li{
+	width:33.3%;
+	height:170px;
+	float:left;
+	border-bottom:1px solid #f4f4f4;
+	border-right:1px solid #f4f4f4;
+	position:relative;
+}
+.index-section ul li:nth-child(3n){
+	border-right:none;
+}
+.index-section ul li img{
+	display: block;
+	margin:0 auto;
+	margin-top:24px;
+}
+.index-section ul li p{
+	margin-top:20px;
+	font-size:24px;
+	color:#686868;
+	text-align:center;
+}
+.index-section .order-tips{
+	margin:0;
+	width:63px;
+	height:63px;
+	background:url(../images/order-tips.png) no-repeat;
+	position:absolute;
+	top:0;
+	right:0;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+.index-section .order-tips span{
+	display: inline-block;
+	width:26px;
+	height:26px;
+	border-radius:50%;
+	background:#e8423a;
+	font-size:14px;
+	color:#fff;
+	text-align: center;
+	line-height: 26px;
+}
+
+.head-img img {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+}

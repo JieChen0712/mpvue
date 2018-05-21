@@ -1,0 +1,172 @@
+/**
+*	WHMASK缁忛攢鍟嗙鐞嗙郴缁焎ss鏍峰紡鏂囦欢
+*/
+* {
+	margin: 0;
+	padding: 0;
+}
+.header {
+	height: 40px;
+	width: 100%;
+	background-color: black;
+	color: white;
+	line-height: 40px;
+}
+.header-left {
+	display: inline;
+	float: left;
+	margin: 0 0 0 10px;
+	font-size: 25px;
+	font-weight: bolder;
+}
+.header-right {
+	display: inline;
+	float:right;
+}
+.header-right a {
+	display: block;
+	background-color: #333;
+	color: white;
+	text-decoration: none;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	margin: 0 10px;
+	padding: 0 20px;
+}
+.left {
+	height: 100%;
+	width: 200px;
+	display: inline;
+	float: left;
+	margin: 20px 0 0 30px;
+}
+.left ul li {
+	list-style-type: none;
+}
+.left ul li a {
+	display: block;
+	height: 30px;
+	text-decoration: none;
+	color: black;
+	line-height: 30px;
+}
+.left ul li a:hover {
+	text-decoration: underline;
+	color: blue;
+}
+.right {
+	height: 100%;
+	width: 80%;
+	display: inline;
+	float: left;
+	position: absolute;
+	left: 150px;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+.right iframe {
+	height: 100%;
+	width: 1500px;
+	padding:10px;
+}
+.manager table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.manager table tr:hover {
+	color: #333;
+}
+.manager table tr td {
+	padding: 5px 20px;
+}
+#upgrade,#audit,#delete {
+	display: block;
+	height: 20px;
+	width: 80px;
+	padding: 5px 10px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	background-color: #E1EFFB;
+	color:blue;
+	text-align: center;
+	font-weight: bolder;
+	cursor: pointer;
+}
+#upgrade:hover,#audit:hover,#delete:hover {
+	background-color: blue;
+	color: white;
+	font-weight: bolder;
+}
+.form {
+	height: 340px;
+	width: 260px;
+	background: #fff;
+	display: none;
+	position: absolute;
+	z-index: 999;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	padding:40px 20px 0 30px;
+}
+.form p {
+	padding: 40px 20px;
+}
+.form #btn {
+	text-align: right;
+}
+.form button,.form input[type="submit"] {
+	border: none;
+	height: 30px;
+	width: 60px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	background-color: #ddd;
+	cursor: pointer;
+	font-weight: bolder;
+	text-align: center;
+	margin: 0 10px 0 0;
+}
+.form button:hover,.form input[type="submit"]:hover {
+	background-color: #333;
+	color: white;
+	font-weight: bolder;
+}
+
+/**
+*	鐧诲綍椤甸潰
+*/
+#login {
+	background-color: #C5E2F4;
+}
+.logform {
+	height: 300px;
+	width: 500px;
+	margin: 200px 400px;
+	padding: 50px 100px;
+	background-color: white;
+	text-align: left;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+}
+.logform h3 {
+	margin: 0 0 40px 0;
+}
+.logform p {
+	margin: 10px;
+}
+.logform button {
+	height: 30px;
+	width:80px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border: none;
+	background-color: #ddd;
+	font-weight: bolder;
+	cursor: pointer;
+}
+.logform button:hover {
+	border: none;
+	background-color: #333;
+	color: white;
+	font-weight: bolder;
+}

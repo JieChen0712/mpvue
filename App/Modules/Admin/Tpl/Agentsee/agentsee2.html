@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>营销系统</title>
+    <include file="Public/header_v3"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/agentsee.css">
+</head>
+<body>
+    <div class="box"> 
+        <!-- header start-->
+        <include file="Public/header_features_v3" />
+        <!-- header end-->
+
+        <!--main start-->
+        <section id="main">
+            <ul class="nav">
+                <a href="__APP__/admin">
+                <li>
+                    <span>邀请经销商</span>
+                    <div class="triangle"></div>
+                </li>
+                </a>
+                <li>
+                    <span>审核经销商</span>
+                    <div class="triangle"></div>
+                </li>
+                <a href="__APP__/admin/agentsee/index">
+                <li>
+                    <span>团队数据</span>
+                    <div class="triangle active"></div>
+                </li>
+                </a>
+            </ul>
+        </section>
+        
+        <div class="re-title bg-red center">
+            <ul>
+                <li class="flex1">代理名称</li>
+                <li class="flex1">级别</li>
+                <li class="flex1">授权号</li>
+            </ul>
+        </div>
+        <section class="bg-white center">
+            <div class="re-section">
+            <volist name="list" id="vo">
+            <a href="__APP__/Admin/Manage/detail?id={$vo.id}">
+                <ul>
+                    <li class="flex1">{$vo.name}</li>
+                    <li class="flex1">{$vo.levname}</li>
+                    <li class="flex1">{$vo.authnum}</li>
+                    <p class="go" style="margin: 30px 0;"><img src="__PUBLIC__/Admin_v2/images/icon-go.png" alt=""></p>
+                </ul>
+            </a>
+            </volist>
+            </div>
+        </section>
+        <!--main end-->
+
+        <!--footer start-->
+        <footer id="footer" class="row">
+            <a class="col-25 wrapper">
+                <img class="img" src="__PUBLIC__/Admin_v3/images/footer-1.jpg" width="20" height="25">
+                <p class="text">团队管理</p>
+            </a>
+            <a class="col-25 wrapper">
+                <img class="img" src="__PUBLIC__/Admin_v3/images/footer-2.jpg"  width="20" height="25">
+                <p class="text">营销</p>
+            </a>
+            <a class="col-25 wrapper">
+                <img class="img" src="__PUBLIC__/Admin_v3/images/footer-3.jpg"  width="20" height="25">
+                <p class="text">下单</p>
+            </a>
+            <a class="col-25 wrapper">
+                <img class="img" src="__PUBLIC__/Admin_v3/images/footer-4.jpg"  width="20" height="25">
+                <p class="text">个人信息</p>
+            </a>
+        </footer>
+        <!--footer end-->
+    </div>
+
+    <!--script start-->
+    <script src="__PUBLIC__/Admin_v3/js/js/light7.min.js"></script>
+    <script src="__PUBLIC__/Admin_v3/js/js/index.js"></script>
+    <!--script end-->
+</body>
+</html>

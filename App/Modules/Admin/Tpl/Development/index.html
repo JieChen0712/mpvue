@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>经销商申请管理</title>
+    <include file="Public/header"/>
+    <script src="__PUBLIC__/js/admin.js"></script>
+    <script type="text/javascript">
+        var auditUrl = '{:U(GROUP_NAME . "/Manage/audit")}/';
+        var delUrl = '{:U(GROUP_NAME . "/Manage/delete")}/';
+        var url = '{:U(GROUP_NAME . "/Index/index")}/';
+    </script>
+    </head>
+    <body style="background-color:#f5f5f5">
+            <header class="header"><a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/new/left_icon.png" alt=""></a>经销商申请管理</header>
+            <div class="content">
+            <div class="box">
+                <section class="section4_4">
+                    <ul class="ul">
+                        <li>经销商名称</li>
+                        <li>级别</li>
+                        <li>授权号</li>
+                    </ul>
+                </section>
+            </div>
+            
+            
+            <empty name="pending_m">
+        	<h3 style="color:red">对不起,您没有要审核的经销商! </h3>
+        	<else />
+            <volist name="pending_m" id="pm">
+            
+            <div class="box">  
+                <a href="__APP__/Admin/Manage/detail?id={$pm.id}"> 
+                <section class="section4">
+                        <ul class="ul1">
+                        <li>{$pm.name}</li>
+                        <li>{$pm.levname}</li>
+                        <li>{$pm.id}</li>
+                    </ul>
+                    <div style="clear:both"></div>
+                    <div class="btm"><span class="span">查看资料</span><span>【待审核】</span></div>
+                </section>
+                </a>
+                <div class="checkbox"><input type="checkbox" name="pend" id="pend" value="{$pm.id}" class="checkbox1" >
+            </div>
+       	   </div>
+           </volist>
+           </empty> 
+          
+    </div>
+            <div style="float:right;margin-right:50px;" class="btm_1"><input type="image" src="__PUBLIC__/images/new/btm.jpg" onclick="audit()"></div>	
+            <div  style="float:left;margin-left:50px;margin-top:30px;" class="btm_2"><input type="image" src="__PUBLIC__/images/new/btm1.png" onclick="del()"></div>
+    </body>
+    </html>

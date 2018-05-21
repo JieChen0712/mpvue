@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <!--<title>订单管理</title>
+        <include file="Public/header_v2"/>
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/header.css">-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>积分品牌商城</title>
+
+    <include file="./App/Modules/Admin/Tpl/Public/header_v3.html"/>
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/light7-swiper.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/footer.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/manager-order.css"/>
+    <!--<style>
+      body {
+      background: url(__PUBLIC__/Admin_v2/images/bg.jpg) #fbfbfb no-repeat;
+      background-color:#fbfbfb;
+      background-size: cover;      
+      }
+     .tel_title {   background: transparent; } 
+ 
+    </style>-->
+    <script>
+        var cat_url = '__URL__/index';
+    </script>
+</head>
+<body>
+    <div class="page">
+        <!-- header start-->
+        <include file="./App/Modules/Admin/Tpl/Public/header_features_v3.html" />
+        <!-- header end-->
+        <div class="content order-contents">
+            <div class="manager-order">
+                <div class="manager-kind">
+                    <ul class="col-100" id="kind-head">
+                        <!--<li><a href="__APP__/admin/order/all" class="external"><img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind1.png"/><p>待付款</p><span>12</span></a></li>-->
+                        <li><a href="__APP__/sale/integralorder/all" class="external"><img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind1.png"/><p>待付款</p></a></li>
+                        <li><a href="__APP__/sale/integralorder/all" class="external"><img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind2.png"/><p>待发货</p></a></li>
+                        <li><a href="__APP__/sale/integralorder/all" class="external"><img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind3.png"/><p>已完成</p></a></li>
+                        <li><a href="__APP__/sale/integralorder/shopping_cart" class="external"><img src="__PUBLIC__/Admin_v3/images/manager-order/manager-kind4.png"/><p>购物车</p></a></li>
+                    </ul>
+                    <notempty name="products">
+                    <div class="search col-100">
+                        <label class="icon icon-search" for="search"></label>
+                        <input type="search" id='search' placeholder='搜索商品名称'/>
+                    </div>
+                    </notempty>
+                </div>
+            </div>
+            <notempty name="products">
+            <div class="container">
+                <div class="hidden-scorll">
+                    <nav class="shop-nav col-100">
+                        <ul class="shop-nav-list">
+                            <li><a href="javascript:void(0);" class="active external" data-id="0"><p>全部</p></a></li>
+                            <volist name="cats" id="cat">
+                                <li><a href="javascript:;" class="external" data-id="{$cat.id}"><p>{$cat.name}</p></a></li>
+                            </volist>
+                        </ul>
+                    </nav>
+                </div>
+                <section class="shop-items">
+                    <ul id="products">
+                        <volist name="products" id="product">
+                            <li class="s-items clearfloat">
+                                <a href="__URL__/goods_detail?id={$product.id}" class="external">
+                                    <img src="{$product.image}" alt="" />
+                                    <div class="shop-details">
+                                        <p class="p-shopneme">{$product.name}</p>
+                                        <p class="p-area">&nbsp;</p>
+                                        <p class="p-price"><span>￥</span>{$product.price}+<em>{$product.integral}积分</em>
+                                            <i class="icon icon-car"></i>
+                                        </p>
+                                    </div>
+                                </a>
+                            </li>
+                        </volist>
+                    </ul>
+                </section>
+            </div>
+            <else/>
+                <include file="./App/Modules/Admin/Tpl/Public/empty.html" />
+            </notempty>
+        </div>
+
+        <!--footer start-->
+        <include file="./App/Modules/Admin/Tpl/Public/footer_v3.html" />
+        <!--footer end-->
+
+        <!--script strat-->
+        <script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/light7-swiper.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/order-shop.js" type="text/javascript" charset="utf-8"></script>
+        <!--script end-->
+        <!--</div>-->
+</body>
+</html>

@@ -1,0 +1,100 @@
+<layout name="Public/public" />
+
+<head>
+	<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+	<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+	<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+	<script type="text/javascript" src='__PUBLIC__/js/index.js'></script>
+	<script type="text/javascript">
+        function sc($name, $ulr) {
+            //利用对话框返回的值 （true 或者 false）
+            if (confirm("您确定要删除" + $name + "吗？")) {
+                window.location.href = $ulr;
+            } else {
+                return false;
+            }
+        }
+	</script>
+</head>
+
+<h1 class="page-header">
+	配送方式列表
+</h1>
+<div class="row">
+	<div class="col-md-8">
+
+	</div>
+
+	<div class="col-md-4">
+		<div class="pull-right">
+			<input type="button" class="btn btn-success" value="添加" onClick="javascript:location.href='__URL__/add'"/>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 col-xs-12">
+
+		<!--表格-->
+		<table class="table table-condensed table-hover table-responsive table-bordered">
+			<thead>
+			<tr>
+				<th>序号</th>
+				<th>模板名称</th>
+				<th>发货地区</th>
+				<th>计费方式</th>
+				<th>首件(个)</th>
+				<th>续件(个)</th>
+				<th>首重(kg)</th>
+				<th>续重(kg)</th>
+				<th>首体积(m³)</th>
+				<th>续体积(m³)</th>
+				<th>首费(元)</th>
+				<th>续费(元)</th>
+				<th>操作</th>
+			</tr>
+			</thead>
+			<tbody>
+			<empty name="template_list">
+				<tr><td colspan="12">对不起,没有找到经销商! </td></tr>
+				<else />
+				<!--<tr><td colspan="12"><div class="pull-right">{$page}</div></td></tr>-->
+			<tbody>
+			<volist id="template" name="template_list" empty="暂时没有数据">
+				<tr>
+					<td>{$template.id}</td>
+					<td>{$template.template_name}</td>
+					<td>{$template.province}{$template.city}{$template.district}</td>
+					<td><eq name="template.price_way" value="1">按件数</eq>
+						<eq name="template.price_way" value="2">按重量</eq>
+						<eq name="template.price_way" value="3">按体积</eq>
+					</td>
+					<td><eq name="template.price_way" value="1">{$template.default.first_num}</eq></td>
+					<td><eq name="template.price_way" value="1">{$template.default.continue_num}</eq></td>
+					<td><eq name="template.price_way" value="2">{$template.default.first_num}</eq></td>
+					<td><eq name="template.price_way" value="2">{$template.default.continue_num}</eq></td>
+					<td><eq name="template.price_way" value="3">{$template.default.first_num}</eq></td>
+					<td><eq name="template.price_way" value="3">{$template.default.continue_num}</eq></td>
+					<td>{$template.default.first_fee}</td>
+					<td>{$template.default.continue_fee}</td>
+
+					<input type="hidden" name="goods_id" value="{$vo.goods_id}" />
+
+				<td>
+					<input type="button" class="btn btn-info" value="查看" onClick="javascript:location.href = '__URL__/info?template_id={$template.id}'"/>
+					<input type="button" class="wz2 btn" value="编辑" onClick="javascript:location.href = '__URL__/template_edit?template_id={$template.id}'"/>
+					<input type="button" class="btn btn-danger" value="删除" onClick="sc('{$template.template_name}','__URL__/delete?template_id={$template.id}')"/>
+
+				</td>
+
+				</tr>
+			</volist>
+			<tr><td colspan="12"><div class="pull-right">{$page}</div></td></tr>
+			</empty>
+			</tbody>
+		</table>
+		<!--end 表格-->
+
+
+	</div>
+</div>

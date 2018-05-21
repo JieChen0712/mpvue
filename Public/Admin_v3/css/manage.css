@@ -1,0 +1,175 @@
+@charset "utf-8";
+@import "comme.css";
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,section,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 5px;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+
+.manage-section{
+/*	width:93%;*/
+    width:100%;
+	/*margin:0 auto;*/
+	/*margin-top:20px;*/
+	border-radius:0.5em;
+	background:#fff;
+	margin-bottom: 160px;
+}
+.manage-section ul{
+    display: flex;
+	width:92%;
+	padding:10px 0;
+	border-bottom:1px solid #f3f3f3;
+}
+.manage-section ul li{
+	flex: 1;
+	float:left;
+	text-align: center;
+	font-size:14px;
+	color:#3b3b3b;
+}
+.manage-section ul .col3{
+    position: relative;
+}
+.manage-section ul .col3 .review-btn{
+    position: absolute;
+    right: -17px;
+    top: 50%;
+    width: 15px;
+    height: 15px;
+    transform: translateY(-50%);
+}
+.manage-section .col3 .text{
+    margin: 0;
+    font-size: 14px;
+}
+.manage-section .manage-section-title ul{
+    display: flex;
+	padding:10px 0;
+	border:none;
+}
+.manage-section .manage-section-title li{
+	flex: 1;
+	font-size: 16px;
+	line-height: 30px;
+	color:#fff;
+	border-right:1px solid rgba(255,255,255,0.5);
+}
+.manage-section .manage-section-title li:last-child{
+	border:none;
+	text-align: center;
+}
+.manage-section .manage-btn-div{
+	margin-top:30px;
+	padding-bottom: 20px;
+}
+.manage-section .col3 a{
+    display: block;
+	font-size:10px;
+}
+.manage-section .review-btn{
+	width:15px;
+	height:15px;
+	border-radius:17px;
+	border:1px solid #856a6e;
+}
+.manage-section .review-check-btn{
+	border:none;
+    background: url(../images/review-check-btn.png) no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.footer{
+    display: flex;
+	background:#f0f0f0;
+	position:fixed;
+	bottom:0;
+	right: 0;
+	left:0;
+}
+.footer input{
+    flex: 1;
+	padding:12px 0;
+	font-size:18px;
+	outline:none;
+    font-family:'pingfang_medium';
+}
+
+
+/*detail*/
+.manage-panel{
+	width:100%;
+	padding:25px 0;
+/*	background:#e8423a;*/
+}
+.manage-panel ul{
+	width:75%;
+	margin:0 auto;
+	color:#fff;
+	overflow: hidden;
+}
+.manage-panel ul .panel-left{
+	float:left;
+	width:150px;
+	height:150px;
+	overflow: hidden;
+	border:3px solid #fff;
+	border-radius: 50%;
+}
+.panel-left img{
+	width:100%;
+}
+.manage-panel ul .panel-center{
+	float:left;
+	margin-left:25px;
+	margin-top:51px;
+}
+.panel-center .name{
+     font-size:29px;
+     font-family: 'pingfang_bold'; 
+}
+.manage-message-title{
+	padding:23px;
+	font-size:26px;
+	color:#333;
+	background:#fff;
+	border-bottom: 2px solid #f7f7f7;
+}
+.manage-message-content{
+    width:100%;
+    background:#fff;
+    margin-bottom:15px;
+}
+.manage-message-content p{
+	width:90%;
+	margin:0 auto;
+	padding:28px 0;
+	font-size:24px;
+	border-bottom:1px solid #f2f2f2;
+}
+.manage-message-content p:last-child{
+	border:none;
+}
+.manage-message-content p span:last-child{
+	float:right;
+}
+.manage-message-content img{
+	display: block;
+	max-width:640px;
+	margin:0 auto;
+}

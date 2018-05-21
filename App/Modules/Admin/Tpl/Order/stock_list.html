@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>库存详情</title>
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/light7.min.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/header_v1.css" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/award_manager.css" />
+
+        <!--script start-->
+        <script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+        <!--script end-->
+        <style type="text/css">
+            .infinite-scroll-preloader { 
+                margin-top:-20px;
+            }
+            section {
+                margin-top: 0rem;
+            }
+            .award-show {
+                height: 2.375rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!--第一个页面-->
+        <div class="page page-current" id="page1">
+            <!-- header start-->
+            <include file="Public/header_features_v3" />
+            <!-- header end-->
+            <div class="content infinite-scroll">
+                <section class="award-manager1" data-empty="false" data-page="1">
+                    <div class="award-show">
+                        <div class="select-date">
+                            <span style='line-height: 35px;font-size: 20px;color: #fff;'>日志数量:{$count|default=0}</span>
+                            <!--<i class="icon icon-down"></i>-->
+                        </div>
+                        <div class="list-wrapper">
+                            <empty name="list">
+                                <include file="Public/empty" />
+                                <else />
+                                <volist name="list" id="vo">
+                                    <dl class="award-list">
+                                        <dt class="alist-title">
+                                            <p>来源：{$vo.dis_info.name}</p>
+                                            <p><if condition="$vo['type'] == 'charge' ">- <else /> +</if>{$vo.point}</p>
+                                        </dt>
+                                        <dd class="alist-detail">
+                                            <!--<p>手机号：{$vo.rec_id_info.phone}</p>-->
+                                            <!--<p>等级：{$vo.rec_id_info.levname}</p>-->
+                                            <p>类型：{$vo.type_name}
+                                                <!--<eq name='vo.type' value='0'>推荐/发展</eq>-->
+                                                <eq name='vo.type' value='1'>总部充入</eq>
+                                                <eq name='vo.type' value='2'>总部扣除</eq>
+
+                                            </p>
+                                            <p>时间：{$vo.created|date='Y-m-d H:i:s',###}</p>
+                                        </dd>
+                                    </dl>
+                                </volist>
+                            </empty>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </body>
+
+</html>

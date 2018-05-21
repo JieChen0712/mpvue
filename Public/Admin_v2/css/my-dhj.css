@@ -1,0 +1,149 @@
+.myor-section{
+	width:100%;
+	margin-top:17px;
+	background:#fff;
+	margin-top: 175px;
+}
+.myor-section .product-content{
+	width:90%;
+	margin:0 auto;
+	padding:23px 0;
+	border-bottom: 1px solid #f6f6f6;
+	overflow: hidden;
+	display:flex;
+}
+
+.order-toggle{
+	width:100%;
+}
+.order-toggle ul li{
+    padding:20px 0;
+    font-size:24px;
+    color:#fad9d8;
+    text-align: center;
+}
+.order-toggle li:hover,.order-toggle li:active,.order-toggle .active{
+	color:#fff;
+	border-bottom: 3px solid #fff;
+}
+#section3{
+	display: none;
+	padding-bottom:87px;
+}
+#section2{
+	display: none;
+	padding-bottom: 87px;
+}
+#section1{
+	padding-bottom: 17px;
+}
+.order-section{
+	width:100%;
+	background:#fff;
+	margin-top:17px;
+}
+.order-content{
+    width:90%;
+    margin:0 auto;
+}
+.order-num{
+	padding:18px 0;
+	font-size:23px;
+	color:#333;
+	overflow: hidden;
+}
+.order-num .num{
+	width:33px;
+	height:33px;
+	display: inline-block;
+	background:#50b7ff;
+	border-radius:50%;
+	font-size:18px;
+	color:#fff;
+	text-align: center;
+	line-height: 33px;
+	vertical-align: bottom;
+	margin-right: 7px;
+}
+.order-num .order-status{
+	float:right;
+	color:#3b95f2;
+}
+.order-content .order-detail{
+	font-size:20px;
+	color:#666;
+	padding:11px 0;
+	position:relative;
+	border-top:1px solid #f6f6f6;
+	border-bottom:1px solid #f6f6f6;
+}
+.order-detail p{
+	margin-left: 24px;
+	line-height: 44px;
+}
+.order-content .order-money{
+	padding:20px 0;
+	margin-left:24px;
+	font-size:23px;
+	color:#333;
+}
+.order-money span{
+	font-family: 'pingfang_bold'; 
+}
+.order-money p{
+	display: inline-block;
+}
+.cancel-order{
+	display: inline-block;
+	margin-top:-11px;
+	padding:10px 13px;
+	font-weight:normal;
+	color:#4c9ef3;
+	border:1px solid #4c9ef3;
+	border-radius:0.3em;
+}
+
+.product-img{
+	float:left;
+	flex:1;
+	width:170px;
+	height:170px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+.product-img img{
+	max-width: 170px;
+	max-height: 170px;
+}
+.product-content .product-detail{
+	flex:5;
+	margin-left: 24px;
+	position:relative;
+}
+.product-detail .product-name{
+	font-size:26px;
+	color:#333;
+}
+.product-detail .product-intro{
+	margin-top:20px;
+	font-size:20px;
+	color:#999;
+	line-height: 30px;
+	overflow:hidden; 
+	text-overflow:ellipsis;
+	display:-webkit-box; 
+	-webkit-box-orient:vertical;
+	-webkit-line-clamp:2; 
+}
+.product-detail .product-price{
+     position:absolute;
+     bottom:0;
+     right:0;
+     font-size:20px;
+     color:#383838;
+}
+.product-detail .product-price span{
+	font-family: 'pingfang_bold'; 
+	color:#e8423a;
+}

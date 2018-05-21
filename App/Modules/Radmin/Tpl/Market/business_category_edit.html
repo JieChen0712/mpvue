@@ -1,0 +1,28 @@
+<style type="text/css">
+    .layui-form-item span{
+        line-height: 38px!important;
+    }
+
+    @media screen and (max-width: 768px) {
+        .layui-input-block {
+            margin-left: 15px;
+        }
+    }    
+</style>
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__URL__/business_category_update" data-auto="false" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input  autofocus name="name" type="text" value="{$row.name}"  required=""  title="请输入标题" placeholder="请输入标题" class="layui-input">
+            <input type="hidden" name="id" value="{$id}">
+        </div>
+    </div>
+
+    <div class="hr-line-dashed"></div>
+
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>确认修改</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+    </div>
+
+</form>

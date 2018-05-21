@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>云仓库存退货</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/stock.css" />
+</head>
+
+<body>
+    <div class="page">
+        <div class="buttons-tab">
+            <div class="buttons-wrap"><a href="#tab1" class="tab-link button active">我要退货</a></div>
+        </div>
+        <div class="content stock infinite-scroll">
+            <div class="content-block">
+                <div class="tabs">
+                    <div id="tab1" class="tab active">
+                        <div class="content-block">
+                            <div class="take-title">
+                                <p><img src="__PUBLIC__/Admin_v3/images/mallorder/take.png" alt="" />选择退货商品</p>
+                            </div>
+                            <ul class="take-list">
+                                
+                            </ul>
+                            <button class="fr submit-take">退货</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--script start-->
+            <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+            <!--<script src="__PUBLIC__/Admin_v3/js/order-list.js" type="text/javascript" charset="utf-8"></script>-->
+            <script type="text/javascript">
+                var loading = false;
+                var count = 0;
+                var page = 1;
+                $(function () {
+                    //加按钮点击
+                    $(document).on("click", ".numadd", function () {
+                        var num = Number($(this).siblings(".allnum").text());
+                        console.log(num)
+                        if ($(this).siblings(".shownum").val() < num) {
+                            var count = $(this).siblings(".shownum").val(Number($(this).siblings(".shownum").val()) + 1);
+                        }
+
+                    });
+                    //减按钮点击
+                    $(document).on("click", ".reducenum", function () {
+                        var num = $(this).siblings(".shownum").val();
+                        if (num > 0) {
+                            var count = $(this).siblings(".shownum").val(Number(num) - 1);
+                        }
+                    });
+                    //选择按钮点击
+
+                    $(document).on("click", ".btn-select", function () {
+                        var selflag = true;
+                        if ($(this).attr("id") != "btn-selall") {
+                            $(this).toggleClass("active");
+                            $(".btn-select").each(function (key, value) {
+                                if (!$(value).hasClass("active")) {
+                                    selflag = false;
+                                }
+                            });
+                            if (!selflag && $("#btn-selall").hasClass("actived")) {
+                                $("#btn-selall").removeClass("actived");
+                            }
+                            if (selflag) {
+                                $("#btn-selall").addClass("actived");
+                            }
+                        }
+                    });
+
+                    $(document).on("click", ".btn-sel", function () {
+                        if ($(this).hasClass("actived")) {
+                            $(".btn-select").removeClass("active");
+                            $(this).toggleClass("actived").removeClass("active");
+                        } else {
+                            $(".btn-select").addClass("active");
+                            $(this).toggleClass("actived").removeClass("active");
+                        }
+                    });
+
+                    $.attachInfiniteScroll($('.infinite-scroll'));
+
+                    function addItems() {
+                        $.post('__APP__/admin/order/get_stock_info_ajax',
+                                {get_all: 'ture',num_not_empty:true},
+                                function (data) {
+                                    console.log(data)
+                                    if (data.code == 1) {
+                                        if (data.info.list == null || data.info.list == undefined || data.info.list == "") {
+                                            var str = '<p style="text-align: center;">暂无更多数据！</p>';
+                                            return;
+                                        }
+                                        var temp = [];
+                                        $.each(data.info.list, function (key, value) {
+                                            count++;
+                                            var str = '<li><div class="goods-infs"><button class="btn-select" data-id="' + value.pid + '"></button><img src="' + value.temp_info.image + '" />' +
+                                                    '<p class="goods-title">' + value.temp_info.name + '</p><p class="select-num">库存：<span class="allnum">' + value.num + '</span><br />' +
+                                                    '<input  type="button" name="numadd" class="numadd pull-right" value="+" /><input  type="number" name="shownum" class="shownum pull-right" value="0" />' +
+                                                    '<input  type="button" name="reducenum" class="reducenum pull-right" value="-" /></p></div></li>';
+
+                                            temp.push(str);
+                                        });
+                                        $(".take-list").append(temp);
+                                    } else {
+                                        tusi(data.msg)
+                                    }
+                                }
+                        )
+                    }
+
+                    addItems();
+
+                    $(document).on('infinite', '.infinite-scroll', function () {
+
+                        // 如果正在加载，则退出
+                        if (loading)
+                            return;
+
+                        // 设置flag
+                        loading = true;
+
+                        setTimeout(function () {
+                            loading = false;
+
+//					            if (lastIndex >= maxItems) {
+//					                $.detachInfiniteScroll($('.infinite-scroll'));
+//					                $('.infinite-scroll-preloader').remove();
+//					                return;
+//					            }
+
+                            addItems(itemsPerLoad, lastIndex);
+                            lastIndex = $('.list-container li').length;
+                        }, 1000);
+                    });
+                    
+
+                    $(document).on("click", ".submit-take", function () {
+                        var sum = 0;
+                        var flag = false;
+                        var pids = [];
+                        var pnums = [];
+                        var that = this;
+                        $(this).attr('disabled', 'true');
+                        $(".goods-infs").each(function () {
+                            if (Number($(this).find(".shownum").val()) != 0 && $(this).find(".btn-select").hasClass("active")) {
+                                flag = true;
+                                var pnum = Number($(this).find(".shownum").val())
+                                var pid = $(this).find(".btn-select").attr("data-id");
+                                pids.push(pid);
+                                pnums.push(pnum);
+                            }
+                        });
+                        
+                        
+//                        console.log(pids, pnums)
+//                        console.log(flag);
+                        if (!flag) {
+                            tusi('请选择至少一种商品，并且退货数量不能为0！');
+                            $(that).removeAttr('disabled');
+                            return false;
+                        }
+                        
+                        $.post('__APP__/admin/order/stock_return_apply_ajax',
+                            {p_ids: pids, p_nums: pnums},
+                            function (data) {
+                                $(that).removeAttr('disabled');
+                                //console.log(data);
+                                if( data.code != 1 ){
+                                    tusi(data.msg);
+                                }
+                                else {
+                                    tusi(data.msg);
+                                    if( data.return_url != '' && data.return_url != undefined && data.return_url != null ){
+                                        setTimeout(function(){window.location.href=data.return_url;},2000);
+                                    }
+                                    else{
+                                        setTimeout(function(){window.location.reload()},2000);
+                                    }
+                                }
+                            }
+                        )
+                    });
+
+                    $(document).on("click", "#transfer", function () {
+                        var id = $(this).attr("data-id");
+                        window.location.href = 'transfer_stock?p_id=' + id;
+                    });
+                });
+
+
+            </script>
+            <!--script end-->
+
+            </body>
+
+            </html>

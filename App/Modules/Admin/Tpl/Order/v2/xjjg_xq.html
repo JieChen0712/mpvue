@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <include file="Public/header_v2"/>
+    <title>经销商订货价</title>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/order.css">
+    <style>
+      body {
+      background: url(__PUBLIC__/Admin_v2/images/bg.jpg) #fbfbfb no-repeat;
+      background-color:#fbfbfb;
+      background-size: cover;      
+      }
+     .tel_title {   background: transparent; } 
+ 
+    </style>
+</head>
+<body>
+     <header class="header">
+        <a href="javascript:history.go(-1);" class="a"></a>
+        <p>下级代理订货价</p>
+    </header>
+    <div class="myor-panel bg-red">
+        <ul>
+            <li class="panel-left left"  style="margin-top:5%;"><p class="headimg"><img src="{$manager.headimgurl}" alt=""></p></li>
+            <li class="panel-center left"><p class="name">{$manager.name}</p><p class="lev">等级：{$manager.levname}</p></li>
+        </ul>
+    </div>
+    <section class="myor-section">
+        <volist name="list" id="m">
+        <div class="product-content">
+            <div class="product-img"><img src="__PUBLIC__/Admin_v2/images/product-img.jpg" alt=""></div>
+            <div class="product-detail">
+                <p class="product-name">{$m.name}</p>
+                <p class="product-intro">{$m.state}</p>
+                <p class="product-price">他的订货价：<span>￥{$m.price}</span></p>
+            </div>
+        </div>
+        </volist>
+    </section>
+</body>
+</html>

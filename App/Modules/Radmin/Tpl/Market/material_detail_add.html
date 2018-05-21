@@ -1,0 +1,66 @@
+<script>
+  /**
+   * 使用图片上传接口需满足以下条件
+   * 1.容器选择器id=upload
+   * 2.设置name=image的input标签隐藏域
+   * 3.指定上传目录名称
+   */
+  //上传目录
+  var upload_dir_name = 'Marker';
+  form.render();
+</script>
+<style>
+    @media screen and (max-width: 768px) {
+        .layui-input-block {
+            margin-left: 15px;
+        }
+    } 
+</style>
+<div class="container-fluid edit-wrapper layui-container">
+  <div class="layui-content">
+    <form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__URL__/material_detail_insert" data-auto="false" method="post" enctype="multipart/form-data">
+      <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+          <input type="text" autofocus name="title" value='' required="" title="请输入标题" placeholder="请输入标题" class="layui-input">
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">所属分类</label>
+        <div class="form-right">
+          <div class="layui-input-inline three-select">
+            <select name="material_id" id="" lay-verify="required" lay-search="">
+              <volist name="dis_market_material" id="m">
+                <option value="{$m.id}">{$m.title}</option>
+              </volist>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+          <textarea style="height: 100px;" type="text" autofocus name="descirbe" class="layui-input"></textarea>
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">图片</label>
+        <div class="imgs-wrapper">
+          <include file="Public/images" data-name="image[]"/>
+          <small class="orange-text">(请上传正方型的图片 图片大小为：80*80-150*150 最合适80*80)</small>
+        </div>
+      </div>
+
+      <div class="hr-line-dashed"></div>
+
+      <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>提交</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消吗？" data-close>取消</button>
+      </div>
+
+    </form>
+  </div>
+</div>

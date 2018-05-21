@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>升级审核</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/recharge_check.css" />
+</head>
+
+<body>
+    <div class="page">
+        <div class="content">
+            <div class="content-top">
+                <div class="recharge-name">
+                    申请人姓名：
+                    <span>{$list.uid_info.name}</span>
+                </div>
+                <div class="recharge-name">
+                    申请人等级：
+                    <span>{$list.cur_levname}</span>
+                </div>
+                <div class="WeChat">
+                    申请的等级：
+                    <span>{$list.apply_levname}</span>
+                </div>
+                <div class="WeChat">
+                    申请的时间：
+                    <span>{$list.created_fromat}时</span>
+                </div>
+            </div>
+            <div class="content-bottom">
+                <div class="btn-wrapper">
+                        <button class="pass color-recharge-check-passbtn" onclick="apply_pass('{$list.id}','1')">审核通过</button>
+                        <button class="refuse color-recharge-check-refusebtn" onclick="apply_pass('{$list.id}','3')">拒绝</button>
+                        <button class="passed" disabled="disabled">已通过</button>
+                        <button class="refused" disabled="disabled">已拒绝</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        function apply_pass(id, status) {
+            var pass_info;
+            if (status == '3') {
+                pass_info = '您确认审核不通过吗？';
+            } else {
+                pass_info = '您确认审核通过吗？';
+            }
+            $.confirm(pass_info, function () {
+                if (pass_info) {
+                    $.post("upgrade_apply_pass", {
+                        id: id,
+                        status: status
+                    }, function (res) {
+                        if (res.code = '1') {
+                            tusi(res.msg);
+                            setTimeout(function() {
+                                window.location.href = document.referrer;
+                            }, 1200);
+                        } else {
+                            tusi(res.msg);
+                        }
+                    });
+
+                } else {
+                    return false;
+                }
+            });
+        }
+
+        $(function () {
+            var arr = window.location.search.split('&');
+            if (arr[1]) {
+                var type = arr[1].substring(5);
+            }
+            if (type != 'undefined') {
+                $('.btn-wrapper button').hide();
+                if (type == 1) {
+                    $('.passed').show();
+                } else if (type == 2) {
+                    $('.refused').show();
+                } else {
+                    $('.passed').remove();
+                    $('.refused').remove();
+                    $('.btn-wrapper button').show();
+                }
+            }
+
+            $('.pay-screenshot').on('click', '.img-wrapper', function(){
+                $('.mask').fadeIn();
+            })
+            $('.mask').on('click', '.close-btn', function(){
+                $('.mask').fadeOut();
+            })
+        })
+    </script>
+</body>
+
+
+</html>

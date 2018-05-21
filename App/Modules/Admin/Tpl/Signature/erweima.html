@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="ui-mobile">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--<base href="http://fraisefibre.fw-315.net/a/QueryAgent.aspx">--><base href=".">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<title>经销商名片</title>
+   
+    <link href="__PUBLIC__/css/back/jquery.mobile-1.4.2.min.css" rel="stylesheet">
+	
+	<style>
+	ul li{
+		list-style:none;
+		}
+	.ui-page-theme-a .ui-btn,html head+body .ui-btn.ui-btn-b:hover, html head+body .ui-btn.ui-btn-b {background:#d6b500; color:#fff; border-color:#B29702;text-shadow:0 1px 0#333;}
+	.msg2{
+		position:absolute;
+		top:52%;
+		left:25%;
+		font-size:1em;
+		}
+	.msg2 ul li{
+		color:#fff;
+		font-family:"楷体";
+		text-shadow:0 0px 0 #777;
+		height:20px;
+		font-size:1em;
+		}
+	.msg2 .ul2{
+		position:absolute;
+		bottom:-80%;;
+		left:30%;
+		font-size:0.8em;
+		}
+	.gongsi{
+		position:absolute;
+		bottom:5%;
+		left:47%;
+		}
+	.gongsi p{
+	color:#fff;
+	font-family:"楷体";
+	text-shadow:0 1px 0 #777;
+	font-size:0.8em;
+	line-height:0.6em;
+	}
+	</style>
+</head>
+<body class="ui-mobile-viewport ui-overlay-a">
+    <div data-role="page" data-url="/a/QueryAgent.aspx" tabindex="0" class="ui-page ui-page-theme-a ui-page-active">
+        
+
+        <div data-role="header" style="background-color:#000;border-color:#000;" role="banner" class="ui-header ui-bar-inherit">
+            <a href="{:U(GROUP_NAME . '/Index/index')}" style="background:#97e0d7; color:#fff; border:#C20776; margin-top:2px;" data-role="button" data-icon="home" data-theme="b" data-rel="back" class="ui-link ui-btn-left ui-btn ui-btn-b ui-icon-home ui-btn-icon-left ui-shadow ui-corner-all" role="button">返回</a>
+            <h1 style="color:#fff;text-shadow:0 1px 0 #333;" class="ui-title" role="heading" aria-level="1">经销商名片</h1>
+        </div>
+		<div style="text-align:center; height:100px; line-height:100px;">
+             <img src="{$manager.signature}" width="50%">
+        </div>
+    </div>
+
+</body>
+</html>

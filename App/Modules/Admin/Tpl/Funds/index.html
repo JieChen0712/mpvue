@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>虚拟币管理</title>
+    <include file="Public/header_v2"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/header.css">
+    <style>
+      body {
+      background: url(__PUBLIC__/Admin_v2/images/bg.jpg) #fbfbfb no-repeat;
+      background-color:#fbfbfb;
+      background-size: cover;      
+      }
+     .tel_title {   background: transparent; } 
+ 
+    </style>
+    </head>
+    <body>
+    	<div class="index-panel">
+    		<header class="index-header">
+    			<a class="a" href="javascript:history.go(-1);"></a>
+    			<p>虚拟币管理</p>
+    		</header>
+            
+        <include file="./App/Public/admin_header.html" />
+            
+    	<div class="index-section">
+         <ul>
+             <!--<li><a href="G.html"><img src="images/icon_dlsq.png" alt=""><p>查询单号</p></a></li>-->
+             <li>
+                 <a href="__URL__/money_apply">
+                     <img src="__PUBLIC__/Admin_v2/images/icon_dlsc.png" alt="">
+                     <p>我要充值</p>
+                 </a>
+             </li>
+             <li>
+                 <a href="__URL__/money_refund_apply">
+                     <img src="__PUBLIC__/Admin_v2/images/icon_dlck.png" alt="">
+                     <p>我要提现</p>
+                 </a>
+             </li>
+             <li>
+                 <a href="__URL__/money_recharge_log">
+                     <img src="__PUBLIC__/Admin_v2/images/icon_xjdl.png" alt="">
+                     <p>虚拟币往来记录</p>
+                 </a>
+             </li>
+             <li>
+                 <a href="__URL__/money_refund">
+                     <img src="__PUBLIC__/Admin_v2/images/icon_xjdl.png" alt="">
+                     <p>虚拟币提现记录</p>
+                 </a>
+             </li>
+             <li>
+                 <a href="__URL__/xj_apply_list">
+                     <img src="__PUBLIC__/Admin_v2/images/icon_dlgl.png" alt="">
+                     <p>审核下级充值申请</p>
+                 </a>
+             </li>
+             
+         </ul>   
+        </div>
+    </body>
+    </html>

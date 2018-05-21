@@ -1,0 +1,104 @@
+<layout name="Public/public" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>编辑小标出库</title>
+<link href="__PUBLIC__/Admin/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-ui.js" ></script>
+</head>
+<body class="zh_CN">
+         <div class="col_main">
+	<div class="main_hd">
+		<div class="title_tab" id="topTab">
+			<ul class="tab_navs mt title_tab">
+                  	<li class="tab_nav js_top  selected" data-id="send"><a href="#">编辑小标出库</a></li>
+                	</ul>
+              </div>
+              
+              <div class="menu">
+			
+			
+		</div>
+
+	</div>
+	<!--右边内容--> 
+	<div class="main_bd">
+			<form method="post" action="__URL__/change/?type=m" id="proform">
+	            <table style="margin-left:0px;text-align:left;width:900px;">
+	             <tbody>
+              	<!-- 收件人 -->
+              	<tr>
+	              	<td>收货经销商：</td>
+	              	<td>
+	              	    <select name="receive_id">
+	              	    <volist name="list" id="vo">
+	              	    	<option value="{$vo.id}">{$vo.name}</option>
+	              	    </volist>
+	              	    </select>
+	              		<!-- <input type="text" id="agent" placeholder="请输入关键字以选择收货商" onmouseup="this.select();" maxlength="80" style="width:300px;" required/>
+	              		<input type="hidden" id=receive_id name="receive_id"> -->
+	              	</td>
+              	</tr>
+              	<!-- 模板名 -->
+              	<tr>
+	              	<td>选择模板：</td>
+		              	<td>
+		              		<select name="templet_id">
+		              	    <volist name="templet" id="t">
+		              	    	<option value="{$t.id}">{$t.name}</option>
+		              	    </volist>
+		              	    </select>
+			             	<input type="text" style="display:none" placeholder="默认不用选择" onmouseup="this.select();" maxlength="80" style="width:300px;"/>
+			            </td>
+	              	</tr>
+              	
+              	
+              	<!--确定按钮-->
+				<tr>
+					<td></td>
+					<td>
+		              	<input id="form_submit" class="btn1" value="提交" type="submit"/>
+	              	</td>
+	              	<td>
+	              		<input type="hidden" name="id" value="{$id}"/>
+	              	</td>
+              	</tr>
+	            	</tbody>
+	            </table>
+			</form><br/>
+		</div>
+</div>
+	
+<script type="text/javascript">
+
+$("#templet").autocomplete({
+	minLength:1,
+	autoFocus:true, 
+	source: function(request, response){
+		$.ajax({
+			url: "__URL__/templet", 
+			dataType: "json",
+			data: {
+				term: request.term,
+			},
+			success: function(data){
+				response($.map(data,function(item){
+					return {
+						data: item,
+						label :item.name,
+						ID: item.id,
+					}
+				})); 
+			} 
+		}); 
+	},
+	select: function(event, ui){
+		$('#templet_id').val(ui.item.ID);
+	}
+});
+</script>
+</body>
+</html>

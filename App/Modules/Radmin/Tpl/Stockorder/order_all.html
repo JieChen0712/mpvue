@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+  </head>
+
+  <body>
+    <section class="layui-container">
+      <div class="content">
+        <header class="header">
+            <h3>全部订单</h3>
+          <!--<a href="__URL__/expUser?pd=order&con_url={$con_url}" class="layui-btn layui-btn-radius layui-btn-normal">导出Excel</a>-->
+        </header>
+        <form class="layui-form form layui-row form-search" action="__SELF__" method="get" onsubmit="return false">
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="start_time">请选择时间范围</label>
+            <div class="time-wrapper">
+              <input type="text" class="layui-input" id="timeChoose"  name="s_time" placeholder="请选择时间范围">
+            </div>
+          </div>
+          <!--<div class="layui-form-item form-item">
+            <label class="layui-form-label" for="start_time">开始时间</label>
+            <div class="time-wrapper site-demo-laydate">
+              <input type="text" class="layui-input blue" name="start_time" id="start_time" readonly="readonly" placeholder="开始时间" autocomplete="on">
+              <i class="fa fa-angle-down"></i>
+            </div>
+          </div>-->
+          <!--<div class="layui-form-item form-item">
+            <label class="layui-form-label" for="end_time">结束时间</label>
+            <div class="time-wrapper site-demo-laydate">
+              <input type="text" class="layui-input blue" name="end_time" id="end_time" readonly="readonly" placeholder="结束时间" autocomplete="on">
+              <i class="fa fa-angle-down"></i>
+            </div>
+          </div>-->
+
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="order_num">订单号</label>
+            <div>
+              <input type="text" autocomplete="on" class="layui-input" id="order_num" name="order_num" placeholder="订单号">
+            </div>
+          </div>
+
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="name">代理</label>
+            <div>
+              <input type="text" autocomplete="on" class="layui-input" id="name" name="name" placeholder="姓名/微信号">
+            </div>
+          </div>
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="name">产品</label>
+            <div class="select-wrapper">
+              <select name="p_id" id="p_id" lay-verify="required">
+                <option value="">选择产品</option>
+                <volist name="dis_templet_List" id="m">
+                  <option value="{$m.id}">{$m.name}</option>
+                </volist>
+              </select>
+            </div>
+          </div>
+
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="status">订单状态</label>
+            <div class="select-wrapper" style="max-width: 104px">
+              <select name="status" id="status" lay-verify="required">
+                <option value="">选择状态</option>
+                <option value="1">待审核</option>
+                <option value="6">已审核</option>
+                <option value="2">配送中</option>
+                <option value="3">已收货</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="ishead">是否总部供货</label>
+            <div class="select-wrapper" style="max-width: 70px">
+              <select name="ishead" id="ishead" lay-verify="required">
+                <option value="">是否</option>
+                <option value="1">是</option>
+                <option value="0">否</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="search-btn">
+            <button type="submit" class="layui-btn layui-btn-radius">搜索</button>
+          </div>
+        </form>
+        <div class="table-wrapper">
+          <table class="layui-table" lay-skin="row" lay-size="sm">
+            <thead>
+              <tr>
+                <th>订单号</th>
+                <th>订货经销商</th>
+                <th>接单经销商</th>
+                <th>级别</th>
+                <th>产品名称</th>
+                <th>数量</th>
+                <th>单价</th>
+                <th>总价</th>
+                <th>申请时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <empty name="applyList">
+                <tr style="position: relative;">
+                  <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                </tr>
+                <else />
+                <volist name="applyList" id="m">
+                  <tr>
+                    <td>{$m.order_num}</td>
+                    <td>{$m.name}</td>
+                    <td>{$m.o_name}</td>
+                    <td>{$m.levname}</td>
+                    <td>
+                      <volist name="m['row']" id="vv">
+                        {$vv.p_name} {$vv.style}x{$vv.num}<br>
+                      </volist>
+                    </td>
+                    <td>
+                      {$m.total_num}
+                    </td>
+                    <td>
+                      <volist name="m['row']" id="vv">
+                        {$vv.price}<br>
+                      </volist>
+                    </td>
+                    <td>{$m.total_price}</td>
+                    <!--<td>{$m.s_addre}</td>-->
+                    <!--<td>
+                      <div class="kd{$m.id}" style="display:inline">
+                        <div id='shipper_name{$m.id}'>{$m.shipper_name}</div>
+                        <div id="change_order_info_{$m.id}">
+                          <if condition="$m.ordernumber eq ''">
+                            未填写
+                            <else /> {$m.ordernumber}
+                          </if>
+                        </div>
+
+                        <button type="button" data-modal="__URL__/index_kd?order_num={$m.order_num}" class="layui-btn layui-btn-radius layui-btn-normal">更新</button>
+                      </div>-->
+                      <!--<select id="shipper{$m.id}" class="form-control change_order_dis change_order_{$m.id}">-->
+                      <!--<option value="">选择快递公司</option>-->
+                      <!--<?php foreach( $shipper as $k => $v ):?>-->
+                      <!--<option class="shipper_detail_name{$k}" value="{$k}">{$k}-{$v}</option>-->
+                      <!--<?php endforeach;?>-->
+                      <!--</select>-->
+
+                      <!--<input type="text" placeholder="请填写快递单号" class="form-control change_order_dis change_order_{$m.id}" id="ordernumber_{$m.id}">-->
+                      <!--<input type="submit" onclick="onumber('{$m.id}', '{$m.order_num}');" class="btn btn-success change_order_dis change_order_{$m.id}" value="提交" />-->
+                      <!--<input type="button" onclick="cancle('{$m.id}');" class="btn btn-success change_order_dis change_order_{$m.id}" style="background-color: #5bc0de" value="取消" />-->
+
+                      <!--<if condition="($m.shipper neq null) AND ($m.ordernumber neq null) ">
+                          <eq name="m.ordernumber_count" value="1">
+                            <a target="__bank" href="http://api.weisika.net/kd100/index/jump?ShipperCode={$m.shipper}&LogisticCode={$m.ordernumber_arr[0]}" class="layui-btn layui-btn-radius wlxx{$m.id}">物流信息</a>
+                          <else />
+                            <button type="button" data-iframe="__URL__/detail?id={$m.id}&status={$m.status}" data-title='物流信息查询' class="layui-btn layui-btn-radius">物流信息</button>
+                          </eq>
+                      </if>
+                    </td>-->
+                    <!--<td>{$m.notes}</td>-->
+                    <td>{$m.time|date="Y-m-d H:i",###}</td>
+                    <td>
+                      <if condition="$m.status eq 1">
+                        <p class="layui-bg-red">待审核</p>
+                        <elseif condition="$m.status eq 2" />
+                        <p class="layui-bg-orange">已审核</p>
+                        <elseif condition="$m.status eq 6" />
+                        <p class="layui-bg-green">已审核，未配送</p>
+                        <else/>
+                        <p class="layui-bg-blue">已收货</p>
+                      </if>
+                      <button type="button" data-iframe="__URL__/detail?id={$m.id}&status={$m.status}" data-title='订单详情' class="layui-btn layui-btn-radius layui-btn-normal">详情</button>
+                      <!--<button type="button" data-iframe="__URL__/detail?id={$m.id}&status={$m.status}" data-title='订单详情' class="layui-btn layui-btn-radius layui-btn-normal">详情</button>-->
+                      <!--<button type="button" class="btn btn-danger" onclick="sc('{$m.order_num}', '__URL__/delOrder/id/{$m.order_num}')">删除</button>-->
+                    </td>
+                  </tr>
+                </volist>
+                <include file="Public/page" />
+                <!-- <div id="page"></div> -->
+                <!--<tr><td colspan="14"><div class="pull-right">{$page}</div></td></tr>-->
+              </empty>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <script>
+      form.render();
+      //    layui.use('laydate', function() {
+      //      var laydate = layui.laydate;
+      //      laydate.render({
+      //        elem: '#start_time'
+      //      });
+      //      laydate.render({
+      //        elem: '#end_time'
+      //      });
+      //    })
+
+      $(".change_order_dis").hide();
+
+      function change_order(id) {
+        $('.kd' + id).hide();
+        $('.wlxx' + id).hide();
+        $(".change_order_" + id).toggle();
+      }
+
+      function onumber(id, order_num) {
+        var ordernumber = $('#ordernumber_' + id).val();
+        var shipper = $('#shipper' + id).val();
+        var shipper_detail_name = $(".shipper_detail_name" + shipper).html();
+
+        $.post("__URL__/ordernb", {
+          id: id,
+          order_num: order_num,
+          ordernumber: ordernumber,
+          shipper: shipper
+        }, function(data) {
+          if(data) {
+
+            change_order(id);
+            $("#change_order_info_" + id).html(ordernumber);
+            $("#shipper_name" + id).html(shipper_detail_name);
+            $('.kd' + id).show();
+            $('.wlxx' + id).show();
+            layer.msg('填写成功！');
+            setTimeout(function() {
+              location.reload();
+            }, 1500);
+          } else {
+            layer.msg('填写失败！原因没做出改变！');
+          }
+        });
+      }
+
+      function cancle(id) {
+        change_order(id);
+        $('.kd' + id).show();
+        $('.wlxx' + id).show();
+      }
+    </script>
+
+    <script type="text/javascript">
+      //            日期范围
+      layui.use(['laydate', 'upload'], function() {
+        var $ = layui.jquery
+          ,upload = layui.upload
+          ,laydate = layui.laydate;
+        laydate.render({
+          elem: '#timeChoose',
+          range: '-',
+          format: 'yyyyMMdd',
+        });
+      //          文件上传
+        var uploadInst = upload.render({
+          elem: '#test1',
+          url: '__URL__/impordernumber_ajax',
+          accept: 'file', //普通文件
+          exts:'xls|xlsx',
+          auto:true,
+          done: function(res) {
+            layer.closeAll('loading'); //关闭loading
+            
+            if( res.code == 1 ){
+                layer.msg(res.msg);
+                location.reload();
+            }
+            else if( res.msg != null && res.msg != '' ){
+                layer.msg(res.msg);
+            }
+            else{
+                layer.msg('未定义错误，可能是系统繁忙，请重试！');
+            }
+          },
+          error: function(index, upload){
+            layer.closeAll('loading'); //关闭loading
+            //当上传失败时，你可以生成一个“重新上传”的按钮，点击该按钮时，执行 upload() 方法即可实现重新上传
+              layer.msg('无法调用文件上传！');
+          }
+        });
+      })
+    </script>
+
+  </body>
+
+</html>

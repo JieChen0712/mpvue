@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>提交订单</title>
+
+    <include file="Public/header_v3"/>
+
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/order-list.css"/>
+</head>
+<body>
+    <div class="page">
+        <!-- header start-->
+        <include file="Public/header_features_v3" />
+        <!-- header end-->
+        <div class="content content-order">
+            <section class="address_wrapper">
+                <div class="list-block">
+                <ul class="list-container">
+                    <li class="item-content" id="add_address"><div class="item-inner"><p class="item-title" id="address_text">填写地址</p><span class="icon icon-right"></span></div></li>
+                </ul>
+            </div>
+            </section>
+            <section class="order-alist">
+                <ul>
+                    <li>
+                        <p class="seller-inf"><img src="{$manager.headimgurl}" alt="" />{$manager.name}</p>
+                        <div class="goods-infs">
+                            <img src="__ROOT__{$product.image}"/>
+                            <p class="goods-title">{$product.name}</p>
+                            <p class="goods-price">￥<span class="priceval">{$product.price}</span></p>
+                            <!--<p class="goods-format">满{$shipping_num}件包邮</p>-->
+                        </div>
+                        
+                        <div class="count-num">
+                            <span>购买数量</span>
+                            <input type="button" name="numadd" class="numadd" value="+" />
+                            <input type="number" name="shownum" class="shownum" value="{$num}" disabled="disabled"/>
+                            <input type="button" name="reducenum" class="reducenum" value="-" />
+                            <input type="hidden" name="product_id" value="{$product.id}"/>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+            <div id="mask">
+            	<div class="address_info">
+            	    <h1 class="titles">填写地址</h1>
+            	    <div class="info_item">
+            	        <label class="text">收货人：</label>
+            	        <input type="text" name="re_name" id="re_name"/>
+            	    </div>
+            	    <div class="info_item">
+                        <label class="text">手机号：</label>
+                        <input type="phone" name="re_phone" id="re_phone"/>
+                    </div>
+                    <div class="info_item">
+                        <label class="text">地址：</label>
+                        <input type="text" id='city-picker' name="re_address"/>
+                    </div>
+                    <div class="info_item">
+                        <textarea name="address_detail" id="address_detail" rows="2" cols="50" placeholder="请填写详细地址"></textarea>
+                    </div>
+                    <button class="button button-fill button-success" id="btn_sure">确定</button>
+            	</div>
+            </div>
+        </div>
+
+        <footer class="submit-order">
+            <p>合计：￥<span id="countprice"></span><span class="shipper_fee" style="display: block;"></span></p>
+            <input style="background-color: #dd0000" type="button" name="submit-order5" id="submit-order5" value="提交订单" />
+        </footer>
+    </div>
+
+    <!--script strat-->
+    <script src="__PUBLIC__/Admin_v3/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/light7-city-picker.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	var root = '__ROOT__';
+    	var total_money = '{$total_money}';
+    	var priceval = $('.priceval').text();
+    	var shownum = $('.shownum').val();
+    	$('#countprice').text(total_money);
+                
+        $("#city-picker").cityPicker({
+            toolbarTemplate: '<header class="bar bar-nav"><button class="button button-link pull-left close-picker">取消</button><button class="button button-link pull-right close-picker" id="sure">确定</button><h1 class="title">选择地址</h1></header>'
+        })
+    </script>
+    <script src="__PUBLIC__/Admin_v3/js/other-order-list.js" type="text/javascript" charset="utf-8"></script>
+    <!--script end-->
+</body>
+</html>

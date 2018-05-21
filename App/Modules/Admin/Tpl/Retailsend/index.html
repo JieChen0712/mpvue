@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html>
+    <head lang="en">
+        <title>零售发货</title>
+    <include file="Public/header_v2.1"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/retail-send.css">     
+    <script>
+        $(function () {
+            //确认发货层 
+            $("#send").click(function () {
+                $(".mask").addClass("center-middle");
+            });
+            $(".mask").click(function () {
+                $(this).removeClass("center-middle");
+            });
+        })
+    </script>
+
+    <script>
+        var flag = "{$Think.session.ls}";
+        if (flag == 'yes') {
+            setTimeout(function () {
+                $("#ls").toggleClass("serial-check");
+            }, 0);
+
+        } else {
+            setTimeout(function () {
+                $("#ls").toggleClass("");
+            }, 0);
+        }
+    </script>
+    <script>var count = 1;</script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script>
+        wx.config({
+            appId: '{$signPackage.appId}',
+            timestamp: '{$signPackage.timestamp}' ,
+            nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+            signature: '<?php echo $signPackage["signature"];?>',
+            jsApiList: [
+                // 所有要调用的 API 都要加到这个列表中
+                "onMenuShareTimeline",
+                "scanQRCode"
+            ]
+        });
+        wx.ready(function () {
+            // 在这里调用 API
+        });
+        function ScanQRCode() {
+            var obj = document.getElementById('ls');
+            wx.scanQRCode({
+                desc: 'scanQRCode desc',
+                needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                success: function (res) {
+                    var result = res.resultStr; // 当needResult为 1 时，扫码返回的结果
+                    var p = new Array();
+                    var st = new Array();
+                    p = result.split("p=");
+                    st = result.split("st=");
+                    if (p.length > 1) {
+                        var ptag = p[1].substring(0);
+
+                    }
+                    if (st.length > 1) {
+                        var status = st[1].substring(0, 1);
+                    }
+                    //ptag = xb(ptag);
+                    //查找小标
+                    $.post('__APP__/Admin/Retailsend/searchxb', {ptag: ptag}, function (data) {
+                        if (data != 'none') {
+                            ptagBeg = data['ptag_beg'];
+                            ptagEnd = data['ptag_end'];
+                        } else {
+                            ptagBeg = '';
+                            ptagEnd = '';
+                        }
+
+                        var ptagObj = document.getElementsByName("ptag");
+                        for (var i = 0; i < ptagObj.length; i++)
+                        {
+
+                            if (ptag == ptagObj[i].value) {
+                                if (flag == 'yes') {
+                                    obj.checked = true;
+                                    setTimeout(function () {
+                                        ScanQRCode();
+                                    }, 1000);
+                                } else {
+                                    obj.checked = false;
+                                }
+                                return;
+                            }
+                        }
+
+                        var text = "";
+                        //text+= '<section class="section7" id="myul'+count+'"><ul class="ul1" ><li>'+count+'</li>';
+                        text += '<section class="section7" id="myul' + count + '"><ul class="ul1" ><li>' + count + '</li>';
+                        text += '<li>' + ptag + '</li>';
+                        text += '<li class="xb">' + ptagBeg + '<br>' + ptagEnd + '</li>';
+                        text += '</li><li><img src="__PUBLIC__/Admin_v2/images/s-delete.png" onclick="delPtag(' + count + ')"/>';
+                        text += '</li></ul><input type="hidden" name="ptag" value="' + ptag + '"/>';
+                        text += '<input type="hidden" name="status" value="' + status + '"/></section>';
+                        $(".content1").append(text);
+                        $(".content1").show();
+                        count++;
+                        setTimeout(function () {
+                            if (flag == 'yes') {
+                                obj.checked = true;
+                                ScanQRCode();
+                            } else {
+                                obj.checked = false;
+                            }
+                        }, 500);
+                    });
+
+                }
+            });
+        }
+
+    </script>
+
+</head>
+<script type="text/javascript">
+    $(function(){
+         $(".djlr").click(function(){
+             $(".fh_mask").show();
+         })
+         $("#ss").click(function(){
+             $("#ss").hide();
+             $(".search").show();
+         })
+//         $("#subsearch").click(function(){
+//             var s = $("input[name=search]").val();
+//             if(s == ""){
+//                 alert('请输入代理姓名');
+//                 return;
+//             }
+//             $.post('__APP__/Admin/G/searchAgent',{search:s},function(data){
+//                 var html ="";
+//                 if(data == null){
+//                     alert('对不起,未找到相关代理');
+//                     return false;
+//                 }
+//                 $.each(data,function(index,array){
+//                     html+='<ul class="ul1" onclick="selectAgent('+array["id"]+');">';
+//                     html+='<li>'+array["id"]+'</li><li>'+array["name"]+'</li><li>'+array["levname"]+'</li></ul>'; 
+//                 })
+//                 $("#fh_mask .section5 .mysel").html(html);
+//                 $("#fh_mask").show();
+//                 $("#ss").show();
+//                 $(".search").hide();
+//             })
+//         })
+         $(".btm1").click(function(){ 
+            
+         /* var agentId = $("input[name=receive_id]").val();
+            if(agentId == ""){
+                alert('收货代理不能为空!');
+                return;
+            }*/
+
+            //大标
+            var sellname = $('#sellname').val();
+            var sellphone = $('#sellphone').val();
+            var remark = $("#remark").val();
+            
+            if( sellname == '' ){
+                alert('零售出库的顾客姓名不能为空!');
+                return;
+            }
+            
+//             if(remark ==""){
+//                alert('零售出库的备注信息不能留空，请输入相关备注信息!');
+//                return;
+//             }
+            var ptag = document.getElementsByName("ptag");
+            
+            var managers = '';
+            for(var i=0;i<ptag.length;i++)
+            {
+                managers = managers + '|' + ptag[i].value;
+            }
+            //小标
+            var status = document.getElementsByName("status");
+            var m = '';
+            for(var j=0;j<status.length;j++)
+            {
+                m = m + '|' + status[j].value;
+            }
+            
+//            m = '|b';
+//            ptag = managers = '|0000000001';
+            if(ptag.length == 0){
+                alert('请扫描标签!');
+                return;
+            }
+            var send_id = $("input[name=send_id]").val();
+            var receive_id = send_id;
+           
+            //发货
+            $.post('__APP__/Admin/Retailsend/sellout',{ptag:managers,status:m,receive_id:receive_id,send_id:send_id,remark:remark,sellname:sellname,sellphone:sellphone},function(data){
+                if(data['state'] == 'ptag'){
+                    alert('对不起,标签号为:'+data["ptag"]+'的产品您无权发货');
+                }else if(data['state'] == 'repeat'){
+                    alert('对不起,标签号为:'+data["repeat"]+'的产品不能重复发货');
+                }else if(data['state'] == 'error'){
+                    alert(data['msg']);
+                }
+                else if(data == 'success'){
+                    alert('发货成功');
+                    $.post('__APP__/Admin/G/clearAgent',{},function(list){
+                        if(list == 'success'){
+                            location.href = "__APP__/Admin/G/retail";
+                        }
+                    });
+                }else{
+                    alert('发货失败');
+                }
+            })
+            
+            })
+            
+            $("#ls").click(function(){
+                //var obj = document.getElementById('ls');
+                var ls = "";
+                if(this.checked){
+                    ls = 1;
+                }else{
+                    ls = 0;
+                }
+                $.post('__APP__/Admin/G/setLs',{ls:ls},function(data){
+                    flag = data;
+                })
+            });
+     })
+    
+    
+    $(function () {
+        $(".serial").click(function () {
+
+            $(this).find("input").toggleClass("serial-check");
+        })
+
+        $("#ls").click(function () {
+            //var obj = document.getElementById('ls');
+            var ls = "";
+            if (this.checked) {
+                ls = 1;
+            } else {
+                ls = 0;
+            }
+            $.post('__APP__/Admin/Retailsend/setLs', {ls: ls}, function (data) {
+                flag = data;
+            })
+        });
+    })
+</script>
+<script>
+
+    //删除标签
+    function delPtag(count) {
+        $("#myul" + count).remove();
+    }
+</script>
+
+<body>    
+    <header class="header">
+        <a class="a" href="javascript:history.go(-1);"></a>
+        <p>零售出库</p>
+        <div class="serial"><span class="span2">连扫</span><input type="checkbox" id="ls" value="" class="input" /><br></div>
+    </header>
+    <div class="panel-content">
+        <div class="clearfix flex-column">
+            <input id="sellname" type="text" placeholder="顾客姓名" class="flex1">
+            <input id="sellphone" type="tel" placeholder="顾客电话" class="flex1 phone">
+        </div>
+        <div class="remark">
+            <p class="order-detail-title"><img src="__PUBLIC__/Admin_v2/images/order-remark.png" alt=""><span>备注</span></p>
+            <div class="order-remark">
+                <textarea name="remark" placeholder="需要记录的相关信息" id="remark"></textarea>
+            </div>
+        </div>
+        <p class="scan-tip">扫描发货时请不要超过15个标哦！</p>
+    </div>
+    <!-- 扫描出现标 -->
+    <div class="content1" style="clear:both;display:none">
+        <section class="section7_7">
+            <ul class="ul">
+                <li>编号</li>
+                <li>条码</li>
+                <li>标号</li>
+                <li>删除</li>
+            </ul>
+        </section>
+    </div>
+    
+    <input type="hidden" name="receive_id" value="{$Think.session.managerid}"/>
+    <input type="hidden" name="send_id" value="{$Think.session.managerid}"/>
+    
+    <footer class="footer footer-fixed bg-red">
+        <ul>
+            <li id="send" class="left center"><img src="__PUBLIC__/Admin_v2/images/footer-left.png" alt=""></li>
+            <li id="scan" class="right center"><img class="btm2" onclick="ScanQRCode()" src="__PUBLIC__/Admin_v2/images/footer-right.png" alt=""></li>
+        </ul>
+    </footer> 
+    <!-- 确认发货层 -->
+    <div class="mask">
+        <div class="comfirm bg-white">
+            <p class="comfirm-tip">确认发货</p>
+            <div class="comfirm-select">
+                <ul class="flex-column"><li class="flex1">取消</li><li class="flex1 red btm1">确定</li></ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

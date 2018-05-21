@@ -1,0 +1,12 @@
+body { background-color: #f5f9f8; position: fixed; }
+
+.page .containers header img { min-height: 300px; }
+.page .containers .search-wrapper { display: flex; align-items: center; justify-content: center; height: 100px; padding: 0 40px; margin-bottom: 28px; background-color: #fff; overflow: hidden; }
+.page .containers .search-wrapper input { flex: 1; height: 50px; padding: 0 10px; font-size: 30px; outline: none; border: none; }
+.page .containers .search-wrapper button { flex: 0 0 60px; font-size: 35px; height: 100px; background-color: #fff; border: none; outline: none; color: #A0A0A0; }
+.page .containers .content { display: none; padding: 30px 20px; color: #303030; text-align: center; background-color: #fff; overflow: hidden; }
+.page .containers .content p { font-size: 26px; line-height: 1; margin-bottom: 20px; }
+.page .containers .content .btn-detail { font-size: 26px; margin: 0 auto; }
+.page .containers .content .remark { margin-top: 10px; display: block; text-align: left; font-size: 20px; color: #fe0100; }
+
+/*# sourceMappingURL=manager.css.map */

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <include file="Public/header_v2"/>
+    <title>我的团队经销商查看</title>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/agentsee.css">
+    <style>
+      body {
+      background: url(__PUBLIC__/Admin_v2/images/bg01.jpg) #fbfbfb no-repeat;
+      background-color:#fbfbfb;
+      background-size: cover;      
+      }
+     .tel_title {   background: transparent; } 
+ 
+    </style>
+    </head>
+    <body>
+        <header class="header">
+        <a href="javascript:history.go(-1);" class="a"></a>
+        <p>下级代理查看</p>
+        </header>
+        <div class="re-title bg-red center">
+            <ul>
+                <li class="flex1">代理名称</li>
+                <li class="flex1">级别</li>
+                <li class="flex1">授权号</li>
+            </ul>
+        </div>
+        <section class="bg-white center">
+            <div class="re-section">
+            <volist name="list" id="vo">
+            <a href="__APP__/Admin/Manage/detail?id={$vo.id}">
+                <ul>
+                    <li class="flex1">{$vo.name}</li>
+                    <li class="flex1">{$vo.levname}</li>
+                    <li class="flex1">{$vo.authnum}</li>
+                    <p class="go"><img src="__PUBLIC__/Admin_v2/images/icon-go.png" alt=""></p>
+                </ul>
+            </a>
+            </volist>
+            </div>
+        </section>
+    </body>
+    </html>

@@ -1,0 +1,30 @@
+.ui-shadow {
+    box-shadow: none!important;
+    .list-wrapper {
+        margin-bottom: 20px!important;
+        .list-item {
+            display: flex!important;
+            .photo-show {
+                flex: 0 0 100px;
+                position: static !important;
+                max-width: none!important;
+                max-height: none!important;
+                width: 110px;
+                height: 150px;
+                margin-right: 15px;
+            }
+            .introduction {
+                flex: 1;
+                overflow: hidden;
+                p {
+                    font-size: 22px;
+                    white-space: normal;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 3;
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/common.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/list.css">
+    <script src="https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div class="headbar">
+        <div class="menubutton">
+            <a href="javascript:;"><i class="iconfont">&#xe609;</i></a>
+            <ul class="pagenav">
+                <foreach name="catss" item="vo">
+                <li class="col-group">
+                    <a href="classify?bus_id={$vo.id}">{$vo.name}</a>
+                </li>
+                </foreach>
+            </ul>
+        </div>
+        <ul class="grounpList">
+
+            <li class="col"><a href="javascript:;">最新</a></li>
+
+            <li class="col"><a href="javascript:;">人气</a></li>
+
+            <li class="col curr"><a href="javascript:;">价格</a></li>
+
+        </ul>
+        <div class="searchbutton">
+            <a href="javascript:;"><i class="iconfont">&#xe607;</i></a>
+            <div class="searchbox">
+                <form action="">
+                    <div class="inputbox">
+                        <input type="text" name="keyword">
+                        <input type="submit" class="iconfont" value="&#xe607;">
+                        <!-- <button></button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="content">
+        <ol class="goodslist">
+                <foreach name="products" item="m">
+            <li class="item"><a href="./goods_detail">  
+					<img src="__ROOT__/{$m.image}" alt="" width="100%">
+					<p class="title">{$m.name}</p>
+					<p class="price">&yen;<strong>{$m.price}</strong></p>
+				</a></li>
+                </foreach>
+
+
+        </ol>
+        <!-- <div class="pagenavtion">
+            <a href="/wsh/whs_proList.aspx?keyword=&btype=3&scate=&page=2" class="before">前一页</a>
+            <div class="pageselect">
+                <p class="text">3/4</p>
+                <select onchange="window.location.href=this.value">
+            <option value="/wsh/whs_proList.aspx?keyword=&btype=3&scate=&page=1" >第1页</option>
+            <option value="/wsh/whs_proList.aspx?keyword=&btype=3&scate=&page=2" >第2页</option>
+            <option value="/wsh/whs_proList.aspx?keyword=&btype=3&scate=&page=3" selected="selected">第3页</option>
+            <option value="/wsh/whs_proList.aspx?keyword=&btype=3&scate=&page=4" >第4页</option>
+        </select>
+            </div>
+            <a href="/wsh/whs_proList.aspx?keyword=&btype=3&scate=&page=4" class="after">后一页</a>
+        </div> -->
+
+         </div> 
+        <!-- <div id="footer">
+		<ul>
+			<li class="menuitem"><a href="/wsh/whs_index.aspx"><i class="icon iconfont">&#xe602;</i><p>首页</p></a></li>
+            <li class="menuitem sec curr"><a href="/wsh/whs_proList.aspx"><i class="icon iconfont">&#xe60d;</i><p>商品</p></a></li>
+			<li class="menuitem center"><a href="/index.aspx"><span><i class="icon iconfont">&#xe603;</i></span><p>积分商城</p></a></li>
+		    <li class="menuitem"><a href="/shopCart/shoppingCart.aspx"><i class="icon iconfont">&#xe601;</i><p>购物车</p></a></li>
+			<li class="menuitem"><a href="/my.aspx"><i class="icon iconfont">&#xe604;</i><p>我</p></a></li>
+		</ul>
+	</div> -->
+        <!-- <a href="#top" class="backtop iconfont">&#xe608;</a> -->
+        
+        
+</body>
+
+<script type="text/javascript">
+    $(function () {
+        //导航栏点击
+        $('.menubutton a').on("click", function () {
+            $(".pagenav").toggle();
+        });
+        //搜索框点击
+        $('.searchbutton a').on("click", function () {
+            $(".searchbox").toggle();
+        });
+        //点击页面其它部分关闭页面导航和弹窗搜索
+        $(document).on("click", function (e) {
+            e.stopPropagation(); //阻止事件冒泡
+            if (!$(e.target).parents().hasClass('searchbutton')) {
+                $(".searchbox").hide();
+            }
+            if (!$(e.target).parents().hasClass('menubutton')) {
+                $(".pagenav").hide();
+            }
+        });
+        //返回顶部
+        $(".backtop").click(function () {
+            $('html,body').scrollTop(0);
+        });
+        //显示隐藏返回顶部按钮
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > 100) {
+                $(".backtop").show();
+            } else {
+                $(".backtop").hide();
+
+            }
+        });
+        $('.grounpList').on('click', 'li a', function(){
+            $('.grounpList li a').css('color', '#666');
+            $(this).css('color', '#e3393c');
+        })
+    });
+</script>
+
+</html>

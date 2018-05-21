@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/footer_v4.css">
+<footer class="bar bar-tab">
+	<a class="tab-item active external shopping" href="__GROUP__/mall/index">
+		<span class="icon-shop"></span>
+		<span class="tab-label">商城</span>
+	</a>
+    
+        <?php if( !empty($manager) ):?>
+<!--	<a class="tab-item external" href="__GROUP__/mall/commodity">
+		<span class="icon-kind"></span>
+		<span class="tab-label">分类</span>
+		<span class="badge">2</span>
+	</a>-->
+	<!-- <a class="tab-item external" href="https://shequ.yunzhijia.com/thirdapp/forum/network/59c4bad3e4b03a4a5fd0f2b0">
+		<span class="icon-community"></span>
+		<span class="tab-label">社区</span>
+		<span class="badge">2</span>
+	</a> -->
+	<a class="tab-item external shopping_cart" href="__GROUP__/mallorder/shopping_cart">
+		<span class="icon-shoppingcart"></span>
+		<span class="tab-label">购物车</span>
+		<!--<span class="badge">2</span>-->
+	</a>
+	<a class="tab-item external personal" href="__GROUP__/mallorder/center">
+		<span class="icon-center"></span>
+		<span class="tab-label">个人中心</span>
+		<!--<span class="badge">2</span>-->
+	</a>
+        <?php else:?>
+        <a class="tab-item external login" href="__GROUP__/mall/login?control=login">
+		<span class="icon-center"></span>
+		<span class="tab-label">登录</span>
+		<!--<span class="badge">2</span>-->
+	</a>
+        <?php endif;?>
+</footer>

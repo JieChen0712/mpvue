@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <include file="Public/header_v3"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/mall_info.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/back/apply.css">
+    <script src="__PUBLIC__/js/exif.js"></script>
+    <style>
+        #footer {
+            position: relative;
+        }
+    </style>
+    <title>个人资料</title>
+    <script>
+        var uploadUrl = '__APP__/Home/Manager/uploadCanvas';
+        var IS_SUBMIT_ID_CARD_IMG = '{$Think.config.IS_SUBMIT_ID_CARD_IMG}';
+    </script>
+</head>
+
+<body>
+<div class="page">
+    <div class="content" style="background-color: white;">
+        <!-- header start-->
+        <include file="Public/header_features_v3"/>
+        <!-- header end-->
+
+        <!--main start-->
+        <section id="main">
+            <a class="avatar-wrapper">
+                <span class="text">头像</span>
+                <div class="avatar">
+                    <img src="{$row.headimgurl}" height="55" alt="">
+                </div>
+            </a>
+            <a class="name-wrapper">
+                <span class="text">名字</span>
+                <input class="name" type="text" value="{$row.nickname}"></input>
+            </a>
+            <div class="WeChat-wrapper">
+                <span class="text">微信号</span>
+                <input class="WeChat" type="text" value="{$row.wechatnum}"></input>
+            </div>
+            <a class="tel-wrapper">
+                <span class="text">手机号码</span>
+                <input class="tel" type="tel" value="{$row.phone}"></input>
+            </a>
+            <div class="tel-wrapper">
+                <span class="text">身份证</span>
+                <input class="tel" id="iden" type="text" value="{$row.idennum}"></input>
+            </div>
+            <div class="address-wrapper">
+                <span class="text">地址</span>
+                <input type="text" id="city-picker" placeholder="点击修改地址"
+                       value="{$row.province} {$row.city} {$row.county}"/>
+            </div>
+            <!--            <a href="__GROUP__/user/bindwechat" class="password-wrapper">
+        <span class="text">绑定微信</span>
+        <span class="icon icon-right"></span>
+    </a>-->
+            <div class="level-wrapper">
+                <span class="text">当前级别</span>
+                <span class="level">{$row.levname}</span>
+            </div>
+
+            <if condition="$type neq ''">
+                <div data-id="{$rec_info.id}" class="password-wrapper">
+                    <span class="text">申请升级级别</span>
+                    <select name="level" id="level" class="select" style="border: 0">
+                        <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                            <option value="{$key_left_num}">{$vo_left_name}</option>
+                        </foreach>
+                    </select>
+                    <!--<span class="icon icon-right"></span>-->
+                </div>
+            </if>
+
+            <a data-id="{$row.pid}" id="boss" class="password-wrapper">
+                <span class="text">上级</span>
+                <span class="agentname">{$row.bossname}</span>
+                <!--<span class="icon icon-right"></span>-->
+            </a>
+            <a data-id="{$row.recommendID}" id="recommend" class="password-wrapper">
+                <span class="text">推荐人</span>
+                <span class="agentname">{$rec_info.name}</span>
+                <!--<span class="icon icon-right"></span>-->
+            </a>
+            <!--<a class="password-wrapper">-->
+            <!--<span class="text">绑定微信</span>-->
+            <!--<span class="icon icon-right"></span>-->
+            <!--</a>-->
+            <if condition="$type eq ''">
+                <a class="password-wrapper" id="updata_password">
+                    <span class="text">修改密码</span>
+                    <span class="icon icon-right"></span>
+                </a>
+            </if>
+			<input type="hidden" id="user_password">
+            <eq name="type" value="up">
+
+                <if condition="($Think.config.IS_SUBMIT_ID_CARD_IMG eq 1) OR ($Think.config.IS_SUBMIT_ID_CARD_IMG eq 2)">
+                    <if condition="$row.idennumimg eq ''">
+                        <div class="uploading-img">
+                            <div>
+                                * 添加身份证照片
+                                <span>（限一张）</span>
+                            </div>
+                            <div>
+                                <span id="list1" style="float:left"></span>
+                                <div class="imgUpload">
+                                    <img src="__PUBLIC__/images/sq.png"/>
+                                    <input type="button" id="btn1" onclick="myfile1.click();" value=""
+                                           style="display:none">
+                                    <input type="file" accept="image/*;capture=camera" id="myfile1" name="idennumimg">
+                                </div>
+                                <div style="clear:both"></div>
+                                <input type="hidden" value="" id="idennum" name="idennumimg"/>
+                            </div>
+                        </div>
+                    </if>
+                </if>
+
+
+                <if condition="($Think.config.IS_SUBMIT_ID_CARD_IMG eq 1) OR ($Think.config.IS_SUBMIT_ID_CARD_IMG eq 3)">
+                    <if condition="$row.liveimg eq ''">
+                        <div class="uploading-img">
+                            <div>
+                                * 添加保证金截图
+                                <span>（限一张）</span>
+                            </div>
+                            <span id="list2" style="float:left"></span>
+                            <div class="imgUpload">
+                                <img src="__PUBLIC__/images/sq.png"/>
+                                <input type="button" id="btn2" onclick="myfile2.click();" value="" style="display:none">
+                                <input type="file" accept="image/*;capture=camera" id="myfile2" name="liveimg">
+                            </div>
+                            <input type="hidden" value="" id="live" name="liveimg"/>
+                        </div>
+                    </if>
+                </if>
+            </eq>
+
+
+            <!--<div class="item-inner">-->
+            <!--<div class="item-title label">申请升级级别：</div>-->
+            <!--<div class="item-input">-->
+            <!--<select name="level" class="select">-->
+            <!--<foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">-->
+            <!--<option>{$vo_left_name}</option>-->
+            <!--</foreach>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
+
+        </section>
+        <!--main end-->
+
+        <!--footer start-->
+
+        <footer id="footer">
+            <if condition="$type eq ''">
+                <button onclick="javascript:window.location.href='__APP__/admin/Login/loginout'"
+                        class="exit color-info-exitbtn">退出登录
+                </button>
+            </if>
+            <input type="hidden" name="type" id="type" value="{$type}">
+            <button class="save color-info-exitbtn" id="submit_info">
+                <if condition="$type eq ''">
+                    保存修改
+                    <else/>
+                    提交升级申请
+                </if>
+            </button>
+            </if>
+        </footer>
+        <!--footer end-->
+    </div>
+</div>
+<!--script start-->
+<script src="__PUBLIC__/Admin_v3/js/light7.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin_v3/js/light7-city-picker.min.js" charset="utf-8"></script>
+<script src="__PUBLIC__/Admin_v3/js/public.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/pho.js"></script>
+<!--script end-->
+<script>
+    $(function () {
+        //  地址选择
+        $("#city-picker").cityPicker({
+            toolbarTemplate: '<header class="bar bar-nav"><button class="button button-link pull-left close-picker">取消</button><button class="button button-link pull-right close-picker" id="sure">确定</button><h1 class="title">选择地址</h1></header>'
+        });
+        $("#city-picker").val();
+        $('.exit').click(function (id) {
+            $.post('exit_login', {
+                id: id
+            }, function (data) {
+                if (data.status == 1) {
+                    tusi(data.message);
+                    setTimeout(function () {
+                        window.location.href = '__GROUP__/login/index';
+                    }, 1000);
+                } else {
+                    tusi(data.message);
+                }
+            });
+        })
+        $('#boss').click(function () {
+            if ($('#boss').data('id') == 0) {
+                tusi('无法查看总部信息！')
+                return false;
+            }
+        })
+        $('#recommend').click(function () {
+            if ($('#recommend').data('id') == 0) {
+                tusi('无法查看总部信息！')
+                return false;
+            }
+        })
+        //输入修改密码
+        $('#updata_password').bind('click', function () {
+            $.modal({
+                title: '修改密码',
+                text: '<div class="new_password"><span class="text">新密码</span><input type="password" class="new_pw" /></div>' +
+                '<div class="again_password"><span class="text">再次输入新密码</span><input type="password" class="again_pw" /></div>',
+                buttons: [{
+                    text: '确定',
+                    close: false,
+                    bold: true,
+                    onClick: function () {
+                        var new_pw = $('.new_pw').val();
+                        var again_pw = $('.again_pw').val();
+                        if (new_pw == again_pw) {
+                            $('#user_password').val(new_pw);
+                            $.toast("验证成功，请按下方保存修改按钮保存！");
+                        } else {
+                            $.toast("两次输入的密码不一致！")
+                            return false;
+                        }
+                    }
+                },
+                    {
+                        text: '取消',
+                        onClick: function () {
+                            $.closeModal();
+                        }
+                    }
+                ]
+            })
+        });
+
+        $('.tel,.name,.WeChat').bind('click', function () {
+            $(this).find('input').focus();
+        });
+
+        //提交修改信息
+        $('#submit_info').bind('click', function () {
+            var address = $('#city-picker').val();
+            var province = "";
+            var city = "";
+            var county = "";
+            if (address.trim() != "") {
+                var temp = address.split(" ");
+                if (temp.length > 2) {
+                    province = temp[0];
+                    city = temp[1];
+                    county = temp[2];
+                } else {
+                    province = temp[0];
+                    city = temp[1];
+                    county = temp[1];
+                }
+            }
+            $.post('__URL__/save_info', {
+                province: province,
+                city: city,
+                county: county,
+                nickname: $('.name').val().trim(),
+                wechatnum: $('.WeChat').val().trim(),
+                phone: $('.tel').val().trim(),
+                password: $('#user_password').val().trim(),
+                idennum: $('#iden').val(),
+                level: $('#level').val(),
+                type: $('#type').val(),
+                idennumimg: $('#idennum').val(),
+                liveimg: $('#live').val()
+            }, function (data) {
+
+//              console.log(data);
+//              alert(data.msg)
+                $.toast(data.msg);
+            });
+        });
+    });
+</script>
+
+</body>
+
+</html>

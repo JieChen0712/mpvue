@@ -1,0 +1,121 @@
+<link rel="stylesheet" href="__PUBLIC__/Radmin_v3/plugs/layui/css/layui.css?ver=170725" />
+<link rel="stylesheet" href="__PUBLIC__/Radmin_v3/css/content.css">
+<script src="__PUBLIC__/Radmin_v3/plugs/layui/layui.js"></script>
+<script src="__PUBLIC__/Radmin_v3/plugs/jquery/jquery.js"></script>
+<style>
+    .pay-way {
+        margin-top: .9375rem;
+        line-height: 1.5rem;
+        font-size: 16px;
+    }
+
+    .pay-way .img-wrapper {
+        margin-top: 1.25rem;
+        width: 90%;
+        overflow: hidden;
+    }
+    .pay-way .img-wrapper img {
+        width: 90%;
+    }
+</style>
+<script>
+    layui.use(['layer', 'form'], function () {
+        var layer = layui.layer;
+        var form = layui.form;
+        form.render();
+        form.on('radio(payWay)', function (data) {
+            if (data.value == 2) {
+                $('#upload-item').fadeIn();
+            } else {
+                $('#upload-item').fadeOut();
+            }
+        });
+    });
+</script>
+<script src="__PUBLIC__/Admin/js/jquery-2.1.1.min.js"></script>
+<script src="__PUBLIC__/Radmin_v3/js/audit.js"></script>
+<script type="text/javascript">
+    var auditUrl = '{:U(GROUP_NAME . "/Order/audit")}/';
+    var upload_dir_name = 'templet';
+</script>
+<link rel="stylesheet" href="__PUBLIC__/Radmin_v3/css/iframe.css" />
+<link rel="stylesheet" href="__PUBLIC__/Radmin_v3/css/layui.css" />
+<div class="iframe-wrapper">
+  <table class="table-list">
+      <tr>
+          <td class="checkItem">
+              <input type="hidden" name="mid" value="{$order.order_num}" checked="checked"/>
+          </td>
+      </tr>
+    <tr>
+      <td>订单号：</td>
+      <td>{$order.order_num}</td>
+    </tr>
+    <tr>
+      <td>商品金额：</td>
+      <td>{$order.total_price}</td>
+    </tr>
+    <tr>
+      <td>订单金额：</td>
+      <td>{$order.sum_price}</td>
+    </tr>
+    <tr>
+      <td>订货代理头像：</td>
+      <td><img src="{$order_user.headimgurl}" style="width:70px;height:70px;" /></td>
+    </tr>
+    <tr>
+      <td>姓名：</td>
+      <td>{$order_user.name}</td>
+    </tr>
+    <tr>
+      <td>手机号：</td>
+      <td>{$order_user.phone}</td>
+    </tr>
+    <tr>
+      <td>微信号：</td>
+      <td>{$order_user.wechatnum}</td>
+    </tr>
+    <tr>
+      <td>等级：</td>
+      <td>{$order_user.levname}</td>
+    </tr>
+    <tr>
+      <td>接单代理：</td>
+      <td>{$accept_user.name|default='总部'}</td>
+    </tr>
+    <tr>
+      <td>手机号：</td>
+      <td>{$accept_user.phone|default='总部'}</td>
+    </tr>
+    <tr>
+      <td>微信号：</td>
+      <td>{$accept_user.wechatnum|default='总部'}</td>
+    </tr>
+    <tr>
+      <td>等级：</td>
+      <td>{$accept_user.levname|default='总部'}</td>
+    </tr>
+    <!--<tr>
+      <td>运费支付截图：</td>
+      <td><img src="" alt="" />{$accept_user.levname|default='总部'}</td>
+    </tr>-->
+    <if condition="($order.shipper neq null) AND ($number neq null) ">
+      <volist name="number" id="vo">
+          <tr>
+              <td style="line-height: 38px;padding:5px;">物流单号{$i}：</td>
+              <td style="line-height: 38px;padding:5px;">{$vo}</td>
+              <td style="text-align: right;">
+                  <a target="__bank" href="http://api.weisika.net/kd100/index/jump?ShipperCode={$order.shipper}&LogisticCode={$vo}" class="layui-btn layui-btn-xs layui-btn-normal">查看物流信息</a>
+              </td>
+          </tr>
+      </volist>
+    </if>
+    <if condition="$status eq 1">
+    <tr>
+      <td>
+        <button type="button" class="layui-btn layui-btn-normal layui-btn-small" id="audit" data-status="1">通过审核</button>
+      </td>
+    </tr>
+    </if>
+  </table>
+</div>

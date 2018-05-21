@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+<include file="Public/header"/>
+<link href="__PUBLIC__/Admin/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="__PUBLIC__/Admin/css/style.css">
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-ui.js" ></script>
+<!-- 扫描微信调用摄像头 -->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<title>订单系统</title>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>var count =1;</script>
+<script>
+    wx.config({
+    appId: '<?php echo $signPackage["appId"];?>',
+      timestamp: <?php echo $signPackage["timestamp"];?>,
+      nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+      signature: '<?php echo $signPackage["signature"];?>',
+        jsApiList: [
+          // 所有要调用的 API 都要加到这个列表中
+          "scanQRCode"
+        ]
+      });
+    wx.ready(function () {
+      // 在这里调用 API
+    });
+   function ScanQRCode(scan) {
+      wx.scanQRCode({
+        desc: 'scanQRCode desc',
+          needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+          scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+          success: function (res) {
+              var result = res.resultStr; // 当needResult为 1 时，扫码返回的结果
+              var p = new Array();
+              var st = new Array();
+              p = result.split("p=");
+              st = result.split("st=");
+              if(p.length > 1){
+                var ptag = p[1].substring(0);
+              }
+              if(st.length > 1){
+                var status = st[1].substring(0,1);
+              }
+              var ptagObj = document.getElementsByName("ptag");
+            for(var i=0;i<ptagObj.length;i++)
+            { 
+              if(ptag == ptagObj[i].value){
+                if(scan == 'loop'){
+                  setTimeout(function(){
+
+                    ScanQRCode(scan);
+                  },1000);
+                }
+                return ;
+              }
+            }
+            var text = "";
+                text+= '<ul class="nbox4-1" id="myul'+count+'"><li>'+count+'</li>';
+                text+= '<li>'+ptag+'</li><li style="line-height: 23px;margin-top:10px;">';
+                text+= '</li><li><img src="__PUBLIC__/Admin/images/n_09.png" onclick="delPtag('+count+')"/>';
+                text+= '</li><input type="hidden" name="ptag" value="'+ptag+'"/>';
+                text+= '<input type="hidden" name="status" value="'+status+'"/></ul>';
+              $(".nbox4").append(text);
+              $(".nbox4").show();
+              count++;
+              setTimeout(function(){
+            if(scan == 'loop'){
+              
+              ScanQRCode(scan);
+            }
+              },500);
+          }
+      });
+  }
+  $(function(){
+  $('.nbox5-1').click(function(){
+    if (val%2 == 1) {
+      var level = $('select[name=level]').val();
+      var receive_id = $('select[name=receive_id]').val();
+      var templet_id = $('select[name=templet_id]').val();
+      var type = $('select[name=type]').val();
+      if (type == "") {
+          tusi('必须选择出库模式');
+          return false;
+      }
+      if (level == 0) {
+          tusi('必须选择经销商等级');
+          return false;
+      }
+      if (receive_id == 0) {
+          tusi('必须选择经销商');
+          return false;
+      }
+      if (templet_id == 0) {
+          tusi('必须选择产品');
+          return false;
+      }
+    } else{
+        var receive_id = $('input[name=myagentId]').val();
+        var templet_id = $('select[name=templet_id]').val();
+        var type = $('select[name=type]').val();
+        
+        if (receive_id == '') {
+            tusi('搜索不能为空');
+            return false;
+        }
+        if (templet_id == 0) {
+            tusi('必须选择产品');
+            return false;
+        }
+    }
+          
+          /*var agentId = $("input[name=receive_id]").val();
+          if(agentId == ""){
+            tusi('收货经销商不能为空!');
+            return;
+          }*/
+          //大标
+          var ptag = document.getElementsByName("ptag");
+          var managers = '';
+          for(var i=0;i<ptag.length;i++)
+          {
+            managers = managers + '|' + ptag[i].value;
+          }
+          //小标
+          var status = document.getElementsByName("status");
+          var m = '';
+          for(var j=0;j<status.length;j++)
+          {
+            m = m + '|' + status[j].value;
+          }
+          if(ptag.length == 0){
+            tusi('请扫描标签!');
+            return;
+          }
+          /*var receive_id = $("input[name=receive_id]").val();*/
+          //var send_id = $("input[name=send_id]").val();
+          //发货
+          $.post('__APP__/Admin/Client/phoneStock',{ptag:managers,status:m,receive_id:receive_id,templet_id:templet_id,type:type},function(data){
+            if(data.err_code != 'success'){
+              tusi(data.err_msg);
+            }else{
+              tusi('出库成功');
+              setTimeout(function(){
+                  location.href = "__APP__/Admin/Client/scan"
+              },3000)
+            }
+          })
+          
+      })
+      $('#model').change(function(){
+          $('.nbox4').html("");
+      })
+  })  
+</script>
+<script>
+    //删除标签
+    function delPtag(count){
+       $("#myul"+count).remove();
+    }
+</script>
+
+<script type="text/javascript">
+  var val = 1;
+    $(function(){
+      $(".nbox2").click(function(){
+          $("#s,.li1").toggle();
+          val++;
+      })
+    })
+</script>
+<script>
+$(function(){
+  $("#level").change(function(){
+    var level = $(this).val();
+    var html = '<option value="0">请选择经销商</option>';
+    if(level == 0){
+      $(".mylevel").html(html);
+      return;
+    }
+    $.post("__APP__/Radmin/Stock/getAgent",{level:level},function(data){
+      if(data != 'none'){
+        var text = '';
+        $.each(data,function(index,array){
+          text +='<option value="'+array["id"]+'">'+array["name"]+'</option>';
+        })
+        $(".mylevel").html(text);
+      }else{
+        $(".mylevel").html(html);
+      }
+    })
+  })
+})
+</script>
+<style>
+    .nbox2{
+        padding-top:50px;
+    }
+    
+</style>
+  </head>
+  <body >
+   <div class="nbox">
+     <div class="nbox1">
+       <ul>
+         <li>
+          <img src="__PUBLIC__/Admin/images/n_02.png" alt=""/>
+          <select class="nbox1-1" name="level" id="level">
+            <option value="0">请选择经销商等级</option>
+            <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                <option value="{$key_left_num}">{$vo_left_name}</option>
+            </foreach>
+          </select>
+        </li>
+        <li class="li1">
+          <img src="__PUBLIC__/Admin/images/n_03.png" alt=""/>
+          <select name="receive_id" class="nbox1-1 mylevel">
+            <option value="0">请选择经销商</option>
+            <!-- <option value="">1</option>
+            <option value="">2</option>
+            <option value="">3</option> -->
+          </select>
+        </li>
+        <li>
+          <img src="__PUBLIC__/Admin/images/n_04.png" alt=""/>
+          <select name="templet_id" class="nbox1-1">
+            <option value="0">请选择产品</option>
+            <volist name="templet" id="t">
+              <option value="{$t.id}">{$t.name}</option>
+            </volist>
+          </select>          
+        </li>
+        <li>
+          <img src="__PUBLIC__/Admin/images/n_10.png" alt=""/>
+          <select name="type" class="nbox1-1" id="model">
+            <option value="b">大标出库</option>
+            <option value="m">小标出库</option>
+          </select>          
+        </li>
+       </ul>
+       <input type="text" name="agent" onmouseup="this.select();" placeholder="搜索" maxlength="80" id="s"/ >
+       <div class="nbox2"><img src="__PUBLIC__/Admin/images/n_08.png" alt=""/><p>&nbsp;搜索</p></div>
+       <input type="hidden" id='receive_id' name="myagentId" value="">
+   </div>
+   <div >
+     <ul class="nbox3">
+       <li>编号</li>
+       <li>大标签</li>
+       <!-- <li>小标签范围</li> -->
+       <li>删除</li>
+     </ul>    
+   </div>
+   <div class="nbox4">
+     
+   </div>
+     <div class="nbox5">
+       <div class="nbox5-1"><img src="__PUBLIC__/Admin/images/n_1.png" alt=""/>&nbsp;提交</div>
+       <img src="__PUBLIC__/Admin/images/n_2.png" onclick="ScanQRCode('loop')" alt="" class="nbox5-2"/>
+       <div class="nbox5-3" onclick="ScanQRCode('one')"><img src="__PUBLIC__/Admin/images/n_3.png" alt=""/>&nbsp;扫描</div>
+     </div>
+     </div>
+     
+  </body>
+  <script>
+  $("#s").autocomplete({
+  minLength:1,
+  autoFocus:true, 
+  source: function(request, response){
+    $.ajax({
+      url: "__URL__/agent", 
+      dataType: "json",
+      data: {
+        term: request.term,
+      },
+      success: function(data){
+        response($.map(data,function(item){
+          return {
+//            data: item,
+            label :item.name+'---'+item.levname+'---'+item.phone,
+//            value :item.agent_name,
+            ID: item.id,
+//            province: item.agent_province,
+//            city: item.agent_city,
+          }
+        }));
+      } 
+    }); 
+  },
+  select: function(event, ui){
+//    $('#order_address').val(ui.item.address+item.agent_city);
+    $('#receive_id').val(ui.item.ID);
+  }
+});
+</script>
+
+</html>

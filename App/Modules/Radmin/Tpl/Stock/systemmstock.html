@@ -1,0 +1,398 @@
+<html>
+
+<head>
+    <style>
+        /*小屏幕样式*/
+
+        @media screen and (max-width: 768px) {
+            .edit-wrapper .layui-content .layui-form .items .form-text {
+                margin-left: 10px;
+            }
+            .form_submit {
+                margin-left: 10px;
+            }
+        }
+    </style>
+    <script>
+        /**
+         * 使用图片上传接口需满足以下条件
+         * 1.容器选择器id=upload
+         * 2.设置name=image的input标签隐藏域
+         * 3.指定上传目录名称
+         */
+        //上传目录
+        var upload_dir_name = 'stock';
+
+        function search() {
+            $(".searchagent").hide();
+            $(".searchagent").remove();
+            $(".mysearch").show();
+            $(".search").hide();
+        }
+    </script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-ui.js"></script>
+</head>
+
+<body>
+
+    <div class="container-fluid edit-wrapper">
+        <header class="edit-title">
+            <blockquote class="layui-elem-quote">
+                <span class="title">系统小标出库</span>
+            </blockquote>
+        </header>
+        <div class="layui-content">
+            <form class="layui-form layui-box" action="__URL__/m_mStock" data-auto="false" method="post">
+                <div class="layui-form-item  items searchagent">
+                    <label class="form-text">收货代理：</label>
+                    <div class="form-right">
+                        <div class="layui-input-inline three-select searchagent">
+                            <select lay-verify="stock_level" name="level" id="level" lay-filter="level">
+                                <option value="">请选择代理等级</option>
+                                <egt name="level_num" value="1">
+                                    <option value="1">{$level_name.1}</option>
+                                </egt>
+                                <egt name="level_num" value="2">
+                                    <option value="2">{$level_name.2}</option>
+                                </egt>
+                                <egt name="level_num" value="3">
+                                    <option value="3">{$level_name.3}</option>
+                                </egt>
+                                <egt name="level_num" value="4">
+                                    <option value="4">{$level_name.4}</option>
+                                </egt>
+                                <egt name="level_num" value="5">
+                                    <option value="5">{$level_name.5}</option>
+                                </egt>
+                                <egt name="level_num" value="6">
+                                    <option value="6">{$level_name.6}</option>
+                                </egt>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline three-select">
+                            <select name="receive_id" class="mylevel" lay-verify="stock_agent_id">
+                                <option value="">请选择代理</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline three-select">
+                            <button class="layui-btn layui-btn-normal search" onclick="search();">搜索代理</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item items mysearch" style="display: none;">
+                    <label class="form-text">收货代理：</label>
+                    <div class="form-right">
+                        <div class="layui-input-inline three-select">
+                            <select name="modules" lay-verify="required" lay-search="" id="m_search" lay-filter="m_search"></select>
+                            <!--<input type="hidden" id='receive_id' name="receive_id">-->
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item  items">
+                    <label class="form-text">选择模板：</label>
+                    <div class="form-right">
+                        <div class="layui-col-sm6">
+                            <div class="layui-col-sm6">
+                                <div class="layui-input-inline three-select">
+                                    <select name="templet_id" class="input-inf2 layui-input" lay-verify="stock_templet_id" lay-search="">
+                                        <volist name="templet" id="t">
+                                            <option value="{$t.id}">{$t.name}</option>
+                                        </volist>
+                                    </select>
+                                    <input type="text" style="display:none" placeholder="默认不用选择" onmouseup="this.select();" maxlength="80" style="width:300px;"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item items" id="addli">
+                    <label class="form-text">首末标签：</label>
+                    <div class="form-right">
+                        <div class="layui-input-inline three-select">
+                            <input class="layui-input tag-beg check-beg1" type="text" autocomplete="off" placeholder="首标签" name='pbeg[]'>
+                        </div>
+                        <div class="layui-input-inline three-select">
+                            <input class="layui-input tag-end check-end1" name='pend[]' type="text" autocomplete="off" placeholder="末标签">
+                        </div>
+                        <div class="layui-input-inline three-select">
+                            <input type="button" class="layui-btn layui-btn-normal" onclick="addli();" value="添加" />
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item  items" id="mtag">
+                    <label class="form-text"></label>
+                    <div class="form-right">
+                        <button class="layui-btn form_submit" lay-submit="">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        form.render();
+    </script>
+    <script type="text/javascript">
+        function deleteitem(ob) {
+            ob.parentNode.parentNode.parentNode.removeChild(ob.parentNode.parentNode);
+        }
+
+        $(document).ready(function () {
+
+            $("#m_url").keydown(function (event) {
+                if (event.which == 13) {
+                    getPtag();
+                }
+            });
+
+            $("#del").click(function () {
+                this.remove();
+            });
+
+            //          $("#form_submit").click(function() {
+            //            var searchagent = $('.mylevel').val();
+            //            var templet = $('#mytemplet').val();
+            //            var agent = $("input[name=receive_id]").val();
+            //            var flag = 1;
+            //            if(searchagent == 0 || searchagent == undefined) {
+            //              if(agent == "") {
+            //                layer.msg('收货代理不能为空！');
+            //                return false;
+            //              }
+            //
+            //            } else {
+            //              $("input[name=receive_id]").val(searchagent);
+            //            }
+            //            if(templet == "") {
+            //                layer.msg('模板不能为空！');
+            //              return false;
+            //            }
+            //            //add by z
+            //            $(".tag-beg").each(function() {
+            //              if("" == $(this).val()) {
+            //                  layer.msg('起始标签不能为空');
+            //                flag = 2;
+            //                return false;
+            //              }
+            //            })
+            //            $(".tag-end").each(function() {
+            //              if("" == $(this).val()) {
+            //                  layer.msg('结束标签不能为空');
+            //                flag = 2;
+            //                return false;
+            //              }
+            //            })
+            //            if(flag != 2) {
+            //              var blen = $(".tag-beg").length;
+            //              var elen = $(".tag-end").length;
+            //              if(blen != elen) {
+            //                  layer.msg('首尾标签数量不一致');
+            //                return false;
+            //              }
+            //              for(var i = 1; i <= blen; i++) {
+            //                var beg = $(".check-beg" + i).val();
+            //                var end = $(".check-end" + i).val();
+            //                if(beg - end > 0) {
+            //                    layer.msg('起始标签不能大于结束标签');
+            //                  return false;
+            //                }
+            //              }
+            //              //:add by z
+            //              $("#proform").submit();
+            //            }
+            //          });
+        });
+
+        /*function getPtag(){ 
+          var m_url = $("#m_url").val();
+          if(m_url){
+            $.ajax({ 
+              type: "post", 
+              url : "__URL__/bigPtag",
+              dataType:'json',
+              data: 'm_url='+m_url,
+              success: function(json){
+                //alert(json.username+'\n'+json.password); //把php中的返回值（json.username）给 alert出来 
+                if(json != null){
+                  var m_html = "";
+                  m_html = "<div><input type='text' readonly name='pbeg[]' value='"+json.ptag-beg+"' />~<input type='text' readonly name='pend[]' value='"+json.ptag-end+"'/>（共<b id='pronum'>"+json.ptag_total+"</b>件）<input type='hidden' value='"+json.ptag_total+"' name='product_num[]'/><input type='hidden' value='"+json.ptag_name+"' name='ptag_name[]'/><input onclick='deleteitem(this)' type='button' value='删除'/></div>";
+                  $('#addtag').append(m_html);
+                  $("#m_url").val('');
+                  $('#urlTip').html("");
+                }else{
+                  $('#urlTip').html("<font color='red'>标签不存在</font>");
+                }
+              }
+            }); 
+          }else{
+            $('#urlTip').html("");
+          }
+        }*/
+        var num = 2;
+
+        function addxb() {
+            var m_html = "";
+            m_html = "<div><input type='text' name='pbeg[]' class='tag-beg check-beg" + num +
+                "'/>~<input type='text' name='pend[]' class='tag-end check-end" + num +
+                "'/><input onclick='deleteitem(this)' type='button' value='删除'/></div>";
+            $('#addtag').append(m_html);
+            num++;
+        }
+
+        function addli() {
+            var m_html = "";
+            m_html += '<div class="layui-form-item items" ><label class="form-text"></label><div class="form-right">';
+            m_html += '<div class="layui-input-inline three-select">';
+            m_html += '<input class="layui-input tag-beg check-beg1" type="text" placeholder="首标签" name="pbeg[]">';
+            m_html += '</div><div class="layui-input-inline three-select">';
+            m_html +=
+                '<input class="layui-input tag-end check-end1" name="pend[]" type="text"  placeholder="末标签"></div>';
+            m_html +=
+                '<div class="layui-input-inline three-select"><input type="button" class="layui-btn layui-btn-danger" onclick="deleteitem(this);" value="删除"/></div></div></div>'
+
+            $('#mtag').before(m_html);
+            num++;
+        }
+    </script>
+
+    <script>
+        $(function () {
+            form.on('select(level)', function (data) {
+                var level = data.value;
+                var html = '<option value="0">请选择代理</option>';
+                if (level == 0) {
+                    $(".mylevel").html(html);
+                    return;
+                }
+                $.post("__APP__/Radmin/Stock/getAgent", {
+                    level: level
+                }, function (data) {
+                    if (data != 'none') {
+                        var text = '';
+                        $.each(data, function (index, array) {
+                            text += '<option value="' + array["id"] + '">' + array[
+                                "name"] + '</option>';
+                        })
+                        $(".mylevel").html(text);
+                    } else {
+                        $(".mylevel").html(html);
+                    }
+                    form.render('select')
+                })
+            })
+        })
+    </script>
+    <script type="text/javascript">
+        function search() {
+            $(".searchagent").hide();
+            $(".searchagent").remove();
+            $(".mysearch").show();
+            $(".search").hide();
+        }
+    </script>
+
+    <script type="text/javascript">
+        $('#m_search~.layui-form-select>.layui-select-title>.layui-input').attr('placeholder', '请输入搜索内容');
+        $(document).on('input', '#m_search~.layui-form-select>.layui-select-title>.layui-input', function () {
+            var _this = this;
+            var aim = $('#m_search');
+            if ($(_this).val().trim().length < 1) {
+                aim.empty();
+                form.render();
+                $('#m_search~.layui-form-select>.layui-select-title>.layui-input').attr('placeholder',
+                    '请输入搜索内容');
+                return;
+            }
+            $.ajax({
+                type: "post",
+                url: "__URL__/agent",
+                async: true,
+                data: {
+                    term: $(_this).val()
+                },
+                success: function (data) {
+                    var html = '';
+                    var count = 50;
+                    $.each(data, function (key, value) {
+                        if (count > 0) {
+                            html += '<option value="' + value.id + '">' + value.name +
+                                '---' + value.levname + '</option>';
+                            count--;
+                        } else {
+                            return;
+                        }
+                    });
+                    aim.empty().append(html);
+                    form.render('select');
+                    $('#m_search~.layui-form-select').addClass("layui-form-selected");
+                    $('#m_search~.layui-form-select>.layui-select-title>.layui-input').focus().val(
+                        $(_this).val()).attr('placeholder', '请输入搜索内容')
+                }
+            });
+        })
+
+        form.on('select(m_search)', function (data) {
+            var id = data.value;
+            $('#receive_id').val(id);
+        });
+
+        //    $("#agent").autocomplete({
+        //      minLength: 1,
+        //      autoFocus: true,
+        //      source: function(request, response) {
+        //        $.ajax({
+        //          url: "__URL__/agent",
+        //          dataType: "json",
+        //          data: {
+        //            term: request.term,
+        //          },
+        //          success: function(data) {
+        //            response($.map(data, function(item) {
+        //              return {
+        //                //            data: item,
+        //                label: item.name + '---' + item.levname,
+        //                //            value :item.agent_name,
+        //                ID: item.id,
+        //                //            province: item.agent_province,
+        //                //            city: item.agent_city,
+        //              }
+        //            }));
+        //          }
+        //        });
+        //      },
+        //      select: function(event, ui) {
+        //        //    $('#order_address').val(ui.item.address+item.agent_city);
+        //        $('#receive_id').val(ui.item.ID);
+        //      }
+        //    });
+
+        $("#templet").autocomplete({
+            minLength: 1,
+            autoFocus: true,
+            source: function (request, response) {
+                $.ajax({
+                    url: "__URL__/templet",
+                    dataType: "json",
+                    data: {
+                        term: request.term,
+                    },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                data: item,
+                                label: item.name,
+                                ID: item.id,
+                            }
+                        }));
+                    }
+                });
+            },
+            select: function (event, ui) {
+                $('#templet_id').val(ui.item.ID);
+            }
+        });
+    </script>
+</body>
+
+</html>

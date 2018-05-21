@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>分享二维码</title>
+		<include file="Public/header_v3"/>
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/share-qrcode.css"/>
+		
+	</head>
+	<body>
+		<div class="page">
+			<div class="content qrcode-wrapper">
+				<div class="share-wrapper">
+					<div class="share-user">
+						<img src="{$manager.headimgurl}" alt=""/>
+						<p class="user-name">{$manager.name}</p>
+                                                <p class="user-info">&nbsp;</p>
+					</div>
+					<div class="qrcode-img">
+						<img src="" alt="" id="qrcodeImg"/>
+					</div>
+					
+					<span>扫一扫上面的二维码图案，进入积分品牌商城！</span>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var qrurl='__APP__/sale/mallorder/get_mall_encode_link';
+		</script>
+		<script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/Admin_v3/js/qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="__PUBLIC__/Admin_v3/js/share_qrcode.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

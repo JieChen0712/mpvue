@@ -1,0 +1,33 @@
+.success-wrapper{
+	text-align: center;
+	font-size: 0;
+	padding-bottom: 30px;
+	color: #303030;
+	background-color: #fff;
+}
+.success-wrapper img{
+	margin-top: 20px;
+	width: 85px;
+}
+.success-wrapper .price{
+	font-size: 24px;
+	margin: 15px 0 0;
+	color: #ff5429;
+}
+.success-wrapper .text{
+	margin: 0;
+	font-size: 17px;
+}
+.success-wrapper .btn-wrapper{
+	margin-top: 20px;
+}
+.success-wrapper .btn-wrapper a{
+	height: 35px;
+	padding: 8px;
+	border: solid 1px #303030;
+	border-radius: 5px;
+	box-sizing: border-box;
+}
+.success-wrapper .btn-wrapper a:first-child{
+	margin-right: 40px;
+}

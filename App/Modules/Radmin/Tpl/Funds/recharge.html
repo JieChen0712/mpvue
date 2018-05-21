@@ -1,0 +1,58 @@
+<style type="text/css">
+	.layui-form-item span{
+	  line-height: 38px!important;
+    }
+    /*小屏幕样式*/
+    @media screen and (max-width: 768px) {
+        .layui-input-block {
+            left: -99px;
+        }
+    }
+</style>
+
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__URL__/recharge_submit" data-auto="false" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">代理姓名</label>
+        <div class="layui-input-block">
+            <input type="text" readonly value='{$dis_info.name}'class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">等级</label>
+        <div class="layui-input-block">
+            <input type="text" readonly value='{$dis_info.levname}'class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">微信号</label>
+        <div class="layui-input-block">
+            <input type="text" readonly value='{$dis_info.wechatnum}'class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">账户余额</label>
+        <div class="layui-input-block">
+            <input type="text" readonly value='{$recharge_money}'class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">充值金额</label>
+        <div class="layui-input-block">
+            <input type="number" name="recharge_money" value='' pattern="\d" required=""  title="请输入充值金额" placeholder="请输入充值金额" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请控制在30字以内" name="note" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+
+    <div class="layui-form-item text-center">
+        <input type='hidden' class="form-control" name="uid" value="{$dis_info.id}" >
+        <button class="layui-btn" type='submit'>确认充值</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消充值</button>
+    </div>
+
+</form>

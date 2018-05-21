@@ -1,0 +1,206 @@
+<html>
+
+    <head>
+        <style>
+            @media screen and (max-width: 768px) {
+                .ueditors {
+                    width: 100%;
+                    overflow: hidden;
+                }
+                .edit-wrapper .layui-content .layui-form .items .form-text {
+                    margin-left: 10px;
+                }
+                .edit-wrapper .layui-content .layui-form .items .three-select {
+                    float: none;
+                }
+                .form-right span {
+                    display: block;
+                    padding-left: 10px;
+                }
+            }
+            
+            blockquote {
+                max-width: 300px!important;
+            }
+            
+            .table-wrapper {
+                width: 200px;
+                overflow: inherit;
+            }
+            
+            .tb_input {
+                height: 38px;
+                border: none;
+                outline: none;
+                text-align: center;
+            }
+            .layui-form-item .layui-input-inline {
+                width: 160px;
+            }
+            .all-address .layui-form-select {
+                width: 330px;
+            }
+            .edit-wrapper .layui-content .layui-form .items .form-right .three-select {
+                width: 103px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container-fluid edit-wrapper layui-container">
+            <header class="edit-title">
+                <blockquote class="layui-elem-quote">
+                    <span class="title">购物车结算</span>
+                </blockquote>
+            </header>
+            <div class="layui-content">
+                <form class="layui-form layui-box" action="__URL__/orderhand" data-auto="false" method="post" enctype="multipart/form-data">
+                    <div class="layui-form-item  items">
+                        <label class="form-text">收货代理：</label>
+                        <div class="form-right">
+                            <div class="layui-input-inline">
+                                <select class="form-control" name="level" id="level" lay-filter="level">
+                                    <option value="">请选择代理等级</option>
+                                    <egt name="level_num" value="1">
+                                        <option value="1">{$level_name.1}</option>
+                                    </egt>
+                                    <egt name="level_num" value="2">
+                                        <option value="2">{$level_name.2}</option>
+                                    </egt>
+                                    <egt name="level_num" value="3">
+                                        <option value="3">{$level_name.3}</option>
+                                    </egt>
+                                    <egt name="level_num" value="4">
+                                        <option value="4">{$level_name.4}</option>
+                                    </egt>
+                                    <egt name="level_num" value="5">
+                                        <option value="5">{$level_name.5}</option>
+                                    </egt>
+                                    <egt name="level_num" value="6">
+                                        <option value="6">{$level_name.6}</option>
+                                    </egt>
+                                    <egt name="level_num" value="7">
+                                        <option value="7">{$level_name.7}</option>
+                                    </egt>
+                                    <egt name="level_num" value="8">
+                                        <option value="8">{$level_name.8}</option>
+                                    </egt>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline">
+                                <select name="agent_list" lay-verify="required" lay-filter="agent_list" id="agent_list" lay-search>
+                                    <option value="">请选择代理</option>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline">
+                                <input class="input-inf2" type="text" name="" id="daili2" autocomplete="off" placeholder="请搜索代理" class="layui-input" value="">
+                            </div>
+                            <div class="layui-input-inline">
+                                <input onclick="secect_daili('daili2')" class="layui-btn layui-btn-radius layui-btn-normal" value="搜索" type="button" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items">
+                        <label class="form-text">微信号：</label>
+                        <div class="form-right">
+                            <input class="input-inf2" type="text" name="" id="wechatnum" lay-verify="sequence" autocomplete="off" placeholder="" class="layui-input" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items">
+                        <label class="form-text">账户余额：</label>
+                        <div class="form-right">
+                            <input class="input-inf2" type="text" name="" id="recharge_money" lay-verify="sequence" autocomplete="off" placeholder="" class="layui-input" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items">
+                        <label class="form-text">请选择地址：</label>
+                        <div class="form-right all-address">
+                            <select name="address_id" lay-verify="required" lay-filter="sel_address" id="sel_address">
+                                <option value="">请选择地址</option>
+                                <option value="add">添加新地址</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items">
+                        <label class="form-text">地区：</label>
+                        <div class="form-right">
+                            <div class="layui-input-inline three-select">
+                                <select lay-verify="required" lay-filter="level_one" name="province" id="level_one" disabled>
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline three-select">
+                                <select lay-verify="required" lay-filter="level_two" name="city" id="level_two" disabled>
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline three-select">
+                                <select lay-verify="required" lay-filter="level_three" name="area" id="level_three" disabled>
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items">
+                        <label class="form-text">详细地址：</label>
+                        <div class="form-right">
+                            <input class="input-inf2" type="text" name="address" id="address_detail" lay-verify="" autocomplete="off" placeholder="" class="layui-input" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items">
+                        <label class="form-text">收货人：</label>
+                        <div class="form-right">
+                            <input class="input-inf2" type="text" name="agent_name" id="agent_name" lay-verify="sequence" autocomplete="off" placeholder="" class="layui-input" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items">
+                        <label class="form-text">手机号：</label>
+                        <div class="form-right">
+                            <input class="input-inf2" type="text" name="phone" id="phone" lay-verify="sequence" autocomplete="off" placeholder="" class="layui-input" value="" disabled>
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items">
+                        <label class="form-text">购买的产品：</label>
+                        <div class="form-right">
+                            <div class="table-wrapper">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item items">
+                    	<label class="form-text">总金额：</label>
+                        <div class="form-right">
+                            <input class="input-inf2" type="text" name="total_money" id="total_money" lay-verify="" autocomplete="off" placeholder="总金额" class="layui-input" value="" disabled>
+                            <span class="yuan">（元）</span>
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items">
+                        <label class="form-text"></label>
+                        <div class="form-right">
+                            <input type="hidden" name="order_num" id="order_num" value="" />
+                            <button class="layui-btn" lay-submit="" lay-filter="*">下单</button>
+                            <button class="layui-btn layui-btn-danger" type='button' id="btn2">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        var get_agentid = '__APP__/Radmin/Stock/getAgent';
+        var get_agentinfo = '__URL__/get_user_info';
+        var get_cartinfo = '__URL__/show_cart';
+        var get_distributor = '__GROUP__/manager/get_distributor_info';
+        var root = '__PUBLIC__';
+    </script>
+    <script src="__PUBLIC__/Radmin_v3/js/show_shopping_cart.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        $("#btn2").on('click', function() {
+            layer.confirm("确定要取消吗？", function (index) {
+                layer.close(index);
+                window.history.back(-1);
+            });
+        });
+    </script>
+</html>

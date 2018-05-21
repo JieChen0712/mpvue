@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>订单详情</title>
+    <include file="Public/header_v2"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/order.css">
+    </head>
+    <body>
+     <header class="header">
+        <a href="javascript:history.go(-1);" class="a"></a>
+        <p>订单详情</p>
+        <!--dd-->
+    </header>
+    <div class="order-section">
+        <div class="order-content">
+            <p class="order-num">订单号：{$orderInfo.0.order_num}</p>
+            <div class="order-detail">
+                <volist name="orderInfo" id="vo"> 
+                    <p>产品名称：<span>{$vo.product_name}x{$vo.num}</span></p>
+                </volist> 
+                <p>订单金额：<span class="red">￥{$vo.total_price}</span></p>
+                <p>订单日期：{$vo.time|date="Y-m-d H:i",###}</p>
+                <p>订单状态：
+                    <eq name="orderInfo.0.status" value="0">临时订单</eq>
+                    <eq name="orderInfo.0.status" value="1">未支付</eq>
+                    <eq name="orderInfo.0.status" value="2">未发货</eq>
+                    <eq name="orderInfo.0.status" value="3">已发货</eq>
+                    <eq name="orderInfo.0.status" value="4">已取消</eq>
+                    <eq name="orderInfo.0.status" value="5">已收货</eq>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="order-section">
+        <div class="order-content">
+            <p class="order-num">收货信息</p>
+            <div class="order-detail">
+                <p>收货人名称：{$orderInfo.0.s_name}</p>
+                <p>收货人电话：{$orderInfo.0.s_phone}</p>
+                <p>收货地址：{$orderInfo.0.s_address}</p>
+            </div>
+        </div>
+    </div>
+    
+    <notempty name="orderInfo.0.express_num">
+        <div class="order-section">
+            <div class="order-content">
+                <p class="order-num">物流信息</p>
+                <div class="order-detail">
+                    <p>物流公司：{$orderInfo.0.shipper}</p>
+                    <p>物流单号：{$orderInfo.0.express_num}</p>
+                    <if condition="($orderInfo[0].shipper neq null) AND ($orderInfo[0].express_num neq null) "> 
+                    <p><a style="color:red;" href="http://api.weisika.net/kd100/index/jump?ShipperCode={$orderInfo.0.shipper}&LogisticCode={$orderInfo.0.express_num}&callbackurl=http://{$Think.config.YM_DOMAIN}__GROUP__/activityorder/detail?order_num={$orderInfo.0.order_num}">点击查询物流信息</a></p>
+                    </if>
+                </div>
+            </div>
+        </div>
+    </notempty>
+        
+    <div class="order-section">
+        <div class="order-content">
+            <p class="order-num">备注信息</p>
+            <div class="order-detail">{$orderInfo.0.notes}</div>
+        </div>
+    </div>
+    
+    <eq name="orderInfo.0.status" value="1">
+    <eq name="open_wxpay" value="1">
+    <div class="order-section shouhuo_box1">
+        <div class="order-content"  onclick="pay('{$orderInfo.0.order_num}')">
+            <p class="order-num" style="text-align: center;color:#00AAFF;">微信支付</p>
+        </div>
+    </div>
+    </eq>
+    </eq>  
+    
+    <eq name="orderInfo.0.status" value="3">
+<!--    <div class="order-section shouhuo_box1">
+        <div class="order-content"  onclick="shouhuo('{$orderInfo.0.order_num}')">
+            <p class="order-num" style="text-align: center;color:#00AAFF;">确认收货</p>
+        </div>
+    </div>-->
+    </eq>    
+<script>
+    
+    function pay(order_num) {
+         window.location.href = '__APP__/admin/wxpay/pay?order_num='+order_num;
+    }
+    
+    function shouhuo(order_num){
+        if(confirm("您确定收货？")){
+            $.post("__APP__/admin/activityorder/receiving",{order_num:order_num},function(msg){
+            if(msg){
+                //tusi("以确定收货"); 
+                $("#ddzt").html("已收货");
+                $(".shouhuo_box1").hide();
+            }else{
+                tusi("收货处理失败");
+            }
+        });
+        
+         }else{
+            //否则说明下了
+          //tusi("您取消了确认收货");
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

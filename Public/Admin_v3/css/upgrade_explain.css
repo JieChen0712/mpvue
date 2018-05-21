@@ -1,0 +1,47 @@
+.upgrade_wrapper{
+    background-color: white;
+}
+.upgrade_wrapper .upgrade_list{
+    list-style: none;
+}
+.upgrade_wrapper .upgrade_list .upgrade_item{
+    display: flex;
+    padding: 10px;
+    border-top: solid 1px #ebebeb;
+}
+.upgrade_wrapper .upgrade_list .upgrade_item .item_left{
+    flex: 5;
+    display: flex;
+}
+.upgrade_wrapper .upgrade_list .upgrade_item .item_left .lvimg{
+    flex: 0 0 60px;
+    height: 60px;
+    margin-right: 10px;
+}
+.upgrade_wrapper .upgrade_list .upgrade_item .item_left .text_wrapper .text{
+    margin: 0;
+}
+.upgrade_wrapper .upgrade_list .upgrade_item .item_left .text_wrapper .text .levname{
+    margin-right: 10px;
+}
+.upgrade_wrapper .upgrade_list .upgrade_item .item_left .text_wrapper .text .upgrade_money{
+    color: #247ccb;
+}
+.upgrade_wrapper .upgrade_list .upgrade_item .item_left .text_wrapper .desc{
+    margin: 0;
+    font-size: 14px;
+    color: #b8b8b8;
+}
+.upgrade_wrapper .upgrade_list .upgrade_item .item_right{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.upgrade_wrapper .upgrade_list .upgrade_item .item_right a{
+    height: 2rem;
+    line-height: 2rem;
+}
+.upgrade_wrapper .upgrade_list .upgrade_item .item_right a.disable{
+    background: #888;
+}

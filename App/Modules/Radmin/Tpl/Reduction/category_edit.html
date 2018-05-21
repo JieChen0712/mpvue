@@ -1,0 +1,95 @@
+<layout name="Public/public" />
+
+
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+<script type="text/javascript" src='__PUBLIC__/js/index.js'></script>
+<h1 class="page-header">
+    编辑分类信息
+</h1>
+
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <form class="form-inline" method="post" action="__URL__/category_update" enctype="multipart/form-data">
+            <table class='table table-condensed table-hover table-responsive table-bordered'>
+                <tbody>
+                <tr>
+                    <td>上级名称
+                    </td>
+                    <td>
+                        <select name="pid" id="pid"  class="form-control">
+                            <option value="0">顶级栏目</option>
+                            <volist name="list" id="m">
+                                <if condition="$m['id'] eq $row['pid']">
+                                    <option value="{$m.id}" selected="selected">
+                                        <if condition="$m['level'] neq 0">|</if>
+                                        <?php echo str_repeat('-', $m['level']*4)
+                                        ?>
+                                        {$m.name}
+                                    </option>
+                                    <else/>
+                                    <option value="{$m.id}">
+                                        <if condition="$m['level'] neq 0">|</if>
+                                        <?php echo str_repeat('-', $m['level']*4)
+                                        ?>
+                                        {$m.name}
+                                    </option>
+                                </if>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>分类名称:
+                    </td><td>
+                    <input class="form-control" name="name" type="text" required value="{$row.name}" placeholder="请输入名称">
+                    <input type="hidden" name="id" value="{$row.id}">
+                </td>
+                </tr>
+                <tr>
+                    <td>图片
+                    </td><td>
+                    <input type="file" name="image"  id="file0"/>
+                    <br><span style="color:red">(请上传正方型的图片 图片大小为：80*80)</span>
+                        <br><img style="width:80px;height:80px;margin-left:105px;"   src="__ROOT__/{$row.image}" id="img0" >
+                    <input type="hidden" name="old_image" value="{$row.image}">
+                </td>
+                </tr>
+                <tr>
+                    <!--确定按钮-->
+                    <td >
+                        <input class="btn btn-default" id="确定" value="确定" type="submit">
+                    </td><td>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    (function($){
+        $("#file0").change(function(){
+            var objUrl = getObjectURL(this.files[0]) ;
+            console.log("objUrl = "+objUrl) ;
+            if (objUrl) {
+                $("#img0").attr("src", objUrl) ;
+            }
+        }) ;
+    })(jQuery);
+    //建立一個可存取到該file的url
+    function getObjectURL(file) {
+        var url = null ;
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+</script>
+

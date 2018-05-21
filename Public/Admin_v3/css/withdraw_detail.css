@@ -1,0 +1,89 @@
+.content {
+    background-color: #f5f4f9;
+    color: #303030;
+}
+
+.message {
+    margin: 5% 5% 0 5%;
+    padding: 3% 5%;
+    background-color: #fbfbfb;
+    line-height: 2rem;
+}
+
+.message .name {
+    position: relative;
+}
+
+.message .name span {
+    position: absolute;
+    right: 0;
+    color: #959595;
+}
+
+.message p {
+    margin: 0;
+}
+
+.recharge-wrapper {
+    margin: 0 5%;
+    padding: 3% 5%;
+    background-color: #fff;
+}
+
+.recharge-wrapper p {
+    margin: 0;
+}
+
+.recharge-wrapper .recharge-money {
+    display: flex;
+}
+
+.recharge-wrapper .recharge-money span {
+    flex: 0 0 1.5625rem;
+    font-size: 1.8125rem;
+}
+
+.recharge-wrapper .recharge-money p {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    font-size: 2.8125rem;
+}
+.account{
+    display: flex;
+    width: 90%;
+    margin: 0 5%;
+    padding: 5%;
+    background-color: #FBFBFB;
+}
+.account .account-title {
+    flex: 0 0 5.625rem
+}
+.account .account-content {
+    flex: 1
+}
+.account .account-content p {
+    margin: 0
+}
+.account .account-content span {
+    color: #0F3D6E
+}
+.create-time {
+    display: flex;
+    width: 90%;
+    margin: 0 5%;
+    padding: 5%;
+    color: #959595;
+    background-color: #fff;
+}
+
+.create-time p {
+    flex: 0 0 5.625rem;
+    margin: 0;
+}
+
+.create-time span {
+    flex: 1;
+    text-align: right;
+}

@@ -1,0 +1,72 @@
+<layout name="Public/public" />
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <title>编辑{$Think.config.internal_name}级别</title>
+        <link href="__PUBLIC__/css/index.css" rel="stylesheet">
+        <script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+
+        <script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+        <script type="text/javascript" src='__PUBLIC__/js/index.js'></script>
+    </head>
+    <body class="zh_CN">
+        <div class="col_main">
+            <div class="main_hd">
+                <div class="title_tab" id="topTab">
+                    <ul class="tab_navs mt title_tab">
+                        <li class="tab_nav js_top  selected" data-id="send">
+                            <a href="#">编辑{$Think.config.internal_name}</a></li>
+                    </ul>
+
+
+                </div>
+                <div class="main_bd">
+                    <form  method="post" action="__URL__/change_internal_level">
+                        <table style="margin-left:0px;text-align:left;width:900px;">
+                            <tbody>
+
+                                <tr>
+                                    <td>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：
+                                        {$vo.name}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>微&nbsp;&nbsp;信&nbsp;&nbsp;号：
+                                        {$vo.wechatnum}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{$Think.config.internal_name}&nbsp;级别：
+                                        <!--{$vo['internal_level']}-->
+                                        <eq name="vo.internal_level" value="0">无<else />{$config_internal_level[$vo['internal_level']]}</eq>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>更改&nbsp;级别：
+                                        <select name="internal_level">
+                                            <option value="">请选择级别</option>
+                                            <option value="0">无</option>
+                                            <foreach name="Think.config.internal_level" item="vo_int" key='key_int'>
+                                                <option value="{$key_int}">{$vo_int}</option>
+                                            </foreach>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr><td></td></tr>
+                                <tr>
+                                    <!--确定按钮-->
+                                    <td align="center">
+                                        <input class="btn1" id="确定" value="确定" type="submit">
+                                    </td>
+                                    <td><input type="hidden" name="id" value="{$vo.id}"/></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </form><br/>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

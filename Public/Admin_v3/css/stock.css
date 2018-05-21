@@ -1,0 +1,281 @@
+.stock-list li {
+	display: flex;
+	background-color: white;
+	margin-bottom: 6px;
+	padding: 19px 20px 10px;
+	height: 115px;
+	color: #303030;
+}
+
+.stock-list li img {
+	flex: 1;
+	width: 80px;
+	height: 80px;
+	margin-right: 12px;
+}
+
+.stock-list li .list-right {
+	flex: 3;
+	position: relative;
+}
+
+.stock-list li .list-right p {
+	margin: 0;
+	width: 100%;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+
+.stock-list li .list-right p:last-child {
+	position: absolute;
+	bottom: 0;
+}
+
+.stock-list li .list-right p span {
+	color: #fb4835;
+}
+
+.stock-list li .list-right p input {
+	float: right;
+	width: 62px;
+	height: 27px;
+	color: white;
+	background-color: #fb4835;
+	border: none;
+	border-radius: 5px;
+}
+
+.stock .content-block {
+	margin-top: 50px;
+	padding: 0;
+	color: #303030;
+}
+
+.buttons-tab {
+	height: 50px;
+	display: flex;
+}
+
+.buttons-tab .buttons-wrap {
+	flex: 1;
+	text-align: center;
+}
+
+.buttons-tab .button {
+	line-height: 50px;
+	height: 50px;
+	font-size: 1rem;
+	width: auto;
+	display: inline-block;
+	text-align: center;
+	margin: 0 auto;
+	bottom: 0;
+}
+
+.buttons-tab .button.active {
+	z-index: 100;
+	color: #fb4834;
+	border-color: #fb4834;
+}
+
+.goods-infs {
+	background-color: #fafafa;
+	margin: 0;
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+
+.goods-infs img {
+	width: 75px;
+	height: 75px;	
+	float: left;
+	margin: .5rem .8rem .5rem .2rem;
+}
+
+.goods-infs .goods-title {
+	font-weight: bold;
+	margin-top: .5rem;
+	margin-right: 1rem;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+}
+
+.select-num {
+	margin-top: .2rem;
+	overflow: hidden;
+	margin-right: 1rem;
+	color: #a0a0a0;
+}
+
+.goods-infs .goods-format {
+	margin: 0;
+	color: #a0a0a0;
+	transform: scale(.8);
+	margin-left: -7rem;
+}
+
+.goods-infs .goods-price {
+	color: #fc4735;
+	font-weight: bold;
+	margin-top: .2rem;
+	margin-bottom: 0;
+	margin-right: 1rem;
+}
+
+.goods-price input {
+	color: black;
+	font-weight: normal;
+	/*border-radius: 0;*/
+	height: 1.25rem;
+	padding: 0;
+	color: #303030;
+}
+
+.shownum {
+	width: 3.4375rem;
+	background-color: #eee;
+	border: none;
+	outline: none;
+	text-align: center;
+	margin: 0 .1rem;
+	color: #303030;
+}
+
+.numadd {
+	width: 1.25rem;
+	border: none;
+	background-color: #eee;
+	color: #303030;
+}
+
+.reducenum {
+	width: 1.25rem;
+	border: none;
+	background-color: #eee;
+	color: #303030;
+}
+
+.count-num input {
+	float: right;
+	margin: .1rem;
+}
+
+.control-menu {
+	background-color: white;
+	padding: 0 10px;
+	height: 53px;
+	background-color: white;
+	border-bottom: solid 1px #c9c9c9;
+	font-size: 0;
+}
+
+.control-menu button {
+	float: right;
+	font-size: 1rem;
+}
+
+.btn-select {
+	float: left;
+	transform: scale(.7);
+	vertical-align: middle;
+	margin-left: .6rem;
+	margin-top: 40px;
+	border: solid 1px #787878;
+	border-radius: 50%;
+	width: 2rem;
+	display: inline-block;
+	background: transparent;
+	height: 2rem;
+}
+
+.goods-infs>.active {
+	background-image: url(../images/mallorder/selected.png);
+	border: 1px solid transparent;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.take-title{
+	height: 50px;
+	background-color: white;
+	padding: 0 20px;
+	border-bottom: solid 1px #c9c9c9;
+}
+.take-title p{
+	line-height: 50px;
+	margin: 0;
+	color: #303030;
+}
+.take-title p img{
+	width: 16px;
+	height: 16px;
+	vertical-align: text-bottom;
+	margin-right: 10px;
+}
+.take-list{
+	margin-bottom: 15px;
+	background-color: white;
+}
+.bottom-content{
+	background-color: white;
+	margin-bottom: 22px;
+}
+.bottom-content .loca-title{
+	padding: 0 20px;
+}
+.bottom-content .loca-title{
+	margin: 0;
+	line-height: 50px;
+	font-size: 1rem;
+	border-bottom: solid 1px #C9C9C9;
+}
+.bottom-content .loca-title img{
+	height: 22px;
+	margin-right: 10px;
+	vertical-align: text-bottom;
+}
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+.address-wrap{
+	display: flex;
+	font-size: 14px;
+	color: #a0a0a0;
+}
+.address-wrap p{
+	padding: 0 20px;
+	overflow: hidden;
+}
+.address-wrap .wrapper-left{
+	flex: 9;
+}
+.address-wrap .wrapper-right{
+	flex: 1;
+	position: relative;
+}
+.address-wrap .wrapper-right i{
+	position: absolute;
+	top: 50%;
+	margin-top: -8px;
+	vertical-align: middle;
+}
+.submit-take{
+	background-color: #fb4538;
+	color: white;
+	border: none;
+	padding:5px 20px;
+	margin-right: 20px;
+	border-radius: 5px;
+	margin-bottom: 50px;
+}
+.infinite-scroll-preloader {
+  margin-top:-20px;
+}
+/*# sourceMappingURL=stock.css.map */

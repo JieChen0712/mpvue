@@ -1,0 +1,362 @@
+<html>
+
+<head>
+    <script>
+        /**
+         * 使用图片上传接口需满足以下条件
+         * 1.容器选择器id=upload
+         * 2.设置name=image的input标签隐藏域
+         * 3.指定上传目录名称
+         */
+        //上传目录
+        var upload_dir_name = 'manager';
+        form.render();
+    </script>
+    <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
+</head>
+
+<body>
+
+    <div class="container-fluid edit-wrapper">
+        <header class="edit-title">
+            <blockquote class="layui-elem-quote">
+                <span class="title">总部添加经销商</span>
+            </blockquote>
+            
+            <?php if( $aid==1 ):?>
+            <div class="layui-upload">
+                <button type="button" class="layui-btn pull-right" id="test1">
+                    <i class="layui-icon"></i>导入代理信息</button>
+            </div>
+            <?php endif;?>
+            
+        </header>
+        <div class="layui-content">
+            <form class="layui-form layui-box" action="__URL__/user_add_submit" data-auto="false" method="post">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>注意后台添加的经销商无法自动登录账号，请尽量使用手机注册账号</legend>
+                </fieldset>
+                <div class="layui-form-item items">
+                    <label class="form-text">授权编号：</label>
+                    <div class="form-right">
+                        <input class="input-inf2 layui-input" type="text" name="authnum" autocomplete="off" title="请输入授权编号"
+                            placeholder="如无特定授权号，请不要输入" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item items">
+                    <label class="form-text">姓名：</label>
+                    <div class="form-right">
+                        <input class="input-inf2 layui-input" required="" type="text" name="name" lay-verify="name" autocomplete="off" title="请输入经销商姓名"
+                            placeholder="请输入经销商姓名" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item  items">
+                    <label class="form-text">微信号：</label>
+                    <div class="form-right">
+                        <input class="input-inf2 layui-input" type="text" name="wechatnum" lay-verify="required" autocomplete="off" placeholder="请输入微信号"
+                            value="{$vo.wechatnum}" required="" title="请输入微信号">
+
+                    </div>
+                </div>
+                <div class="layui-form-item  items">
+                    <label class="form-text">手机号：</label>
+                    <div class="form-right">
+                        <input class="input-inf2 layui-input" type="number" name="phone" lay-verify="phone" autocomplete="off" placeholder="请输入手机号码"
+                            value="{$vo.phone}" required="" title="请输入手机号码">
+
+                    </div>
+                </div>
+                <div class="layui-form-item  items">
+                    <label class="form-text">邮箱：</label>
+                    <div class="form-right">
+                        <input class="input-inf2 layui-input" type="text" name="email" autocomplete="off" placeholder="请输入邮箱地址"
+                            value="{$vo.email}">
+
+                    </div>
+                </div>
+                <div class="layui-form-item  items">
+                    <label class="form-text">身份证号：</label>
+                    <div class="form-right">
+                        <input class="input-inf2 layui-input" type="number" name="idennum" lay-verify="identity" autocomplete="off" placeholder="请输入身份证号码"
+                            value="{$vo.idennum}" required="" title="请输入身份证号码">
+
+                    </div>
+                </div>
+                <div class="layui-form-item special-item items">
+                    <label class="form-text label-required">地区：</label>
+                    <div class="form-right flex special-flex">
+                        <div class="flex-item">
+                            <select class="select-hook" name="province" id="province" lay-filter="province" lay-verify="required" lay-search="">
+                                <option value="{$vo.province}">{$vo.province}</option>
+                            </select>
+                            <!--<input type="text" autofocus name="address" value='{$vo.idennum}' pattern="^\S{1,}$" required=""  title="请输入地址" placeholder="请输入地址" class="layui-input">-->
+                        </div>
+                        <div class="flex-item">
+                            <select class="select-hook" name="city" id="city" lay-filter="city" lay-verify="required" lay-search="">
+                                <option value="{$vo.city}">{$vo.city}</option>
+                            </select>
+                            <!--<input type="text" autofocus name="address" value='{$vo.idennum}' pattern="^\S{1,}$" required=""  title="请输入地址" placeholder="请输入地址" class="layui-input">-->
+                        </div>
+                        <div class="flex-item">
+                            <select class="select-hook" name="county" id="area" lay-filter="area" lay-verify="required" lay-search="">
+                                <option value="{$vo.county}">{$vo.county}</option>
+                            </select>
+                            <!--<input type="text" autofocus name="address" value='{$vo.idennum}' pattern="^\S{1,}$" required=""  title="请输入地址" placeholder="请输入地址" class="layui-input">-->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-form-item  items">
+                    <label class="form-text">详细地址：</label>
+                    <div class="form-right">
+                        <input class="input-inf2 layui-input" type="text" name="address" lay-verify="address" autocomplete="off" placeholder="请输入地址信息"
+                            value="{$vo.address}" required="" title="请输入地址信息">
+                    </div>
+                </div>
+                
+                <div class="layui-form-item  items">
+                    <label class="form-text label-required">经销商级别：</label>
+                    <div class="form-right">
+                        <div class="layui-col-sm6">
+                            <div class="layui-col-sm6">
+                                <div class="layui-input-inline three-select">
+                                    <select name="level" class="input-inf2 layui-input" required lay-verify="required" lay-search="">
+                                        <option value="0">请选择经销商等级</option>
+                                        <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                                            <option value="{$key_left_num}">{$vo_left_name}</option>
+                                        </foreach>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="layui-form-item  items">
+                    <label class="form-text">经销商上级：</label>
+
+                    <div class="form-right">
+                        <div id="choose_dis">
+                            <div class="layui-input-inline three-select">
+                                <select name="level1" id="level1" lay-verify="required" lay-filter="level1">
+                                    <option value="0">请选择经销商上级等级</option>
+                                    <option value="-1">总部</option>
+                                    <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                                        <option value="{$key_left_num}">{$vo_left_name}</option>
+                                    </foreach>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline three-select" style="margin: 0 15px 5px 0;">
+                                <select name="pid" lay-verify="required" class="mylevel1">
+                                    <option value="0">请选择经销商</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--<div id="search_dis">-->
+                        <!--<input class="input-inf2 layui-input" type="text" placeholder="请输入经销商姓名" onmouseup="this.select();" maxlength="80" autocomplete="off" id="agent">-->
+                        <!--<input type="hidden" id='sear_pid' name="sear_pid">-->
+                        <!--</div>-->
+
+                        <!--<div class="layui-input-inline three-select">-->
+                        <!--<button class="layui-btn layui-btn-normal" id="search_dis_button">搜索经销商</button>-->
+                        <!--</div>-->
+                    </div>
+                </div>
+
+                <!--引入图片页面-->
+                <div class="layui-form-item items">
+                    <label class="form-text">头像：</label>
+                    <div class="form-right">
+                        <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
+                        <include file="Public/image" image_name="image" is_show="0" img_url="" />
+                        <small class="orange-text desc">（*如不选择则显示默认头像）
+                            <img src="__PUBLIC__/images/headimg.png" width="10%" />
+                        </small>
+
+                    </div>
+                </div>
+                <if condition="($Think.config.IS_SUBMIT_ID_CARD_IMG eq 1) OR ($Think.config.IS_SUBMIT_ID_CARD_IMG eq 2)">
+                    <div class="layui-form-item items">
+                        <label class="form-text">身份证图片：</label>
+                        <div class="form-right">
+                            <include file="Public/image" image_name="image2" is_show="0" img_url="" />
+                            <small class="orange-text desc">（*手持身份证正面）</small>
+                        </div>
+                    </div>
+                </if>
+
+                <if condition="($Think.config.IS_SUBMIT_ID_CARD_IMG eq 1) OR ($Think.config.IS_SUBMIT_ID_CARD_IMG eq 3)">
+                    <div class="layui-form-item items">
+                        <label class="form-text">保证金截图：</label>
+                        <div class="form-right">
+                            <include file="Public/image" image_name="image3" is_show="0" img_url="" />
+                            <small class="orange-text desc">（*限一张）</small>
+                        </div>
+                    </div>
+                </if>
+
+                <div class="layui-form-item  items">
+                    <label class="form-text"></label>
+                    <div class="form-right">
+                        <button class="layui-btn" lay-submit="">立即提交</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    $(function () {
+
+
+        $("#search_dis").hide();
+
+        $("#search_dis_button").click(function () {
+            $("#search_dis").show();
+            $("#choose_dis").hide();
+        });
+
+        form.on('select(level1)', function (data) {
+            var level1 = data.value;
+            var html = '<option value="0">请选择经销商</option>';
+            if (level1 == 0) {
+                $(".mylevel1").html(html);
+                form.render();
+                return;
+            } else if (level1 == '-1') {
+                html = '<option value="0">总部</option>';
+                $(".mylevel1").html(html);
+                form.render();
+                return;
+            }
+            $.post("__APP__/Radmin/Stock/getAgent", {
+                level: level1
+            }, function (data) {
+                if (data != 'none') {
+                    var text = '';
+                    $.each(data, function (index, array) {
+                        text += '<option class="' + array["id"] + '" value="' + array[
+                            "id"] + '">' + array["name"] + '</option>';
+                    })
+                    $(".mylevel1").html(text);
+                } else {
+                    $(".mylevel1").html(html);
+                }
+                form.render();
+            })
+        })
+    });
+
+    layui.use(['upload'], function () {
+        var upload = layui.upload;
+        //文件上传
+        var uploadInst = upload.render({
+            elem: '#test1',
+            url: '__URL__/impordemanager_ajax',
+            accept: 'file', //普通文件
+            exts: 'xls|xlsx',
+            auto: true,
+            done: function (res) {
+                layer.closeAll('loading'); //关闭loading
+
+
+        if( res.code == 1 ){
+            layer.msg(res.msg);
+            //location.reload();
+        }
+        else if( res.msg != null && res.msg != '' ){
+            layer.msg(res.msg);
+        }
+        else{
+            layer.msg('未定义错误，可能是系统繁忙，请重试！');
+        }
+      },
+      error: function(index, upload){
+        layer.closeAll('loading'); //关闭loading
+        //当上传失败时，你可以生成一个“重新上传”的按钮，点击该按钮时，执行 upload() 方法即可实现重新上传
+        layer.msg('无法调用文件上传！');
+      }
+    });
+    var province,province1,city,city1,area,area1;
+
+    $.getJSON("__PUBLIC__/Radmin_v3/plugs/echart/map/area.json",function(data){
+        province = new Array();
+        $.each(data,function(key,value){
+            province.push('<option value="'+value.name+'">'+value.name+'</option>');
+        })
+        $('#province').append(province);
+        form.render('select');
+    })
+
+    form.on('select(province)',function(data){
+        province1 = data.value;
+        $.getJSON("__PUBLIC__/Radmin_v3/plugs/echart/map/area.json",function(data){
+            city = new Array();
+            $.each(data, function(key,value) {
+                if(province1 === value.name){
+                    $.each(value.sub, function(k,v) {
+                        city.push('<option value="'+v.name+'">'+v.name+'</option>');
+                    });
+                }
+            });
+            $('#city').empty().append(city);
+            form.render('select');
+        });
+    })
+
+    form.on('select(city)',function(data){
+        city1 = data.value;
+        $.getJSON("__PUBLIC__/Radmin_v3/plugs/echart/map/area.json",function(data){
+            area = new Array();
+            $.each(data, function(key,value) {
+                if(province1 == value.name){
+                    $.each(value.sub, function(k,v) {
+                        if(city1 == v.name){
+                            if(!(v.sub==undefined||v.sub==""||v.sub==null)){
+                                $.each(v.sub, function(i,j) {
+                                    area.push('<option value="'+j.name+'">'+j.name+'</option>');
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+            $('#area').empty().append(area);
+            form.render('select');
+        });
+    })
+    form.render();
+    })
+    //    $("#agent").autocomplete({
+    //      minLength: 1,
+    //      autoFocus: true,
+    //      source: function(request, response) {
+    //        $.ajax({
+    //          url: "__URL__/agent",
+    //          dataType: "json",
+    //          data: {
+    //            term: request.term,
+    //          },
+    //          success: function(data) {
+    //            response($.map(data, function(item) {
+    //              return {
+    //                //						data: item,
+    //                label: item.name + '---' + item.levname,
+    //                // 						value :item.agent_name,
+    //                ID: item.id,
+    //                //						province: item.agent_province,
+    //                //						city: item.agent_city,
+    //              }
+    //            }));
+    //          }
+    //        });
+    //      },
+    //      select: function(event, ui) {
+    //        //		$('#order_address').val(ui.item.address+item.agent_city);
+    //        $('#sear_pid').val(ui.item.ID);
+    //      }
+    //    });
+</script>
+
+</html>

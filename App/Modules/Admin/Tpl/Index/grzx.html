@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <include file="Public/header"/>
+    <title>经销商后台</title>
+    </head>
+    <body style="background-color:#f5f5f5">
+    <header class="header">
+        <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/new/left_icon.png" alt=""></a>
+        <p>{$Think.config.SYSTEM_NAME}经销商后台<span id="loginout"><a href="#" class="a1">退出</a></span></p>
+    </header>
+        <div class="index_bg">
+            <div class="wrap">
+                <img src="__PUBLIC__/images/new/wx_logo.png" alt="">
+            </div>
+                <div class="wrap1">
+                <p class="p">Trump.d<p/>
+                <p>微信号：601648626<p/>
+                <!-- <p><span><img src="__PUBLIC__/images/new/jf.png" alt="">&nbsp;&nbsp;</span>积分：100<p/> -->     
+             </div>
+        </div>
+        <section class="section">
+            <ul>
+                <a href="#">
+                    <li>
+                        <div class="logo1"><img src="__PUBLIC__/images/new/grzx_icon.png" alt=""></div>
+                        <p class="test1">修改密码<br><span>修改登录密码</span></p>
+                        <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                        <div class="hr"></div>
+                    </li> 
+                </a>
+               <!-- <a href="#">
+                   <li>
+                       <div class="logo1"><img src="__PUBLIC__/images/new/jf_icon.png" alt=""></div>
+                       <p class="test1">兑换积分<br><span>通过积分兑换产品或进行级别升级</span></p>
+                       <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                       <div class="hr"></div>
+                   </li>
+                   </a>  -->
+            </ul>
+        </section>  
+		<script>
+			$("#loginout").click(function(){
+				location.href = "__APP__/Admin/Login/loginout";
+			})
+		</script>
+    </body>
+    </html>

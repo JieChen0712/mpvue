@@ -1,0 +1,217 @@
+.query_txt {
+    padding: 0;
+    position: relative;
+    margin: 0 auto;
+    font-size: 90%; 
+    border: 1px solid #f6f4f2;
+    background: #FFFFFF;
+    word-wrap: break-word;
+    word-break: normal;
+    -moz-box-shadow: 0px 0px 6px #f6f4f2;
+    -webkit-box-shadow: 0px 0px 6px #f6f4f2;
+    box-shadow: 0px 0px 6px #f6f4f2;
+    background: url(../images/menu/name_bg.png) no-repeat center;
+    background-size: cover; 
+     width: 320px;
+    height: 60px;
+    text-shadow: none;
+    color: #ebc8b4;
+    font-family: 'Microsoft YaHei',Arial, Helvetica, sans-serif;
+}
+
+.query_txt .left_title {
+    width: 25%;
+    height:100%;
+    float: left;
+    
+}
+
+.query_txt .top_title {
+    width: 100%; 
+    height: 50%;
+    line-height: 34px;
+    padding-left: 30px;
+    font-size: 0.8em;
+}
+.query_txt .bottom_title {
+    width: 100%;
+    height: 50%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 800;
+    
+}
+.query_txt .fw_text {
+    width: 51%; 
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500; 
+     float: left;
+    color: #636161;
+    padding-left: 8px;
+    padding-top: 2px;
+    
+}
+.query_txt .fw_text p{
+    padding: 0;
+    margin: 0;
+    line-height:13px;
+    height: 13px;
+    font-size: 0.8em;
+    text-align: left;
+}
+
+.query_txt .fw_button {
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500; 
+     float: left;
+    display: block;
+    font-size: 0.8em;
+}
+
+.query_txt .fw_button a{ 
+   background-color: #ffffff;
+    border: 2px solid #f6f3f1;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    height: 26px;
+    margin: 5px auto;
+   
+    line-height: 25px;
+    font-size: 0.8em;
+    color: #000000;
+    text-decoration: none;
+    padding: 2px;
+}
+
+.music_img {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    text-align: center;
+    margin: 0px auto;
+    background: #f6f4f2;
+}
+
+.music_img img {
+    max-width: 60px;
+    max-height: 60px;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    margin: 2px auto;
+}
+
+.music_img2 {
+    width: 100%;        
+    text-align: center;
+    margin: 0;
+    padding:0;
+    background: #f6f4f2;
+}
+
+.music_img2 img {        
+    width: 100%;    
+    overflow: hidden;
+    margin: 0;
+    padding:0;
+}
+
+.img_td {
+    margin: 0px;
+    text-align: center;
+    font-size: 70%;
+}
+
+.img_td a{
+    text-decoration: none;
+    color: #000000;
+}
+
+.img_td a:link,.img_td a:hover,.img_td a:active,.img_td a:visited{
+    text-decoration: none;
+    color: #000000;
+}
+
+.music_div {
+    line-height: 25px;
+    text-shadow: 0 1px 0 #FFF;
+    position: relative;
+    margin: 3px auto;
+    background: #f6f4f2;
+    word-wrap: break-word;
+    word-break: normal;
+    text-align: center;
+}
+
+.product {
+    text-align:center;
+    margin-bottom:12px;
+    margin-top:-10px;
+}
+
+.product a {
+    color:#000000;
+    margin-bottom:5px;
+}
+
+.product a:hover{
+    color:#000000;
+}
+
+.product .customer {
+    width:80%;
+    height:80px;
+    /*background:url(../../../Images/name_bg.png) no-repeat;*/
+    margin:auto;
+    font-family: 'Microsoft YaHei',Arial, Helvetica, sans-serif;
+    background-color:#F6F3F1;
+}
+
+.product .customer .title {
+    width:100px;text-align:right;
+    padding-top:0px;
+    background:url(../../../Images/name_bg1.png) no-repeat;
+    background-size:102px auto;    
+}
+
+.product .customer .title span {    
+    margin-right:10px;
+    color:#FFF;
+}   
+
+.product .customer .info {
+    text-align:left;padding-left:10px
+}
+
+.navbar img {
+    height:65px;    
+}
+
+.menu1 {
+    height:60px;
+    background:url(../../../Images/bottom_bg.png) no-repeat center;
+    background-size:100% 100%;
+}
+
+.menu2 {    
+    height:60px;
+    background:url(../../../Images/bottom_bg.png) no-repeat center;
+    background-size:100% 100%;
+}
+
+.menu3 {
+    height:60px;
+    background:url(../../../Images/bottom_bg.png) no-repeat center;
+    background-size:100% 100%;
+}
+
+.menu4 {
+    height:60px;
+    background:url(../../../Images/bottom_bg.png) no-repeat center;
+    background-size:100% 100%;
+}

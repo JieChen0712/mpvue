@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>云仓库存订单详情</title>
+    <include file="Public/order"/>
+    <script type="text/javascript" src="__PUBLIC__/js/my_dd.js"></script>
+    </head>
+    <style type="text/css">
+    .test_box .shouhuo_box1{background:#4abcf2;width:100%;font-size:25px;color:#fff;position: fixed;bottom: 0;text-align: center;
+        height:60px;line-height:60px;}
+     .height{height:60px;}   
+    </style>
+    <body style="background-color:#f5f5f5;">
+     <header class="header">
+        <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/index/left_icon.png" alt=""></a><p>云仓库存订单详情</p>
+    </header>
+    <div class="test_box">
+        <div class="test1 ">
+        <p class="p test">云仓库存订单号：{$orderInfo.0.order_num}</p>
+        </div>
+     <div class="test_box1">
+        <volist name="orderInfo" id="vo">
+            <p class="test">{$vo.p_name}x{$vo.num}</p>
+        </volist>
+        <p class="test">云仓库存订单金额：<span>￥{$vo.total_price}</span></p>
+        <p class="test">云仓库存订单日期：{$vo.time|date="Y-m-d H:i",###}</p>
+        <notempty  name="row.ordernumber">
+        <p class="test">快递单号：{$row.ordernumber}</p>
+        </notempty >
+        <!-- <p  class="test">云仓库存订单状态：<span><eq name="row.status" value="1">待审核<else/>已审核</eq></span></p> -->
+        <p  class="test">云仓库存订单状态：<span id="ddzt"><if condition="$row.status eq 1">待审核<elseif condition="$row.status eq 2"/>已发货，物流配送中...<else/>已收货</if></span></p>
+    </div>
+<!--        <div class="test1 ">
+        <p class="p1 test">收货信息</p>
+        </div>
+      <div class="test_box1">   
+        <p class="test">收货人名称：{$orderInfo.0.s_name}</p>
+        <p  class="test">电话：{$orderInfo.0.s_phone}</p>
+        <p class="test">地址：{$orderInfo.0.s_addre}</p>
+    </div>-->
+<!--    <div class="test1 ">
+        <p class="p1 test">备注信息</p>
+    </div> 
+    <div class="test_box1">   
+        <p class="test">{$orderInfo.0.notes}</p>
+    </div>-->
+<!--    <div class="height"></div> 
+    <eq name="$orderInfo.0.status" value="2">
+        <div class="shouhuo_box1" onclick="shouhuo({$row.order_num})">
+            <p class="test">确认收货</p>
+        </div>
+    </eq>
+    </div>-->
+</body>
+<script>
+    function shouhuo(order_num){
+        if(confirm("你确信收货？")){
+            $.post("__URL__/shouhuo",{order_num:order_num},function(msg){
+            if(msg){
+                //tusi("以确定收货"); 
+                $("#ddzt").html("已收货"); 
+                $(".shouhuo_box1").hide();                          
+            }else{
+                tusi("收货处理失败");
+            }
+        });
+ 
+         }else{
+            //否则说明下了
+          //tusi("你取消了确认收货");
+            return false;
+        }
+    }
+</script>
+</script>
+</html>

@@ -1,0 +1,136 @@
+﻿
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://www.swiper.com.cn/demo/03-vertical.html -->
+<html lang="en"><head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no, email=no">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="MobileOptimized" content="640">
+        <meta name="screen-orientation" content="portrait">
+        <meta name="x5-orientation" content="portrait">
+        <meta name="full-screen" content="yes">
+        <meta name="x5-fullscreen" content="true">
+        <meta name="browsermode" content="application">
+        <meta name="x5-page-mode" content="app">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="width=640,target-densitydpi=device-dpi,maximum-scale=1.0, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+        <title>经销商登录</title>
+        <!--<include file="Public/header"/>-->
+
+        <!-- bootsratp's CSS -->
+        <!--     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
+        <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+        <!-- bootsratp's JS -->
+        <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <!-- Demo styles -->
+        <!--必要样式-->
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/login/style.css">
+        <!--[if IE]>
+            <script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+        <![endif]-->
+        <script type="text/javascript" src="__PUBLIC__/js/my/common.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+        <script type="text/javascript">
+            var loginUrl = '{:U(GROUP_NAME . "/Login/checkLogin")}';
+        </script>
+
+    </head>
+    <!--封面图-->
+    <body>   
+        <style>
+            body {
+                background-size:cover;
+                background-color:#323542;    
+            }
+            .tel_title {   background: transparent; } 
+        </style>
+
+        <div class="top">
+            <div><h3>欢迎进入经销商登录页面</h3></div>
+        </div>
+        <div>
+            <img src="__PUBLIC__/Admin/images/login/line.png" style="height:auto;width:25%;position:absolute;left:37%;margin-top:2%">
+        </div>
+        <div>
+            <img src="__PUBLIC__/Admin/images/login/logo.png" style="height:auto;width:50%;position:absolute;left:24%;margin-top:13%">
+        </div>
+
+        <div class="login_fields" style="margin-top:58%;">
+            <div class="login_fields__user">
+                <div class="icon">
+                    <img src="__PUBLIC__/Admin/images/login/icon.png" style="width:30px;">
+                </div>
+                <input placeholder="请输入微信" type="text" name="name" value="{$Think.session.loginName}">
+                <div class="validation">
+                    <img src="__PUBLIC__/Admin/images/login/gou.png" style="margin-left:91%;margin-top:-16%;">
+                </div>
+
+            </div>
+            <div class="login_fields__password">
+                <div class="icon">
+                    <img src="__PUBLIC__/Admin/images/login/icon1.png" style="width:23px;margin-left:11%">
+                </div>
+                <input placeholder="请输入密码" type="password" name="password" >
+                <div class="validation">
+                    <img src="__PUBLIC__/Admin/images/login/gou.png" style="margin-left:91%;margin-top:-9%;">
+                </div>
+            </div>
+            <div class="login_fields__submit">
+                <div class="forgot">温馨提示:登录密码为手机号码后六位,登录成功后请尽快修改密码！</div>
+                <input type="submit" value="登录" class="input2" name="button">
+            </div>
+        </div>
+        <!-- <div class='success'>
+          <span id="show"></span>
+              <p>亲！欢迎进入后台管理系统。</p>
+        </div> -->
+    </div>
+    <!--     <div class="authent">
+          <p>登录中...</p>
+        </div> -->
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/stopExecutionOnTimeout.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-ui.min.js"></script>
+    <script>
+        /*	$(".dl_icon1").click(function(){
+         $(".test").show();
+         $(".dj").hide();
+         });*/
+
+        $(".input2").click(function () {
+            var name = $("input[name=name]").val();
+            var password = $("input[name=password]").val();
+            if (name == "") {
+                tusi("请输入微信号");
+                return false;
+            }
+            if (password == "") {
+                tusi("请输入密码");
+                return false;
+            }
+            $.post(loginUrl, {name: name, password: password}, function (data) {
+                if (data == 'none') {
+                    tusi('微信号或者密码错误');
+                    return;
+                } else if (data == 'nomanager') {
+                    tusi('经销商还未通过审核,不能进入后台');
+                    return;
+                } else if (data == 'disable') {
+                    tusi('经销商已被禁用，请联系品牌负责人！');
+                    return;
+                } else {
+                    //location.href = data['url'];
+                    location.href = '__GROUP__/index';
+                }
+            });
+        });
+    </script>
+</body></html>

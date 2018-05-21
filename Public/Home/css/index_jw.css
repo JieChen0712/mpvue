@@ -1,0 +1,24 @@
+body{text-align: center;}
+.header-wrapper { display:none;height: 55px; padding: 0 30px; font-family: fzltzhk; background-color: #201b15; color: #676767; box-sizing: border-box; }
+.header-wrapper .logo { width: 60px; margin-top: 14px; }
+.header-wrapper .text { float: right; font-weight: bolder; font-size: 18px; line-height: 55px; }
+
+.photo-wrapper{width:100%;min-height:220px;}
+.photo-wrapper img{width:100%;min-height: 220px;}
+
+.test{background: #fff;margin: 0 auto;font-family: "微软雅黑";width: 95%;margin-top: 20px;}
+.test .p{border: 0px;padding: 15px 0;}
+.test .p p{width: 90%;height: 34px;line-height: 33px;font-size: 25px;letter-spacing: 2px;margin: 0 auto;font-weight: bold;}
+.test .test1{width: 90%;margin: 0 auto;font-size: 20px;}
+.test .test1 li{padding: 15px 0;}
+.test .test1 li span{padding-left: 10px;}
+
+.menu-wrapper .menu-list {padding-top: 20px;padding-bottom: 20px;overflow: hidden;}
+.menu-wrapper .menu-list li { float: left; width: 33.3%; text-align: center; margin-top: 22px;margin-bottom: 22px; }
+.menu-wrapper .menu-list li .menu-link { display: block; text-decoration: none; }
+.menu-wrapper .menu-list li .menu-link:hover { text-decoration: none; }
+.menu-wrapper .menu-list li .menu-link:active { text-decoration: none; }
+.menu-wrapper .menu-list li .menu-link:visited { text-decoration: none; }
+.menu-wrapper .menu-list li .menu-link img { width: 55px; }
+
+/*# sourceMappingURL=index.css.map */

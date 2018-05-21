@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>邀请代理</title>
+        <include file="Public/header_v3" />
+        <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/authorize.css" />
+    </head>
+
+<body>
+    <!--第一个页面-->
+    <div class="page page1 page-current" id='route1'>
+        <!-- header start-->
+        <!-- header end-->
+        <!--main start-->
+
+        <!--main end-->
+        <div class="content order-content content_index">
+            <section id="content1">
+                <div class="card">
+                    <div class="card-header title-bg">
+                        <ul class="agent-list3">
+                            <li>代理名称</li>
+                            <li>代理级别</li>
+                            <li>授权号</li>
+                        </ul>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            <ul class="row col-100 angent-detail">
+                                <li class="col-33">{$agentRow.name}</li>
+                                <li class="col-33">{$agentRow.levname}</li>
+                                <li class="col-33">{$agentRow.authnum}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card agent-user">
+                    <?php 
+                                $cur_level = $agentRow['level'];
+                                $GROW_MODEL = C('GROW_MODEL');
+                                $GROW_MODEL_LEVEL = C('GROW_MODEL_LEVEL');
+                                $cur_grow_model_level = isset($GROW_MODEL_LEVEL[$cur_level])?$GROW_MODEL_LEVEL[$cur_level]:$GROW_MODEL_LEVEL[0]; 
+                                ?>
+                    <div class="card-header title-bg">
+                        <span>邀请成为代理</span>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-content-inner">
+                            <ul class="angent-detail agent-level">
+                                
+                                <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+
+                                    <!--默认，高发展低-->
+                                    <if condition="($cur_level lt $key_left_num) AND ($GROW_MODEL eq 1) ">
+                                        <a class="external" href="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}"><li><img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/agent-level{$key_left_num}.png" alt=""><span>{$vo_left_name}</span></li></a>
+
+                                    <!--高发展低及平级推-->
+                                    <elseif condition="($cur_level elt $key_left_num) AND ($GROW_MODEL eq 2) " />
+                                        <a class="external" href="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}"><li><img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/agent-level{$key_left_num}.png" alt=""><span>{$vo_left_name}</span></li></a>
+
+                                    <!--任何级别都可以发展-->
+                                    <elseif condition="$GROW_MODEL eq 3" />
+                                        <a class="external" href="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}"><li><img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/agent-level{$key_left_num}.png" alt=""><span>{$vo_left_name}</span></li></a>
+                                    <!--特定的级别发展逻辑-->
+                                    <elseif condition="($GROW_MODEL eq 4) AND ($cur_grow_model_level eq 1) AND ($cur_level lt $key_left_num)" />
+                                        <a class="external" href="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}"><li><img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/agent-level{$key_left_num}.png" alt=""><span>{$vo_left_name}</span></li></a>
+                                    <elseif condition="($GROW_MODEL eq 4) AND ($cur_grow_model_level eq 2) AND ($cur_level elt $key_left_num)" />
+                                        <a class="external" href="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}"><li><img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/agent-level{$key_left_num}.png" alt=""><span>{$vo_left_name}</span></li></a>
+                                    <elseif condition="($GROW_MODEL eq 4) AND ($cur_grow_model_level eq 3)" />
+                                        <a class="external" href="__GROUP__/Development/apply/?pid={$agentRow.id|encode}&level={$key_left_num|encode}&ct={$ct}"><li><img src="__PUBLIC__/Admin_v3/images/team-manager/team-agent/agent-level{$key_left_num}.png" alt=""><span>{$vo_left_name}</span></li></a>
+                                    </if>
+                                </foreach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+        <!--footer start-->
+        <include file="Public/footer_v3" />
+        <!--footer end-->
+    </div>
+</body>
+
+</html>

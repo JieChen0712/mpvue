@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/login_green.css">
+    <title>经销商登录</title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="content color-login-bg">
+            <div class="logo">
+                <img src="__PUBLIC__/Admin_v3/images/login/login_green/logo.png" alt="">
+            </div>
+            <p class="welcome-text color-login-text">欢迎进入微斯咖微商管理系统</p>
+            <div class="input-wrapper color-login-input">
+                <input type="text" placeholder="请输入帐号" class="username" name="name">
+                <input type="password" placeholder="请输入密码" class="password" name="password">            
+            </div>
+            <div class="btn-wrapper">
+                <button class="button button-big login color-login-btn" name="button">登录</button>
+            </div>
+            <div class="tip-text">
+                <p class="color-login-text">温馨提示：登录密码为手机号码后六位，登录成功后请尽快修改密码！</p>
+            </div>
+            <!-- <div class="web-text">
+                <p class="color-login-text">www.weisika.com</p>
+            </div> -->
+            
+        </div>
+        
+        <script>
+            var loginUrl = '{:U(GROUP_NAME . "/Login/checkLogin")}';
+            var indexUrl = '__GROUP__/index';
+        </script>
+        <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/login_green.js"></script>
+    </div>
+</body>
+
+</html>

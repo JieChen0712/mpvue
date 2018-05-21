@@ -1,0 +1,118 @@
+<style type="text/css">
+    .layui-form-item span{
+        line-height: 38px!important;
+    }
+    @media screen and (max-width: 768px) {
+        .layui-input-block {
+            margin-left: 15px;
+        }
+    }
+</style>
+<script src="__PUBLIC__/Admin_v3/js/shopping-menu.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    form.render();
+</script>
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__URL__/add_cars" data-auto="false" method="post" >
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品名称</label>
+        <div class="layui-input-block">
+            <input  autofocus  name="name" type="text" value='{$product.name}'    title="产品名称"  class="layui-input" disabled>
+        </div>
+    </div>
+    <if condition="$properties eq ''">
+        <div class="layui-form-item">
+            <label class="layui-form-label">单价</label>
+            <div class="layui-input-block">
+                <input     type="text" value='{$product.price}'    title="单价"  class="layui-input" disabled>
+                <input    name="price" type="hidden" value='{$product.price}'  >
+            </div>
+        </div>
+
+     <else/>
+        <div id="div">
+        <foreach name="properties" item="vo">
+            <div class="layui-form-item" >
+                <input type="hidden" id="pid" value="{$vo.pid}">
+                <label class="layui-form-label">{$vo.name}</label>
+
+                <div class="layui-input-block rad_arr"  data-num="{$vo.pid}">
+                    <foreach name="vo.values" item="m">
+                    <input type="radio" class="point"  id="{$m.vid}" name="{$vo.pid}" value="{$m.value}" title="{$m.value}"  lay-filter="rad" lay-skin="primary">
+                    </foreach>
+                </div>
+
+            </div>
+        </foreach>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单价</label>
+            <div class="layui-input-block">
+                <input  id="manager_price" type="text" value='0'    title="单价"  class="layui-input" disabled>
+                <input    name="price2" type="hidden" id="manager_price2">
+            </div>
+        </div>
+    </if>
+    <div class="layui-form-item">
+        <label class="layui-form-label">库存</label>
+        <div class="layui-input-block">
+            <input     id="quantity" type="text" value='{$product.quantity}'    title="库存"  class="layui-input" disabled>
+            <input    name="quantity" type="hidden" id="quantity2" value="{$product.quantity}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">购买数量</label>
+        <div class="layui-input-block">
+            <input    name="num" type="number" value='1' required="" title="购买数量"  class="layui-input" placeholder="请输入标题">
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+
+    <div class="layui-form-item text-center">
+        <!--产品id-->
+        <input type="hidden" name="templey_id" id="templey_id" value="{$product.id}">
+        <!--属性id-->
+        <input type="hidden" name="sku_id" id="sku_id" value="0">
+        <button class="layui-btn" type='submit'>提交</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消吗？" data-close>取消</button>
+    </div>
+
+</form>
+<script>
+    var skus=<php>echo json_encode($skus, JSON_FORCE_OBJECT)</php>;
+    var temp_rad = [];
+
+    form.on('radio(rad)', function(data){
+            rad_sort();
+            rad_add_price();
+        });
+
+    function rad_sort() {
+        temp_rad = [];
+//        $('.rad_arr').find('input [type=radio]')
+        $.each($('.rad_arr'),function (key,value) {
+            var str =$("#pid").val();
+            $.each($(value).find('.point'),function (k,v) {
+                if($(v).is(':checked')){
+                    str+=':'+$(v).attr('id');
+                    temp_rad.push(str);
+                }
+            });
+        });
+    }
+    
+    function rad_add_price() {
+        var properties = temp_rad.join(';')
+        $.each(skus,function (key,value) {
+            if(value.properties == properties){
+                console.log(value)
+                $('#manager_price').val(value.price);
+                $('#quantity').val(value.quantity);
+                $('#manager_price2').val(value.price);
+                $('#quantity2').val(value.quantity);
+                $('#sku_id').val(value.id);
+            }
+        });
+        form.render();
+    }
+
+</script>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>订单明细</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/order-detail.css" type="text/css" />
+
+    </head>
+
+    <body>
+        <div class="page">
+            <!-- header start-->
+            <!--	        <header id="header" class="bar bar-nav">
+<button class="back button button-link button-nav pull-left">
+<a href="javascript:history.go(-1);" > <span class="icon icon-left">返回</span></a>
+</button>
+<button class="more button button-link button-nav pull-right">
+<img class="img" src="__PUBLIC__/Admin_v3/images/clock.jpg" height="26">
+<span class="text">10</span>
+<i class="circle">●●●</i>
+</button>
+<h1 class="title">订单明细</h1>
+</header>-->
+            <div class="buttons-tab">
+                <a href="#tab1" class="tab-link active button btns color-all-nav" data-stat=''>全部订单</a>
+                <if condition="$is_open_stock eq '1'">
+                    <?php if( $stock == null || $stock == 0 ):?>
+                    <?php if( $stock ):?>
+                    <a href="#tab2" class="tab-link button btns color-all-nav" data-stat='1'>待审核</a>
+                    <?php endif;?>
+                    <?php if( !$stock ):?>
+                    <a href="#tab6" class="tab-link button btns color-all-nav" data-stat='6'>待发货</a>
+                    <?php endif;?>
+                    <a href="#tab3" class="tab-link button btns color-all-nav" data-stat='2'>已发货</a>
+                    <a href="#tab4" class="tab-link button btns color-all-nav" data-stat='3'>已收货</a>
+                    <?php else:?>
+                    <a href="#tab2" class="tab-link button btns color-all-nav" data-stat='1'>待审核</a>
+                    <a href="#tab3" class="tab-link button btns color-all-nav" data-stat='2'>已审核</a>
+                    <?php endif;?>
+                    <else/>
+                    <a href="#tab2" class="tab-link button btns color-all-nav" data-stat='1'>待审核</a>
+                    <a href="#tab3" class="tab-link button btns color-all-nav" data-stat='2'>已发货</a>
+                    <a href="#tab4" class="tab-link button btns color-all-nav" data-stat='3'>已收货</a>
+                </if>
+
+            </div>
+            <div class="order-detail">
+                <div class="content infinite-scroll">
+                    <div class="content-block wrappers">
+                        <div class="tabs">
+                            <div id="tab1" class="tab active">
+                                <div class="content-block wrappers" data-flag="false">
+
+                                    <!-- preloader -->
+                                    <div class="infinite-scroll-preloader">
+                                        <div class="preloader"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--待审核-->
+                            <div id="tab2" class="tab">
+                                <div class="content-block wrappers" data-flag="false">
+
+                                    <!-- preloader -->
+                                    <div class="infinite-scroll-preloader">
+                                        <div class="preloader"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab3" class="tab">
+                                <div class="content-block wrappers" data-flag="false">
+                                    <!-- preloader -->
+                                    <div class="infinite-scroll-preloader">
+                                        <div class="preloader"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab4" class="tab">
+                                <div class="content-block wrappers" data-flag="false">
+
+                                    <!-- preloader -->
+                                    <div class="infinite-scroll-preloader">
+                                        <div class="preloader"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--待发货-->
+                            <div id="tab6" class="tab">
+                                <div class="content-block wrappers" data-flag="false">
+
+                                    <!-- preloader -->
+                                    <div class="infinite-scroll-preloader">
+                                        <div class="preloader"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--script start-->
+        <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="__PUBLIC__/Admin_v3/js/all.js" type="text/javascript" charset="utf-8"></script>
+        <!--script end-->
+    </body>
+    <script>
+        var allurl = '__GROUP__/order/get_all';
+        var emptyimg = '__PUBLIC__/Admin_v3/images/mallorder/norder@2x.png';
+        var stock = getUrlParam('stock');
+        var uid = '{$uid}';
+        $(function() {
+            $(document).on('click', '.cancel-order', function() {
+                var order_num = $(this).data('id');
+                $.confirm('是否取消订单？', function() {
+                    //              var order_num = $('.cancel-order').data('id');
+                    //              console.log(order_num);
+                    $.post('cancel_order', {
+                        order_num: order_num
+                    }, function(res) {
+                        if(res.code == 1) {
+                            tusi('取消订单成功');
+                            window.location.href = changeURLArg(window.location.href, "reloadtime", new Date().valueOf());
+                        } else if(res.msg != '') {
+                            tusi(res.msg);
+                        } else {
+                            tusi('取消订单失败');
+                        }
+                    });
+                })
+            });
+        });
+        $(function() {
+            $(document).on("click", '.shou', function() {
+                // var order_num = $(this).data('id');
+                var order_num = $(this).data('id');
+                console.log(order_num);
+                $.post('shouhuo', {
+                    order_num: order_num
+                }, function(res) {
+                    if(res) {
+                        tusi('确认收货成功');
+                        window.location.href = changeURLArg(window.location.href, "reloadtime", new Date().valueOf());
+                    } else {
+                        tusi('确认收货失败');
+                    }
+                });
+            })
+        });
+
+        $(function() {
+            $(document).on('click', '.all-list', function() {
+                var order_num = $(this).data('id');
+                console.log(order_num);
+                if(stock == "" || stock == undefined || stock == null) {
+                    window.location.href = 'take_order_detail?order_number=' + order_num;
+                } else {
+                    window.location.href = 'stock_order_detail?order_number=' + order_num;
+                }
+            });
+        });
+
+        $(function() {
+            $(document).on('click', '.order-details', function() {
+                var order_num = $(this).data('id');
+                console.log(order_num);
+                window.location.href = 'take_order_detail?order_number=' + order_num;
+            });
+        });
+        //设置url参
+        function changeURLArg(url, arg, arg_val) {
+            var pattern = arg + '=([^&]*)';
+            var replaceText = arg + '=' + arg_val;
+            if(url.match(pattern)) {
+                var tmp = '/(' + arg + '=)([^&]*)/gi';
+                tmp = url.replace(eval(tmp), replaceText);
+                return tmp;
+            } else {
+                if(url.match('[\?]')) {
+                    return url + '&' + replaceText;
+                } else {
+                    return url + '?' + replaceText;
+                }
+            }
+            return url + '\n' + arg + '\n' + arg_val;
+        }
+    </script>
+
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>业绩数据</title>
+    <include file="Public/header_v2"/>
+    <!--<link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/grzx.css">-->
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/header.css">
+    <style>
+        
+        .personal_bot{
+            margin-top: 205px;
+        }
+        .personal_font{
+            font-size:32px;
+            font-weight:bold;
+        }
+        .personal_bot1{
+            margin-right: 0px;
+        }
+    </style>
+
+    </head>
+    <body>
+        
+        <div class="index-panel">
+            <header class="index-header">
+                <a class="a" href="javascript:history.go(-1);"></a>
+    			<p>业绩数据</p>
+            </header>
+                
+        <include file="./App/Public/admin_header.html" />
+        
+<!--        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="lie">日期设置-1:<input  id="beginTime" class="kbtn" /></div>
+            </div>
+        </div>-->
+        
+        <div class="row personal_bot personal_font personal_bot1">
+            <div class="col-xs-1 col-sm-1 col-md-1"></div>
+            
+            <div class="col-xs-5 col-sm-5 col-md-5">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                    <h3 class="panel-title">我的团队人数</h3>
+                    </div>
+                <div class="panel-body">
+                    {$count_info.team_num}
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xs-5 col-sm-5 col-md-5">
+                
+            </div>
+            
+            <div class="col-xs-1 col-sm-1 col-md-1"></div>
+        </div>
+        
+        <div class="row personal_font personal_bot1">
+            <div class="col-xs-1 col-sm-1 col-md-1"></div>
+            <div class="col-xs-11 col-sm-10 col-md-10">
+                <h3>本月业绩</h3>
+            </div>
+        </div>
+        
+        <div class="row personal_font personal_bot1">
+            <div class="col-xs-1 col-sm-1 col-md-1"></div>
+            
+            <div class="col-xs-5 col-sm-5 col-md-5">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                    <h3 class="panel-title">个人业绩（元）</h3>
+                    </div>
+                <div class="panel-body">
+                    {$count_info.my_order_info.total_money}
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xs-5 col-sm-5 col-md-5">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                    <h3 class="panel-title">团队业绩（元）</h3>
+                    </div>
+                <div class="panel-body">
+                    {$count_info.team_money}
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1"></div>
+        </div>
+        
+        <div class="row personal_font personal_bot1">
+            <div class="col-xs-1 col-sm-1 col-md-1"></div>
+            <div class="col-xs-11 col-sm-10 col-md-10">
+                <h3>上月业绩</h3>
+            </div>
+        </div>
+        
+        <div class="row personal_font personal_bot1">
+            <div class="col-xs-1 col-sm-1 col-md-1"></div>
+            
+            <div class="col-xs-5 col-sm-5 col-md-5">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                    <h3 class="panel-title">个人业绩（元）</h3>
+                    </div>
+                <div class="panel-body">
+                    {$last_month_count_info.my_order_info.total_money}
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-xs-5 col-sm-5 col-md-5">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                    <h3 class="panel-title">团队业绩（元）</h3>
+                    </div>
+                <div class="panel-body">
+                    {$last_month_count_info.team_money}
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1"></div>
+        </div>
+        
+         
+    </body>
+    </html>

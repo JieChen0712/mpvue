@@ -1,0 +1,42 @@
+.section8 .dl_icon1{text-align: center;margin-top:168px;}
+.section8 .test{width:494px;margin:0 auto;}
+.section8 .test img{display:inline-block;vertical-align: -10px;}
+.section8 .test p{color:#107ec8;font-size:50px;margin-top:101px;}
+.section8 .test .input{background:#f5f5f5;border-bottom:solid #d1d1d1 2px !important;
+	display:inline-block;padding:50px 0;width:409px;font-size:26px;margin-top:28px;color:#8f8f8f;border-radius:0.1em;-webkit-appearance: none;outline:none;    margin-left: 37px;
+	border-top:0px;border-right:0px;border-left: 0px;}
+.section8 .test .input1{background:#f5f5f5;border-bottom:solid #d1d1d1 2px !important;
+	display:inline-block;padding:50px 0;width:409px;font-size:26px;color:#8f8f8f;border-radius:0.1em;-webkit-appearance: none;outline:none;    margin-left: 37px;
+border-top:0px;border-right:0px;border-left: 0px;}
+.section8 .test div{text-align: center;}
+.section8 .test .input2{font-size:33px;width:100%;color:#fff;background:#4abcf2;height:70px;border-radius:0.2em;margin-top:44px;border:none;-webkit-appearance: none;outline:none;}
+
+
+.section9 .test{width:494px;margin:0 auto;}
+.section9 .test img{display:inline-block;vertical-align: -10px;}
+.section9 .test p{color:#4abcf2;font-size:50px;margin-top:250px;}
+.section9 .test .input1{background:#f5f5f5;border-bottom:solid #d1d1d1 2px !important;
+	display:inline-block;padding:50px 0;width:409px;font-size:26px;color:#8f8f8f;border-radius:0.1em;-webkit-appearance: none;outline:none;    margin-left: 37px;
+	border-top:0px;border-right:0px;border-left: 0px;}
+.section9 .test div{text-align: center;}
+.section9 .test .input2{font-size:33px;width:100%;color:#fff;background:#4abcf2;height:70px;border-radius:0.2em;margin-top:44px;border:none;-webkit-appearance: none;outline:none;}
+.section9 .xg_mask{width:100%;height:100%;background:rgba(0,0,0,0.5); position:fixed;top:0;z-index:100;right:0;display:none;}
+.section9 .xg_mask .true{text-align:center;margin-top:232px;}
+.section9 .xg_mask .true p{color:#fff;font-size:46px;}
+
+.section9 .xg_mask1{width:100%;height:100%;background:rgba(0,0,0,0.5); position:fixed;top:0;z-index:100;right:0;display:none;}
+.section9 .xg_mask1 .true{text-align:center;margin-top:232px;}
+.section9 .xg_mask1 .true p{color:#fff;font-size:46px;}	
+
+/* *::-webkit-input-placeholder {
+    color: #fff;
+}
+
+*:-moz-placeholder {
+    color: #fff;
+}
+
+*:-ms-input-placeholder {
+    IE10+
+    color: #fff;
+} */

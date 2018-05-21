@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>虚拟币提现记录</title>
+    <include file="Public/order"/>
+    <!--<link rel="stylesheet" href="__PUBLIC__/css/back/apply.css">-->
+    <script type="text/javascript" src="__PUBLIC__/js/my_dd.js"></script>
+    <style>
+        .header{
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body style="background-color:#f5f5f5;">
+    <header class="header">
+        <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/index/left_icon.png" alt=""></a><p>虚拟币提现记录</p>
+    </header>
+    
+    
+<!--    <div class="my_dd">
+        <ul>
+            <li class="li1"><span>提现</span></li>
+            <li class="li2"><span>订单返现</span></li>
+        </ul> 
+    </div>-->
+    
+    <!--dd2-->
+    <div class="dd2">
+        <volist name="list" id="vv">
+            <div class="wrap" style="height:150px;">
+                <div class="top">
+                    <h2></h2><p class="p1">提现金额：￥{$vv.money}</p>
+                    <p class="p2">{$vv.type_name}</p>
+                </div>
+                    <div class="top2">
+                        <p>提现时间：{$vv.created_format}</p> 
+                    </div>
+                
+<!--                <div class="top3">
+                    <p>虚拟币：<span>￥{$vv.money}</span></p>
+                    <eq name="vv.status" value="0"><a href="__APP__/Admin/funds/money_apply_detail?id={$vv.id}}"><p class="p2">进行审核</p></a></eq>
+                </div>-->
+            </div>
+        </volist>
+        
+        <div><center><font color="red">{$page}</font></center></div>
+    </div>   
+    <!--end dd2-->
+    
+    
+    
+</body>
+
+
+
+</html>

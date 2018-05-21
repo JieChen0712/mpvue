@@ -1,0 +1,148 @@
+.order-title {
+  display: flex;
+  width: 95%;
+  height: 3.125rem;
+  line-height: 3.125rem;
+  margin-left: 5%;
+  border-bottom: 0.0625rem solid #c9c9c9;
+}
+.order-title .order-num {
+  flex: 0 0 65%;
+}
+.order-title .is-pay {
+  flex: 0 0 35%;
+  text-align: right;
+  padding-right: 5%;
+  color: #fc4736;
+}
+.receiving-wrapper {
+  display: flex;
+  width: 100%;
+  height: 6.25rem;
+  padding: 0 5%;
+  color: #787878;
+  margin-bottom: 0.625rem;
+}
+.receiving-wrapper .icon-wrapper {
+  flex: 0 0 2rem;
+  margin-top: 1.9375rem;
+}
+.receiving-wrapper .receiving-detail {
+  line-height: 1.5625rem;
+  padding-top: 0.625rem;
+}
+.receiving-wrapper .receiving-detail .consignee {
+  float: left;
+}
+.receiving-wrapper .receiving-detail .tel {
+  float: right;
+}
+.account {
+  display: flex;
+  width: 100%;
+  height: 3.125rem;
+  line-height: 2.1875rem;
+  padding: 0 5%;
+  margin-bottom: 0.625rem;
+}
+.account .avatar {
+  flex: 0 0 3.125rem;
+}
+.account .username {
+  flex: 0 0 4.6875rem;
+}
+.account .WeChat {
+  flex: 1;
+  text-align: right;
+  font-size: 0.875rem;
+}
+.goods {
+  display: flex;
+  height: 5.9375rem;
+  width: 100%;
+  padding: 0 5%;
+}
+.goods .goods-img {
+  flex: 0 0 5.875rem;
+}
+.goods .goods-detail {
+  flex: 1;
+  padding-left: 1.0625rem;
+}
+.goods .goods-detail .goods-top {
+  display: flex;
+}
+.goods .goods-detail .goods-top .goods-name {
+  flex: 1;
+}
+.goods .goods-detail .goods-top .goods-price {
+  flex: 0 0 5rem;
+  text-align: right;
+}
+.goods .goods-detail .goods-bottom {
+  display: flex;
+  margin-top: 0.625rem;
+  color: #a0a0a0;
+}
+.goods .goods-detail .goods-bottom .goods-specification {
+  flex: 1;
+  font-size: 0.75rem;
+}
+.goods .goods-detail .goods-bottom .goods-count {
+  flex: 0 0 5rem;
+  text-align: right;
+  font-size: 0.75rem;
+}
+.all-price {
+  width: 100%;
+  padding: 0 5%;
+  margin-top: 1.5625rem;
+}
+.all-price .all-count {
+  float: right;
+  font-size: 0.875rem;
+}
+.all-price .price {
+  margin-left: 1.25rem;
+  float: right;
+  font-size: 0.875rem;
+}
+.all-price .price strong {
+  font-size: 0.875rem;
+  color: #fc4734;
+}
+.date {
+  width: 100%;
+  padding: 0 5%;
+  font-size: 0.75rem;
+  margin-top: -5px;
+  color: #afafaf;
+  text-align: right;
+}
+.remark {
+  height: 4.375rem;
+  width: 100%;
+  padding: 0 5%;
+  margin-top: 2.1875rem;
+}
+.btn-wrapper {
+  width: 100%;
+  padding: 0 5%;
+  text-align: right;
+}
+.btn-wrapper .remove,
+.btn-wrapper .pass {
+  width: 5rem;
+  height: 2.125rem;
+  background: transparent;
+  border-radius: 0.3125rem;
+}
+.btn-wrapper .remove {
+  border: 1px solid #303030;
+  color: #303030;
+}
+.btn-wrapper .pass {
+  border: 1px solid #fc4734;
+  color: #fc4734;
+  margin-left: 0.75rem;
+}

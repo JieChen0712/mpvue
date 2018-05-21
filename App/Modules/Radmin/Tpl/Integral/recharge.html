@@ -1,0 +1,58 @@
+<style>
+    /*小屏幕样式*/
+    @media screen and (max-width: 768px) {
+        .layui-form-item .layui-form-label {
+            float: left;
+            padding: 9px 0 9px 15px;
+            width: auto;
+        }
+        .layui-input-block {
+            margin-left: 75px;
+        }
+    }
+</style>
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__URL__/recharge_submit" data-auto="false" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">代理名字:</label>
+        <label class="layui-form-label">{$dis_info.name}</label>
+
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">代理等级:</label>
+        <label class="layui-form-label">{$dis_info.levname}</label>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">微信号:</label>
+        <label class="layui-form-label">{$dis_info.wechatnum}</label>
+
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">积分余额:</label>
+        <label class="layui-form-label">{$score}</label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">充入积分:</label>
+        <div class="layui-input-block">
+            <input type='number' class="layui-input" name="score" value="" placeholder="请充入积分" required="" title="请输入积分">
+            <input type='hidden'  name="uid" value="{$dis_info.id}" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注:</label>
+        <div class="layui-input-block">
+            <textarea placeholder="请控制在30字以内" class="layui-input" style="height: 100px;resize: none;"></textarea>
+        </div>
+    </div>
+
+
+    <div class="hr-line-dashed"></div>
+
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>充入</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消吗？" data-close>取消</button>
+    </div>
+
+</form>
+

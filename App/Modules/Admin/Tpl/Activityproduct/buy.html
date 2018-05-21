@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>立即下单</title>
+    <include file="Public/header_v2.1"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/product_buy.css">
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/bootstrap.min.css">
+    <script type="text/javascript" src="__PUBLIC__/radmin/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <p>立即下单</p>
+        <a href="javascript:history.go(-1);" class="a"></a>
+    </header>
+    <div class="container">
+        <a href="__APP__/admin/product/address_choose?return_url={$return_url}">
+            <div class="row">
+                <input type="hidden" id="rec_id" value="{$receiving_info.id}" />
+                <div class="col-xs-8 col-sm-6 col-md-5">收货人：{$receiving_info.name}</div>
+                <div class="col-xs-4 col-sm-6 col-md-5">{$receiving_info.phone}</div> 
+                <div class="col-xs-11 col-sm-8 col-md-8">{$receiving_info.area}{$receiving_info.addre}</div>
+                <div class="col-xs-1 col-sm-1 col-md-1">
+                    <img src="__PUBLIC__/Admin_v2/images/icon-go.png" alt="" id="img-go">
+                </div>
+            </div>
+        </a>
+        <hr style="border:none;border-top:15px dotted #185598;" /> 
+
+        <foreach name="templet_info" item="vo">
+            <div class="row">
+                <img src="{$vo.image}" alt="" class="img-thumbnail">
+                <div style="float:left;padding-left:15px;">
+                    <p>{$vo.name}</p>
+                    <p style="color:red">￥ {$vo.price}</p>
+                    <input type="hidden" id="templet_id" value="{$vo.id}" />
+                    <input type="hidden" id="price" value="{$vo.price}" />
+                </div>
+
+            </div><hr color=#d0d0d0>
+
+            <div class="row">
+                <span>购买数量</apan>
+                    <div style="float:right">   
+                        <input id="min" onclick="return jian('{$vo.cal_id}')" name="" type="button" value=" ─ " />
+
+                        <input onchange="return conutmoney();" id="buynum" type="text" value="{$vo.buy_num}" style="width:150px;text-align:center;"  />
+                        <input id="add" onclick="return jia('{$vo.cal_id}')" name="" type="button" value=" ✛ " />
+                    </div>
+            </div><hr color=#d0d0d0>
+        </foreach>
+
+
+        <div class="row">
+            <strong>备注</strong><hr color=#d0d0d0>
+            <p>
+                <textarea class="textarea" placeholder="输入备注信息..." name="remark" id=""></textarea>
+            </p>
+        </div>
+
+    </div>  
+    
+    <div style="height: 100px;"></div>
+    
+    <div class="footer">
+        <span style="color:red;" id="count">合计:￥<span id="conutmoney"></span></span>
+        <a href="#"><button type="button" onclick="return orderhand();" class="btn btn-warning" id="new">提交订单</button></a>
+    </div>
+    
+<script>
+    $(document).ready(function (e) {
+        conutmoney();
+    });
+    
+//    function jia(id) {
+//        var qty = Number($('#buynum'+id).val());
+//        $('#buynum'+id).val(qty + 1);
+//        
+//        conutmoney();
+//    }
+//    function jian(id) {
+//        var qty = Number($('#buynum'+id).val());
+//        if (qty <= 1) {
+//            tusi("商品数量不能小于1");
+//            return;
+//        }
+//        $('#buynum'+id).val(qty - 1);
+//        
+//        conutmoney();
+//    }
+    
+    function conutmoney(){
+        var conutmoney = 0;
+        var pro_id = $('#templet_id').val();
+        var pro_num = $('#buynum').val();
+        var price = $("#price").val();
+
+
+        if( price != 0 && price != '' && price != null && pro_num != 0 && pro_num != '' && pro_num != null ){
+            var the_conutmoney = Number(pro_num)*Number(price);
+
+            var conutmoney = Number(conutmoney) + Number(the_conutmoney);
+        }
+        $("#conutmoney").html(conutmoney);
+    }
+    
+
+    function orderhand() {
+        
+        if( !confirm('请确认您的订单，确认完毕请联系您的客服完成购买。') ){
+            return false;
+        }
+        
+        var order_num = new Date().getTime();
+        var pd = 0;
+        var znumber = 0;
+        //tusi(time);
+        var j = 1;
+        var user_name = $('.p_name').html();
+        var textarea = $(".textarea").val();
+        var rec_id = $('#rec_id').val();
+
+        if( rec_id == '' ){
+            tusi('请选择收货地址');
+            return false;
+        }
+
+        var p_ids = new Array();
+        var p_nums = new Array();
+        var sku_ids = new Array();
+
+        for (var i = 1; i <= j; i++) {
+            var pro_id = $('#templet_id').val();
+            var pro_num = $('#buynum').val();
+            
+            p_ids[i] = pro_id;
+            p_nums[i] = pro_num;
+            
+        }
+        $.post("__APP__/admin/activityorder/submit", {"p_ids": p_ids, "p_nums": p_nums, order_num: order_num, textarea: textarea,rec_id:rec_id}, function (data) {
+            if (data.code == 1) {
+                
+                var open_wxpay = "{$open_wxpay}";
+                if (!open_wxpay) {
+                    tusi('下单成功');
+                    setTimeout(function(){
+                        window.location.href="__APP__/admin/activityorder/index";
+                    },2000);
+                } else {
+                    window.location.href="__APP__/admin/wxpay/pay?order_num="+data.error_info;
+                }
+            } else {
+                var msg = '下单失败！';
+                if (data.msg != null) {
+                    msg = data.msg;
+                }
+                tusi(msg);
+            }
+        });
+
+    }
+    
+    //选择地址
+    function choose_address(){
+        
+        
+        $('.choose_address').modal('show');
+    }//end func choose_address
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<html>
+
+<head>
+    <script>
+        /**
+         * 使用图片上传接口需满足以下条件
+         * 1.容器选择器id=upload
+         * 2.设置name=image的input标签隐藏域
+         * 3.指定上传目录名称
+         */
+            //上传目录
+        var upload_dir_name = 'Malltemplet';
+        form.render()
+    </script>
+    <script>
+        $("#btn2").on('click', function() {
+            layer.confirm("确定要取消吗？", function (index) {
+                layer.close(index);
+                window.history.back(-1);
+            });
+        });
+    </script>
+    <style type="text/css">
+      blockquote{max-width: 300px!important;}
+    </style>
+</head>
+
+<body>
+
+<div class="container-fluid edit-wrapper layui-container">
+    <header class="edit-title">
+        <blockquote class="layui-elem-quote">
+            <span class="title">添加产品</span>
+        </blockquote>
+    </header>
+    <div class="layui-content">
+        <form class="layui-form layui-box"action="__URL__/product_insert" data-auto="false" method="post" enctype="multipart/form-data">
+            <div class="layui-form-item items">
+                <label class="form-text">产品封面图片：</label>
+                <div class="form-right">
+                    <!--引入图片页面-->
+                    <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
+                    <include file="Public/image" image_name="image" is_show="0" img_url=""/>
+                </div>
+                <!--<small class="orange-text desc">(请上传正方型的图片 图片大小为：188*188 )</small>-->
+            </div>
+
+            <div class="layui-form-item items">
+                <label class="form-text">产品详情轮播图：</label>
+                <div class="form-right">
+                    <!--引入图片页面-->
+                    <include file="Public/images" data-name="many_image[]"/>
+                    <small class="orange-text">(请上传长方型的图片 图片大小为：375*270)</small>
+                </div>
+            </div>
+            <div class="layui-form-item items">
+                <label class="form-text">名称：</label>
+                <div class="form-right">
+                    <input class="input-inf2" required="" type="text" name="name" lay-verify="name" autocomplete="off" title="请输入产品名称" placeholder="请输入产品名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item  items">
+                <label class="form-text">产品分类：</label>
+                <div class="form-right">
+                  <div class="layui-input-inline three-select">
+                    <select name="category_id"  lay-verify="required" lay-search="">
+                        <volist name="cateres" id="vo">
+                            <option value="{$vo.id}"><if condition="$vo['level'] neq 0">|</if><?php echo str_repeat('-',$vo['level']*4)?> {$vo.name}</option>
+                        </volist>
+                    </select>
+                  </div>
+                    
+                </div>
+            </div>
+            
+            <div class="layui-form-item  items">
+                <label class="form-text">关联代理商城产品：</label>
+                <div class="form-right">
+                  <div class="layui-input-inline three-select">
+                    <select name="templet_id"  lay-verify="required" lay-search="">
+                        <option value="" checked>不关联</option>
+                        <volist name="templet_info" id="vo">
+                            <option value="{$vo.id}">{$vo.name}</option>
+                        </volist>
+                    </select>
+                  </div>
+                    
+                </div>
+            </div>
+
+            <div class="layui-form-item  items">
+                <label class="form-text">是否上架：</label>
+                <div class="form-right">
+                    <div class="layui-col-sm6">
+                        <div class="layui-col-sm6">
+                            <div class="layui-input-inline three-select">
+                                <select name="active" class="input-inf2" lay-verify="required" lay-search="">
+                                    <option value="1">是</option>
+                                    <option value="0">否</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item  items">
+                <label class="form-text">是否包邮：</label>
+                <div class="form-right">
+                    <div class="layui-col-sm6">
+                        <div class="layui-col-sm6">
+                            <div class="layui-input-inline three-select">
+                                <select name="mail_fee" class="input-inf2" lay-verify="required" lay-search="">
+                                    <option value="1">是</option>
+                                    <option value="0">否</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="layui-form-item  items">-->
+                <!--<label class="form-text">首页显示：</label>-->
+                <!--<div class="form-right">-->
+                    <!--<div class="layui-col-sm6">-->
+                        <!--<div class="layui-col-sm6">-->
+                            <!--<div class="layui-input-inline three-select">-->
+                                <!--<select name="statu" class="input-inf2" lay-verify="required" lay-search="">-->
+                                    <!--<option value="0">不显示</option>-->
+                                    <!--<option value="1">显示</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="layui-form-item  items">-->
+                <!--<label class="form-text">积分：</label>-->
+                <!--<div class="form-right">-->
+                    <!--<input class="input-inf2" type="number" name="integral" lay-verify="" autocomplete="off" placeholder="请输入产品积分" class="layui-input" value="{$row.score}">-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="layui-form-item  items">
+                <label class="form-text">价格：</label>
+                <div class="form-right">
+                    <input class="input-inf2" type="text" name="price" lay-verify="price" autocomplete="off" placeholder="请输入产品价格" class="layui-input">
+                    <span class="yuan">（元）</span>
+                </div>
+            </div>
+            <!--<foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">-->
+                <!--<div class="layui-form-item  items">-->
+                    <!--<label class="form-text">{$level_name[$key_left_num]}拿货价：</label>-->
+                    <!--<div class="form-right">-->
+                        <!--<input class="input-inf2" type="number" required="" name="price{$key_left_num}" lay-verify="" title="请输入价格" autocomplete="off" placeholder="请输入价格" class="layui-input">-->
+                        <!--<span class="yuan">（元）</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</foreach>-->
+            <!--<div class="layui-form-item  items">-->
+                <!--<label class="form-text">一级返佣比例：</label>-->
+                <!--<div class="form-right">-->
+                    <!--<input class="input-inf2" required="" name="ratio1" type="number" step="0.01" lay-verify="ratio1" autocomplete="off" title="请输入返佣比例" placeholder="请输入返佣比例" class="layui-input">-->
+                    <!--<span class="yuan">（%）</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="layui-form-item  items">-->
+                <!--<label class="form-text">二级返佣比例：</label>-->
+                <!--<div class="form-right">-->
+                    <!--<input class="input-inf2" required="" name="ratio2" type="number" step="0.01" lay-verify="ratio2" autocomplete="off" title="请输入返佣比例" placeholder="请输入返佣比例" class="layui-input">-->
+                    <!--<span class="yuan">（%）</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="layui-form-item  items">-->
+                <!--<label class="form-text">三级返佣比例：</label>-->
+                <!--<div class="form-right">-->
+                    <!--<input class="input-inf2" required="" name="ratio3" type="number" step="0.01" lay-verify="ratio3" autocomplete="off" title="请输入返佣比例" placeholder="请输入返佣比例" class="layui-input">-->
+                    <!--<span class="yuan">（%）</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="layui-form-item  items">
+                <label class="form-text">描述：</label>
+                <div class="form-right">
+                    <textarea placeholder="请输入产品描述" class="layui-textarea" name="description"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item  items">
+                <label class="form-text">产品介绍：</label>
+                <div class="form-right">
+                    <textarea id="editor" class="ueditors" name="content"></textarea>
+                    <!--<textarea class="layui-textarea layui-hide" name="disc" lay-verify="disc" id="LAY_demo_editor"></textarea>-->
+                    <include file="Public/ueditor"/>
+                </div>
+            </div>
+            <div class="layui-form-item  items">
+                <label class="form-text"></label>
+                <div class="form-right">
+                    <button class="layui-btn" type='submit'>立即提交</button>
+                    <button class="layui-btn layui-btn-danger" type='button' id="btn2">取消</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+
+</html>

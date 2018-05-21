@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <title>经销商后台</title>
+        <include file="Public/header_v2"/>
+        <link rel="stylesheet" href="__PUBLIC__/Admin_v2/css/header.css">
+        <style>
+            .index-section {
+                margin-top: 0%;
+            }
+        </style>
+    </head>
+<body>
+
+    <div class="index-panel">
+        <header class="index-header">
+            <a href="__GROUP__/Login/loginout" class="index-header_left">
+                <img src="__PUBLIC__/Admin_v2/images/back.png" />
+                退出登录
+            </a>
+            <div class="index-header_right">
+                <div class="span1">{$Think.config.SYSTEM_NAME}微商管理系统</div>
+                <div class="span2"><php>echo date('Y年m月d日');</php></div>
+            </div>
+        </header>
+        
+       <include file="./App/Public/admin_header.html" />
+        
+        <div class="header_data">
+            <div class="header_data_left">
+                <p class="header_data_p1">{$user_count.status2}</p>
+                <p class="header_data_p2">待审核</p>
+            </div>                
+            <div class="header_data_mid">
+                <p class="header_data_p1">{$user_count.status3}</p>
+                <p class="header_data_p2">待收货</p>
+            </div>
+            <div class="header_data_right">
+                <p class="header_data_p1">{$user_count.recharge_money}</p>
+                <p class="header_data_p2">我的虚拟币</p>
+            </div>  
+            <div class="header_data_left" style="margin-top:20px;">
+                <p class="header_data_p1">{$user_count.team_num}</p>
+                <p class="header_data_p2">我的团队（人）</p>
+            </div>                
+            <div class="header_data_mid" style="margin-top:20px;">
+                <p class="header_data_p1">{$user_count.my_total_money}</p>
+                <p class="header_data_p2">我的业绩（元）</p>
+            </div>                
+            <div class="header_data_right" style="margin-top:20px;">
+                <p class="header_data_p1">{$user_count.team_total_money}</p>
+                <p class="header_data_p2">团队业绩（元）</p>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="index-section">
+        <ul>
+            <li>
+                <a href="__APP__/Home/Manager/detail/?id={$manager.id}&no_return=1&top_type=1">
+                    <img src="__PUBLIC__/Admin_v2/images/list-sqzs.png" alt=""><p>授权证书</p>
+                </a>
+            </li>
+            <li>
+                <a href="{:U(GROUP_NAME.'/Signature/create')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-yqdl.png" alt=""><p>邀请经销商</p>
+                </a>
+            </li>
+            <li><a href="{:U(GROUP_NAME.'/Count/index')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-tdck.png" alt=""><p>业绩数据</p>
+                </a>
+            </li>
+            <li><a href="{:U(GROUP_NAME.'/Agentsee/index')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-tdck.png" alt=""><p>我的团队</p>
+                </a>
+            </li>
+            <li><a href="{:U(GROUP_NAME.'/Manage/index')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-shdl.png" alt=""><p>审核经销商申请</p>
+                </a>
+            </li>
+            <li><a href="{:U(GROUP_NAME.'/Funds/index')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-xnb.png" alt=""><p>虚拟币管理</p>
+                </a>
+            </li>
+            <li><a href="{:U(GROUP_NAME.'/Order/index')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-ddgl.png" alt=""><p>订单管理</p>
+                </a>
+            </li>
+            <li><a href="{:U(GROUP_NAME.'/Rebate/index')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-jxsfl.png" alt=""><p>经销商返利</p>
+                </a>
+            </li>
+            <li><a href="{:U(GROUP_NAME.'/G/s/?join=s')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-dlsfk.png" alt=""><p>经销商发货</p>
+                </a>
+            </li>
+<!--            <li><a href="../repertory/index.html">
+                    <img src="__PUBLIC__/Admin_v2/images/list-smcp.png" alt=""><p>扫码产品库存</p>
+                </a>
+            </li>-->            
+            <li><a href="{:U(GROUP_NAME.'/Retailsend/index')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-smcp.png" alt=""><p>零售出库</p>
+                </a>
+            </li>
+            
+            <eq name="activity.OPEN" value="1">
+            <li><a href="{:U(GROUP_NAME.'/activityproduct/index')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-dlsfk.png" alt=""><p>活动礼品</p>
+                </a>
+            </li>
+            <li><a href="{:U(GROUP_NAME.'/activityorder/index')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-ddgl.png" alt=""><p>活动订单</p>
+                </a>
+            </li>
+            </eq>
+            
+            <li><a href="{:U(GROUP_NAME.'/Index/center')}">
+                    <img src="__PUBLIC__/Admin_v2/images/list-grzx.png" alt=""><p>个人中心</p>
+                </a>
+            </li>
+        </ul>   
+    </div>
+</body>
+<script type="text/javascript">
+    
+    function get_sign_up_state(){
+        
+        $.post("__GROUP__/integral/get_sign_up_state_ajax",function(data){
+            var msg = data.msg;
+            
+            if(data.code==1){
+                add_sign_up_state(data.is_sign_up);
+                var is_sign_up = data.is_sign_up;
+            }
+            else if( data.msg != '' ){
+                tusi(data.msg);
+            }
+            else{
+                var msg = '获取状态失败';
+                tusi(msg);
+            }
+        });
+        
+    }
+    
+    function sign_up(){
+        $.post("__GROUP__/integral/sign_up",function(data){
+            var msg = data.msg;
+            
+            if(data.code==1){
+                
+            }
+            
+            tusi(msg);
+        });
+    }
+    
+    function add_sign_up_state(is_sign_up){
+        
+        var state_html_y = '<div onclick="return sign_up();" class="hide-3s-later-right">签到</div>';
+        
+        var state_html_n = '<div class="hide-3s-later-right" style="background:gray;">已签到</div>';
+        
+        
+        if( is_sign_up == '0' ){
+            $("#sign_up").html('');
+        }
+        else if( is_sign_up == '1' ){
+            $("#sign_up").html(state_html_n);
+        }
+        else if( is_sign_up ==  '2' ){
+            $("#sign_up").html(state_html_y);
+        }
+        
+        //tusi(is_sign_up);
+    }
+    
+    get_sign_up_state();
+</script>
+</html>

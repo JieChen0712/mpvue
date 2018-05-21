@@ -1,0 +1,248 @@
+<include file="Public:public"/>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>转移库存</title>
+<link href="__PUBLIC__/Admin/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-ui.js" ></script>
+<script>
+$(function(){
+	$("#level").change(function(){
+		var level = $(this).val();
+		var html = '<option value="0">请选择代理</option>';
+		if(level == 0){
+			$(".mylevel").html(html);
+			return;
+		}
+		$.post("__APP__/Radmin/Stock/getAgent",{level:level},function(data){
+			if(data != 'none'){
+				var text = '';
+				$.each(data,function(index,array){
+					text +='<option class="'+array["id"]+'" value="'+array["id"]+'">'+array["name"]+array["phone"]+'</option>';
+				})
+				$(".mylevel").html(text);
+			}else{
+				$(".mylevel").html(html);
+			}
+		})
+	})
+})
+$(function(){
+	$("#level1").change(function(){
+		var level1 = $(this).val();
+		var html = '<option value="0">请选择代理</option>';
+		if(level1 == 0){
+			$(".mylevel1").html(html);
+			return;
+		}
+		$.post("__APP__/Radmin/Stock/getAgent",{level:level1},function(data){
+			if(data != 'none'){
+				var text = '';
+				$.each(data,function(index,array){
+					text +='<option class="'+array["id"]+'" value="'+array["id"]+'">'+array["name"]+array["phone"]+'</option>';
+				})
+				$(".mylevel1").html(text);
+			}else{
+				$(".mylevel1").html(html);
+			}
+		})
+	})
+})
+$(function(){
+	$("#btm").click(function(){
+		var level = $("#level").val();
+		var level1 = $("#level1").val();
+		if(level != '' && level1 != ''){
+			
+				var o_id = $(".mylevel").val();
+				var user_id = $(".mylevel1").val();
+				if(o_id == null || o_id == undefined){
+					var o_id  = $("input[name=receive_id]").val();
+					
+				}
+				if(user_id == null || user_id == undefined){
+					var user_id  = $("input[name=receive_id2]").val();
+				}
+				var o_name = $(".mylevel ."+o_id).html();
+				if(o_name == null || o_name == undefined){
+					var o_name = $("input[name=agent1]").val();
+				}
+				var user_name = $(".mylevel1 ."+user_id).html();
+				if(user_name == null || user_name == undefined){
+					var user_name = $("input[name=agent2]").val();
+				}
+				if(o_id != user_id){
+					if(confirm("你确定要将“"+o_name+"”的库存转移给“"+user_name+"”吗？")){
+						//alert(o_id+"<br>"+user_id+"<br>"+o_name+"<br>"+user_name);
+			            $.post("__URL__/transform",{o_id:o_id,user_id:user_id,o_name:o_name,user_name:user_name},function(data){
+			            	if(data == 1){
+			            		alert("转移成功！");
+			            		window.location.reload();
+			            	}else{
+			            		//alert(data);
+			            		//console.log(data);
+			            		alert("转移失败！");
+			            	}
+         				});
+			        }else{
+			            return false;
+			        }
+				}else{
+					alert("相同经销商不能转移库存！");
+				}
+			
+		}else{
+			alert("请选择！");
+		}
+	})
+})
+
+function search(){
+		$(".searchagent").hide();
+		$(".searchagent").remove();
+		$(".mysearch").show();
+		$(".search").hide();
+	}
+</script>
+</head>
+<body class="zh_CN">
+          <div class="col_main">
+		<div class="main_hd">
+			<div class="title_tab" id="topTab">
+				<ul class="tab_navs mt title_tab">
+                   	<li class="tab_nav js_top  selected" data-id="send"><a href="#">转移库存</a></li>
+                 	</ul>
+               </div>
+               <div class="menu">
+			</div>
+		</div>
+		<!--右边内容--> 
+		<div class="main_bd" style="position:relative">
+			
+			<button class="search" value="" onclick="search();" style="position:relative;">搜索代理
+				</button>
+
+		            <table style="margin-left:0px;text-align:left;">
+	              	<!-- 收件人 -->
+	              	<tr>
+		              	<td>被转移库存的代理商：</td>
+		              	<td><div class="searchagent">
+		              		<select name="level" id="level">
+		              			<option value="0">请选择代理等级</option>
+		              			<egt name="level_num" value="2"><option value="1">{$level_name.1}</option></egt>
+		              			<egt name="level_num" value="3"><option value="2">{$level_name.2}</option></egt>
+		              			<egt name="level_num" value="4"><option value="3">{$level_name.3}</option></egt>
+		              			<egt name="level_num" value="5"><option value="4">{$level_name.4}</option></egt>
+		              			<egt name="level_num" value="6"><option value="5">{$level_name.5}</option></egt>
+		              		</select>
+		              		<select name="receive_id" class="mylevel">
+		              		<option value="0">请选择代理</option>
+		              		</select>
+		              		</div>
+		              		<div class="mysearch" style="display:none">
+		              		<input type="text" name="agent1" id="agent" placeholder="请输入代理姓名" onmouseup="this.select();" maxlength="80" style="width:300px;" required/>
+		              		
+		              		</div>
+		              		<input type="hidden" id='receive_id' name="receive_id" value="">
+		              	</td>
+	              	</tr>
+	              	<tr style="height:40px;">
+		              	<td>接受库存的代理商：</td>
+		              	<td><div class="searchagent">
+		              		<select name="level1" id="level1">
+		              			<option value="0">请选择代理等级</option>
+		              			<egt name="level_num" value="2"><option value="1">{$level_name.1}</option></egt>
+		              			<egt name="level_num" value="3"><option value="2">{$level_name.2}</option></egt>
+		              			<egt name="level_num" value="4"><option value="3">{$level_name.3}</option></egt>
+		              			<egt name="level_num" value="5"><option value="4">{$level_name.4}</option></egt>
+		              			<egt name="level_num" value="6"><option value="5">{$level_name.5}</option></egt>
+		              		</select>
+		              		<select name="receive_id1" class="mylevel1">
+		              		<option value="0">请选择代理</option>
+		              		</select>
+		              		</div>
+		              		<div class="mysearch" style="display:none">
+		              		<input type="text" name="agent2" id="agent2" placeholder="请输入代理姓名" onmouseup="this.select();" maxlength="80" style="width:300px;" required/>
+		              		
+		              		</div>
+		              		<input type="hidden" id='receive_id2' name="receive_id2" value="">
+		              	</td>
+	              	</tr>
+	              	<!--确定按钮-->
+					<tr>
+						<td></td>
+						<td>
+			              	<input id="btm" class="btn1" value="提交" type="button"/>
+		              	</td>
+	              	</tr>
+				</form>
+			</div>
+		              		
+	</div>
+</body>
+
+<script type="text/javascript">
+$("#agent").autocomplete({
+	minLength:1,
+	autoFocus:true, 
+	source: function(request, response){
+		$.ajax({
+			url: "__APP__/Radmin/Stock/agent", 
+			dataType: "json",
+			data: {
+				term: request.term,
+			},
+			success: function(data){
+				response($.map(data,function(item){
+					return {
+//						data: item,
+						label :item.name+item.phone+item.levname,
+// 						value :item.agent_name,
+						ID: item.id,
+//						province: item.agent_province,
+//						city: item.agent_city,
+					}
+				}));
+			} 
+		}); 
+	},
+	select: function(event, ui){
+//		$('#order_address').val(ui.item.address+item.agent_city);
+		$('#receive_id').val(ui.item.ID);
+	}
+});
+$("#agent2").autocomplete({
+	minLength:1,
+	autoFocus:true, 
+	source: function(request, response){
+		$.ajax({
+			url: "__APP__/Radmin/Stock/agent", 
+			dataType: "json",
+			data: {
+				term: request.term,
+			},
+			success: function(data){
+				response($.map(data,function(item){
+					return {
+//						data: item,
+						label :item.name+item.phone+item.levname,
+// 						value :item.agent_name,
+						ID: item.id,
+//						province: item.agent_province,
+//						city: item.agent_city,
+					}
+				}));
+			} 
+		}); 
+	},
+	select: function(event, ui){
+//		$('#order_address').val(ui.item.address+item.agent_city);
+		$('#receive_id2').val(ui.item.ID);
+	}
+});
+
+</script>
+</html>

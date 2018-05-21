@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <script src="__PUBLIC__/Radmin_v3/js/audit.js"></script>
+        <script type="text/javascript">
+            var publicUrl = '__PUBLIC__/';
+            var auditUrl = '{:U(GROUP_NAME . "/Order/audit")}/';
+            var auditsendUrl = '{:U(GROUP_NAME . "/Order/audit_send")}/';
+            //            var delUrl = '{:U(GROUP_NAME . "/Order/refuse_order")}/';
+        </script>
+        <!--<script language="javascript" src="__PUBLIC__/Radmin_v3/js/LodopFuncs.js"></script>-->
+        <!--<script src="__PUBLIC__/Radmin_v3/js/fixedtable.js" type="text/javascript" charset="utf-8"></script>-->
+    </head>
+
+    <body>
+        <section class="layui-container">
+            <div class="content">
+                <header class="header">
+                    <eq name="status" value="">
+                        <h3>全部订单</h3>
+                    </eq>
+                    <eq name="status" value="2">
+                        <h3>配送中订单</h3>
+                    </eq>
+                    <eq name="status" value="3">
+                        <h3>已收货订单</h3>
+                    </eq>
+                    <eq name="status" value="4">
+                        <h3>申请退货订单</h3>
+                    </eq>
+                    <eq name="status" value="5">
+                        <h3>已退货订单</h3>
+                    </eq>
+                    <eq name="status" value="6">
+                        <h3>待配送订单</h3>
+                    </eq>
+                    <eq name="status" value="7">
+                        <h3>拒绝退货订单</h3>
+                    </eq>
+                    <eq name="status" value="8">
+                        <h3>抢单中心</h3>
+                    </eq>
+                    
+                    <div class="pull-right">
+                        <neq name="status" value="7">
+                            <a href="__URL__/expUser?pd=order&con_url={$con_url}" class="layui-btn layui-btn-radius layui-btn-normal">导出Excel</a>
+                        </neq>
+                        <if condition="($status eq 2) OR ($status eq 6)">
+                            <!--<div class="layui-upload">-->
+                                <!--<form class="form-inline" method="post" action="__URL__/impordernumber?type=order" enctype="multipart/form-data">-->
+                                <button type="button" class="layui-btn" id="test1"><i class="layui-icon"></i>导入快递单号</button>
+                                <!--</form>-->
+                            <!--</div>-->
+                        </if>
+                        <if condition="($status eq 6)">
+                            <?php if( C('SEND_ORDER') ): ?>
+                                <button type="button" class="layui-btn layui-btn-danger" id="print_send_order">批量打印配送单</button>
+                            <?php endif;?>
+                            <?php if( C('KDNIAO_ORDER') ): ?>
+                                <button type="button" class="layui-btn layui-btn-warm" id="print_order">批量打印电子面单</button>
+                            <?php endif;?>
+                            <input type="button" class="layui-btn layui-btn-radius layui-btn-normal" id="auditsend" data-status="{$status}" value="发货审核" />
+                        </if>
+                        <if condition="($status eq 8)">
+                            <input type="button" class="layui-btn layui-btn-radius layui-btn-normal" id="audit" data-status="{$status}" value="转回总部订单" />
+                        </if>
+                        
+                    </div>
+                </header>
+                <form class="layui-form form layui-row form-search" action="__SELF__" method="get" onsubmit="return false">
+                    <div class="layui-form-item form-item">
+                        <label class="layui-form-label" for="start_time">请选择时间范围</label>
+                        <div class="time-wrapper">
+                            <input type="text" class="layui-input" id="timeChoose" name="s_time" placeholder="请选择时间范围">
+                        </div>
+                    </div>
+                    <!--<div class="layui-form-item form-item">
+            <label class="layui-form-label" for="start_time">开始时间</label>
+            <div class="time-wrapper site-demo-laydate">
+              <input type="text" class="layui-input blue" name="start_time" id="start_time" readonly="readonly" placeholder="开始时间" autocomplete="on">
+              <i class="fa fa-angle-down"></i>
+            </div>
+          </div>-->
+                    <!--<div class="layui-form-item form-item">
+            <label class="layui-form-label" for="end_time">结束时间</label>
+            <div class="time-wrapper site-demo-laydate">
+              <input type="text" class="layui-input blue" name="end_time" id="end_time" readonly="readonly" placeholder="结束时间" autocomplete="on">
+              <i class="fa fa-angle-down"></i>
+            </div>
+          </div>-->
+
+                    <div class="layui-form-item form-item">
+                        <label class="layui-form-label" for="order_num">订单号</label>
+                        <div>
+                            <input type="text" autocomplete="on" class="layui-input" id="order_num" name="order_num" placeholder="订单号">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item form-item">
+                        <label class="layui-form-label" for="name">代理</label>
+                        <div>
+                            <input type="text" autocomplete="on" class="layui-input" id="name" name="name" placeholder="姓名/微信号">
+                        </div>
+                    </div>
+                    <div class="layui-form-item form-item">
+                        <label class="layui-form-label" for="name">产品</label>
+                        <div class="select-wrapper">
+                            <select name="p_id" id="p_id" lay-verify="required">
+                                <option value="">选择产品</option>
+                                <volist name="dis_templet_List" id="m">
+                                    <option value="{$m.id}">{$m.name}</option>
+                                </volist>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item form-item">
+                        <label class="layui-form-label" for="status">订单状态</label>
+                        <div class="select-wrapper" style="max-width: 104px">
+                            <select name="status" id="status" lay-verify="required">
+                                <option value="">选择状态</option>
+                                <?php foreach( $status_name as $key_status => $v_status ):?>
+                                <option value="{$key_status}">{$v_status}</option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                    </div>
+
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="ishead">是否总部供货</label>
+            <div class="select-wrapper" style="max-width: 70px">
+              <select name="ishead" id="ishead" lay-verify="required">
+                <option value="">是否</option>
+                <option value="1">是</option>
+                <option value="0">否</option>
+              </select>
+            </div>
+          </div>
+          
+          
+          <div class="layui-form-item form-item">
+            <label class="layui-form-label" for="shipper">选择快递公司</label>
+            <div class="select-wrapper" style="max-width: 70px">
+              <select name="shipper" id="shipper" lay-verify="required">
+                <option value="">选择快递公司</option>
+                <?php foreach( $shipper as $k => $v ):?>
+                <option class="shipper_detail_name{$k}" value="{$k}">{$k}-{$v}</option>
+                <?php endforeach;?>
+              </select>
+            </div>
+          </div>
+          
+
+                    <div class="search-btn">
+                        <button type="submit" class="layui-btn layui-btn-radius">搜索</button>
+                    </div>
+                </form>
+                <div class="table-wrapper">
+                    <table class="layui-table" lay-skin="row" lay-size="sm">
+                        <thead>
+                            <tr>
+                                <if condition="($status eq 6) OR ($status eq 8)">
+                                    <th><input type="checkbox" id="checkAll" /></th>
+                                </if>
+                                <th>订单号</th>
+                                <th>订货代理</th>
+                                <th>接单代理</th>
+                                <th>级别</th>
+                                <th>产品名称</th>
+                                <th>单价</th>
+                                <th>数量</th>
+                                <th>商品总价</th>
+                                <?php if( C('ORDER_SHIPPING') == TRUE ): ?>
+                                <th>运费</th>
+                                <th>订单总价</th>
+                                <!--<th>配送方式</th>-->
+                                <?php endif;?>
+                                <th>收货人姓名</th>
+                                <th>收货人电话</th>
+                                <th>收货地址</th>
+                                <th>快递单号</th>
+                                <th>备注</th>
+                                <if condition="($status eq 5) OR ($status eq 7)">
+                                    <th>退货原因</th>
+                                </if>
+                                <th>申请时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <empty name="applyList">
+                                <tr style="position: relative;">
+                                    <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                                </tr>
+                                <else />
+                                <volist name="applyList" id="m">
+                                    <tr>
+                                        <if condition="($status eq 6) OR ($status eq 8)">
+                                            <td class="checkItem"><input type="checkbox" name="mid" value="{$m.id}" /></td>
+                                        </if>
+                                        <td id="order_num{$m.id}">{$m.order_num}</td>
+                                        <td id="order_name{$m.id}">{$m.name}</td>
+                                        <td id="order_oname{$m.id}">{$m.o_name}</td>
+                                        <td id="order_levname{$m.id}">{$m.levname}</td>
+                                        <td id="order_pname{$m.id}">
+                                            <volist name="m['row']" id="vv">
+                                                {$vv.p_name} {$vv.style}x{$vv.num}<br>
+                                            </volist>
+                                        </td>
+                                        <td id="order_price{$m.id}">
+                                            <volist name="m['row']" id="vv">
+                                                {$vv.price}<br>
+                                            </volist>
+                                        </td>
+                                        <td id="order_tnum{$m.id}">
+                                            {$m.total_num}
+                                        </td>
+                                        <td id="order_tprice{$m.id}">{$m.total_price}</td>
+                                        <?php if( C('ORDER_SHIPPING') == TRUE ): ?>
+                                        <td id="order_shipping_fee{$m.id}">{$m.shipping_fee}</td>
+                                        <td id="order_sprice{$m.id}">{$m.sum_price}</td>
+                                        <?php endif;?>
+                                        <!--<td>
+                        <if condition="$m.shipping_way eq 0">
+                            快递
+                            <elseif condition="$m.shipping_way eq 1"/>
+                                EMS
+                            <else/>
+                                平邮
+                        </if>
+                    </td>-->
+                                        <td id="order_sname{$m.id}">{$m.s_name}</td>
+                                        <td id="order_sphone{$m.id}">{$m.s_phone}
+                                            <input type="hidden" id="order_phone{$m.id}" value="{$m.phone}" />
+                                        </td>
+                                        <td id="order_saddre{$m.id}">{$m.s_addre}</td>
+                                        <td>
+                                            <div class="kd{$m.id}" style="display:inline">
+                                                <div id='shipper_name{$m.id}' data-shipper="{$m.shipper}">{$m.shipper_name}</div>
+                                                <div id="change_order_info_{$m.id}">
+                                                    <if condition="$m.ordernumber eq ''">未填写
+                                                        <else /> {$m.ordernumber}</if>
+                                                </div>
+                                                <button type="button" data-modal="__URL__/index_kd?order_num={$m.order_num}" class="layui-btn layui-btn-radius layui-btn-normal">更新</button>
+                                            </div>
+                                            <!--<select id="shipper{$m.id}" class="form-control change_order_dis change_order_{$m.id}">-->
+                                            <!--<option value="">选择快递公司</option>-->
+                                            <!--<?php foreach( $shipper as $k => $v ):?>-->
+                                            <!--<option class="shipper_detail_name{$k}" value="{$k}">{$k}-{$v}</option>-->
+                                            <!--<?php endforeach;?>-->
+                                            <!--</select>-->
+
+                                            <!--<input type="text" placeholder="请填写快递单号" class="form-control change_order_dis change_order_{$m.id}" id="ordernumber_{$m.id}">-->
+                                            <!--<input type="submit" onclick="onumber('{$m.id}', '{$m.order_num}');" class="btn btn-success change_order_dis change_order_{$m.id}" value="提交" />-->
+                                            <!--<input type="button" onclick="cancle('{$m.id}');" class="btn btn-success change_order_dis change_order_{$m.id}" style="background-color: #5bc0de" value="取消" />-->
+
+                                            <if condition="($m.shipper neq null) AND ($m.ordernumber neq null) ">
+                                                <eq name="m.ordernumber_count" value="1">
+                                                    <a target="__bank" href="http://api.weisika.net/kd100/index/jump?ShipperCode={$m.shipper}&LogisticCode={$m.ordernumber_arr.0}" class="layui-btn layui-btn-radius wlxx{$m.id}">物流信息</a>
+                                                    <else />
+                                                    <button type="button" data-iframe="__URL__/detail?id={$m.id}&status={$m.status}" data-title='物流信息查询' class="layui-btn layui-btn-radius">物流信息</button>
+                                                </eq>
+                                            </if>
+                                        </td>
+                                        <td id="notes{$m.id}">{$m.notes}</td>
+                                        <if condition="($status eq 5) OR ($status eq 7)">
+                                            <th>{$m.return_notes}</th>
+                                        </if>
+                                        <td>{$m.time|date="Y-m-d H:i",###}</td>
+                                        <td>
+                                            <if condition="$m.status eq 1">
+                                                <p class="layui-bg-red">待审核</p>
+                                                <elseif condition="$m.status eq 2" />
+                                                <p class="layui-bg-orange">配送中</p>
+                                                <elseif condition="$m.status eq 6" />
+                                                <p class="layui-bg-red">待发货</p>
+                                                <elseif condition="$m.status eq 4" />
+                                                <p class="layui-bg-green">申请退货</p>
+                                                <elseif condition="$m.status eq 5" />
+                                                <p class="layui-bg-green">已退货</p>
+                                                <elseif condition="$m.status eq 7" />
+                                                <p class="layui-bg-red">拒绝退货</p>
+                                                <else/>
+                                                <p class="layui-bg-blue">已收货</p>
+                                            </if>
+                                            <?php if( !in_array(28,$admin_auth)): ?>
+                                            <button type="button" data-iframe="__URL__/detail?id={$m.id}&status={$m.status}" data-title='订单详情' class="layui-btn layui-btn-radius layui-btn-normal">详情</button>
+                                            <?php endif;?>
+                                            <!--<button type="button" class="btn btn-danger" onclick="sc('{$m.order_num}', '__URL__/delOrder/id/{$m.order_num}')">删除</button>-->
+                                            <if condition="($status eq 6)">
+                                                <?php if( C('SEND_ORDER') ): ?>
+                                                    <button type="button" data-id="{$m.id}" style="margin-left: 0;" data-title='配送单' class="layui-btn layui-btn-radius layui-btn-danger btn-send">配送单</button>
+                                                <?php endif;?>
+                                                <?php if( C('KDNIAO_ORDER') ): ?>
+                                                    <button type="button" data-id="{$m.id}" style="margin-left: 0;" data-title='电子面单' class="layui-btn layui-btn-radius layui-btn-warm btn-kdn">电子面单</button>
+                                                <?php endif;?>
+                                            </if>
+                                        </td>
+                                        <input type="hidden" id="send_province{$m.id}" value="{$m.dis_province}" />
+                                        <input type="hidden" id="send_city{$m.id}" value="{$m.dis_city}" />
+                                        <input type="hidden" id="send_county{$m.id}" value="{$m.dis_county}" />
+                                        <input type="hidden" id="send_address{$m.id}" value="{$m.dis_address}" />
+                                        <input type="hidden" id="rec_province{$m.id}" value="{$m.province}" />
+                                        <input type="hidden" id="rec_city{$m.id}" value="{$m.city}" />
+                                        <input type="hidden" id="rec_county{$m.id}" value="{$m.county}" />
+                                        <input type="hidden" id="o_id{$m.id}" value="{$m.o_id}" />
+                                    </tr>
+                                </volist>
+                                <include file="Public/page" />
+                                <!-- <div id="page"></div> -->
+                                <!--<tr><td colspan="14"><div class="pull-right">{$page}</div></td></tr>-->
+                            </empty>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                </div>
+
+        </section>
+
+        <script>
+            var printname = '';
+
+            function CheckIsInstall() {
+                try {
+                    var LODOP = getLodop();
+                    if(LODOP.VERSION) {
+                        //                       if (LODOP.CVERSION){
+                        //                          alert("当前有C-Lodop云打印可用!\n C-Lodop版本:"+LODOP.CVERSION+"(内含Lodop"+LODOP.VERSION+")"); 
+                        //                       }else{
+                        //                          alert("本机已成功安装了Lodop控件！\n 版本号:"+LODOP.VERSION); 
+                        //                       }
+                        printname = LODOP.GET_PRINTER_NAME(0);
+                    };
+                } catch(err) {}
+            };
+            form.render();
+            //    layui.use('laydate', function() {
+            //      var laydate = layui.laydate;
+            //      laydate.render({
+            //        elem: '#start_time'
+            //      });
+            //      laydate.render({
+            //        elem: '#end_time'
+            //      });
+            //    })
+            var loading = false,
+                loading2 = false;
+            var print_limit = true;
+            var index = '';
+            $(function() {
+                $('#checkAll').on('click', function() {
+                    if($(this).is(':checked')) {
+                        $('.checkItem input[name=mid]').prop('checked', true);
+                    } else {
+                        $('.checkItem input[name=mid]').prop('checked', false);
+                    }
+                });
+                // 电子面单
+                $(document).on('click', '.btn-kdn', function() {
+                    if(loading) {
+                        return false;
+                    }
+                    index = layer.load();
+                    loading = true;
+                    var uid = $(this).data('id');
+                    var other = {
+                        async: true,
+                        isPrint: true
+                    }
+                    print_order(uid, other);
+                });
+                // 配送单
+                $(document).on('click', '.btn-send', function() {
+                    if(print_limit) {
+                        print_limit = !print_limit;
+                        var order_id = $(this).data('id');
+                        console.log(order_id);
+                        if(order_id != "") {
+                            window.open('__URL__/send_order?order_id=' + order_id);
+                        }
+                        setTimeout(function() {
+                            print_limit = !print_limit;
+                        }, 1000);
+                    } else {
+                        return false;
+                    }
+                });
+
+                $(".change_order_dis").hide();
+
+                // 电子面单
+                $('#print_order').click(function() {
+                    if(loading) {
+                        layer.msg("正在打印中，请稍后再试！");
+                        return false;
+                    }
+                    loading = true;
+                    var aim = $('.checkItem input[name=mid]:checked');
+                    print_order_batch(aim);
+                });
+
+                // 配送单
+                $('#print_send_order').click(function() {
+                    if(loading) {
+                        layer.msg("正在打印中，请稍后再试！");
+                        return false;
+                    }
+                    loading = true;
+                    var aim = $('.checkItem input[name=mid]:checked');
+                    print_send_order_batch(aim);
+                    console.log(aim)
+                });
+            });
+
+            function change_order(id) {
+                $('.kd' + id).hide();
+                $('.wlxx' + id).hide();
+                $(".change_order_" + id).toggle();
+            }
+
+            function onumber(id, order_num) {
+                var ordernumber = $('#ordernumber_' + id).val();
+                var shipper = $('#shipper' + id).val();
+                var shipper_detail_name = $(".shipper_detail_name" + shipper).html();
+
+                $.post("__URL__/ordernb", {
+                    id: id,
+                    order_num: order_num,
+                    ordernumber: ordernumber,
+                    shipper: shipper
+                }, function(data) {
+                    if(data) {
+
+                        change_order(id);
+                        $("#change_order_info_" + id).html(ordernumber);
+                        $("#shipper_name" + id).html(shipper_detail_name);
+                        $('.kd' + id).show();
+                        $('.wlxx' + id).show();
+                        layer.msg('填写成功！');
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    } else {
+                        layer.msg('填写失败！原因没做出改变！');
+                    }
+                });
+            }
+
+            function cancle(id) {
+                change_order(id);
+                $('.kd' + id).show();
+                $('.wlxx' + id).show();
+            }
+
+            //          批量打印电子面单
+            function print_order_batch(aim) {
+                CheckIsInstall();
+                if(aim.length < 1) {
+                    layer.msg('请选择要打印的电子面单');
+                    loading = false;
+                    return false;
+                }
+                index = layer.load();
+                var other = {
+                    async: false,
+                    isPrint: false
+                }
+                var temp = [];
+                var temp_data = [];
+                var temp_html = "";
+                $.each(aim, function (key, value) {
+                    var uid = $(value).val().trim();
+                    var orderCode = $('#order_num' + uid).text().trim();
+                    temp.push(orderCode);
+//                  console.log(print_order(uid, other))
+                    temp_data.push(print_order(uid, other));
+                });
+                $.each(temp_data, function(key,value) {
+                    console.log(key)
+                    if(value['PrintTemplate']!=undefined && value['PrintTemplate']!=null && value['PrintTemplate']!=""){
+                        temp_html += '<div style="position:relative">'+value['PrintTemplate']+'</div>';
+                    }
+                });
+//              console.log(temp_html);
+                OpenWindow = window.open("", "_blank", "fullscreen=yes, width=" + screen.width + ", height=" + screen.height + ", toolbar=no ,scrollbars=" + scroll + ",menubar=no");
+                OpenWindow.document.write(temp_html);
+                OpenWindow.document.write('<script>setTimeout(function(){window.print()},1500);<\/script>');
+                OpenWindow.document.close();
+                loading = false;
+//              $.post('__APP__/Api/kdniao/build_form', {
+//                  OrderCode: temp,
+//                  PortName: printname
+//              }, function(data) {
+//                  OpenWindow = window.open("", "_blank", "fullscreen=yes, width=" + screen.width + ", height=" + screen.height + ", toolbar=no ,scrollbars=" + scroll + ",menubar=no");　　
+//                  OpenWindow.document.write(data);
+//                  OpenWindow.document.write('<script>setTimeout(function(){window.print()},1500);<\/script>');
+//                  OpenWindow.document.close();
+//                  loading = false;
+//              });
+            }
+
+            //          批量打印配送单
+            function print_send_order_batch(aim) {
+                if(aim.length < 1) {
+                    layer.msg('请选择要打印的电子面单');
+                    loading = false;
+                    return false;
+                }
+                index = layer.load();
+                var other = {
+                    async: false,
+                    isPrint: false
+                }
+                var temp = [];
+
+                $.each(aim, function(key, value) {
+                    var uid = $(value).val().trim();
+                    temp.push(uid);
+                });
+                layer.close(index);
+                loading = false;
+                window.open('__URL__/send_order?order_id=' + temp);
+            }
+            var test_data = '';
+            //          打印单张电子面单
+            function print_order(uid, other) {
+                var order_data = '';
+                var info = {
+                    shipperCode: $('#shipper_name' + uid).data('shipper').trim(),
+                    orderCode: $('#order_num' + uid).text().trim(),
+                    logisticCode: $('#change_order_info_' + uid).text().trim(),
+                    cost: $('#order_shipping_fee' + uid).text().trim(),
+                    senderName: $('#order_oname' + uid).text().trim(),
+                    senderMobile: $('#order_phone' + uid).val().trim(),
+                    senderProvinceName: $('#send_province' + uid).val().trim() + ($('#send_province' + uid).val().trim().indexOf("省") != -1 ? "" : "省"),
+                    senderCityName: $('#send_city' + uid).val().trim() + ($('#send_city' + uid).val().trim().indexOf("市") != -1 ? "" : "市"),
+                    senderAreaName: $('#send_county' + uid).val().trim(),
+                    senderAddress: $('#send_address' + uid).val().trim(),
+                    recProvinceName: $('#rec_province' + uid).val().trim() + ($('#rec_province' + uid).val().trim().indexOf("省") != -1 ? "" : "省"),
+                    recCityName: $('#rec_city' + uid).val().trim() + ($('#rec_city' + uid).val().trim().indexOf("市") != -1 ? "" : "市"),
+                    recAreaName: $('#rec_county' + uid).val().trim(),
+                    recName: $('#order_sname' + uid).text().trim(),
+                    recPhone: $('#order_sphone' + uid).text().trim(),
+                    recAddress: $('#order_saddre' + uid).text().trim(),
+                    goodsName: $('#order_pname' + uid).text().trim(),
+                    goodsQuantity: $('#order_tnum' + uid).text().trim(),
+                    goodsPrice: $('#order_tprice' + uid).text().trim(),
+                    remark: $('#notes' + uid).text().trim()
+                };
+
+                if($('#o_id' + uid).val() == 0) {
+                    info.senderName = '{$Think.config.BOSS.NAME}';
+                    info.senderProvinceName = '{$Think.config.BOSS.PROVINCE}'.indexOf('省')!=-1?'{$Think.config.BOSS.PROVINCE}':'{$Think.config.BOSS.PROVINCE}'+'省';
+                    info.senderCityName = '{$Think.config.BOSS.CITY}'.indexOf('市')!=-1?'{$Think.config.BOSS.CITY}':'{$Think.config.BOSS.CITY}'+'市';
+                    info.senderAreaName = '{$Think.config.BOSS.COUNTY}';
+                    info.senderMobile = '{$Think.config.BOSS.PHONE}';
+                    info.senderAddress = '{$Think.config.BOSS.DETAIL}';
+                }
+                console.log(info);
+                $.ajax({
+                    url: '__APP__/Api/kdniao/print_orderdemo',
+                    type: "POST",
+                    async: other.async,
+                    data: {
+                        //              $.ajax({url:'__APP__/Api/index/test_kdn',type:"POST", async:other.async, data:{
+                        'ShipperCode': info.shipperCode, //快递公司编码
+                        'OrderCode': info.orderCode, //订单号（不可重复提交，重复提交系统会返回具体错误代码。）
+                        'LogisticCode': info.logisticCode, //快递单号
+                        'PayType': ('{$Think.config.BOSS.PHONE}'==''?'3':'{$Think.config.BOSS.PHONE}'), //邮费支付方式:1-现付，2-到付，3-月结，4-第三方支付
+                        'Cost': info.cost,
+                        'sendername': info.senderName,
+                        'sendermobile': info.senderMobile,
+                        'senderprovincename': info.senderProvinceName, //不要缺少“省”
+                        'sendercityname': info.senderCityName, //不要缺少“市”
+                        'senderexpareaName': info.senderAreaName, //不要缺少“区”或“县”
+                        'senderaddress': info.senderAddress,
+                        'receivername': info.recName,
+                        'receivermobile': info.recPhone,
+                        'receiverprovincename': info.recProvinceName,
+                        'receivercityname': info.recCityName,
+                        'receiverexpareaName': info.recAreaName,
+                        'receiveraddress': info.recAddress,
+                        'return_number': '', //返回快递单号的url
+                        'Remark': info.remark, //备注
+                        'GoodsName': info.goodsName, //商品名称
+                        'Goodsquantity': info.goodsQuantity, //商品数量
+                        'GoodsPrice': info.goodsPrice, //商品价格
+                        'GoodsDesc': '用于测试', //商品描述
+                        'IsReturnPrintTemplate': '1', //返回电子面单模板：0-不需要；1-需要（如果调用批量打印则封装这个为0）
+                        'returnjson': 1, //是否返回json格式
+                    },
+                    success: function(data) {
+
+                        layer.close(index);
+                        //                  var _data = JSON.parse(data);
+                        var _data = data;
+                        test_data = data;
+                        if(_data.Success == true) {
+                            loading = false;
+                            $.post('__URL__/set_kd', {
+                                shipper: $('#shipper_name' + uid).data('shipper').trim(),
+                                order_num: $('#order_num' + uid).text().trim(),
+                                ordernumber: _data.Order.LogisticCode
+                            }, function(data) {
+                                console.log(data.msg);
+                            });
+                            if(other.isPrint) {
+                                OpenWindow = window.open("", "_blank", "fullscreen=yes, width=" + screen.width + ", height=" + screen.height + ", toolbar=no ,scrollbars=" + scroll + ",menubar=no");　　
+                                OpenWindow.document.write(_data.PrintTemplate);
+                                OpenWindow.document.write('<script>setTimeout(function(){window.print()},1500);<\/script>');
+                                OpenWindow.document.close();
+                            }else{
+                                order_data = data;
+                            }
+                        } else {
+                            order_data = data
+                            layer.msg(_data.Reason);
+                            loading = false;
+                        }
+                    }
+                });
+                return order_data;
+            }
+        </script>
+
+        <script type="text/javascript">
+            //            日期范围
+            layui.use(['laydate', 'upload'], function() {
+                var $ = layui.jquery,
+                    upload = layui.upload,
+                    laydate = layui.laydate;
+                laydate.render({
+                    elem: '#timeChoose',
+                    range: '-',
+                    format: 'yyyyMMdd',
+                });
+                //          文件上传
+                var uploadInst = upload.render({
+                    elem: '#test1',
+                    url: '__URL__/impordernumber_ajax?type=order',
+                    accept: 'file', //普通文件
+                    exts: 'xls|xlsx',
+                    auto: true,
+                    done: function(res) {
+                        layer.closeAll('loading'); //关闭loading
+
+                        if(res.code == 1) {
+                            layer.msg(res.msg);
+                            location.reload();
+                        } else if(res.msg != null && res.msg != '') {
+                            layer.msg(res.msg);
+                        } else {
+                            layer.msg('未定义错误，可能是系统繁忙，请重试！');
+                        }
+                    },
+                    error: function(index, upload) {
+                        layer.closeAll('loading'); //关闭loading
+                        //当上传失败时，你可以生成一个“重新上传”的按钮，点击该按钮时，执行 upload() 方法即可实现重新上传
+                        layer.msg('无法调用文件上传！');
+                    }
+                });
+            })
+        </script>
+        <script>
+            $("#order_auto").click(function() {
+                $.post("__URL__/order_auto", {}, function(data) {
+                    if(data.code == '1') {
+                        layer.msg(data.msg);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500)
+                    }
+                });
+            });
+        </script>
+    </body>
+
+</html>

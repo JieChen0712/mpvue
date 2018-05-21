@@ -1,0 +1,107 @@
+<layout name="Public/public" />
+
+
+
+<link href="__PUBLIC__/css/index.css" rel="stylesheet">
+<!--图标样式-->
+<!--<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/bootstrap.min.css">-->
+<!--主要样式-->
+<!--<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/css/styleone.css">
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-1.7.2.min.js"></script>-->
+<script type="text/javascript">
+$(function(){
+    $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+    $('.tree li.parent_li > span').live('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+            children.hide('fast');
+            $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+        }else{
+            var mid = $(this).children('input').val();
+            var tet = $(this).next('a').next('b').next('ul').html();
+            //判断有没有把下属显示出来
+            if(tet == ""){
+              var texta = '';
+              $.ajax({
+                  async: false,
+                  type : "POST",
+                  data: {mid:mid},
+                  dataType: "json",
+                  url : '__URL__/treedirect',
+                  success : function(data) {
+                    if(data == 1){
+                      alert("没下级代理！");
+                      return;
+                    }
+                    //alert(data);
+                    for(var i=0;i<data.length;i++){
+                      texta += '<li class="parent_li"><span title="Expand this branch" class="level'+data[i]['level']+'"><input type="hidden" value="'+data[i]['id']+'"><i class="icon-plus-sign"></i>'+data[i]['name']+'</span> <a href="javascript:void(0);" onclick="xqxx('+data[i]['id']+')">详情信息</a><b>'+data[i]['count']+'</b><ul></ul></li>';
+                    }
+                  }
+              });
+              $(this).next('a').next('b').next('ul').html(texta);
+            }
+            children.show('fast');
+            $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+        }
+        e.stopPropagation();
+    });
+});
+function xqxx(id){
+  var textb = '';
+  $.post("__URL__/persondetail",{id:id},function(data){
+    textb += '<p class="p1">'+data['levname']+'</p>';
+    textb += '<p class="p2">'+data['name']+'</p>';
+    textb += '<div class="test">';
+    textb += '<p class="p3">授权电话：<span>'+data['phone']+'</span></p>';
+    textb += '<hr>';
+    textb += '<p class="p4">身份证号：<span>'+data['idennum']+'</span></p>';
+    textb += '<hr>';
+    textb += '<p class="p5">授权代码：<span>'+data['id']+'</span></p>';
+    textb += '<hr>';
+    textb += '<p class="p6">授权姓名：<span>'+data['name']+'</span></p>';
+    textb += '<hr>';
+    textb += '<p class="p7">授权微信：<span>'+data['wechatnum']+'</span></p>';
+    textb += '<hr>';
+    textb += '<p class="p8">授权日期：<span>'+data['time']+'</span></p>';
+    textb += '<hr>';
+    textb += '<p class="p_img"><img src="'+data['headimgurl']+'" alt="" class="headimg"></p>';
+    textb += '</div>';
+    $('.bg').html(textb);
+  },'JSON');
+}
+</script>
+</head>
+
+
+
+<h1 class="page-header">
+    库存编辑
+</h1>
+
+        <form class="form-inline" action="__URL__/update" method="post" role="form">
+        <table class="table table-bordered">
+            
+          <tr>
+            <td>录入人</td>
+            <td>厂家</td>
+          </tr>
+          <tr>
+            <td>库存数量</td>
+            <td>
+                <input name="total_num" class="form-control" type="number" value="{$one.total_num}" required placeholder="库存数量" >
+                <input name="id" type="hidden" value="{$one.id}" >
+            </td>
+          </tr>
+          <tr>
+              <td></td>
+            <td>
+              <input class="btn btn-default" type="submit" value="提交">
+            </td>
+          </tr>
+         
+        </table>
+         </form>
+      
+      

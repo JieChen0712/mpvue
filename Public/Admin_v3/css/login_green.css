@@ -1,0 +1,82 @@
+.page {
+    display: block;
+    
+}
+.content {
+    background-size: cover;
+}
+
+.logo {
+    text-align: center;
+    padding-top: 4.375rem;
+}
+
+.logo img {
+    width: 6.25rem;
+
+}
+
+.welcome-text {
+    text-align: center;
+}
+
+.input-wrapper {
+    text-align: center;
+}
+
+.input-wrapper .username,
+.input-wrapper .password {
+    width: 16.875rem;
+    height: 2.25rem;
+    border: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+    background-position: 10px 5px;
+    text-indent: 2.5rem;
+}
+
+.input-wrapper .username {
+    margin-top: 1.5625rem;
+    background-image: url(../images/login/login_green/icon1.png);
+}
+
+.input-wrapper .password {
+    margin-top: .9375rem;
+    background-image: url(../images/login/login_green/icon2.png);
+}
+
+.btn-wrapper {
+    margin-top: 2.5rem;
+    text-align: center;
+}
+
+.btn-wrapper .login {
+    width: 16.875rem;
+    height: 2.8125rem;
+    display: inline-block;
+    border: none;
+    color: #fff;
+}
+
+.tip-text {
+    text-align: center;
+}
+.tip-text p {
+    text-align: left;
+    display: inline-block;
+    width: 16.875rem;
+    font-size: 12px;
+}
+
+.web-text {
+    position: absolute;
+    width: 100%;
+    bottom: .625rem;
+    text-align: center;
+}
+
+.web-text p {
+    margin: 0;
+}
+

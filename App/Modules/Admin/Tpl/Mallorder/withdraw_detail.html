@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>提现详情</title>
+    <include file="Public/header_v3"/>
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/withdraw_detail.css"/>
+    <!-- <script src="__PUBLIC__/js/exif.js"></script> -->
+    <!-- <script>
+        var uploadUrl = '__APP__/Home/Manager/uploadCanvas';
+    </script> -->
+</head>
+<body>
+<div class="page">
+    <div class="content">
+        <div class="message">
+
+            <p class="name">提现者姓名： 测试中
+                <span>已完成</span>
+            </p>
+            <p class="Wechat">微信号：123</p>
+            <p class="grade">经销商等级：乐享会员</p>
+            <p class="chech-name">充值审核人：
+                <if condition="$is_parent_audit eq 0">
+                    总部
+                    <else/>
+                    {$manager.bossname}
+                </if>
+            </p>
+
+        </div>
+        <div class="recharge-wrapper">
+            <p>提现虚拟币</p>
+            <div class="recharge-money">
+                <span>￥</span>
+                <p>34578.88</p>
+            </div>
+        </div>
+        <div class="account">
+            <div class="account-title">到账账户</div>
+            <div class="account-content">
+                <p>银行卡：工商银行</p>
+                <span>6749 4345 4356 1212</span>
+            </div>
+        </div>
+        <div class="create-time">
+            <p>创建时间：</p>
+            <span>2017-10-1 13.12.54</span>
+        </div>
+    </div>
+    
+</div>
+</div>
+
+<script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+<!-- <script src="__PUBLIC__/Admin_v3/js/recharge_apply.js" type="text/javascript" charset="utf-8"></script> -->
+<!-- <script src="__PUBLIC__/js/uploadPicture/uploadImage.js" type="text/javascript" charset="utf-8"></script> -->
+
+</body>
+</html>

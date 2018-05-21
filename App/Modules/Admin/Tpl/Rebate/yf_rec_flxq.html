@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>我应付推荐返利详情</title>
+    <include file="Public/rebate"/>
+    <script src="__PUBLIC__/js/exif.js"></script>
+    <script>
+        var  uploadUrl = '__APP__/Home/Manager/uploadCanvas';
+    </script>
+    <script type="text/javascript" src="__PUBLIC__/js/my_dd.js"></script>
+    <style>
+    .test_box .shouhuo_box1{background:#4abcf2;width:100%;font-size:25px;color:#fff;position:fixed;bottom:0;text-align:center;height:60px;line-height:60px;}
+    .height{height:60px;}
+    .pp{font-size:25px;color:#4abcf2;height:83px;line-height:83px;margin-left: 40px;}
+        #list1 img{height:110px;margin-right:10px;}
+        #btn1{background:url(__PUBLIC__/images/sq.png) no-repeat;width:110px;height:110px;outline:none;}
+        .p2{color: red;margin-left: 17px;}
+        </style>
+    </head>
+    <body style="background-color:#f5f5f5;">
+     <header class="header">
+        <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/index/left_icon.png" alt=""></a><p>我应付推荐返利详情</p>
+    </header>
+    <div class="test_box">
+        <div class="test1 ">
+        <p class="p test_1"></p>
+        </div>
+     <div class="test_box1">   
+        <p class="test_1">获利经销商名称：{$list.name}</p>
+        <p class="test_1">获利经销商级别：{$list.levname}</p>
+        <p class="test_1">被推荐经销商名称：{$list.x_name}</p>
+        <p class="test_1">被推荐经销商级别：{$list.x_levname}</p>
+        <p  class="test_1">被推荐经销商状态：<span>已通过</span></p>
+    </div>
+        <div class="test1 ">
+        <p class="p1 test_1">返利信息</p>
+        </div>
+      <div class="test_box1">
+        <p class="p2"><eq name="list.status" value="0">待付款</eq><eq name="list.status" value="1">已付款，对方未确认</eq><eq name="list.status" value="2">已付款，对方已确认</eq></p>   
+        <p class="test_1">收款人名称：{$list.name}</p>
+        <p  class="test_1">电话：{$list.phone}</p>
+        <p class="test_1">返利时间：{$list.time|date="Y:m:d H:i",###}</p>
+        <p class="test_1">返利金额：<span>￥{$list.money}</span></p>
+        <!--<p class="test_1">返利信息：<span>{$list.set_info}</span></p>-->
+    </div>
+        
+    <notempty name="list.img">
+    <div class="test_box1">
+        <img src="{$list.img}" width="80%" />
+    </div>
+    </notempty >
+        
+    <eq name="list.status" value="0">
+        <div class="test1 ">
+             <p class="pp">*添加支付截图<span>（限一张）</span></p>
+        </div>
+        <div class="test_box1" style="padding-left:40px;">
+            <span id="list1" style="float:left"></span>
+            <input type="button" id="btn1" onclick="myfile1.click();" value="">  
+            <input type="file" id="myfile1"  name="fljeimg" style="display:none">
+            <input type="hidden" value="" id="flimg" name="fljeimg"/>
+            <div style="clear:both"></div>
+        </div>
+        <div class="height"></div> 
+            <div class="shouhuo_box1" onclick="fukuan({$list.id})">
+                <p class="test">确认付款</p>
+            </div>
+    </eq>
+    </div>
+    <script>
+        function fukuan(id){
+            var imgval = $('#flimg').val();
+            if(imgval != ""){
+                $.post("__URL__/fukuan_rec",{id:id,imgval:imgval},function(data){
+                    if(data == 1){
+                        tusi("提交成功！请通知对方确认!");
+                        window.location.href='__URL__/yf_rec_fl';
+                    }else{
+                        tusi("提交失败!");
+                    }
+                });
+             }else{
+                //否则说明下了
+              tusi("请上传支付截图！");
+                return false;
+            }
+        }
+    </script>
+    <script type="text/javascript" src="__PUBLIC__/js/pho1.js"></script>  
+</body>
+</html>

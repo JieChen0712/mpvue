@@ -1,0 +1,383 @@
+<layout name="Public/public" />
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>经销商查询</title>
+<link href="__PUBLIC__/Admin/css/jquery-ui.css" type="text/css" rel="stylesheet" />
+<link href="__PUBLIC__/css/back/index.css" rel="stylesheet">
+<link href="__PUBLIC__/Admin/css/toggle.css" rel="stylesheet">
+<script type="text/javascript" src="__PUBLIC__/Admin/js/agentcode.js"></script>
+<script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+<script type="text/javascript" src='__PUBLIC__/js/index.js'></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery-ui.js" ></script>
+<script type="text/javascript">
+	var level_name1 = "{$level_name.1}";
+	var level_name2 = "{$level_name.2}";
+	var level_name3 = "{$level_name.3}";
+	var level_name4 = "{$level_name.4}";
+	var level_name5 = "{$level_name.5}";
+	var level_name6 = "{$level_name.6}";
+	var level_num = "{$level_num}";
+	var upgradeUrl = '{:U(GROUP_NAME . "/Manager/upgrade")}/';
+	var searchUrl = "{:U(GROUP_NAME . '/Manager/search',array('id' => 8,'keyword' => '9'))}";
+</script>
+    
+<script type="text/javascript">
+function sc($name,$ulr){
+  //利用对话框返回的值 （true 或者 false）
+    if(confirm("您确定要删除"+$name+"吗？")){
+    window.location.href=$ulr;
+    }else{
+      return false;
+    }
+}
+</script>
+<style>
+/*控制弹出框的样式*/
+.bottom_box{
+    background:rgba(255, 255, 255, 1);/* 遮罩层的透明度 */
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 100;
+    height:100%;
+    text-align: center;
+    max-height:800px;
+    overflow:auto;
+     /* 此处的图层要大于页面 */
+} 
+.bottom_box img{
+    width:200px;  
+}
+.bottom_box table{
+    text-align: center;
+    margin-top: 80px;
+    float: left;
+    color:#666;
+}
+.bottom_box table td{
+    width: 150px;
+    height: 50px;
+    border-bottom: 1px solid #666;
+}
+.tdbo{
+    border-right: 1px solid #666;
+}
+.title_bar5{
+    height: 105px;
+}
+.btm{
+  width:30px;
+  height:30px;
+  background:#000;
+  position: absolute;
+  right: 0;
+  background: url(__PUBLIC__/Admin/images/btm.png) no-repeat;
+  margin-right:10px;
+  cursor:pointer;
+  background-size: 100% 100%;
+  overflow:hidden;
+
+  }
+.box{
+  max-width:710px;
+  margin:0 auto;
+  }
+  .form{
+    height: 400px;
+    width: 290px;
+  }
+</style>
+</head>
+<body class="zh_CN">
+         <div class="col_main">
+  <div class="main_hd">
+    <div class="title_tab" id="topTab">
+      <ul class="tab_navs mt title_tab">
+                    <li class="tab_nav js_top  selected" data-id="send">
+                    <a href="#">经销商查询</a></li>
+                    <li style="height:35px;float:right;margin-right:18px;">
+                       <form method="get" action="__URL__/search">
+                            地区：<input style="height:35px;" type="text" id="keyword3" name="keyword" value="{$addr}" required placeholder="姓名/微信号/手机号"/>
+                         <input type="hidden" name="id" value="3">
+                         <input type="submit" value="搜索"/>
+                       </form>
+                     </li>
+
+                    <li style="height:35px;float:right;margin-right:18px;">
+                       <form method="get" action="__URL__/search">
+                         经销商商：<input type="text" id="agent" placeholder="请输入经销商名称" onmouseup="this.select();" maxlength="80" style="width:200px;height:35px;margin-left:10px;"/>
+                         <input type="hidden" id="keywordid" name="keyword">
+                         <input type="hidden" name="id" value="1">
+                         <input type="submit" value="搜索"/>
+                       </form>
+                    </li>
+                    <li style="height:35px;float:right;margin-right:18px;">
+                      <form method="get" action="__URL__/search">
+                        审核人：<input style="height:35px;" type="text" id="keyword2" name="keyword" value="{$audit}" placeholder="姓名/微信号/手机号"/>
+                        <input type="hidden" name="id" value="2">
+                        <input type="submit" value="搜索"/>
+                      </form>
+                    </li>
+    
+                  </ul>
+                  
+  
+              </div>
+
+  </div>
+  <!--右边内容--> 
+  <div class="main_bd">
+    <div class="mp_news_area notices_box" style="width:1400px;margin:0 auto; ">
+      <div class="title_bar2" style="width:100px;"> 编号 </div>
+      <div class="title_bar2" style="width:87px;"> 姓名 </div>
+              <div class="title_bar2" style="width:120px;"> 手机号 </div>
+              <div class="title_bar2" style="width:130px;"> 微信号 </div>
+              <div class="title_bar2" style="width:199px;"> 身份证号码 </div>
+              <div class="title_bar2" style="width:75px;"> 状态 </div>
+              <div class="title_bar2" style="width:100px;"> 经销商级别名</div>
+              <div class="title_bar2" style="width:80px;"> 上级名称 </div>
+              <div class="title_bar2" style="width:100px;"> 审核人 </div>
+              <div class="title_bar2" style="width:150px;"> 授权时间 </div>
+              <div class="title_bar2" style="width:246px;"> 操作 </div><br/>
+              <ul class="mp_news_list">
+
+            <!--第1列-->
+              <li class="mp_news_item"> 
+              <empty name="row">
+                 <p> <span style="color:red;text-align:center;">对不起,没有找到相关经销商!</span>
+              <a href="javascript:history.go(-1);">返回上一页</a></p>
+              <else />
+              <volist name="row" id="m">
+                <span class="title_bar5" style="width:100px; ">{$m.id}</span>
+                <span class="title_bar5" style="width:87px; ">{$m.name}</span>
+                <span class="title_bar5" style="width:120px; ">{$m.phone}</span>
+                <span class="title_bar5" style="width:130px; ">{$m.wechatnum}</span>
+                <span class="title_bar5" style="width:199px;  ">{$m.idennum}</span>
+                <span class="title_bar5" style="width:75px; ">{$m.audited|toStatus=###}</span>
+                <span class="title_bar5" style="width:100px; ">{$m.levname}</span>
+                <span class="title_bar5" style="width:80px; ">{$m.bossname}</span>
+                <span class="title_bar5" style="width:100px; ">{$m.pname}</span>
+                <span class="title_bar5" style="width:150px; ">{$m.time|date="Y-m-d H:i",###}</span>
+                
+          <if condition="$Think.session.did eq 0">
+          <span class="title_bar5" style="width:146px;"> 
+          <input class="wz2 btn" style="margin-top:0px;" value="升级" onClick="upgrade({$m.id},{$m.level},{$Think.session.did},{$m.audited})" type="button"/>
+          <input class="wz2 btn" style="margin-top:0px;" value="编辑" onClick="location.href='__URL__/edit/id/{$m.id}'" type="button"/><br/>
+          <input class="wz2 btn" style="margin-top:-5px;" value="降级" onClick="downgrade({$m.id},{$m.level},{$m.audited})" type="button"/>
+          <input class="wz2 btn" style="margin-top:-5px;" value="删除" onClick="sc('{$m.name}','__URL__/del/id/{$m.id}')" type="button"/><br/>
+          <input class="wz2 btn" style="margin-top:-5px;" value="详情信息" onClick="showqr('qr{$m.id}')" type="button"/>
+                  </span>
+                  <span class="title_bar5" style="width:100px; ">
+                      招募经销商
+                      <if condition="$m.statu eq 0"><a href="#" class="toggle toggle--on"></a><else /><a href="#" class="toggle toggle--off"></a></if>
+                      <input type="hidden" value="{$m.id}" />
+                      <input type="hidden" value="{$m.statu}" />
+                      <input type="hidden" value="1" />
+                      禁用经销商
+                      <if condition="$m.disable eq 1"><a href="#" class="toggle toggle--on"></a><else /><a href="#" class="toggle toggle--off"></a></if>
+                      <input type="hidden" value="{$m.id}" />
+                      <input type="hidden" value="{$m.disable}" />
+                      <input type="hidden" value="2" />
+                  </span>
+                  <else />
+                  <span class="title_bar5" style="width:146px;"> 
+                  <input class="wz2 btn" style="margin-top:18px;" value="升级" onClick="upgrade({$m.id},{$m.level},{$Think.session.did},{$m.audited})" type="button"/>
+                  <input class="wz2 btn" style="margin-top:18px;" value="编辑" onClick="alert('对不起!您没有权限编辑');" type="button"/><br/>
+                  </span> 
+                  </if>
+                </volist>
+                </empty>
+                </li>
+              </ul>
+              <volist name="row" id="m">
+                    <div class="bottom_box" id="qr{$m.id}" style="top:0;left:0px;text-align:center;">
+                      <div class="btm"></div>
+                      <div class="box">
+                        <table style="">
+                            <tr>
+                                <td class="tdbo">姓名</td>
+                                <td>{$m.name}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">微信头像</td>
+                                <td><img src = "{$m.headimgurl}" style="width:70px;height:70px;" /></td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">微信号</td>
+                                <td>{$m.wechatnum}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">电话</td>
+                                <td>{$m.phone}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">邮箱</td>
+                                <td>{$m.email}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">身份证号</td>
+                                <td>{$m.idennum}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo">详细地址</td>
+                                <td>{$m.address}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbo" style="border-bottom:none;">申请时间</td>
+                                <td style="border-bottom:none;">{$m.time|date="Y-m-d H:i",###}</td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <td style="border-bottom:none;">身份证图片：</td>
+                                <td style="border-bottom:none;"><img src = "{$m.idennumimg}" /></td>
+                            </tr>
+                            <tr style="margin-top:20px;">
+                                <td style="border-bottom:none;">保证金截图：</td>
+                                <td style="border-bottom:none;"><img src = "{$m.liveimg}" /></td>
+                            </tr>
+                        </table>
+                        </div>
+                    </div>
+                </volist> 
+              <div class="form">
+                <h3></h3>
+                <p id="selectlevel">
+                  新经销商级别:<select name="level" id="pdlevel" onchange="plevel()"></select>
+                  上&nbsp;级&nbsp;代&nbsp;理:<select name="levelone" id="uppdlevel" onchange="updlevel()">
+                              <option value="">请选择经销商级别</option>
+                            </select>
+                            <select name="receive_id" style="margin-left:71px;" class="mylevel">
+                              <option value="0">请选择经销商</option>
+                            </select>
+                </p>
+                <p style="padding: 15px 20px;"><input type="hidden" name="managerid" value="" /></p>
+                <input type="hidden" name="type" value="" />
+                <p id="btn">
+                  <button onclick="cancel()">取消</button>
+                  <button onclick="submit()">提交</button>
+                </p>
+              </div>
+              
+    </div>
+    <div><center><font color="red">{$page}</font></center></div>
+    <!--5行为一页，方便查看-->
+     <div style="padding-left:33%; padding-top:10px;"> 
+      <span style="font-weight:bold; color:#ff2222;"> 
+      </span> 
+        </div>
+  </div>
+</div>
+</body>
+<!-- 弹出框 -->
+<script>
+    function showqr(img){
+        var qrimg = img;
+        $("#"+qrimg).show();
+    } 
+</script>
+<script>
+$(function () {
+    //点击关闭按钮的时候，遮罩层关闭
+    $(".btm").click(function () {
+        $(".bottom_box").css("display", "none");
+    });
+});
+$('.toggle').click(function(e) {
+  var toggle = this;
+  e.preventDefault();
+  var ida = $(toggle).next('input').val();
+  var idb = $(toggle).next('input').next('input').val();
+  var pd = $(toggle).next('input').next('input').next('input').val();
+  if(idb == 1){
+    var idc = 0;
+  }else{
+    var idc = 1;
+  }
+  if(pd==1){
+    $.ajax({
+        async: false,
+        type : "POST",
+        data: {id:ida,statu:idc},
+        dataType: "json",
+        url : '__URL__/zstatu',
+        success : function(ree) {
+        }
+    });
+  }else{
+    $.ajax({
+        async: false,
+        type : "POST",
+        data: {id:ida,statu:idc},
+        dataType: "json",
+        url : '__URL__/disable',
+        success : function(ree) {
+        }
+    });
+  }
+  
+  $(toggle).next('input').next('input').val(idc);
+  $(toggle).toggleClass('toggle--on')
+         .toggleClass('toggle--off')
+         .addClass('toggle--moving');
+  setTimeout(function() {
+    $(toggle).removeClass('toggle--moving');
+  }, 200)
+});
+function plevel(){
+  $(function(){
+      var level = $("#pdlevel").val();
+      if(level == 0){
+        return;
+      }
+      var html = '';
+      if(level == 1){
+        html += '<option value="0">总部</option>';
+        $('#uppdlevel').html(html);
+        $('.mylevel').html(html);
+        return;
+      }
+      if(level >= 2){
+        html += '<option value="">选择上级经销商级别</option><option value="1">{$level_name.1}</option>';
+      }
+      if(level >= 3) {
+        html += '<option value="2">{$level_name.2}</option>';
+      }
+      if(level >= 4) {
+        html += '<option value="3">{$level_name.3}</option>';
+      }
+      if(level >= 5) {
+        html += '<option value="4">{$level_name.4}</option>';
+      }
+      $('#uppdlevel').html(html);
+  })
+}
+</script>
+<script>
+function updlevel(){
+  $(function(){
+    var level = $("#uppdlevel").val();
+    var html = '<option value="0">请选择经销商</option>';
+    if(level == 0){
+      $(".mylevel").html(html);
+      return;
+    }
+    $.post("__APP__/Radmin/Stock/getAgent",{level:level},function(data){
+      if(data != 'none'){
+        var text = '';
+        $.each(data,function(index,array){
+          text +='<option value="'+array["id"]+'" class="'+array["id"]+'">'+array["name"]+'</option>';
+        })
+        $(".mylevel").html(text);
+      }else{
+        $(".mylevel").html(html);
+      }
+    })
+})
+}
+</script>
+</html>

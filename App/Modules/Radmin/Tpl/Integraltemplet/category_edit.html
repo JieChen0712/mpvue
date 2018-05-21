@@ -1,0 +1,143 @@
+<script>
+    /**
+     * 使用图片上传接口需满足以下条件
+     * 1.容器选择器id=upload
+     * 2.设置name=image的input标签隐藏域
+     * 3.指定上传目录名称
+     */
+        //上传目录
+    var upload_dir_name = 'Integraltemplet';
+</script>
+<style>
+    @media screen and (max-width: 768px) {
+        .edit-wrapper .layui-content .layui-form {
+            padding: 0 0 10px 0;
+        }
+        .layui-form-item .layui-form-label {
+            float: none;
+            width: 60px;
+            text-align: left;
+        }
+        .layui-input-block {
+            width: 80%;
+            left: -99px;
+        }
+        .edit-wrapper .layui-content .layui-form .input-inf2 {
+            margin-left: 10px;
+        }
+        .layui-form-item .layui-input-inline {
+            margin: 0 0 10px 13px;
+        }
+    }
+</style>
+<script type="text/javascript">
+	form.render()
+</script>
+<div class="container-fluid edit-wrapper layui-container">
+    <div class="layui-content">
+        <form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__URL__/category_update" data-auto="false" method="post" enctype="multipart/form-data">
+            <div class="layui-form-item">
+                <label class="layui-form-label">上级名称</label>
+                <div class="form-right">
+                  <div class="layui-input-inline three-select">
+                    <select name="pid" id="pid"  class="form-control">
+                                <option value="0">顶级栏目</option>
+                                <volist name="list" id="m">
+                                    <if condition="$m['id'] eq $row['pid']">
+                                        <option value="{$m.id}" selected="selected"><if condition="$m['level'] neq 0">|</if><?php echo str_repeat('-', $m['level']*4)?> {$m.name}</option>
+                                        <else/>
+                                        <option value="{$m.id}"><if condition="$m['level'] neq 0">|</if><?php echo str_repeat('-', $m['level']*4)?> {$m.name}</option>
+                                    </if>
+                                </volist>
+                            </select>
+                  </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类名称</label>
+                <div class="form-right">
+                  <div class="layui-input-inline three-select">
+                    <input type="text" name="name" required="" value="{$row.name}" title="请输入名称" placeholder="请输入名称" class="layui-input">
+                    <input type="hidden" name="id" value="{$row.id}">
+                  </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">显示位置</label>
+                <div class="form-right">
+                    <div class="layui-col-sm6">
+                        <div class="layui-col-sm6">
+                            <div class="layui-input-inline three-select">
+                                <select name="statu" class="input-inf2" lay-verify="required" lay-search="">
+                                    <if condition="$row.statu eq '0'">
+                                        <option value="0">首页</option>
+                                        <else/>
+                                        <option value="1">分类页</option>
+                                    </if>
+                                    <if condition="$row.statu eq '0'">
+                                        <option value="1">分类页</option>
+                                    </if>
+                                    <if condition="$row.statu eq '1'">
+                                        <option value="0">首页</option>
+                                    </if>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="form-right">
+                    <div class="layui-col-sm6">
+                        <div class="layui-col-sm6">
+                            <div class="layui-input-inline three-select">
+                                <select name="active" class="input-inf2" lay-verify="required" lay-search="">
+                                    <if condition="$row.active eq '0'">
+                                        <option value="0">下架</option>
+                                        <else/>
+                                        <option value="1">上架</option>
+                                    </if>
+                                    <if condition="$row.active eq '0'">
+                                        <option value="1">上架</option>
+                                    </if>
+                                    <if condition="$row.active eq '1'">
+                                        <option value="0">下架</option>
+                                    </if>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item items">
+                <label class="layui-form-label">图片</label>
+                <!--引入图片页面-->
+                <div>
+                  <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
+                    <if condition="$row.image neq ''">
+                        <include file="Public/image" image_name="image" is_show="1" img_url="{$row.image}"/>
+                        <else/>
+                        <include file="Public/image" image_name="image" is_show="0" img_url="{$row.image}"/>
+                    </if>
+                  <small class="orange-text">（请上传正方型的图片 图片大小为：188*188）</small>
+                </div>
+            </div>
+            
+
+
+            <div class="hr-line-dashed"></div>
+
+            <div class="layui-form-item text-center">
+                <button class="layui-btn" type='submit'>确认修改</button>
+                <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+            </div>
+
+        </form>
+    </div>
+</div>

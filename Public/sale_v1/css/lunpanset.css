@@ -1,0 +1,96 @@
+#header h3 {
+	height: 5rem;
+	line-height: 5rem;
+	font-size: 1.75rem;
+}
+
+#header h4 {
+	background-color: #337ab7;
+	border-radius: 0.1875rem;
+}
+
+#header h4 a {
+	display: inline-block;
+	height: 2.375rem;
+	line-height: 2.375rem;
+	color: #333;
+	cursor: pointer;
+}
+
+#header h4 a span {
+	font-size: 0.6875rem;
+}
+
+#header h4 a i {
+	font-size: 0.6875rem;
+	padding: 0 0.3125rem;
+}
+
+#main {
+	margin-top: 1.875rem;
+}
+
+
+.lp-title {
+    font-weight: bold;
+    padding: 1rem 0;
+    border-bottom: solid 3px #000;
+}
+
+
+.explain-p{
+	color: red;
+}
+.prize-count p{
+	text-align: right;
+}
+#main .prize-wrapper .prize-count {
+	padding-left: 1.875rem;
+	line-height: 3.75rem;
+	overflow: hidden;
+}
+
+.prize-information .col-md-2{
+	text-align: right;
+}
+
+#main .prize-wrapper .form .select {
+	width: 3.75rem;
+	height: 1.875rem;
+	border-radius: 0.3125rem;
+}
+
+#main .prize-information {
+	padding-top: 1.875rem;
+	margin-left: 1.875rem;
+	padding-bottom: 1.875rem;
+	border-bottom: solid 1px #eee;
+	overflow: hidden;
+}
+
+#main .prize-information .prize,
+#main .prize-information .probability,
+#main .prize-information .prize-num,
+#main .prize-information .everyday-num {
+	margin-bottom: 0.625rem;
+}
+
+
+#main .prize-information .prize input,
+#main .prize-information .probability input,
+#main .prize-information .prize-num input,
+#main .prize-information .everyday-num input {
+	border-radius: 0.3125rem;
+	height: 2.125rem;
+}
+
+#main .prize-information .prize-img .prize-title {
+	display: inline-block;
+	margin-bottom: 0.625rem;
+}
+
+#button {
+	text-align: center;
+	padding: 1.25rem 0;
+	border-bottom: solid 1px #eee;
+}

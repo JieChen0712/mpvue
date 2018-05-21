@@ -1,0 +1,49 @@
+<style>
+    @media screen and (max-width: 768px) {
+        .layui-form-item .layui-form-label {
+            float: left;
+            text-align: right;
+        }
+        .layui-input-block {
+            width: 50%;
+        }
+    }
+</style>
+
+<form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__URL__/refund_submit" data-auto="false" method="post" id="refund">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">代理</label>
+                    <div class="layui-input-block">
+                        <label class="layui-form-label" id="refund_name">{$name}</label>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">可扣除积分</label>
+                    <div class="layui-input-block">
+                        <label class="layui-form-label" id="min_refund_money">{$score}</label>
+                    </div>
+                </div>
+
+                <div class="layui-form-item info" >
+                    <label class="layui-form-label">要扣除的积分</label>
+                    <div class="layui-input-block">
+                        <input type="number"  name="score" value='' id="refund_money" class="layui-input" required="" title="请输入要扣除的积分">
+                    </div>
+                </div>
+
+                <div class="layui-form-item info" >
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                        <input type="text"  name="note" value='' id="refund_note" class="layui-input">
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+
+                <div class="layui-form-item text-center">
+                    <input type='hidden' name='uid' id='refund_uid' value="{$uid}" >
+                    <button class="layui-btn" type='submit'>确认</button>
+                    <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消吗？" data-close>取消</button>
+                </div>
+
+</form>

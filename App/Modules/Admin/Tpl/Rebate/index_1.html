@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <title>经销商后台</title>
+    <include file="Public/rebate"/>
+    <link rel="stylesheet" href="__PUBLIC__/css/back/style.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery.js"></script>
+    </head>
+    <body style="background-color:#f5f5f5">
+    <header class="header">
+        <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/new/left_icon.png" alt=""></a>
+        <p>雨林控股经销商后台<span id="loginout"><a href="__APP__/Admin/Index/center" class="a1"><img src="__PUBLIC__/images/new/right_icon.png" alt=""></a></span></p>
+    </header>
+        <div class="index_bg">
+            <div class="wrap" style="margin-top:50px;">
+                <img src="{$manager.headimgurl}" alt="" style="max-width:110px;max-height:140px;">
+            </div>
+                <div class="wrap1">
+                <p class="p">{$manager.name}<p/>
+                <p>微信号：{$manager.wechatnum}<p/>
+                <!-- <p><span><img src="__PUBLIC__/images/new/jf.png" alt="">&nbsp;&nbsp;</span>积分：{$manager.score}<p/>  -->    
+             </div>
+        </div>
+        <section class="section">
+            <ul>
+                <a href="__URL__/fl">
+                    <li>
+                        <div class="hr_top"></div>
+                        <div class="logo1"><img src="__PUBLIC__/images/new/btm_icon1.png" alt=""></div>
+                        <p class="test1">我的推荐返利<br><span>推荐经销商的一次性返利</span></p>
+                        <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                        <div class="hr"></div>
+                    </li> 
+                </a>
+                <a href="__URL__/ys_fl">  
+                   <li>
+                        <div class="hr_top"></div>
+                       <div class="logo1"><img src="__PUBLIC__/images/new/btm_icon3.png" alt=""></div>
+                       <p class="test1">预库存订单返利<br><span>下单时我的返利</span></p>
+                       <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                       <div class="hr"></div>
+                   </li>
+                </a>
+                   <a href="__URL__/yf_fl">
+                     <li>
+                        <div class="hr_top"></div>
+                         <div class="logo1"><img src="__PUBLIC__/images/new/btm_icon2.png" alt=""></div>
+                         <p class="test1">我应付返利<br><span>待付款、已付款</span></p>
+                         <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                         <div class="hr"></div>
+                     </li>
+                  </a> 
+                  <a href="__URL__/my_dl">
+                     <li>
+                         <div class="hr_top"></div>
+                         <div class="logo1"><img src="__PUBLIC__/images/new/btm_icon4.png" alt=""></div>
+                         <p class="test1">我推荐的经销商<br><span>查看我推荐的经销商、下单记录</span></p>
+                         <div class="right"><img src="__PUBLIC__/images/new/icon_right_img.png" alt=""></div>
+                         <div class="hr"></div>
+                     </li>
+                  </a>
+            </ul>
+        </section>  
+		<script>
+		/*	$("#loginout").click(function(){
+				location.href = "__APP__/Admin/Login/loginout";
+			})*/
+		</script>
+    </body>
+    </html>

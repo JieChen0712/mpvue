@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin_v3/css/assets.css">
+    <title>总资产</title>
+</head>
+
+<body>
+    <div class="content page">
+        <!-- header start-->
+        <include file="Public/header_features_v3" />
+        <!-- header end-->
+
+        <!--main start-->
+        <section id="main">
+            <div class="img-wrapper">
+                <img src="__PUBLIC__/Admin_v3/images/information/11.png" height="125" alt="">
+            </div>
+            <p class="text">总资产(元)</p>
+            <p class="money">{$money_funds.recharge_money}</p>
+            <div class="detail">
+                <a href="__GROUP__/user/money_detail" class="external">查看明细</a>
+            </div>
+
+            <div class="btn-wrapper">
+                <button onclick="javascript:window.location.href='__GROUP__/funds/recharge_apply'" class="recharge">充值</button>
+                <button onclick="javascript:window.location.href='__GROUP__/funds/refund_apply'" class="withdraw">提现</button>
+            </div>
+
+        </section>
+        <!--main end-->
+
+    </div>
+
+    <!--script start-->
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js"></script>
+    <!--script end-->
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <style>
+
+        @media screen and (max-width: 768px) {
+            .layui-input-block {
+                left: -99px;
+            }
+        }
+    </style>
+    <script>
+        /**
+         * 使用图片上传接口需满足以下条件
+         * 1.容器选择器id=upload
+         * 2.设置name=image的input标签隐藏域
+         * 3.指定上传目录名称
+         */
+        //上传目录
+        var upload_dir_name = 'regulations';
+    </script>
+</head>
+
+<body>
+
+    <div class="container-fluid edit-wrapper">
+        <header class="edit-title">
+            <blockquote class="layui-elem-quote">
+                <span class="title">条例信息</span>
+            </blockquote>
+        </header>
+        <div class="layui-content">
+            <form class="layui-form layui-box" style='padding:25px 30px 20px 0' action="__URL__/update" data-auto="false" method="post"
+                enctype="multipart/form-data">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">条例名称</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" autofocus type="text" name="reguname" placeholder="请输入条例名称" value='{$row.name}' required="" title="请输入条例名称">
+                    </div>
+                </div>
+
+                <div class="layui-content">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <textarea id="editor" class="ueditors" name="disc">{$row.news}</textarea>
+                            <include file="Public/ueditor" />
+                        </div>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+
+                <div class="layui-form-item text-center">
+                    <button class="layui-btn" type='submit'>立即提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

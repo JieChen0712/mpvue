@@ -1,0 +1,131 @@
+<style type="text/css">
+    .layui-layer-content {
+        overflow: visible!important;
+    }
+    /*小屏幕样式*/
+
+    @media screen and (max-width: 768px) {
+        .modal-body .reset {
+            margin-left: 0 !important;
+        }
+        .modal-body .reset .layui-btn-small {
+            margin: 5px 0 0 15px;
+        }
+        .modal-body .layui-form .layui-form-label {
+            width: 50px;
+        }
+        .modal-body .layui-form .layui-input-block {
+            float: left;
+            margin-left: 15px;
+        }
+        .special-item {
+            padding: 15px;
+        }
+        .special-item .layui-input-block {
+            margin-left: 15px;
+        }
+        .special-item .special-flex {
+            margin-left: 15px;
+        }
+    }
+</style>
+<div class="modal-body">
+    
+    <form class="layui-form layui-box" action="__URL__/charge_submit" data-auto="false" method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">扣费用户</label>
+            <div class="layui-input-block">
+                <input type="text" disabled autofocus name="" value='{$dis_info.name}' pattern="^\S{1,}$" required="" title="扣费用户" placeholder="扣费用户" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">微信号</label>
+            <div class="layui-input-block">
+                <input type="text" disabled autofocus name="" value='{$dis_info.wechatnum}' pattern="^\S{1,}$" required="" title="请输入微信号" placeholder="请输入微信号" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-block">
+                <input type="text" disabled autofocus name="" value='{$dis_info.phone}' pattern="^\S{1,}$" required="" title="请输入手机号" placeholder="请输入手机号" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">当前可扣金额</label>
+            <div class="layui-input-block">
+                <input type="text" disabled autofocus name="" value='{$money_funds.recharge_money}' placeholder="当前可扣金额" class="layui-input">
+            </div>
+        </div>
+        
+        <div class="layui-form-item special-item">
+            <label class="layui-form-label">输入要扣的金额</label>
+            <div class="layui-input-block">
+                <input type="text" autofocus name="charge_money" value='' pattern="^\S{1,}$" required=""  title="输入要扣的金额" placeholder="输入要扣的金额" class="layui-input">
+            </div>
+<!--            <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" autofocus name="charge_remark" value='' pattern="^\S{1,}$" title="备注" placeholder="备注" class="layui-input">
+                </div>
+            </div>-->
+            <div class="hr-line-dashed"></div>
+
+            <div class="layui-form-item text-center">
+                <input type="hidden" name="uid" value="{$uid}" />
+                <button class="layui-btn" type='submit'>确认修改</button>
+                <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+            </div>
+        </div>
+    </form></div>
+
+<script type="text/javascript">
+    var province,province1,city,city1,area,area1;
+
+    $.getJSON("__PUBLIC__/Radmin_v3/plugs/echart/map/area.json",function(data){
+        province = new Array();
+        $.each(data,function(key,value){
+            province.push('<option value="'+value.name+'">'+value.name+'</option>');
+        })
+        $('#province').append(province);
+        form.render('select');
+    })
+
+    form.on('select(province)',function(data){
+        province1 = data.value;
+        $.getJSON("__PUBLIC__/Radmin_v3/plugs/echart/map/area.json",function(data){
+            city = new Array();
+            $.each(data, function(key,value) {
+                if(province1 === value.name){
+                    $.each(value.sub, function(k,v) {
+                        city.push('<option value="'+v.name+'">'+v.name+'</option>');
+                    });
+                }
+            });
+            $('#city').empty().append(city);
+            form.render('select');
+        });
+    })
+
+    form.on('select(city)',function(data){
+        city1 = data.value;
+        $.getJSON("__PUBLIC__/Radmin_v3/plugs/echart/map/area.json",function(data){
+            area = new Array();
+            $.each(data, function(key,value) {
+                if(province1 == value.name){
+                    $.each(value.sub, function(k,v) {
+                        if(city1 == v.name){
+                            if(!(v.sub==undefined||v.sub==""||v.sub==null)){
+                                $.each(v.sub, function(i,j) {
+                                    area.push('<option value="'+j.name+'">'+j.name+'</option>');
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+            $('#area').empty().append(area);
+            form.render('select');
+        });
+    })
+    form.render();
+</script>

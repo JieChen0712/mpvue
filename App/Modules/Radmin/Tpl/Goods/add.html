@@ -1,0 +1,72 @@
+<html>
+
+  <head>
+    <script>
+      /**
+       * 使用图片上传接口需满足以下条件
+       * 1.容器选择器id=upload
+       * 2.设置name=image的input标签隐藏域
+       * 3.指定上传目录名称
+       */
+      //上传目录
+      var upload_dir_name = 'goods';
+    </script>
+    <style>
+        @media screen and (max-width: 768px) {
+            .edit-wrapper .layui-content .layui-form .items .desc {
+                position: static;
+            }
+        } 
+    </style>
+  </head>
+
+  <body>
+
+    <div class="container-fluid edit-wrapper">
+      <header class="edit-title">
+        <blockquote class="layui-elem-quote">
+          <span class="title">添加产品</span>
+        </blockquote>
+      </header>
+      <div class="layui-content">
+        <form class="layui-form layui-box" action="__URL__/insert" data-auto="false" method="post">
+          <div class="layui-form-item items">
+            <label class="form-text">系列产品名称：</label>
+            <div class="form-right">
+              <input class="input-inf2" required="" type="text" name="name" lay-verify="name" autocomplete="off" title="请输入名称" placeholder="请输入产品名称">
+            </div>
+          </div>
+          <div class="layui-form-item  items">
+            <label class="form-text">系列简短介绍：</label>
+            <div class="form-right">
+              <input class="input-inf2" type="text" name="presents" lay-verify="" autocomplete="off" placeholder="请输入产品简短介绍">
+            </div>
+          </div>
+          <!--引入图片页面-->
+          <div class="layui-form-item items">
+            <label class="form-text">系列小图片：</label>
+            <div class="form-right">
+              <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
+              <include file="Public/image" image_name="image" is_show="0" img_url=""/>
+              <br/><small class="orange-text desc">(请上传正方型的图片 图片大小为：80*80-150*150 最合适80*80)</small>
+            </div>
+          </div>
+          <div class="layui-form-item  items">
+            <label class="form-text">产品信息：</label>
+            <div class="form-right">
+              <!--<textarea class="layui-textarea layui-hide" name="disc" lay-verify="disc" id="LAY_demo_editor"></textarea>-->
+              <textarea id="editor" class="ueditors" name="disc"></textarea>
+              <include file="Public/ueditor" />
+            </div>
+          </div>
+          <div class="layui-form-item  items">
+            <label class="form-text"></label>
+            <div class="form-right">
+              <button class="layui-btn" type='submit'>立即提交</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

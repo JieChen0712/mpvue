@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <script type="text/javascript">
+            var auditUrl = '{:U(GROUP_NAME . "/upgrade/upgrade_apply_pass")}/';
+            var delUrl = '{:U(GROUP_NAME . "/upgrade/upgrade_apply_pass")}/';
+            $(document).ready(function () {
+                form.render();
+            })
+        </script>
+
+        <!--引入审核js-->
+        <script src="__PUBLIC__/Radmin_v3/js/audit.js"></script>
+        <style>
+            .layui-layer-page {
+                max-height: 700px;
+                overflow: auto;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section class="layui-container">
+            <div class="content">
+                <header class="header">
+                    <h3>代理升级申请</h3>
+                    <!--<input type="button" class="layui-btn layui-btn-radius layui-btn-normal" id="audit" data-status="1" value="通过" />-->
+                    <input type="button" class="layui-btn layui-btn-radius layui-btn-danger" id="delete" data-status="2" value="不通过" />
+                </header>
+                <form class="layui-form form layui-row form-search" action="__SELF__" method="get" onsubmit="return false">
+                    <div class="layui-form-item form-item">
+                        <label class="layui-form-label">代理名字</label>
+                        <div class="input-wrapper">
+                            <input type="text" name="name" placeholder="代理名字" autocomplete="on" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item form-item">
+                        <label class="layui-form-label">审核状态</label>
+                        <div class="select-wrapper">
+                            <select name="status" >
+                                <option value=""></option>
+                                <?php foreach( $upgrade_apply_status as $k => $v ):?>
+                                <option value="{$k}">{$v}</option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="search-btn">
+                        <button type="submit" class="layui-btn layui-btn-radius">搜索</button>
+                    </div>
+                </form>
+
+                <div class="table-wrapper">
+                    <table class="layui-table" lay-skin="row" lay-size="sm">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="checkAll"/></th>
+                                <th>序号</th>
+                                <th>代理名字</th>
+                                <th>代理级别</th>
+                                <th>代理微信号</th>
+                                <th>审核人</th>
+                                <th>提交申请时的级别</th>
+                                <th>要申请升级的级别</th>
+                                <!--<th>代理备注</th>-->
+                                <th>类型</th>
+                                <th>备注</th>
+                                <th>状态</th>
+                                <th>保证金截图</th>
+                                <th>申请时间</th>
+                                <!--<th>审核时间</th>-->
+                                 <th>操作</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <empty name="list">
+                            <tr style="position: relative;">
+                                <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                            </tr>
+                            <else />
+                            <volist name="list" id="m">
+                                <tr>
+                                    <td class="checkItem">
+                                        <eq name="m.status" value="0">
+                                        <input type="checkbox" name="mid" value="{$m.id}" />
+                                        </eq>
+                                    </td>
+                                    <td>{$m.id}</td>
+                                    <td>{$m.uid_info.name}</td>
+                                    <td>{$m.uid_info.levname}</td>
+                                    <td>{$m.uid_info.wechatnum}</td>
+                                    <td>{$m.audit_id_info.name}</td>
+                                    <td><?php echo $levnames[$m['cur_level']]?></td>
+                                    <td>{$levnames[$m['apply_level']]}</td>
+                                    <td>{$m.type_name}</td>
+                                    <td>{$m.note}</td>
+                                    <td>
+                                        <?php echo $m['status_name'];?>
+                                    </td>
+                                    <td>
+                                        <if condition="$m.type eq 0">
+                                        <button type="button" class="layui-btn layui-btn-radius layui-btn-warm" data-iframe="__URL__/detail?id={$m.id}" data-title='截图'>查看截图</button>
+                                        </if>
+                                    </td>
+                                    <td>{$m.created|date="Y-m-d H:i",###}</td>
+                                    <td>
+                                        <eq name="m.status" value="0">
+                                        <a class="layui-btn" href='__GROUP__#__GROUP__/manager/index?spm=m-2-2&uid={$m.uid}&upgrade_apply_id={$m.id}'>去升级</a>
+                                        </eq>
+                                        <eq name="m.status" value="1">
+                                        已升级
+                                        </eq>
+                                        <eq name="m.status" value="2">
+                                        未通过
+                                        </eq>
+                                    </td>
+                                </tr>
+                            </volist>
+                            <include file="Public/page" />
+                        </empty>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </body>
+
+</html>
+
+
+
+
+
+
+
+

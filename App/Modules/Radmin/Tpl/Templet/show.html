@@ -1,0 +1,40 @@
+<head>
+    <script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+    <script src="__PUBLIC__/Radmin_v2/js/qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Radmin_v2/js/show.js" type="text/javascript" charset="utf-8"></script>
+    <!-- <style>
+        @media screen and (max-width: 768px) {
+            .thumbnail {
+                width: 100%;
+            }
+            .thumbnail img{
+                max-width: 100%;
+            }
+            .thumbnail .caption p code{
+                max-width: 200px;
+            }
+        }  
+    </style> -->
+</head>
+
+<div class="thumbnail" style="text-align: center;">
+	<img id="applyqr" data-src="holder.js/300x300" src=""/>
+    
+
+  <div class="caption">
+
+    <h3>将此二维码发送给要申请{$level_name.$level}的代理</h3>
+    <p>
+        二维码链接:
+        <code id="qrurl">
+            <empty name="level" >
+                http://{$ym_domain}/home/manager/applyAllAgent
+            <else />
+                http://{$ym_domain}/home/manager/applyAllAgent?level={$level}
+            </empty>
+        </code>
+    </p>
+
+  </div>
+
+</div>

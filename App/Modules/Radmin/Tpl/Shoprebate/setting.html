@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>返利设置</title>
+        <link rel="stylesheet" href="__PUBLIC__/Radmin_v3/css/mall_rebate_setting.css">
+    </head>
+
+    <body>
+        <div class="container-fluid edit-wrapper layui-container">
+            <header class="edit-title">
+                <blockquote class="layui-elem-quote">
+                    <span class="title">返利设置</span>
+                </blockquote>
+            </header>
+            <div class="panel panel-default panel-intro">
+                <div class="panel-heading">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a href="#rebate1" data-toggle="tab" aria-expanded="false">订单返利</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-body">
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade" id="rebate1">
+                            <div class="widget-body no-padding">
+                                <div class="layui-content">
+                                    <form id="rebate1-form" role="form" class="layui-form layui-box" action="__GROUP__/mallrebate/mall_order_setting_submit" data-auto="false" method="post">
+                                        <div class="layui-form-item items">
+                                            <label class="form-text">开启/关闭：</label>
+                                            <div class="form-right">
+                                                <input type="checkbox" name="status" lay-filter="open_rb1" <eq name="order_status" value="1"> checked </eq> lay-skin="switch" lay-text="ON|OFF" value="1">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item items">
+                                            <label class="form-text">代理等级：</label>
+                                            <div class="form-right">
+                                                <div class="checkbox_wrapper level-wrapper">
+                                                    <foreach name="level_name" key="level" item="name">
+                                                        <div class="layui-input-inline">
+                                                            <input type="checkbox" name="level[]" lay-filter="rb1_level{$level}" <php> if (in_array($level,$order_level)) {echo 'checked';}</php> value="{$level}" lay-skin="primary" title="{$name}" />
+                                                        </div>
+                                                    </foreach>
+                                                    <i class="fa fa-question-circle-o help" data-tips-text="触发返利的代理级别"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item items">
+                                            <label class="form-text">计算方式：</label>
+                                            <div class="form-right">
+                                                <div class="checkbox_wrapper">
+                                                    <div class="layui-input-inline">
+                                                        <input type="radio" name="count_way" <eq name="order_count_way" value="0">checked</eq> id="awardPercent" lay-filter="rb1_ap" value="0" lay-skin="primary" title="按金额百分比" checked/>
+                                                    </div>
+                                                    <div class="layui-input-inline">
+                                                        <!--<input type="radio" name="award" id="awardMoney" lay-filter="rb1_am" value="2" lay-skin="primary" title="按产品数量" />-->
+                                                        <!--<i class="fa fa-exclamation-circle help" data-tips-text="选择后获得订单的总金额*百分比或产品数量*金额的奖励！"></i>-->
+                                                        <input type="radio" name="count_way" <eq name="order_count_way" value="1">checked</eq> id="awardMoney" lay-filter="rb1_am" value="1" lay-skin="primary" title="按产品数量" />
+                                                        <i class="fa fa-question-circle-o help" data-tips-text="选择后按订单的总金额*百分比或产品总数量*金额的方式计算返利！"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item items">
+                                            <label class="form-text">返利支付方式：</label>
+                                            <div class="form-right">
+                                                <div class="checkbox_wrapper">
+                                                    <div class="layui-input-inline">
+                                                        <input type="radio" name="pay_way" <eq name="order_pay_way" value="0">checked</eq>  value="0" lay-skin="primary" title="总部支付" checked/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="set-wrapper">
+                                            <foreach name="level_name" key="level" item="name">
+                                                <div class="layui-form-item items level_sel{$level}"><label class="form-text">{$name}下单：</label>
+                                                    <div class="form-right">
+                                                        <div class="checkbox_wrapper">
+                                                            <div class="layui-input-inline">
+                                                                <select name="depth[]" lay-filter="rb1_sel{$level}" data-level="{$level}">
+                                                                    <option value="">请选择</option>
+                                                                    <option value="1" <php> if ($order_info[$level]['depth'] == '1') {echo 'selected';} </php>>一级返利</option>
+                                                                    <option value="2" <php> if ($order_info[$level]['depth'] == '2') {echo 'selected';} </php>>二级返利</option>
+                                                                    <option value="3" <php> if ($order_info[$level]['depth'] == '3') {echo 'selected';} </php>>三级返利</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <i class="fa fa-question-circle-o help" data-tips-text="返利百分比请输入0至1的小数点，比如0.1即10%"></i>
+                                                    </div>
+                                                </div>
+                                            </foreach>
+                                        </div>
+
+                                        <div class="layui-form-item items">
+                                            <label class="form-text"></label>
+                                            <div class="form-right">
+                                                <input type="hidden" value="0" name="type"/>
+                                                <button class="layui-btn" lay-submit>立即提交</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var rebatekind = <php> echo json_encode($rebate, JSON_FORCE_OBJECT) </php>;
+            //订单返利设置参数
+            var order_info = <php> echo json_encode($order_info, JSON_FORCE_OBJECT) </php>;
+        </script>
+        <script src="__PUBLIC__/Radmin_v3/js/mall_rebate_setting.js"></script>
+    </body>
+</html>

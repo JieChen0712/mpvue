@@ -1,0 +1,159 @@
+@charset "utf-8";
+@import "comme.css";
+
+
+.manage-section{
+/*	width:93%;*/
+    width:100%;
+	/*margin:0 auto;*/
+	/*margin-top:20px;*/
+	border-radius:0.5em;
+	background:#fff;
+	margin-bottom: 160px;
+}
+.manage-section ul{
+	width:95%;
+	margin:0 auto;
+	padding:25px 0;
+	overflow: hidden;
+	border-bottom:1px solid #f3f3f3;
+}
+.manage-section ul li{
+	width:29.3%;
+	float:left;
+	text-align: center;
+	font-size:24px;
+	color:#3b3b3b;
+}
+.manage-section ul li:last-child{
+	width:11%;
+	text-align: right;
+}
+.manage-section .manage-section-title{
+	width:100%;
+	border-radius:0.5em 0.5em 0 0;
+}.manage-section .manage-section-title ul{
+	padding:18px 0;
+	border:none;
+}
+.manage-section .manage-section-title li{
+	width:29.3%;
+	font-size: 20px;
+	color:#fff;
+	border-right:1px solid rgba(255,255,255,0.5);
+}
+.manage-section .manage-section-title li:last-child{
+	width:29.3%;
+	border:none;
+	text-align: center;
+}
+.manage-section .col3{
+	font-size:20px;
+}
+.manage-section .manage-btn-div{
+	margin-top:30px;
+	padding-bottom: 20px;
+}
+.manage-section .col3 a{
+	font-size:18px;
+}
+.manage-section .review-btn{
+	width:34px;
+	height:34px;
+	border-radius:17px;
+	border:1px solid #856a6e;
+}
+.manage-section .review-check-btn{
+	border:none;
+    background: url(../images/review-check-btn.png) no-repeat;
+}
+.footer{
+	width:100%;
+	padding:40px 0;
+	background:#f0f0f0;
+	position:fixed;
+	bottom:0;
+	left:0;
+}
+.footer div{
+	width:85%;
+	margin:0 auto;
+	overflow: hidden;
+}
+.footer input{
+	width:40%;
+	padding:15px 0;
+	font-size:24px;
+	outline:none;
+    border-radius:30px;
+    font-family:'pingfang_medium';
+}
+.footer .footer-left{
+	float:left;
+}
+.footer .footer-right{
+	float:right;
+}
+
+/*detail*/
+.manage-panel{
+	width:100%;
+	padding:25px 0;
+/*	background:#e8423a;*/
+}
+.manage-panel ul{
+	width:75%;
+	margin:0 auto;
+	color:#fff;
+	overflow: hidden;
+}
+.manage-panel ul .panel-left{
+	float:left;
+	width:150px;
+	height:150px;
+	overflow: hidden;
+	border:3px solid #fff;
+	border-radius: 50%;
+}
+.panel-left img{
+	width:100%;
+}
+.manage-panel ul .panel-center{
+	float:left;
+	margin-left:25px;
+	margin-top:51px;
+}
+.panel-center .name{
+     font-size:29px;
+     font-family: 'pingfang_bold'; 
+}
+.manage-message-title{
+	padding:23px;
+	font-size:26px;
+	color:#333;
+	background:#fff;
+	border-bottom: 2px solid #f7f7f7;
+}
+.manage-message-content{
+    width:100%;
+    background:#fff;
+    margin-bottom:15px;
+}
+.manage-message-content p{
+	width:90%;
+	margin:0 auto;
+	padding:28px 0;
+	font-size:24px;
+	border-bottom:1px solid #f2f2f2;
+}
+.manage-message-content p:last-child{
+	border:none;
+}
+.manage-message-content p span:last-child{
+	float:right;
+}
+.manage-message-content img{
+	display: block;
+	max-width:640px;
+	margin:0 auto;
+}

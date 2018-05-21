@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+      var TP_PUBLIC = '__PUBLIC__';
+      var agentseeurl = '__APP__/admin/manage/get_not_audit';
+      var agentpassurl = '__APP__/admin/manage/audit';
+
+      var agentimg = '__PUBLIC__/Home/images/bjx/certificate3.png'
+
+    </script>
+    <script type="text/javascript" src='__PUBLIC__/js/jquery.js'></script>
+    <style>
+      .certificate p {
+        display: none;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <div class="card" style="background-color: transparent; overflow: auto;">
+      <div class="certificate">
+        <canvas id="thecanvas" width="652" height="920" style="width:327px;height:460px;"></canvas>
+        <!--<p class="agent-name">{$manager.name}</p>
+				<p class="agent-wechat">{$manager.wechatnum}</p>
+				<p class="agent-idcard">{$manager.idennum}</p>
+				<p class="agent-job">{$manager.levname}</p>
+				<p class="authorize-num">{$manager.authnum}</p>
+				<p class="authorize-date">{$manager.start_time|date='Y.m.d',###}一{$manager.end_time|date='Y.m.d',###}</p>-->
+      </div>
+    </div>
+    <script type="text/javascript">
+      //()(jQuery)
+
+      $(document).ready(function() {
+        //加载授权书图片
+        loadImg();
+      })
+      //		绘画证书的canvas
+      function draw(img, data) {
+        var canvas = document.getElementById("thecanvas");
+        var ctx = canvas.getContext("2d");
+        //			context.drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+        //			context.drawImage(规定要使用的图像、画布或视频,截取图片开始的x轴,截取图片开始的y轴,图片显示内容的宽度,图片显示内容的高度,在canvas上的开始坐标x,在canvas上的开始坐标y,图片缩放 的宽度/决定图片在画布上的宽度,图片缩放的高度/决定图片在画布上的高度);
+        //			四个值的时候默认为开始的x,y坐标,图片在画布的大小width,height(默认是整张图片在画布上的缩放)
+        ctx.drawImage(img, 0, 0, 652, 920);
+        //		ctx.fillStyle = "#0cf";
+        //		ctx.fillRect(25, 25, 100, 100);
+        ctx.fillStyle = "#231815"; // black color 
+        var str1 = data.agentName;
+        var str2 = '';
+        if(str1.length > 10) {
+          ctx.font = "bold 14px Noto Sans S Chinese Medium";
+          str2 = str1.substring(11, str1.length)
+          str1 = str1.substring(0, 11);
+          ctx.fillText(str1, 145, 285);
+          ctx.fillText(str2, 145, 308);
+        } else {
+          ctx.font = "bold 16px Noto Sans S Chinese Medium";
+          ctx.fillText(str1, 145, 308);
+        }
+        ctx.font = "bold 20px Noto Sans S Chinese Medium";
+        ctx.fillText(data.agentWeChatId, 420, 308);
+        ctx.fillText(data.agentIDcard, 175, 350);
+        ctx.fillText(data.bossName, 175, 388);
+        ctx.font = "bold 28px Noto Sans S Chinese Medium";
+        ctx.fillText(data.agentLevelName, 250, 480);
+        ctx.font = "bold 16px Noto Sans S Chinese Medium";
+        ctx.fillText(data.startTime + "-" + data.endTime, 408, 640);
+        ctx.fillText(data.certificateId, 408, 670);
+        ctx.restore(); //存储画布状态
+        canvas.style.display = "none";
+        var type = 'png'; //你想要什么图片格式 就选什么吧
+        var d = document.getElementById("thecanvas");
+        var imgdata = d.toDataURL(type);
+        var png = new Image();
+        $('.warrant img').attr('src', imgdata);
+        png.src = imgdata;
+        $(png).attr("id", "imgtrue");
+        if(!$(".certificate").children("#imgtrue").length > 0) {
+          $(".certificate").append(png);
+        }
+
+      }
+
+      //加载授权书图片
+      function loadImg() {
+        var u_id = '{$manager.id}';
+
+        var userId = null;
+        if(u_id != "" && u_id != undefined && u_id != null) {
+          userId = u_id;
+        }
+        var agentInf = {
+          certificateImg: agentimg,
+          agentName: '天津自贸区进口商品直营中心（商丘市新城国际店）',
+          agentWeChatId: '',
+          agentIDcard: '',
+          agentLevelName: '',
+          certificateId: '',
+          startTime: '',
+          endTime: '',
+          bossName: ''
+        }
+        $.post('__APP__/home/manager/get_user_ajax', {
+            id: userId
+          },
+          function(data) {
+            if(data.code == 1) {
+              console.log(data);
+              agentInf.bossName = data.info.bossname;
+              agentInf.agentName = data.info.name;
+              agentInf.agentWeChatId = data.info.wechatnum;
+              agentInf.agentIDcard = data.info.idennum;
+              agentInf.agentLevelName = data.info.levname;
+              agentInf.certificateId = data.info.authnum;
+              agentInf.startTime = data.info.start_time_format1;
+              agentInf.endTime = data.info.end_time_format1;
+              var img = new Image();
+              img.src = agentInf.certificateImg;
+              //	console.log(img);
+              //			将图片设置为隐藏，并添加到页面上渲染
+              $(img).hide()
+              $('.certificate').append(img);
+              //				在证书背景图完全加载完后才开始绘画证书,和添加点击监听事件
+              img.onload = function() {
+                console.log(img);
+                draw(img, agentInf);
+              }
+              return false;
+            } else {
+              console.log(data.msg);
+            }
+          });
+        console.log(agentInf)
+        //	agentInf.agentName = $(".agent-name").text();
+        //	agentInf.agentWeChatId = $(".agent-wechat").text();
+        //	agentInf.agentIDcard = $(".agent-idcard").text();
+        //	agentInf.agentLevelName = $(".agent-job").text();
+        //	agentInf.certificateId = $(".authorize-num").text();
+        //	agentInf.dateTime = $(".authorize-date").text();
+        //			通过ajax获取数据,并给上面的变量赋值存储
+        //			$.get(url,function(data){
+        //				
+        //			})
+        //			将上面获取的图片地址创建成DOM元素
+        //		alert({$agentRow.name})
+
+      }
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,62 @@
+.assets-list {
+    background-color: #f5f5f8;
+}
+
+.assets-list li {
+    display: flex;
+    height: 84px;
+    padding: 10px 20px;
+    border-bottom: solid 1px #c9c9c9;
+}
+
+.assets-list li .assets-left {
+    flex: 1;
+}
+
+.assets-list li .assets-left .avatar-detail {
+    display: flex;
+    margin-top: 2px;
+}
+
+.assets-list li .assets-left .avatar-detail img {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.assets-list li .assets-left .avatar-detail p {
+    flex: 4;
+    margin: 0;
+    line-height: 40px;
+}
+
+.assets-list li .assets-left img {
+    width: 40px;
+    height: 40px;
+}
+
+.assets-list li .assets-left span {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #a0a0a0;
+}
+
+.assets-list li .assets-right {
+    flex: 1;
+}
+
+.assets-list li .assets-right p,
+span {
+    text-align: right;
+    margin: 0;
+}
+
+.assets-list li .assets-right .dealing {
+    color: #fb4835;
+    font-size: 12px;
+}
+
+.assets-list li .assets-right .finish {
+    color: #a0a0a0;
+    font-size: 12px;
+}

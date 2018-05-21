@@ -1,0 +1,398 @@
+<style>
+    .property {
+        border: 1px solid #ccc;
+        /*border-radius: 3px;*/
+        padding:8px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    .on-size {
+        background: #009688;
+        color: #fff;
+    }
+    .choose-properties, .add-value, .add-price {
+        display:none;
+    }
+    .size-list ul li {
+            position: relative;
+            float: left;
+            list-style: none;
+            border: none;
+            border-radius:5px;
+            padding: 3px 13px;
+            background: #009688;
+            color: #fff;
+            margin: 8px 8px 0 8px;
+
+    }
+    .del-size {
+        position: absolute;
+        top: 0;
+        right: 2px;
+        color: white;
+        cursor: pointer;
+    }
+    .size-content {margin-bottom: 48px;}
+    .size-list {margin-left: -8px;}
+    .enter-size {
+        height: 38px;
+        padding-left: 15px;
+        font-size: 14px;
+        width: 34%;
+        margin-right: 15px;
+        width: 330px;
+        box-sizing: border-box;
+    }
+    .form-right1 table {border: 1px solid #ccc;}
+    .form-right1 table th,td {text-align: center;font-weight: 500}
+    .form-right1 table td input {border: 0;text-align: center;width: 100%;}
+    .finish {margin-left: 351px;margin-bottom: 15px;display: none}
+    
+    .form-right1{
+      float: right;
+      flex: 4;
+      max-width: 75%;
+      padding-left: 5%;
+      position: relative;
+    }
+    .table-price{table-layout: fixed;width: 100%;}
+    .table-price tr{}
+    .table-price tr th{}
+    .table-price tr td .imgbtn_upload{width:80px; height:80px;}
+    
+    .imgbtn_upload {max-width: 110px;max-height: 110px}
+</style>
+
+<empty name='product'>
+    <div class="layui-form-item items gg">
+        <label class="form-text">产品规格：</label>
+        <div class="form-right">
+            <button type="button" class="layui-btn add-size">添加产品规格</button>
+        </div>
+    </div>
+<else/>
+    <div class="layui-form-item items gg">
+        <label class="form-text">产品规格：</label>
+        <div class="form-right">
+            <button type="button" class="layui-btn add-size">编辑产品规格</button>
+            <button type="button" class="layui-btn show-stock" data-type="1">查看/编辑库存</button>
+        </div>
+    </div>
+</empty>
+
+<empty name="has_property">
+<div class="layui-form-item items kc">
+    <label class="form-text">库存：</label>
+    <div class="form-right">
+      <input class="input-inf2" type="number" name="quantity" value="{$row.quantity}" lay-verify="quantity" autocomplete="off" placeholder="请输入库存" class="layui-input">
+    </div>
+</div>
+</empty>
+<div class="layui-form-item items choose-properties" style="display:none">
+    <label class="form-text">选择属性：</label>
+    <div class="form-right">
+      <php> foreach($properties as $property) {</php>
+        <span class="property <php> if(isset($product['properties'][$property['id']])){echo 'on-size';} </php>"
+              name="<php>echo $property['name'];</php>" property_id="<php>echo $property['id'];</php>"><php>echo $property['name'];</php></span> 
+        <php>}</php>
+        <button type="button" class="layui-btn layui-btn-radius layui-btn-primary next-value">下一步</button>
+        <button type="button" class="layui-btn layui-btn-radius layui-btn-primary" id="cancle_edit">取消</button>
+    </div>
+</div>
+
+<div class="layui-form-item items add-value" style="display:none">
+    <label class="form-text">添加属性值：</label>
+    <div class="form-right show-value">
+
+    </div>
+</div>
+<div class="layui-form-item items add-price" style="display:none">
+    <label class="form-text">设置价格/库存：</label>
+    <div class="form-right1">
+        <table border="1" class="table-price">
+            
+        </table>
+    </div>
+</div>
+<div class="finish">
+    <!-- <button type="button" class="layui-btn layui-btn-radius layui-btn-primary" id="btnSure">完成</button> -->
+    <button type="button" class="layui-btn layui-btn-radius layui-btn-primary" id="cancle">取消</button>
+</div>
+<input type="hidden" name="ProductForm" value=""/>
+<!-- <div id="templet" style="display: none;">
+  <include file="Public/image_v1" image_name="image" is_show="1" img_url="{$row.image}" />
+</div> -->
+<script>
+     //属性相关js
+    var product = {};
+    $(function () {
+        // var templet = $('#templet').html();
+        var level_name = {};
+        function init() {
+            product = <php>echo json_encode($product, JSON_FORCE_OBJECT)</php>;
+            product.propertyPrices = <php>echo json_encode($propertyPrices, JSON_FORCE_OBJECT)</php>;
+
+            level_name = <php>echo json_encode($level_name, JSON_FORCE_OBJECT)</php>;
+        }
+
+        init();
+        $(document).off('click','.property').on('click', '.property', function () {
+            var id = $(this).attr('property_id');
+            var name = $(this).attr('name');
+            if (!product.properties) {
+                product.properties = {};
+            }
+            if ($(this).hasClass('on-size')) {
+                $(this).removeClass('on-size');
+                delete(product.properties[id]);
+            } else {
+                if (countObj(product.properties) == 3) {
+                    layer.msg('最多只能选3个产品规格');
+                    return;
+                }
+                product.properties[id] = {'id': id, 'name': name, values: {}};
+                $(this).addClass('on-size');
+            }
+        });
+        
+        //计算有多少个对象
+        function countObj(obj) {
+            if (!obj) return 0;
+            var count = 0;
+            for (var i in obj) {
+                count++;
+            }
+            return count;
+        }
+        
+        //点击编辑规格
+        $(document).on('click', '.add-size', function() {
+            $(this).parent().parent('.layui-form-item').hide();
+            $('.kc').hide();
+            $('.other').hide();
+            $('.choose-properties').show();
+            $('.price').hide();
+        });
+        
+        //添加属性值页面
+        $(document).on('click', '.next-value', function() {
+            if(countObj(product.properties)<=0) {
+                layer.msg('请至少选择一个属性');
+                return false;
+            }
+            var html = '';
+            $.each(product.properties,function(name,value) {
+                html += '<div class="size-content">';
+                html += '<input type="text" property_id="'+value.id+'" class="enter-size" placeholder="请输入'+value.name+'后按回车" value="">';
+                html += '<div class="size-list"><ul>';
+                if (!$.isEmptyObject(value.values)) {
+                   $.each(value.values,function(v_name,v_value) { 
+                       html += '<li property_value="" property_id="">'+v_value.value+'<i property_value="'+v_value.value+'" property_id="'+value.id+'" class="del-size fa fa-close"></i></li>';
+                   })
+                }
+                html += '</ul></div></div>';
+            });
+            html += '<button type="button" class="layui-btn layui-btn-radius layui-btn-primary next-price" data-type="0">下一步</button><button type="button" class="layui-btn layui-btn-radius layui-btn-primary" id="cancle_edit">取消</button>';
+            $('.add-value .show-value').html(html);
+            $('.choose-properties').hide();
+            $('.add-value').show();
+        });
+        
+        //添加属性值
+        $(document).on('keydown', '.enter-size', function (event) {
+            if(event.keyCode == 13) {
+                var value = $.trim($(this).val());
+                var pid = $(this).attr('property_id');
+                if (!value) {
+                    $(this).focus();
+                } else if (/[:;]/.test(value)) {
+                    layer.msg('不能含有冒号(:)或分号(;)这两个符号');
+                    $(this).focus();
+                } else if (product.properties[pid].values[value]) {
+                    layer.msg('已经有(' + value + ')这个值了');
+                    $(this).focus();
+                }else {
+                  var html = '<li property_value="" property_id="">'+value+'<i property_value="'+value+'" property_id="'+pid+'" class="del-size fa fa-close"></i></li>';
+                  $(this).parent('.size-content').children().children('ul').append(html);
+                  product.properties[pid].values[value] = {value:value};
+                  $(this).val("").focus();
+                }
+                return false;
+            }
+        });
+        
+        //移除属性值
+        $(document).on('click', '.del-size', function() {
+            $(this).parent().remove();
+            var pid = $(this).attr('property_id');
+            var value = $(this).attr('property_value');
+            delete product.properties[pid].values[value];
+        });
+        
+        //编辑规格/查看库存
+        $(document).on('click', '.next-price,.show-stock', function() {
+//            product.propertyPrices = {};
+            if (!checkEmptyPropertyValue()) {
+                return;
+            }
+            $('.next-price,.show-stock').off('click');
+            //判断是否编辑规格/查看库存
+            var show_stock = $(this).attr('data-type');
+            $.get('__URL__/get_properties_value_combination', {
+                product:JSON.stringify(product),
+            }, function(data) {
+                var html = "";
+                html += '<tr><th>属性</th><th>价格(元)</th>';
+                for (var i in level_name) {
+                    html += '<th>'+level_name[i]+'价格</th>';
+                }
+                html += '<th>库存</th><th>展示图</th></tr><tr><td>批量设置</td>';
+                html += '<td><input type="number" name="bat" key="price" min="0" id="batPrice" placeholder="输入价格"></td>';
+                for (var i in level_name) {
+                    html += '<td><input type="number" name="bat" key="price'+i+'" min="0" id="batPrice" placeholder="输入价格"></td>';
+                }
+                html += '<td><input type="number" name="bat" key="stock" min="0" step="1" id="batStock" placeholder="输入库存"></td><td id="imgbat"></td></tr>';
+                var text;
+                $.each(data.propertyPrices,function(k,v){
+                    text = k.replace(/\d+:/g, '');
+                    text = text.replace(';', '<br/>');
+                    html += '<tr key="'+k+'" class="show-detail"><td class="size-name">'+text+'</td>';
+                    html += '<td><input type="number" name="price" min="0" class="size-pri" placeholder="请输入价格" value="'+v.price+'"/></td>';
+                    for (var i in level_name) {
+                        html += '<td><input type="number" name="price'+i+'" min="0" class="size-pri" placeholder="请输入价格" value="'+v["price"+i]+'"/></td>';
+                    }
+                    html += '<td><input type="number" name="stock" min="0" step="1" class="size-sku"';
+                    html += 'placeholder="请输入库存" value="'+v.stock+'"/></td>';
+                    html += '<td><div class="sm_image-wrapper">';
+                    if (v.image) {
+                        html += '<img src="__ROOT__'+v.image+'" class="imgbtn_upload" alt=""';
+                    } else {
+                        html += '<img src="__PUBLIC__/Radmin_v3/images/sq.png" class="imgbtn_upload" alt=""';
+                    }
+                    html += '</div></td></tr>';
+                });
+                html += '<input type="hidden" name="show_stock" value="'+show_stock+'"';
+                $('.table-price').html(html);
+                $('.add-value').hide();
+                $('.gg').hide();
+                $('.add-price').show();
+                $('.finish').show();
+                console.log(1)
+                $.getScript('__PUBLIC__/Radmin_v3/js/img_upload_sm.js');
+            },'json');
+            // console.log(product);
+        });
+        
+        //检查属性值
+        function checkEmptyPropertyValue() {
+            for (var i in product.properties) {
+                if ($.isEmptyObject(product.properties[i].values)) {
+                    layer.msg('属性(' + product.properties[i].name + ')至少要添加一个值');
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        //批量设置库存/价格
+        $(document).on('change', '[name=bat]', function() {
+            var key = $(this).attr('key');
+            var value = $(this).val();
+
+            $("[name=" + key + "]").val(value);
+            $("table .show-detail").each(function() {
+                var pro = $(this).attr('key');
+                if (!product.propertyPrices[pro]) {
+                    product.propertyPrices[pro] = {};
+                }
+                product.propertyPrices[pro][key] = value;
+            });
+        });
+        
+        //设置库存/价格js
+        $(document).on('change', '[name=price],[name=price1],[name=price2],[name=price3],[name=price4],[name=price5],[name=price6],[name=price7],[name=price8],[name=price9],[name=price10],[name=stock]', function() {
+            var key = $(this).parent().parent().attr('key');
+            var name = $(this).attr('name');
+            if (!product.propertyPrices[key]) {
+                product.propertyPrices[key] = {};
+            }
+            product.propertyPrices[key][name] = $(this).val();
+        });
+        
+        $(document).on('onpropertychange','#imgbat .sm_image-wrapper input[name=image]',function(){
+          alert(1)
+        })
+        
+        $("input").focus(function() {
+            $(this).select();
+        });
+
+        // $('#btnSure').on('click', function () {
+        //     if (!checkFormat()) {
+        //         return;
+        //     }
+        //     $('input[name=ProductForm]').val(JSON.stringify(product));
+        //     layer.msg('设置价格/库存完成，请填写其它产品信息');
+        //     //if(editor.hasContents()){ //此处以非空为例
+        //         // editor.sync();       //同步内容
+        //     //}
+        //     // document.form1.submit();
+        // });
+
+        $('#cancle').on('click', function () {
+            $('input[name=ProductForm]').val('');
+            $('.add-price').hide();
+            $('.finish').hide();
+            $('.gg').show();
+            $('.kc').show();
+            init();
+
+        });
+        $(document).on('click','#cancle_edit',function(){
+            $('.add-price').hide();
+            $('.add-value').hide();
+            $('.finish').hide();
+            $('.gg').show();
+            $('.kc').show();
+            $('.choose-properties').hide();
+            init();
+        })
+        
+        function checkFormat() {
+            if (!$.isEmptyObject(product.properties)) {
+                if ($.isEmptyObject(product.propertyPrices)) {
+                    layer.msg('请设置库存');
+                    return false;
+                }
+            }
+            product.stock = 0;
+            for (var key in product.propertyPrices) {
+                var price = product.propertyPrices[key].price;
+                var stock = product.propertyPrices[key].stock;
+                if (price < 0 || !/^((\d)|([1-9]\d+))(\.\d+)?$/.test(price)) {
+                    layer.msg('价格必须是数字并且不能小于0');
+                    $('tr[key="' + key + '"]').find('input[name=price]').focus().select();
+                    return false;
+                }
+                if (stock < 0 || !/^[1-9][0-9]*$/.test(stock)) {
+                    layer.msg('库存必须是整数并且不能小于0');
+                    $('tr[key="' + key + '"]').find('input[name=stock]').focus().select();
+                    return false;
+                }
+                product.stock += stock*1;
+                product.price = price;
+            }
+            return true;
+        }
+
+        form.on('submit(*)', function(data){
+            if(!$(".table-price").is(":hidden")) {
+                if (!checkFormat()) {
+                    return false;
+                }
+            }
+            $('input[name=ProductForm]').val(JSON.stringify(product));
+            return true;
+});
+    });
+</script>

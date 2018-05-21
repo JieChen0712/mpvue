@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="ui-mobile">
+<head lang="en">
+    <title>产品详情</title>
+    <include file="Public/header"/>
+    <script src="__PUBLIC__/js/jquery.js"></script>
+    <script>
+       var pub = "__PUBLIC__";
+    </script>
+    <style>
+        .product img{width: 100%;margin: 0px;padding:0px;line-height:35px;}
+        .header1 p{margin-top:0px;}
+        .product p{margin-bottom: 10px;}
+        .product{width:95%;margin:0 auto;text-align:justify;font-size:16px;color:#666;}
+    </style>
+</head>
+<body class="ui-mobile-viewport ui-overlay-b" style="background-color:#fff;margin:0;padding:0;">
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div>
+        <header class="header1">
+        <a href="javascript:history.go(-1);" class="a"><img src="__PUBLIC__/images/index/left_icon.png" alt=""></a><p>产品详情</p>
+        </header>
+        <div data-role="content" data-theme="a" style="background-color:#fff;" class="product">
+            {$news.news}
+        </div>    
+    </body>
+    </html>

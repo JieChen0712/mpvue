@@ -1,0 +1,103 @@
+@charset "utf-8";
+
+/*复制comein的*/
+.re-panel{
+	width:100%;
+	padding:5px 0;
+}
+.re-panel p{
+	width:90%;
+	margin:0 auto;
+	font-size:18px;
+	line-height: 30px;
+}
+.re-title{
+    border-bottom:1px solid #f4f4f4;
+}
+.re-title ul{
+	width:90%;
+	margin:0 auto;
+	display: flex;
+    overflow: hidden;
+}
+.re-title ul li{
+	padding:23px 20px;
+	float:left;
+	font-size: 22px;
+}
+.re-section{
+	width:90%;
+	margin:0 auto;
+	margin-top:17px;
+}
+.re-section ul{
+	display: flex;
+	position:relative;
+    overflow: hidden;
+	font-size: 25px;
+	color:#0e0e0e;
+    border-bottom:1px solid #f4f4f4;
+}
+.re-section ul li{
+	padding:32px 20px;
+	float:left;
+}
+.re-section ul .red{
+	color:#e8423a;
+}
+/*agentlev-list*/
+.lev-list-section{
+	width:90%;
+	margin:0 auto;
+	margin-bottom:62px;
+}
+.lev-list-section ul{
+	padding:8px 40px 8px 130px;
+	display: flex;
+	margin-top:15px;
+	border-radius: 0.5em;
+	position:relative;
+}
+.lev-list-section ul li{
+	font-size: 16px;
+	color:#fff;
+    margin-left: 15px;
+}
+.lev-list-section .go{
+	position:absolute;
+	right:24px;
+	top:50%;
+	margin-top:-12px;
+}
+.bg-lightred,.bg-color1,.bg-color7{
+	background:url(../images/agentlev.png) no-repeat #ea544d;
+	background-size: 52px 52px;
+}
+.bg-yellow,.bg-color2,.bg-color8{
+	background:url(../images/agentlev.png) no-repeat#fe9d34;
+	background-size: 52px 52px;
+}
+.bg-orange,.bg-color3,.bg-color9{
+	background:url(../images/agentlev.png) no-repeat#f4753e;
+	background-size: 52px 52px;
+}
+.bg-blue,.bg-color4,.bg-color10{
+	background:url(../images/agentlev.png) no-repeat#46abec;
+	background-size: 52px 52px;
+}
+.bg-lightblue,.bg-color5{
+	background:url(../images/agentlev.png) no-repeat#38c2ea;
+	background-size: 52px 52px;
+}
+.bg-lightgreen,.bg-color6{
+	background:url(../images/agentlev.png) no-repeat#43da87;
+	background-size: 52px 52px;
+}
+/*agent-detail*/
+.ad-section ul{
+	font-size: 23px;
+	color:#333;
+}
+
+/*comme*/
+

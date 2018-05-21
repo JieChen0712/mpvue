@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的积分</title>
+    <include file="Public/header_v3" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin_v3/css/integral.css" />
+    <script src="__PUBLIC__/Admin_v3/js/light7.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Admin_v3/js/integral.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div class="page">
+        <div class="content infinite-scroll">
+            <div class="header-integral">
+                <p id="all-integral"></p>
+                <button data-name="earn">赚积分</button>
+                <button data-name="main">积分记录</button>
+            </div>
+            <!--积分记录-->
+            <section class="main-integral">
+                <div class="card">
+                    <dl id="integral-list">
+                        <dt>
+                            <div class="integral-title">
+                                <p>积分记录</p><input type="text" id='datetime-picker' value="2017-08-11 15:00" /><i class="icon icon-down"></i></div>
+                                <p class="integral-count">获取：<span id="integral-score"></span>使用：<span id="use-score"></span></p>
+                        </dt>
+                        <!-- <dd> -->
+                        <!-- <p><span>充值1000</span><span>+100</span></p> -->
+                        <!-- <span class="integral-date">2017-08-03</span> -->
+                        <!-- </dd> -->
+                    </dl>
+                </div>
+                <!-- preloader -->
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader"></div>
+                </div>
+            </section>
+
+            <!--&lt;!&ndash;积分兑换&ndash;&gt;-->
+            <!--<section class="exchange-integral">-->
+            <!--<div class="card">-->
+            <!--<dl>-->
+            <!--<dt>-->
+            <!--<div class="integral-title"><p><span>可兑换奖品</span></p></div>-->
+            <!--</dt>-->
+            <!--<dd>-->
+            <!--<img src="__PUBLIC__/Admin_v3/images/team-manager/manager-order/goods1.png" alt="" />-->
+            <!--<p class="goods-title">补水套装5件套</p>-->
+            <!--<span class="goods-explain">不花钱，那正品，水嫩肌肤</span>-->
+            <!--<p class="cost-integral">20000积分</p>-->
+            <!--</dd>-->
+            <!--<dd>-->
+            <!--<img src="__PUBLIC__/Admin_v3/images/team-manager/manager-order/goods1.png" alt="" />-->
+            <!--<p class="goods-title">补水套装5件套</p>-->
+            <!--<span class="goods-explain">不花钱，那正品，水嫩肌肤</span>-->
+            <!--<p class="cost-integral">20000积分</p>-->
+            <!--</dd>-->
+            <!--</dl>-->
+            <!--</div>-->
+            <!--</section>-->
+
+
+            <!--赚积分-->
+            <section class="earn-integral">
+                <div class="card">
+                    <dl id="rule">
+                        <dt>
+                            <div class="integral-title">
+                                <p>获取更多积分</p>
+                            </div>
+                        </dt>
+
+                        <!--<p><span>经销商签到</span><span>5积分/次</span></p>-->
+                        <!--<p><span>平推</span><span>5积分/人</span></p>-->
+                        <!--<p><span>低推荐高</span><span>10积分/人</span></p>-->
+                        <!--<p><span>下单数量</span><span>10元/5积分</span></p>-->
+                        <!--<p><span>直属代理升级</span><span>5积分/级</span></p>-->
+                        <!---->
+
+                    </dl>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var integralurl = '__GROUP__/user/get_integral_ajax';
+        var ruleurl = '__GROUP__/user/get_rule';
+        var getScoreUrl = '__GROUP__/user/get_score';
+        var aim = $("#datetime-picker");
+        var month = getNowDay().substring(0, 7).replace('-', '').trim();
+        var isNull = false;
+        var getScore = 0;
+        var useScore = 0;
+
+        console.log(month)
+        var page = 1;
+        $.attachInfiniteScroll(".infinite-scroll");
+
+        getRule();
+        getIntegral();
+
+        function getRule() {
+            $.post(ruleurl, {
+                    type: 'rule',
+                    page_num: 1
+                },
+                function (data) {
+                    var str;
+                    var html = '';
+                    $.each(data.info.list, function (key, value) {
+                        html += '<dd><p><span>' + value.type_name + '</span><span>' + value.score +
+                            '积分/次</span></p></dd>';
+                    });
+                    $("#rule").remove("dd").append(html);
+                });
+        }
+
+        function getIntegral() {
+            $.post(integralurl, {
+                    month: month,
+                    type: 'integral_info',
+                    page_num: page
+                },
+                function (data) {
+                    if (data.info.list == null || data.info.list.length < 8) {
+                        $(".infinite-scroll-preloader").remove();
+                        $.detachInfiniteScroll(".infinite-scroll");
+                        isNull = true;
+                    }
+                    console.log(data);
+                    var html = '';
+                    $.each(data.info.list, function (key, value) {
+                        var sign = value.class == 2 ? '-' : '+';
+                        html += '<dd><p><span>' + value.type_name + '</span><span>' + sign + value.score +
+                            '</span></p>' +
+                            '<span class="integral-date">' + value.created_format + '</span></dd>';
+                        if (sign == '+') {
+                            getScore += parseInt(value.score);
+                        } else if (sign == '-') {
+                            useScore += parseInt(value.score);
+                        }
+                    });
+                    $('#integral-score').text(getScore);
+                    $('#use-score').text(useScore);
+                    $("#integral-list").append(html);
+                });
+            page = page + 1;
+
+        }
+
+        function getNowDay() {
+            var time = new Date();
+            var year = time.getFullYear();
+            var month = time.getMonth() + 1;
+            var day = time.getDate();
+            var hour = time.getHours();
+            var min = time.getMinutes();
+            var str = year.toString();
+            str += "-" + (month < 10 ? 0 : "") + month.toString() + "-";
+            str += (day < 10 ? 0 : "") + day.toString()
+            str += " " + (hour < 10 ? 0 : "") + hour.toString();
+            str += ":" + (min < 10 ? 0 : "") + min.toString();
+            return str;
+        }
+
+        $.ajax({
+            url:getScoreUrl,
+            type: 'post',
+            dataType: 'json',
+            success: function (data){
+                if(data.code == 1) {
+                    $('#all-integral').text(data.score);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

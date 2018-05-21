@@ -1,0 +1,34 @@
+<html>
+
+  <head>
+    <script>
+      /**
+       * 使用图片上传接口需满足以下条件
+       * 1.容器选择器id=upload
+       * 2.设置name=image的input标签隐藏域
+       * 3.指定上传目录名称
+       */
+      //上传目录
+      var upload_dir_name = 'publicity';
+    </script>
+  </head>
+
+  <body>
+
+    <div class="container-fluid edit-wrapper">
+      <header class="edit-title">
+        <blockquote class="layui-elem-quote">
+          <span class="title">条例信息</span>
+          <button type="submit" class="btn layui-btn layui-btn-big pull-right back" data-open="__URL__/edit" >编辑</button>
+        </blockquote>
+      </header>
+      <div class="layui-content">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            {$list.news}
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,165 @@
+body {
+  background-color: #f5f4f9;
+}
+#main {
+  width: 95%;
+  min-height: 100%;
+  margin-left: 5%;
+  /* padding-top: 2.8125rem; */
+  padding-bottom: 3.125rem;
+  background-color: #fff;
+}
+#main .avatar-wrapper {
+  display: flex;
+  width: 100%;
+  height: 5.5rem;
+  line-height: 88px;
+  border-bottom: 0.0625rem solid #c9c9c9;
+}
+#main .avatar-wrapper .text {
+  flex: 0 0 5rem;
+  color: #313131;
+}
+#main .avatar-wrapper .avatar {
+  flex: 1;
+  text-align: right;
+}
+#main .avatar-wrapper .avatar img {
+  margin-right: 0.625rem;
+  margin-top: 1.375rem;
+  border-radius: 50%;
+}
+#main .avatar-wrapper .icon-right {
+  flex: 0 0 0.5625rem;
+  margin-right: 1.3125rem;
+  color: #959595;
+  font-size: 0.75rem;
+}
+#main .name-wrapper {
+  display: flex;
+  width: 100%;
+  height: 2.8125rem;
+  line-height: 2.8125rem;
+  border-bottom: 0.0625rem solid #c9c9c9;
+}
+#main .name-wrapper .text {
+  flex: 0 0 5rem;
+  color: #313131;
+}
+#main .name-wrapper .agentname {
+    flex: 0 0 5rem;
+    color: #313131;
+}
+#main .name-wrapper .name {
+  flex: 1;
+  text-align: right;
+  margin-right: 0.625rem;
+  color: #959595;
+}
+#main .name-wrapper .icon-right {
+  flex: 0 0 0.5625rem;
+  margin-right: 1.3125rem;
+  color: #959595;
+  font-size: 0.75rem;
+}
+#main .WeChat-wrapper {
+  display: flex;
+  width: 100%;
+  height: 2.8125rem;
+  line-height: 2.8125rem;
+  border-bottom: 0.0625rem solid #c9c9c9;
+}
+#main .WeChat-wrapper .text {
+  flex: 0 0 5rem;
+  color: #313131;
+}
+#main .WeChat-wrapper .WeChat {
+  flex: 1;
+  text-align: right;
+  margin-right: 1.3125rem;
+  color: #959595;
+}
+#main .level-wrapper {
+  display: flex;
+  width: 100%;
+  height: 2.8125rem;
+  line-height: 2.8125rem;
+  border-bottom: 0.0625rem solid #c9c9c9;
+}
+#main .level-wrapper .text {
+  flex: 0 0 5rem;
+  color: #313131;
+}
+#main .level-wrapper .level {
+  flex: 1;
+  text-align: right;
+  margin-right: 1.3125rem;
+  color: #959595;
+}
+
+#main .tel-wrapper {
+  display: flex;
+  width: 100%;
+  height: 2.8125rem;
+  line-height: 2.8125rem;
+  border-bottom: 0.0625rem solid #c9c9c9;
+}
+#main .tel-wrapper .text {
+  flex: 0 0 5rem;
+  color: #313131;
+}
+#main .tel-wrapper .tel {
+  flex: 1;
+  text-align: right;
+  margin-right: 0.625rem;
+  color: #959595;
+}
+#main .tel-wrapper .icon-right {
+  flex: 0 0 0.5625rem;
+  margin-right: 1.3125rem;
+  color: #959595;
+  font-size: 0.75rem;
+}
+
+#main .password-wrapper .agentname {
+    flex: 0 0 3rem;
+    color: #959595;
+}
+
+
+#main .password-wrapper {
+  display: flex;
+  width: 100%;
+  height: 2.8125rem;
+  line-height: 2.8125rem;
+  border-bottom: 0.0625rem solid #c9c9c9;
+}
+#main .password-wrapper .text {
+  flex: 1;
+  color: #313131;
+}
+#main .password-wrapper .icon-right {
+  flex: 0 0 0.5625rem;
+  margin-right: 1.3125rem;
+  color: #959595;
+  font-size: 0.75rem;
+}
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 3.125rem;
+  background: #f3f3f3;
+  margin: -3.125rem auto 0 auto;
+  clear: both;
+  text-align: center;
+}
+#footer .exit {
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 3.125rem;
+  /* background-color: #0e3e6e; */
+  color: #fff;
+  border: none;
+}
