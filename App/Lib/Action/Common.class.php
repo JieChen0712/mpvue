@@ -69,4 +69,25 @@ class Common {
         }
         return $data;
     }
+    
+    /**
+     * 数据根据pid排序
+     * @param $data
+     * @param int $pid
+     * @param int $level
+     * @return array
+     * add by qjq
+     */
+    public function sortt($data,$pid=0,$level=0){
+        static $arr=array();
+        foreach ($data as $k => $v) {
+            if($v['pid']==$pid){
+                $v['level']=$level;
+                $arr[]=$v;
+                $this->sortt($data,$v['id'],$level+1);
+            }
+        }
+        return $arr;
+
+    }
 }

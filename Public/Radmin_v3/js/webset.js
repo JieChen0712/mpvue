@@ -531,15 +531,15 @@ $(document).ready(function() {
                 if(!data.config.REBATE.ORDINARY_TEAM) {
                     $('#time').hide();
                 }
-                if(data.config.KDNIAO_ORDER) {
-                    $('#kdnian_order').attr('checked', true);
-                } else {
-                    $('#kdnian_order').removeAttr('checked');
+                for(var i = 0; i < $('#kdnian_order option').length; i++) {
+                    if($('#kdnian_order option').eq(i).val() == data.config.KDNIAO_ORDER) {
+                        $('#kdnian_order option').eq(i).attr('selected', true);
+                    }
                 }
-                if(data.config.SEND_ORDER) {
-                    $('#send_order').attr('checked', true);
-                } else {
-                    $('#send_order').removeAttr('checked');
+                for(var i = 0; i < $('#send_order option').length; i++) {
+                    if($('#send_order option').eq(i).val() == data.config.SEND_ORDER) {
+                        $('#send_order option').eq(i).attr('selected', true);
+                    }
                 }
                 if(data.config.REBATE.CLICK_TEAM_REBATE) {
                     $('#click_team_sw').attr('checked', true);
@@ -547,15 +547,15 @@ $(document).ready(function() {
                     $('#click_team_sw').removeAttr('checked');
                 }
                 /************************消息模块配置**********************/
-                if(data.config.MESSAGE_MODULE.SYSTEM){
-                    $('#msg_m_system').attr('checked', true);
-                } else {
-                    $('#msg_m_system').removeAttr('checked');
+                for(var i = 0; i < $('#msg_m_system option').length; i++) {
+                    if($('#msg_m_system option').eq(i).val() == data.config.MESSAGE_MODULE.SYSTEM) {
+                        $('#msg_m_system option').eq(i).attr('selected', true);
+                    }
                 }
-                if(data.config.MESSAGE_MODULE.DISTRIBUTOR){
-                    $('#msg_m_distributor').attr('checked', true);
-                } else {
-                    $('#msg_m_distributor').removeAttr('checked');
+                for(var i = 0; i < $('#msg_m_distributor option').length; i++) {
+                    if($('#msg_m_distributor option').eq(i).val() == data.config.MESSAGE_MODULE.DISTRIBUTOR) {
+                        $('#msg_m_distributor option').eq(i).attr('selected', true);
+                    }
                 }
                 /************************功能模块配置**********************/
 
@@ -680,10 +680,10 @@ $(document).ready(function() {
                 //是否调试模式
                 $('#app-debug').val(data.config.APP_DEBUG);
                 //是否测试模式
-                if(data.config.APP_TEST) {
-                    $('#app_test').removeAttr('checked');
-                } else {
-                    $('#app_test').attr('checked', true);
+                for(var i = 0; i < $('#app_test option').length; i++) {
+                    if($('#app_test option').eq(i).val() == data.config.APP_TEST) {
+                        $('#app_test option').eq(i).attr('selected', true);
+                    }
                 }
 
                 //   $('#is-test').val(data.config.IS_TEST); //是否测试模式

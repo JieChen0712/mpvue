@@ -1,6 +1,6 @@
 <?php
  return array(
-   'APP_GROUP_LIST'=>'Home,Admin,Radmin,Api',
+   'APP_GROUP_LIST'=>'Radmin,App',
    'DEFAULT_GROUP'=>'Home',
    'APP_GROUP_MODE'=>'1',
    'APP_GROUP_PATH'=>'Modules',
@@ -18,13 +18,14 @@
    'URL_ROUTE_RULES'=> array(
            '/^p_(\d+)_o_(\d+)$/'=>'Admin/Manage/apply?pid=:1&oid=:2',
    ),
+  
    'APP_TOKEN'=>'',
    'APP_AESK'=>'',
    'YM_DOMAIN'=>'viska.weisika.net',
    'APP_ID'=>'',
    'APP_SECRET'=>'',
-   'IS_TEST'=>'0',
-   
-   'SYSTEM_UPDATE'=>'git pull origin master-base',
+   'IS_TEST'=>'',
+   'SYSTEM_UPDATE'=>'git pull',
    'LOG_RECORD'=>'',
+
 ); ?>

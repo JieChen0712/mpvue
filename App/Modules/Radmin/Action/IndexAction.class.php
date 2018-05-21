@@ -7,34 +7,8 @@ class IndexAction extends CommonAction
 	//微斯咖经销商管理系统主页
 	public function index()
 	{
-            
-//            var_dump($this->all_action);
-//            var_dump($this->admin_auth_action);
-//            var_dump($_SESSION['admin_auth_action']);
-            
-//            import('Lib.Action.Admin','App');
-//            $Admin = new Admin();
-//            print_r($Admin->admin_auth_action);
-            
-//            $agentObj = D('Distributor');
-//            $level = C('LEVEL_NAME');
-//            $mulCount = array();
-//            $agentSum = $agentObj->count('id');
-//            $auditSum = $agentObj->where(array('audited'=>1))->count('id');
-//            $mulCount['agentSum'] = $agentSum;
-//            $mulCount['auditSum'] = $auditSum;
-//            $mulCount['notauditSum'] =$agentSum-$auditSum;
-//            foreach($level as $k=>$v){
-//                    $mulCount['agent'][$k] = $agentObj->where(array('level'=>$k))->count('id');
-//            }
-//            $this->assign('mulCount',$mulCount);
-//            $this->assign('level',$level);
-//            
-//            $this->level_num=C('LEVEL_NUM');
-//            $this->level_name=C('LEVEL_NAME');
-            
             //显示未处理数量
-            $this->data = $this->count_handle();
+//            $this->data = $this->count_handle();
             $this->display();
 	}
 

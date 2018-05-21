@@ -123,8 +123,10 @@ class LoginAction extends Action {
         $password = $this->_post('password');
         $code = $this->_post('code');
 
+        $IS_TEST = C('IS_TEST');
+        
         //验证码错误
-        if ( md5($code) != session('verify')) {
+        if ( md5($code) != session('verify') && !$IS_TEST ) {
             //$this->error('验证码错误');
             $return_result=[
                 'code'=>'-1',
@@ -132,6 +134,7 @@ class LoginAction extends Action {
             ];
             $this->ajaxReturn($return_result);
         }
+        
         $admin = M('admin')->where(array('username' => $username))->find();
         
         $count = M('admin')->count('id');

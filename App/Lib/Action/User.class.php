@@ -34,15 +34,6 @@ class User extends Common{
      * 架构函数
      */
     public function __construct() {
-        import("Wechat.Wechat", APP_PATH);
-        $options = array(
-            'token' => C('APP_TOKEN'), //填写你设定的key
-            'encodingaeskey' => C('APP_AESK'), //填写加密用的EncodingAESKey，如接口为明文模式可忽略
-            'appid' => C('APP_ID'), //填写高级调用功能的app id
-            'appsecret' => C('APP_SECRET'), //填写高级调用功能的密钥
-        );
-        $this->wechat_obj = new Wechat($options);
-
 
         $this->distributor_obj = M('distributor');
         $this->distributor_bind_obj = M('distributor_bind');

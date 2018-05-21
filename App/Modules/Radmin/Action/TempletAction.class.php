@@ -25,8 +25,8 @@ class TempletAction extends CommonAction
     }
     public function product_index()
     {
-        import('Lib.Action.Team', 'App');
-        $Team = new Team();
+        import('Lib.Action.Common', 'App');
+        $common_obj = new Common();
 
         $condition = array();
 
@@ -57,7 +57,7 @@ class TempletAction extends CommonAction
         }
 
         $dis_templet_List = $this->cat_model->select();
-        $dis_templet_List1 = $Team->sortt($dis_templet_List);
+        $dis_templet_List1 = $common_obj->sortt($dis_templet_List);
         $condition_temp = array();
         if (!empty($dis_templet_List1)) {
             foreach ($dis_templet_List1 as $k_tem => $v_tem) {
@@ -76,7 +76,7 @@ class TempletAction extends CommonAction
 
             $list = $this->model->where($condition)->limit($limit)->order('id desc')->select();
             //排序
-//            $list=$Team->sortt($listres);
+//            $list=$common_obj->sortt($listres);
             //分页显示
             $page = $p->show();
             //模板赋值显示
@@ -142,14 +142,14 @@ class TempletAction extends CommonAction
     //添加商品信息
     public function product_add()
     {
-        import('Lib.Action.Team', 'App');
-        $Team = new Team();
+        import('Lib.Action.Common', 'App');
+        $common_obj = new Common();
         $this->level_num = C('LEVEL_NUM');
         $this->level_name = C('LEVEL_NAME');
 
         $reduction_category = M('templet_category');
         $cate = $reduction_category->select();
-        $cateres = $Team->sortt($cate);
+        $cateres = $common_obj->sortt($cate);
 
         $shipping_goods_shipping_template=M('shipping_goods_shipping_template');
         $info=$shipping_goods_shipping_template->field('id,template_name')->select();
@@ -247,10 +247,10 @@ class TempletAction extends CommonAction
                 import('Lib.Action.Sku','App');
                 $sku = new Sku();
                 $sku->save_templet_info($templet, $res);
-
-                $this->success('添加成功',__URL__.'/'.'product_index');
                 $name = $this->get_product_name();
                 $this->add_active_log('添加'.$name.'信息');
+                $this->success('添加成功',__URL__.'/'.'product_index');
+
             } else {
                 $this->error('添加失败');
             }
@@ -263,8 +263,8 @@ class TempletAction extends CommonAction
     //编辑
     public function product_edit()
     {
-        import('Lib.Action.Team', 'App');
-        $Team = new Team();
+        import('Lib.Action.Common', 'App');
+        $common_obj = new Common();
         $id = $_GET['id'];
         $row = $this->model->find($id);
 
@@ -280,7 +280,7 @@ class TempletAction extends CommonAction
         $row_arr=implode(',',$arr);
         $category_info = M('templet_category');
         $dis_category = $category_info->select();
-        $list = $Team->sortt($dis_category);
+        $list = $common_obj->sortt($dis_category);
 
         $shipping_goods_shipping_template=M('shipping_goods_shipping_template');
         $info=$shipping_goods_shipping_template->field('id,template_name')->select();
@@ -403,10 +403,10 @@ class TempletAction extends CommonAction
                 import('Lib.Action.Sku','App');
                 $sku = new Sku();
                 $sku->save_templet_info($templet, $id, I('post.show_stock'));
-
-                $this->success('操作成功',__URL__.'/'.'product_index');
                 $name = $this->get_product_name();
                 $this->add_active_log('编辑'.$name.'信息');
+                $this->success('操作成功',__URL__.'/'.'product_index');
+
             } else {
                 $this->error('操作失败');
             }
@@ -433,9 +433,9 @@ class TempletAction extends CommonAction
             import('Lib.Action.Sku','App');
             $sku_obj = new Sku();
             $sku_obj->delete_properties($id);
-            $this->success('删除成功');
             $name = $this->get_product_name();
             $this->add_active_log('删除'.$name.'信息');
+            $this->success('删除成功');
         } else {
             $this->error('删除失败');
         }
@@ -495,8 +495,8 @@ class TempletAction extends CommonAction
     }
     public function category_index()
     {
-        import('Lib.Action.Team', 'App');
-        $Team = new Team();
+        import('Lib.Action.Common', 'App');
+        $common_obj = new Common();
 
         $count = $this->cat_model->count('id');
         if ($count > 0) {
@@ -505,7 +505,7 @@ class TempletAction extends CommonAction
             $limit = $p->firstRow . "," . $p->listRows;
             $listres = $this->cat_model->select();
             //排序
-            $list = $Team->sortt($listres);
+            $list = $common_obj->sortt($listres);
             //分页显示
             $page = $p->show();
             //模板赋值显示
@@ -521,11 +521,11 @@ class TempletAction extends CommonAction
     {
         $p_id=I('get.p_id');
         $c_id=I('get.c_id');
-        import('Lib.Action.Team', 'App');
-        $Team = new Team();
+        import('Lib.Action.Common', 'App');
+        $common_obj = new Common();
         $reduction_category = M('templet_category');
         $cate = $reduction_category->select();
-        $cateres = $Team->sortt($cate);
+        $cateres = $common_obj->sortt($cate);
         $this->assign('cateres', $cateres);
         $this->p_id=$p_id;
         $this->c_id=$c_id;
@@ -564,9 +564,9 @@ class TempletAction extends CommonAction
         );
         $res = $this->cat_model->add($data);
         if ($res) {
-            $this->success('添加成功');
             $name = $this->get_category_name();
             $this->add_active_log('添加'.$name.'信息');
+            $this->success('添加成功');
         } else {
             $this->error('添加失败');
         }
@@ -575,13 +575,13 @@ class TempletAction extends CommonAction
     //编辑
     public function category_edit()
     {
-        import('Lib.Action.Team', 'App');
-        $Team = new Team();
+        import('Lib.Action.Common', 'App');
+        $common_obj = new Common();
 
         $id = $_GET['id'];
         $row = $this->cat_model->find($id);
         $listres = $this->cat_model->select();
-        $list = $Team->sortt($listres);
+        $list = $common_obj->sortt($listres);
 
 
         $this->list = $list;
@@ -651,10 +651,9 @@ class TempletAction extends CommonAction
         if ($res === false) {
             $this->error("操作失败");
         } else {
-            $this->success("操作成功");
             $name = $this->get_category_name();
             $this->add_active_log('编辑'.$name.'信息');
-
+            $this->success("操作成功");
         }
 
     }
@@ -671,9 +670,9 @@ class TempletAction extends CommonAction
         $res = $this->cat_model->delete($id);
 
         if ($res) {
-            $this->success('删除成功');
             $name = $this->get_category_name();
             $this->add_active_log('删除'.$name.'信息');
+            $this->success('删除成功');
         } else {
             $this->error('删除失败');
         }

@@ -85,12 +85,16 @@ class CommonAction extends Action {
             $other = [];
             for ($j = 0; $j < $cellNum; $j++) {
                 if (!$expTableData[$i][$expCellName[$j][0]]) {
-                    foreach ($otherFiled as $v) {
-                        if (!isset($other[$v][$expCellName[$j][0]])) {
-                            $other[$v][$expCellName[$j][0]] = 1;
-                            $data = $expTableData[$i][$v][$expCellName[$j][0]];
-                            break;
+                    if ($otherFiled) {
+                        foreach ($otherFiled as $v) {
+                            if (!isset($other[$v][$expCellName[$j][0]])) {
+                                $other[$v][$expCellName[$j][0]] = 1;
+                                $data = $expTableData[$i][$v][$expCellName[$j][0]];
+                                break;
+                            }
                         }
+                    } else {
+                        $data = $expTableData[$i][$expCellName[$j][0]];
                     }
 //                    if (!isset($other[$otherFiled[$i]][$expCellName[$j][0]])) {
 //                        $other[$otherFiled[$i]][$expCellName[$j][0]] = 1;
@@ -544,6 +548,7 @@ class CommonAction extends Action {
                 $applyList[$k]['levname'] = $list['levname'];
                 $applyList[$k]['o_id'] = $bossname;
                 $applyList[$k]['bossphone'] = $bossphone;
+                $applyList[$k]['order_num'] = ' '.$v['order_num'];
                 
                 //产品规格显示
                 $applyList[$k]['p_name'] = $v['p_name']. ' '. $v['style'];
@@ -741,7 +746,6 @@ class CommonAction extends Action {
                 //return $update_array;
                 
 //                print_r($update_array);return;
-                
                 $update_res = $this->batch_update('order',$update_array,'order_num');
 
                 $error_msg = '请注意填写的快递单号字段必须为文本格式，并且按照导出的EXCEL格式进行导入，如果已经设置了快递单号的不能进行导入设置！';
@@ -1083,7 +1087,7 @@ class CommonAction extends Action {
                     $con[$x]="  {$k} = (CASE {$field} ";
                 }
                 if($k!=$field){
-                    $temp=$value[$field];
+                    $temp=trim($value[$field]);
                     $con_sql[$x].=   " WHEN '{$temp}' THEN '{$v}' ";
                     $x++;
                 }
