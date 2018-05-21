@@ -1,97 +1,40 @@
-const fs = require('fs')
-const path = require('path')
-const zlib = require('zlib')
-const rollup = require('rollup')
-const uglify = require('uglify-js')
+require('./check-versions')()
 
-if (!fs.existsSync('dist')) {
-  fs.mkdirSync('dist')
-}
+process.env.NODE_ENV = 'production'
 
-let builds = require('./config').getAllBuilds()
+var ora = require('ora')
+var rm = require('rimraf')
+var path = require('path')
+var chalk = require('chalk')
+var webpack = require('webpack')
+var config = require('../config')
+var webpackConfig = require('./webpack.prod.conf')
 
-// filter builds via command line arg
-if (process.argv[2]) {
-  const filters = process.argv[2].split(',')
-  builds = builds.filter(b => {
-    // fix the project name === floder name
-    // return filters.some(f => b.dest.indexOf(f) > -1)
-    return filters.some(f => b.dest.slice(path.resolve(__dirname, '../').length).indexOf(f) > -1)
-  })
-} else {
-  // filter out weex builds by default
-  builds = builds.filter(b => {
-    return b.dest.indexOf('weex') === -1
-  })
-}
+var spinner = ora('building for production...')
+spinner.start()
 
-build(builds)
+rm(path.join(config.build.assetsRoot, '*'), err => {
+  if (err) throw err
+  webpack(webpackConfig, function (err, stats) {
+    spinner.stop()
+    if (err) throw err
+    process.stdout.write(stats.toString({
+      colors: true,
+      modules: false,
+      children: false,
+      chunks: false,
+      chunkModules: false
+    }) + '\n\n')
 
-function build (builds) {
-  let built = 0
-  const total = builds.length
-  const next = () => {
-    buildEntry(builds[built]).then(() => {
-      built++
-      if (built < total) {
-        next()
-      }
-    }).catch(logError)
-  }
-
-  next()
-}
-
-function buildEntry (config) {
-  const isProd = /min\.js$/.test(config.dest)
-  return rollup.rollup(config)
-    .then(bundle => bundle.generate(config))
-    .then(({ code }) => {
-      if (isProd) {
-        var minified = (config.banner ? config.banner + '\n' : '') + uglify.minify(code, {
-          output: {
-            ascii_only: true
-          },
-          compress: {
-            pure_funcs: ['makeMap']
-          }
-        }).code
-        return write(config.dest, minified, true)
-      } else {
-        return write(config.dest, code)
-      }
-    })
-}
-
-function write (dest, code, zip) {
-  return new Promise((resolve, reject) => {
-    function report (extra) {
-      console.log(blue(path.relative(process.cwd(), dest)) + ' ' + getSize(code) + (extra || ''))
-      resolve()
+    if (stats.hasErrors()) {
+      console.log(chalk.red('  Build failed with errors.\n'))
+      process.exit(1)
     }
 
-    fs.writeFile(dest, code, err => {
-      if (err) return reject(err)
-      if (zip) {
-        zlib.gzip(code, (err, zipped) => {
-          if (err) return reject(err)
-          report(' (gzipped: ' + getSize(zipped) + ')')
-        })
-      } else {
-        report()
-      }
-    })
+    console.log(chalk.cyan('  Build complete.\n'))
+    console.log(chalk.yellow(
+      '  Tip: built files are meant to be served over an HTTP server.\n' +
+      '  Opening index.html over file:// won\'t work.\n'
+    ))
   })
-}
-
-function getSize (code) {
-  return (code.length / 1024).toFixed(2) + 'kb'
-}
-
-function logError (e) {
-  console.log(e)
-}
-
-function blue (str) {
-  return '\x1b[1m\x1b[34m' + str + '\x1b[39m\x1b[22m'
-}
+})
