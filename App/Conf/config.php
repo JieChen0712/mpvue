@@ -1,13 +1,13 @@
 <?php
  return array(
    'APP_GROUP_LIST'=>'Radmin,App',
-   'DEFAULT_GROUP'=>'Home',
+   'DEFAULT_GROUP'=>'Radmin',
    'APP_GROUP_MODE'=>'1',
    'APP_GROUP_PATH'=>'Modules',
    'URL_MODEL'=>'2',
-   'DB_HOST'=>'localhost',
-   'DB_USER'=>'normal',
-   'DB_PWD'=>'TNpWq2ON8jtjFgx5',
+   'DB_HOST'=>'192.168.3.200',
+   'DB_USER'=>'root',
+   'DB_PWD'=>'root',
    'DB_NAME'=>'applets-back',
    'DB_PREFIX'=>'',
    'URL_HTML_SUFFIX'=>'',

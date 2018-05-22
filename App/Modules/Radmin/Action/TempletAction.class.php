@@ -244,9 +244,9 @@ class TempletAction extends CommonAction
 
                 //属性
                 //保存商品属性库存
-                import('Lib.Action.Sku','App');
-                $sku = new Sku();
-                $sku->save_templet_info($templet, $res);
+//                import('Lib.Action.Sku','App');
+//                $sku = new Sku();
+//                $sku->save_templet_info($templet, $res);
                 $name = $this->get_product_name();
                 $this->add_active_log('添加'.$name.'信息');
                 $this->success('添加成功',__URL__.'/'.'product_index');
@@ -287,9 +287,9 @@ class TempletAction extends CommonAction
 
         //属性
         //商品属性库存
-        import('Lib.Action.Sku','App');
-        $sku = new Sku();
-        $product = $sku->init_properties($row);
+//        import('Lib.Action.Sku','App');
+//        $sku = new Sku();
+//        $product = $sku->init_properties($row);
         if (!$product) {
             $product = [];
             $propertyPrices = [];
@@ -400,9 +400,9 @@ class TempletAction extends CommonAction
             if ($res) {
                 //属性
                 //保存商品属性库存
-                import('Lib.Action.Sku','App');
-                $sku = new Sku();
-                $sku->save_templet_info($templet, $id, I('post.show_stock'));
+//                import('Lib.Action.Sku','App');
+//                $sku = new Sku();
+//                $sku->save_templet_info($templet, $id, I('post.show_stock'));
                 $name = $this->get_product_name();
                 $this->add_active_log('编辑'.$name.'信息');
                 $this->success('操作成功',__URL__.'/'.'product_index');
@@ -430,9 +430,9 @@ class TempletAction extends CommonAction
         if ($res) {
             //属性
             //删除属性/库存
-            import('Lib.Action.Sku','App');
-            $sku_obj = new Sku();
-            $sku_obj->delete_properties($id);
+//            import('Lib.Action.Sku','App');
+//            $sku_obj = new Sku();
+//            $sku_obj->delete_properties($id);
             $name = $this->get_product_name();
             $this->add_active_log('删除'.$name.'信息');
             $this->success('删除成功');
@@ -1115,10 +1115,10 @@ class TempletAction extends CommonAction
         $product = M('Templet')->find($id);
         $product['price'] = $product['price'.$this->manager['level']];
         //商品属性
-        import('Lib.Action.Sku','App');
-        $sku = new Sku();
-        $properties = $sku->get_templet_properties($id);
-        $skus = $sku->get_templet_skus($id);
+//        import('Lib.Action.Sku','App');
+//        $sku = new Sku();
+//        $properties = $sku->get_templet_properties($id);
+//        $skus = $sku->get_templet_skus($id);
         $this->product=$product;
         $this->properties=$properties;
         $this->skus=$skus;
