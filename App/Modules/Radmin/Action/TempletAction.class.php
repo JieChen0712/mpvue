@@ -207,7 +207,31 @@ class TempletAction extends CommonAction
         if($sequence<0 || $sequence >9999){
             $this->error('优先级已超出指定范围');
         }
-
+        
+        //抢购开始时间和结束时间
+        $buy_limit_start_time_date = trim(I('buy_limit_start_time'));
+        $buy_limit_end_time_date = trim(I('buy_limit_end_time'));
+        
+        $buy_limit_start_time=strtotime($buy_limit_start_time_date);
+        $buy_limit_end_time=strtotime($buy_limit_end_time_date);
+        
+        //团购
+        $buy_group_total_num = trim(I('buy_group_total_num'));//团购总人数
+        $buy_group_yet_num = trim(I('buy_group_yet_num'));//已团购人数
+        if (!empty($buy_group_total_num) && !empty($buy_group_yet_num)) {
+            if($buy_group_total_num < 0 || $buy_group_yet_num < 0 || !is_numeric($buy_group_total_num) || !is_numeric($buy_group_yet_num)){
+                $this->error('团购人数不能小于0');
+            }
+        }
+        
+        //价格
+        $price = trim(I('price'));
+        $original_price = trim(I('original_price'));//原价
+        
+        if($price < 0 || $original_price < 0 || !is_numeric($price) || !is_numeric($original_price)){
+            $this->error('产品价格不能小于0');
+        }
+        
         $data = array(
             'image' => $image,
             'name' => trim(I('post.name')),
@@ -215,7 +239,6 @@ class TempletAction extends CommonAction
             'active' => trim(I('post.active')),
             'sequence' =>$sequence,
             'status' => trim(I('post.status')),
-            'price' => trim(I('post.price')),
             'price1' => trim(I('post.price1')),
             'price2' => trim(I('post.price2')),
             'price3' => trim(I('post.price3')),
@@ -235,6 +258,13 @@ class TempletAction extends CommonAction
             'quantity' => $quantity,
             'has_property' =>$has_property,
             'product_parameter'=>trim(I('product_parameter')),
+            'type' => trim(I('post.type')),//0普通产品1秒杀产品2团购产品
+            'buy_limit_start_time'=>$buy_limit_start_time,
+            'buy_limit_end_time'=>$buy_limit_end_time,
+            'buy_group_total_num' => $buy_group_total_num,
+            'buy_group_yet_num' => $buy_group_yet_num,
+            'price' => $price,
+            'original_price' => $original_price,
         );
 
 
@@ -267,6 +297,8 @@ class TempletAction extends CommonAction
         $common_obj = new Common();
         $id = $_GET['id'];
         $row = $this->model->find($id);
+        $row['buy_limit_start_time'] = date('Y-m-d H:i:s', $row['buy_limit_start_time']);
+        $row['buy_limit_end_time'] = date('Y-m-d H:i:s', $row['buy_limit_end_time']);
 
         $row_image = $row['many_image'];
         $arr = explode(',', $row_image);
@@ -371,6 +403,31 @@ class TempletAction extends CommonAction
         }else{
             $product_parameter=$parameter;
         }
+        
+        //抢购开始时间和结束时间
+        $buy_limit_start_time_date = trim(I('buy_limit_start_time'));
+        $buy_limit_end_time_date = trim(I('buy_limit_end_time'));
+        
+        $buy_limit_start_time=strtotime($buy_limit_start_time_date);
+        $buy_limit_end_time=strtotime($buy_limit_end_time_date);
+        
+        //团购
+        $buy_group_total_num = trim(I('buy_group_total_num'));//团购总人数
+        $buy_group_yet_num = trim(I('buy_group_yet_num'));//已团购人数
+        if (!empty($buy_group_total_num) && !empty($buy_group_yet_num)) {
+            if($buy_group_total_num < 0 || $buy_group_yet_num < 0 || !is_numeric($buy_group_total_num) || !is_numeric($buy_group_yet_num)){
+                $this->error('团购人数不能小于0');
+            }
+        }
+        
+        //价格
+        $price = trim(I('price'));
+        $original_price = trim(I('original_price'));//原价
+        
+        if($price < 0 || $original_price < 0 || !is_numeric($price) || !is_numeric($original_price)){
+            $this->error('产品价格不能小于0');
+        }
+        
         $data = array(
             'image' => $image,
             'name' => trim(I('post.name')),
@@ -386,15 +443,22 @@ class TempletAction extends CommonAction
             'quantity' => $quantity,
             'has_property' => $has_property,
             'product_parameter'=>$product_parameter,
+            'type' => trim(I('post.type')),//0普通产品1秒杀产品2团购产品
+            'buy_limit_start_time'=>$buy_limit_start_time,
+            'buy_limit_end_time'=>$buy_limit_end_time,
+            'buy_group_total_num' => $buy_group_total_num,
+            'buy_group_yet_num' => $buy_group_yet_num,
+            'price' => $price,
+            'original_price' => $original_price,
         );
-        if (isset($_POST['price'])) {
-            $data['price'] = $_POST['price'];
-        }
-        for($i=0;$i<11;$i++) {
-            if (isset($_POST["price$i"])) {
-                $data["price$i"] = $_POST["price$i"];
-            }
-        }
+//        if (isset($_POST['price'])) {
+//            $data['price'] = $_POST['price'];
+//        }
+//        for($i=0;$i<11;$i++) {
+//            if (isset($_POST["price$i"])) {
+//                $data["price$i"] = $_POST["price$i"];
+//            }
+//        }
         if (($category_id2 == 'a' && $category_id3 == 'a') || $category_id3 != "a") {
             $res = $this->model->where(array('id' => $id))->save($data);
             if ($res) {
