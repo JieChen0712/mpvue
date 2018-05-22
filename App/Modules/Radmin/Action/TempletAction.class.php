@@ -265,6 +265,7 @@ class TempletAction extends CommonAction
             'buy_group_yet_num' => $buy_group_yet_num,
             'price' => $price,
             'original_price' => $original_price,
+            'store_id' => $this->store_id,
         );
 
 
@@ -450,6 +451,7 @@ class TempletAction extends CommonAction
             'buy_group_yet_num' => $buy_group_yet_num,
             'price' => $price,
             'original_price' => $original_price,
+            'store_id' => $this->store_id,
         );
 //        if (isset($_POST['price'])) {
 //            $data['price'] = $_POST['price'];

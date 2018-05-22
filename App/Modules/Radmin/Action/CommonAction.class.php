@@ -24,6 +24,7 @@ class CommonAction extends Action {
         
         $this->superids = [1,2];//超级管理员ID
         $this->aid = $_SESSION['aid'];
+        $this->store_id = $_SESSION['store_id'];//店铺id
         $admin_info = $admin_model->where(['id'=>$this->aid])->find();
         $this->admin_info = $admin_info;
         $this->admin_auth = explode(',',$admin_info['auth']);
