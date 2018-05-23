@@ -6,6 +6,8 @@
 class StoreAction extends CommonAction
 {
     
+    private $admin_model;
+    private $store_model;
 
     public function _initialize()
     {
@@ -15,6 +17,7 @@ class StoreAction extends CommonAction
         $this->Store = new Store();
         
         $this->store_model = $this->Store->store_model;
+        $this->admin_model = M('admin');
     }
 
     //
@@ -59,8 +62,8 @@ class StoreAction extends CommonAction
     //添加商城提交
     public function edit_post(){
         $id = I('id');
-        $name = I('name');
-        $appid = I('appid');
+        $name = trim(I('name'));
+        $appid = trim(I('appid'));
         
         if( empty($name) || empty($appid) ){
             $this->error('商城名称和appid不能为空！');
@@ -121,7 +124,27 @@ class StoreAction extends CommonAction
         }
     }
     
+    //分配业务员
+    public function dealing_admin(){
+        
+        $admin_info = $this->admin_model->order('id desc')->select();
+        
+//        print_r($admin_info);return;
+        
+        $this->id = trim(I('id'));
+        $this->admin_info = $admin_info;
+        $this->display();
+    }
     
+    //分配业务员操作
+    public function dealing_admin_post(){
+        $aid = I('aid');
+        $store_id = I('id');
+        
+        
+        
+        
+    }
     
     
     

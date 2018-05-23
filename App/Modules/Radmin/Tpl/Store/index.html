@@ -50,6 +50,9 @@
                                     <!--<td>{$m.updated|date="Y-m-d H:i",###}</td>-->
                                     <td class="operate">
                                         <span data-tips-text="修改" data-modal="__URL__/edit?id=<?PHP echo $m['id'] ?>" data-title='修改'></span>
+                                        <?php if( in_array($aid,$superids) ){?>
+                                        <span data-tips-text="分配管理员" data-modal="__URL__/dealing_admin?id=<?PHP echo $m['id'] ?>" data-title='分配管理员'></span>
+                                        <?php }?>
                                         <span data-tips-text="删除" data-title='删除' onclick="return adminDelete('<?PHP echo $m['id'] ?>')"></span>
                                     </td>
                                 </tr>
