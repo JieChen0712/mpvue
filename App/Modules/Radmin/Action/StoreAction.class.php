@@ -30,6 +30,10 @@ class StoreAction extends CommonAction
             'page_num' =>  I('get.p'),
         );
         
+        if( !$this->is_super ){
+            $condition['store_id'] = $this->store_id;
+        }
+        
         $result = $this->Store->get_store($page_info,$condition);
 //        print_r($result);return;
         
@@ -46,9 +50,16 @@ class StoreAction extends CommonAction
     public function edit(){
         $id = I('id');
         
+        
+        
         $list = [];
         if( !empty($id) ){
-            $list = $this->store_model->where(['id'=>$id])->find();
+            if( !$this->is_super && $this->store_id != $id ){
+                $this->error('该账号无权管理此商城！');
+            }
+            
+            $condition['id'] = $id;
+            $list = $this->store_model->where($condition)->find();
             
             if( empty($list) ){
                 $this->error('无法获取到商城信息！');
@@ -84,6 +95,12 @@ class StoreAction extends CommonAction
             $msg = '添加商城《'.$name.'》';
         }
         else{//修改商城
+            
+            if( !$this->is_super && $id == $this->store_id ){
+                $this->error('该账号无权管理此商城！');
+                return;
+            }
+            
             $data = [
                 'name'  =>  $name,
                 'appid' =>  $appid,
@@ -104,6 +121,11 @@ class StoreAction extends CommonAction
     
     //删除商城
     public function del_store(){
+        
+        if( !$this->is_super ){
+            $this->error('该账号无权操作此功能！');return;
+        }
+        
         $id = trim(I('id'));
         
         $info = $this->store_model->where(array('id' => $id))->find();
@@ -126,6 +148,9 @@ class StoreAction extends CommonAction
     
     //分配业务员
     public function dealing_admin(){
+        if( !$this->is_super ){
+            $this->error('该账号无权操作此功能！');return;
+        }
         
         $admin_info = $this->admin_model->order('id desc')->select();
         
@@ -138,12 +163,43 @@ class StoreAction extends CommonAction
     
     //分配业务员操作
     public function dealing_admin_post(){
+        if( !$this->is_super ){
+            $this->error('该账号无权操作此功能！');return;
+        }
+        
         $aid = I('aid');
         $store_id = I('id');
         
+        if( empty($aid) || empty($store_id) ){
+            $this->error('请选择管理员！');
+        }
+        
+        $condition = [
+            'id'    =>  $aid,
+        ];
         
         
+        $info = $this->admin_model->where($condition)->find();
         
+        if( empty($info) ){
+            $this->error('查无此管理员！');
+        }
+        
+        
+        $save_info = [
+            'store_id'    =>  $store_id,
+        ];
+        
+        $result = $this->admin_model->where($condition)->save($save_info);
+        
+        if( !$result ){
+            $this->error('分配失败，请重试！');
+        }
+        else{
+            $log = '分配序号为'.$store_id.'的商城给管理员：'.$info['username'].'（'.$info['id'].'）';
+            $this->add_active_log($log);
+            $this->success('分配成功！');
+        }
     }
     
     

@@ -29,6 +29,12 @@ class CommonAction extends Action {
         $this->admin_info = $admin_info;
         $this->admin_auth = explode(',',$admin_info['auth']);
         
+        if(in_array($this->aid, $this->superids) ){
+            $this->is_super = TRUE;
+        }
+        else{
+            $this->is_super = FALSE;
+        }
         
 //        if( !in_array($this->aid, $this->superids) && !empty($this->admin_auth) ){
 //            
