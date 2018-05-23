@@ -20,13 +20,12 @@ class Coupons extends Common{
         $this->coupons_records_model = M('coupons_records');
         $this->user_model = M('user');
         
-        $this->status_name[$this->status_yes] = '开启';
-        $this->status_name[$this->status_no] = '关闭';
+        $this->status_name[$this->status_yes] = '使用中';
+        $this->status_name[$this->status_no] = '已失效';
     }
     
      //获取优惠券
-    public function get_coupons($page_info=array(),$condition=array()){
-
+    public function get_coupons($page_info=array(),$condition=array(), $coupons_ids=array()){
         $list = array();
         $page = '';
         //每页的数量
@@ -54,6 +53,13 @@ class Coupons extends Common{
                 $list[$k]['status_name'] = $this->status_name[$v['status']];
                 $list[$k]['created'] = date('Y-m-d H:i:s',$v['created']);
                 $list[$k]['updated'] = date('Y-m-d H:i:s',$v['updated']);
+                
+                //领取/未领取做标记
+                if (in_array($v['id'], $coupons_ids)) {
+                    $list[$k]['is_get'] = true;
+                } else {
+                    $list[$k]['is_get'] = false;
+                }
             }
             
             //-----end 整理添加相应其它表的信息-----
@@ -125,6 +131,49 @@ class Coupons extends Common{
             'count' =>  $count,
         );
 
+        return $return_result;
+    }
+    
+    //领取优惠券
+    public function add_coupoons($data) {
+        $store_id = $data['store_id'];//店铺id
+        $uid = $data['uid'];//用户id
+        $coupons_id = $data['coupons_id'];//优惠券id
+        
+        if (empty($coupons_id)) {
+            $return_result = [
+                'code' => -1,
+                'msg' => '优惠券不存在',
+            ];
+            return $return_result;
+        }
+        $coupons = $this->coupons_model->where(['id' => $coupons_id, 'status' => $this->status_yes])->find();
+        if (empty($coupons)) {
+            $return_result = [
+                'code' => -2,
+                'msg' => '优惠券不存在或已经失效了',
+            ];
+            return $return_result;
+        }
+        
+        $add = [
+            'store_id' => $store_id,
+            'uid' => $uid,
+            'coupons_id' => $coupons_id,
+            'created' => time(),
+        ];
+        if (!$this->coupons_records_model->add($add)) {
+            setLog('优惠券领取失败：'.json_encode($add),'coupons');
+            $return_result = [
+                'code' => -3,
+                'msg' => '优惠券领取失败',
+            ];
+            return $return_result;
+        }
+        $return_result = [
+            'code' => 1,
+            'msg' => '优惠券领取成功',
+        ];
         return $return_result;
     }
 }
