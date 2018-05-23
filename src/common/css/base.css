@@ -1,0 +1,40 @@
+/*
+Error: Invalid GBK character "\xE7"
+        on line 8 of base.scss
+
+3: * @Date:   2018-03-30 14:08:04
+4: * @Last Modified by:   jaxQin
+5: * @Last Modified time: 2018-03-30 14:34:05
+6: *\/
+7: 
+8: $red-border: red;  // 用于红色边框
+9: $thame-color: #ff3836; //主题文字颜色----红
+10: $thame-color-orange: #eb825e; // 主题文字颜色----橙
+11: $thame-color-pink: #fecccf; // 主题文字颜色----粉
+12: $thame-color-grey: #6d6d6d; // 主题文字颜色----灰
+13: 
+
+Backtrace:
+base.scss:8
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/util.rb:1048:in `rescue in block in find_encoding_error'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/util.rb:1045:in `block in find_encoding_error'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/util.rb:1044:in `each'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/util.rb:1044:in `each_with_index'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/util.rb:1044:in `find_encoding_error'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/util.rb:772:in `check_sass_encoding'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/engine.rb:444:in `check_encoding!'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/engine.rb:400:in `_to_tree'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/engine.rb:389:in `_render_with_sourcemap'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/engine.rb:307:in `render_with_sourcemap'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/exec/sass_scss.rb:391:in `run'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/exec/sass_scss.rb:63:in `process_result'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/exec/base.rb:52:in `parse'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/lib/sass/exec/base.rb:19:in `parse!'
+C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.1/bin/sass:13:in `<top (required)>'
+C:/Ruby24-x64/bin/sass:22:in `load'
+C:/Ruby24-x64/bin/sass:22:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid GBK character \"\xE7\"\A         on line 8 of base.scss\A \A 3: * @Date:   2018-03-30 14:08:04\A 4: * @Last Modified by:   jaxQin\A 5: * @Last Modified time: 2018-03-30 14:34:05\A 6: */\A 7: \A 8: $red-border: red;  // 用于红色边框\A 9: $thame-color: #ff3836; //主题文字颜色----红\A 10: $thame-color-orange: #eb825e; // 主题文字颜色----橙\A 11: $thame-color-pink: #fecccf; // 主题文字颜色----粉\A 12: $thame-color-grey: #6d6d6d; // 主题文字颜色----灰\A 13: "; }

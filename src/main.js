@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import App from './App'
+// import store from './store'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
+
+// Vue.prototype.$store = store
 
 const app = new Vue(App)
 app.$mount()
@@ -17,6 +20,33 @@ export default {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
+    },
+    tabBar: {
+      color: '#6d6d6d',
+      selectedColor: '#fe785a',
+      backgroundColor: '#fff',
+      borderStyle: 'black',
+      list: [{
+        pagePath: 'pages/index/main',
+        text: '首页',
+        iconPath: 'static/index.png',
+        selectedIconPath: 'static/index_active.png'
+      }, {
+        pagePath: 'pages/index/main',
+        text: '产品展示',
+        iconPath: 'static/product.png',
+        selectedIconPath: 'static/product_active.png'
+      }, {
+        pagePath: 'pages/index/main',
+        text: '促销',
+        iconPath: 'static/sell.png',
+        selectedIconPath: 'static/sell_active.png'
+      }, {
+        pagePath: 'pages/index/main',
+        text: '联系我们',
+        iconPath: 'static/about.png',
+        selectedIconPath: 'static/about_active.png'
+      }]
     }
   }
 }
