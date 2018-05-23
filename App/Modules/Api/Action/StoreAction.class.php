@@ -4,17 +4,25 @@
  * 	微斯咖
  */
 header("Content-Type: text/html; charset=utf-8");
-class StoreAction extends Action {
+class StoreAction extends CommonAction {
 
     private $store_model;//商城
     private $templet_model;//产品
     private $templet_category_model;//产品分类
 
+    private $templet_obj;
+    private $user_obj;
 
     /**
      * 架构函数
      */
     public function __construct() {
+        
+        import('Lib.Action.Templet', 'App');
+        $this->templet_obj = new Templet();
+        
+        import('Lib.Action.User', 'App');
+        $this->user_obj = new User();
         
         $this->store_model = M('store');
         $this->templet_model = M('templet');
@@ -68,6 +76,9 @@ class StoreAction extends Action {
         $store_id = trim(I('post.store_id'));
         $active = trim(I('post.active'));
         $type = trim(I('post.type'));
+        $page_num = trim(I('post.page'));
+        $page_list_num = trim(I('post.page_list_num'));
+        
         
         if( $active!= NULL && !in_array($active,[0,1]) ){
             $result = [
@@ -93,10 +104,15 @@ class StoreAction extends Action {
             $active = 1;
         }
         
+        $page_info['page_num'] = $page_num;
+        if( $page_list_num != null && is_numeric($page_list_num) ){
+            $page_info['page_list_num'] = $page_list_num;
+        }
+        
+        
         $condition['active'] = $active;
         
-        
-        $info = $this->templet_model->where($condition)->order('sequence desc')->find();
+        $info = $this->templet_obj->get_temple($page_info,$condition);
         
         
         if( empty($info) ){
@@ -111,7 +127,10 @@ class StoreAction extends Action {
         $result = [
             'code'  =>  1,
             'msg'   =>  '获取成功！',
-            'info'  =>  $info,
+            'info'  =>  [
+                'list'  => $info['list'],
+                'count' =>  $info['count'],
+            ],
         ];
         
         $this->ajaxReturn($result);

@@ -12,7 +12,7 @@ class Templet extends Common{
      * 架构函数
      */
     public function __construct() {
-        $this->store_model = M('store');
+        $this->model = M('templet');
     }
     
     
@@ -29,17 +29,17 @@ class Templet extends Common{
         $page_list_num = !isset($page_info['page_list_num'])||empty($page_info['page_list_num'])?20:$page_info['page_list_num'];
 
 
-        $count = $this->store_model->where($condition)->count('id');
+        $count = $this->model->where($condition)->count('id');
         
         if( $count > 0 ){
             if( !empty($page_info) ){
 
                 $page_con = $page_num.','.$page_list_num;
 
-                $list = $this->store_model->where($condition)->order('id desc')->page($page_con)->select();
+                $list = $this->model->where($condition)->order('id desc')->page($page_con)->select();
             }
             else{
-                $list = $this->store_model->where($condition)->order('id desc')->select();
+                $list = $this->model->where($condition)->order('id desc')->select();
             }
 
             //-----整理添加相应其它表的信息-----
@@ -61,6 +61,7 @@ class Templet extends Common{
         
         $return_result = array(
             'list'  =>  $list,
+            'count' =>  $count,
             'page'  =>  $page,
         );
 
