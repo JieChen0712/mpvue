@@ -89,9 +89,9 @@ class Store extends Common{
             return $return_result;
         }
         $return_result = [
-                'code' => 1,
-                'msg' => '商城/店铺检查通过',
-            ];
-            return $return_result;
+            'code' => 1,
+            'msg' => '商城/店铺检查通过',
+        ];
+        return $return_result;
     }
 }
