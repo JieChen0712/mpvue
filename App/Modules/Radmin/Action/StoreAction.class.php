@@ -81,6 +81,8 @@ class StoreAction extends CommonAction
             return;
         }
         
+        $update_id = $id;
+        
         //添加商城
         if( empty($id) ){
             $data = [
@@ -92,6 +94,7 @@ class StoreAction extends CommonAction
             
             $result = $this->store_model->add($data);
             
+            $update_id = $result;
             $msg = '添加商城《'.$name.'》';
         }
         else{//修改商城
@@ -111,7 +114,7 @@ class StoreAction extends CommonAction
         }
         
         if( $result ){
-            $this->add_active_log($msg.'成功，序号为'.$result);
+            $this->add_active_log($msg.'成功，商城标识为'.$update_id);
             $this->success('提交成功！');
         }
         else{
@@ -139,7 +142,7 @@ class StoreAction extends CommonAction
             $res = $this->store_model->where(array('id' => $id))->delete();
             if($res) {
                 $this->success('删除商城成功！');
-                $this->add_active_log('删除商城'.$name.'成功，序号：'.$id);
+                $this->add_active_log('删除商城'.$name.'成功，商城标识：'.$id);
             } else {
                 $this->error('删除商城失败！');
             }
@@ -196,7 +199,7 @@ class StoreAction extends CommonAction
             $this->error('分配失败，请重试！');
         }
         else{
-            $log = '分配序号为'.$store_id.'的商城给管理员：'.$info['username'].'（'.$info['id'].'）';
+            $log = '分配商城标识为'.$store_id.'的商城给管理员：'.$info['username'].'（'.$info['id'].'）';
             $this->add_active_log($log);
             $this->success('分配成功！');
         }

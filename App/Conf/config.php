@@ -1,6 +1,6 @@
 <?php
  return array(
-   'APP_GROUP_LIST'=>'Radmin,App',
+   'APP_GROUP_LIST'=>'Radmin,Api',
    'DEFAULT_GROUP'=>'Radmin',
    'APP_GROUP_MODE'=>'1',
    'APP_GROUP_PATH'=>'Modules',
