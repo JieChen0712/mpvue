@@ -74,6 +74,8 @@ class Coupons extends Common{
 
 
         $return_result = array(
+            'code' => 1,
+            'msg' => '获取优惠券成功',
             'list'  =>  empty($list)?[]:$list,
             'page'  =>  $page,
             'count' =>  $count,
@@ -126,6 +128,8 @@ class Coupons extends Common{
 
 
         $return_result = array(
+            'code' => 1,
+            'msg' => '获取领取优惠券记录成功',
             'list'  =>  empty($list)?[]:$list,
             'page'  =>  $page,
             'count' =>  $count,

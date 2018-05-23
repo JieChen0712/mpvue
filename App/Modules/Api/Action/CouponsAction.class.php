@@ -71,7 +71,7 @@ class CouponsAction extends CommonAction {
         //请求接口参数
         $request_data = [
             'store_id' => $this->store_id,//店铺id
-            'openid' => trim(I('openid')),//微信openid
+            'openid' => $this->openid,//微信openid
             'page' => trim(I('page')),//页数
         ];
         
