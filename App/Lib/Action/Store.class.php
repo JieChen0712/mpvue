@@ -6,7 +6,9 @@ require_once "Common.class.php";
 class Store extends Common{
 
     public $store_model;
-    
+    public $status_yes = 1;//店铺开启
+    public $status_no = 0;//店铺关闭
+
     /**
      * 架构函数
      */
@@ -65,6 +67,31 @@ class Store extends Common{
 
         return $return_result;
     }//end func get_money_apply
-
     
+    /**
+     * 检查店铺合法性
+     * @param type $store_id
+     */
+    public function check_store($store_id) {
+        if (empty($store_id)) {
+            $return_result = [
+                'code' => -1,
+                'msg' => '商城/店铺id为空',
+            ];
+            return $return_result;
+        }
+        $store = $this->store_model->where(['id' => $store_id, 'status' => $this->status_yes])->find();
+        if (empty($store)) {
+            $return_result = [
+                'code' => -2,
+                'msg' => '商城/店铺id为空',
+            ];
+            return $return_result;
+        }
+        $return_result = [
+                'code' => 1,
+                'msg' => '商城/店铺检查通过',
+            ];
+            return $return_result;
+    }
 }
