@@ -34,7 +34,7 @@ class StoreAction extends CommonAction {
     public function get_store(){
         $store_id = trim(I('post.store_id'));
         
-        setLog('传值：'.print_r(I()),'get_store_error');
+        setLog('传值：'.print_r(I(),1),'get_store_error');
         
         if( empty($store_id) ){
             $result = [
@@ -80,7 +80,7 @@ class StoreAction extends CommonAction {
         $page_num = trim(I('post.page'));
         $page_list_num = trim(I('post.page_list_num'));
         
-        setLog('传值：'.print_r(I()),'get_templet_error');
+        setLog('传值：'.print_r(I(),1),'get_templet_error');
         
         if( $active!= NULL && !in_array($active,[0,1]) ){
             $result = [
