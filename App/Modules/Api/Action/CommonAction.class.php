@@ -15,6 +15,14 @@ class CommonAction extends Action {
         //接口请求带过的部分参数
         $store_id = trim(I('store_id'));//api传过来的店铺id
         $openid = trim(I('openid'));//api传过来的用户openid
+        
+        if( empty($store_id) || !isset($store_id) ){
+            $result = [
+                'code'  =>  2,
+                'msg'   =>  '参数错误',
+            ];
+            $this->ajaxReturn($result);
+        }
        
         //检查店铺
         $res = $store_obj->check_store($store_id);
