@@ -5,7 +5,7 @@
  */
 class UserAction extends CommonAction {
     private $wxapi_obj;
-    private $store_obj;
+    public $store_obj;
     private $user_model;
     public function _initialize() {
         import('Lib.Action.Wxapi', 'App');
