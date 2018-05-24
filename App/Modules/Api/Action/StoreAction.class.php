@@ -79,10 +79,6 @@ class StoreAction extends CommonAction {
         $page_num = trim(I('post.page'));
         $page_list_num = trim(I('post.page_list_num'));
         
-        $store_id = 1;
-        $type = 0;
-        $page_num = 1;
-        
         
         if( $active!= NULL && !in_array($active,[0,1]) ){
             $result = [
