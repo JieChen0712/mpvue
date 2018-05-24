@@ -3,7 +3,6 @@
 /**
  * 	微斯咖
  */
-header("Content-Type: text/html; charset=utf-8");
 class StoreAction extends CommonAction {
 
     private $store_model;//商城
