@@ -5,12 +5,9 @@
  */
 class UserAction extends CommonAction {
     private $wxapi_obj;
-    private $store_obj;
     private $user_model;
     public function _initialize() {
         import('Lib.Action.Wxapi', 'App');
-        import('Lib.Action.Store', 'App');
-        $this->store_obj = new Store();
         $this->user_model = M('user');
         $store = $this->store_obj->get_store([], ['id' => $this->store_id]);//获取店铺信息
         $appid = $store['$list'][0]['appid'];
