@@ -9,67 +9,23 @@ class Admin {
     
     public $admin_auth = [
         '1' =>  '权限管理',
-        '2' =>  '代理查看管理',
-        '15' =>  '代理操作管理',
-        '13' =>  '代理审核管理',
         
-        '5' =>  '虚拟币管理',
-        '16' =>  '虚拟币审核管理',
-        
-        '3' =>  '代理商城管理',
-        '17' =>  '代理商城产品属性管理',
-        '18' =>  '代理商城产品属性管理',
-        
-        '4' =>  '积分规则管理',
-        '19' =>  '积分订单管理',
-        '20' =>  '积分订单管理',
-        
-        '6' =>  '出库管理',
-        '7' =>  '市场营销管理',
-        '8' =>  '微官网管理',
-        '9' =>  '返利管理',
-        '10' =>  '品牌商城管理',
-//        '11' =>  '营销活动管理',
-        '12'=>  '数据分析管理',
-        '14'  => '库存下单管理',
-        
-        '21'  => '系统配置',
+        '3' =>  '商城',
+        '4' =>  '商城产品管理',
     ];
     
     //权限相关对应的module
     public $admin_auth_module = [
         '1' =>  'admin',
-        '2' =>  'manager,upgrade',
-        '15' =>  'manager,regulations,info',
-        '13' =>  'manager',
         
-        '5' =>  'funds',
-        '16' =>  'funds',
-        
-        '3' =>  'order,inform',
-        '17' =>  'sku',
-        '18' =>  'shipping',
-        
-        '4' =>  'integral',
-        '19' =>  'integralorder',
-        '20' =>  'integraltemplet',
-        
-        '6' =>  'stock',
-        '7' =>  'market',
-        '8' =>  'publicity,aptitude,goods,info',
-        '9' =>  'rebate,newrebate',
-        '10' =>  'malltemplet,mallorder',
-//        '11' =>  'sale',
-        '12'=>  'analysis',
-        '14'  => 'stockorder',
-        
-        '21'  => 'webset',
+        '3' =>  'store',
+        '4' =>  'templet',
     ];
     
     //例外的权限
     //首页、用户手册、发展链接
     public $admin_auth_extra = [
-        'index','user','templet','info','security','admin'
+//        'index','user','templet','info','security','admin'
     ];
     
     

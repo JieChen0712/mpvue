@@ -1,410 +1,502 @@
 <html>
 
-<head>
-    <style type="text/css">
-        /*小屏幕样式*/
-        @media screen and (max-width: 768px) {
-            .edit-wrapper .layui-content .layui-form .items .form-text {
-                margin-left: 10px;
+    <head>
+        <style type="text/css">
+            /*小屏幕样式*/
+            @media screen and (max-width: 768px) {
+                .edit-wrapper .layui-content .layui-form .items .form-text {
+                    margin-left: 10px;
+                }
+                .edit-wrapper .layui-content .layui-form .items .three-select {
+                    float: none;
+                }
+                .form-right span {
+                    display: block;
+                    padding-left: 10px; 
+                }
             }
-            .edit-wrapper .layui-content .layui-form .items .three-select {
-                float: none;
+            #buy-limit {
+                display: none
             }
-            .form-right span {
-                display: block;
-                padding-left: 10px; 
+            #buy-group {
+                display: none
             }
-        }
-    </style>
-  <script>
-      /**
-       * 使用图片上传接口需满足以下条件
-       * 1.容器选择器id=upload
-       * 2.设置name=image的input标签隐藏域
-       * 3.指定上传目录名称
-       */
-          //上传目录
-      var upload_dir_name = 'templet';
-  </script>
-<script>
-  form.render();
-</script>
-  <style type="text/css">
-    blockquote{max-width: 300px!important;}
-  </style>
-</head>
+        </style>
+        <script>
+            /**
+             * 使用图片上传接口需满足以下条件
+             * 1.容器选择器id=upload
+             * 2.设置name=image的input标签隐藏域
+             * 3.指定上传目录名称
+             */
+            //上传目录
+            var upload_dir_name = 'templet';
+        </script>
+        <script>
+            form.render();
+        </script>
+        <style type="text/css">
+            blockquote{max-width: 300px!important;}
+        </style>
+    </head>
 
-<body>
+    <body>
 
-<div class="container-fluid edit-wrapper layui-container">
-  <header class="edit-title">
-    <blockquote class="layui-elem-quote">
-      <span class="title">添加产品</span>
-    </blockquote>
-  </header>
-  <div class="layui-content">
-    <form class="layui-form layui-box" action="__URL__/product_insert" data-auto="false" method="post" enctype="multipart/form-data">
-      <div class="layui-form-item items">
-        <label class="form-text">产品封面图片：</label>
-        <div class="form-right">
-          <!--引入图片页面-->
-          <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
-          <include file="Public/image" image_name="image" is_show="0" img_url=""/>
-          <small class="orange-text">(请上传正方型的图片 图片大小为：80*80-150*150 最合适80*80)</small>
-        </div>
-      </div>
-      <div class="layui-form-item items">
-        <label class="form-text">产品详情轮播图：</label>
-        <div class="form-right">
-          <!--引入图片页面-->
-          <include file="Public/images" data-name="many_image[]"/>
-          <small class="orange-text">(请上传长方型的图片 图片大小为：375*270)</small>
-        </div>
-      </div>
+        <div class="container-fluid edit-wrapper layui-container">
+            <header class="edit-title">
+                <blockquote class="layui-elem-quote">
+                    <span class="title">添加产品</span>
+                </blockquote>
+            </header>
+            <div class="layui-content">
+                <form class="layui-form layui-box" action="__URL__/product_insert" data-auto="false" method="post" enctype="multipart/form-data">
+                    <div class="layui-form-item items">
+                        <label class="form-text">产品封面图片：</label>
+                        <div class="form-right">
+                            <!--引入图片页面-->
+                            <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
+                            <include file="Public/image" image_name="image" is_show="0" img_url=""/>
+                            <small class="orange-text" id="act-img">(请上传尺寸合适的图片 图片大小为：375*300)</small>
+                        </div>
+                    </div>
+                    <div class="layui-form-item items">
+                        <label class="form-text">产品详情轮播图：</label>
+                        <div class="form-right">
+                            <!--引入图片页面-->
+                            <include file="Public/images" data-name="many_image[]"/>
+                            <small class="orange-text">(请上传尺寸合适的图片 图片大小为：375*226)</small>
+                        </div>
+                    </div>
 
-      <div class="layui-form-item items">
-        <label class="form-text">名称：</label>
-        <div class="form-right">
-          <input class="input-inf2" required="" type="text" name="name" lay-verify="name" autocomplete="off" title="请输入产品名称" placeholder="请输入产品名称" class="layui-input">
-        </div>
-      </div>
-      <div class="layui-form-item  items">
-        <label class="form-text">优先级：</label>
-        <div class="form-right">
-          <input class="input-inf2" type="number" name="sequence" lay-verify="sequence" autocomplete="off" placeholder="请输入优先级" class="layui-input" value="0">
-          <span style="color:red;" >(默认值为0，数字越大，优先级越高,最大值为9999)</span>
-        </div>
-      </div>
-      <div class="layui-form-item  items">
-        <label class="form-text">产品分类：</label>
-        <div class="form-right">
-          <div class="layui-input-inline three-select">
-            <select name="category_id1" id="level_one" lay-verify="required" lay-filter="level_one">
-              <option value="a">请选择</option>
-            </select>
-          </div>
-          <div class="layui-input-inline three-select">
-            <select name="category_id2" id="level_two" lay-verify="required" lay-filter="level_two">
-              <option value="a">请选择</option>
-            </select>
-          </div>
-          <div class="layui-input-inline three-select">
-            <select name="category_id3" id="level_three" lay-verify="required" lay-filter="level_three">
-              <option value="a">请选择</option>
-            </select>
-          </div>
-          <span style="color:red">备注：二级分类不能添加产品喔！</span>
-        </div>
+                    <div class="layui-form-item items">
+                        <label class="form-text">名称：</label>
+                        <div class="form-right">
+                            <input class="input-inf2" required="" type="text" name="name" lay-verify="name" autocomplete="off" title="请输入产品名称" placeholder="请输入产品名称" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items">
+                        <label class="form-text">优先级：</label>
+                        <div class="form-right">
+                            <input class="input-inf2" type="number" name="sequence" lay-verify="sequence" autocomplete="off" placeholder="请输入优先级" class="layui-input" value="0">
+                            <span style="color:red;" >(默认值为0，数字越大，优先级越高,最大值为9999)</span>
+                        </div>
+                    </div>
+<!--                    <div class="layui-form-item  items">
+                        <label class="form-text">产品分类：</label>
+                        <div class="form-right">
+                            <div class="layui-input-inline three-select">
+                                <select name="category_id1" id="level_one" lay-verify="required" lay-filter="level_one">
+                                    <option value="a">请选择</option>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline three-select">
+                                <select name="category_id2" id="level_two" lay-verify="required" lay-filter="level_two">
+                                    <option value="a">请选择</option>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline three-select">
+                                <select name="category_id3" id="level_three" lay-verify="required" lay-filter="level_three">
+                                    <option value="a">请选择</option>
+                                </select>
+                            </div>
+                            <span style="color:red">备注：二级分类不能添加产品喔！</span>
+                        </div>
+                    </div>-->
+                        <div class="layui-form-item  items">
+                            <label class="form-text">产品类型：</label>
+                            <div class="form-right">
+                                <div class="layui-col-sm6">
+                                    <div class="layui-col-sm6">
+                                        <div class="layui-input-inline three-select">
+                                            <select name="type" class="input-inf2" lay-verify="required" lay-filter="product-type" lay-search="">
+                                                <option value="0">普通产品</option>
+                                                <option value="1">秒杀产品</option>
+                                                <option value="2">团购产品</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="buy-limit">
+                            <div class="layui-form-item  items">
+                                <label class="form-text">抢购开始时间：</label>
+                                <div class="form-right">
+                                    <input class="input-inf2" type="text" name="buy_limit_start_time" id="buy_limit_start_time" autocomplete="off" placeholder="请输入抢购开始时间" class="layui-input" >
+                                </div>
+                            </div>
+                            <div class="layui-form-item  items">
+                                <label class="form-text">抢购结束时间：</label>
+                                <div class="form-right">
+                                    <input class="input-inf2" type="text" name="buy_limit_end_time" id="buy_limit_end_time"  autocomplete="off" placeholder="请输入抢购结束时间" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
 
-      </div>
-      <div class="layui-form-item  items">
-        <label class="form-text">是否上架：</label>
-        <div class="form-right">
-          <div class="layui-col-sm6">
-            <div class="layui-col-sm6">
-              <div class="layui-input-inline three-select">
-                <select name="active" class="input-inf2" lay-verify="required" lay-search="">
-                  <option value="">请选择</option>
-                  <option value="1" selected>是</option>
-                  <option value="0">否</option>
-                </select>
-              </div>
+                        <div id="buy-group">
+                            <div class="layui-form-item  items">
+                                <label class="form-text">团购总人数：</label>
+                                <div class="form-right">
+                                    <input class="input-inf2" type="number" name="buy_group_total_num"  placeholder="请输入团购目标总人数" class="layui-input" >
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item  items">
+                                <label class="form-text">已团购人数：</label>
+                                <div class="form-right">
+                                    <input class="input-inf2" type="number" name="buy_group_yet_num"  placeholder="请输入已团购人数" class="layui-input" >
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="layui-form-item  items">
+                        <label class="form-text">是否上架：</label>
+                        <div class="form-right">
+                            <div class="layui-col-sm6">
+                                <div class="layui-col-sm6">
+                                    <div class="layui-input-inline three-select">
+                                        <select name="active" class="input-inf2" lay-verify="required" lay-search="">
+                                            <option value="">请选择</option>
+                                            <option value="1" selected>是</option>
+                                            <option value="0">否</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--运费相关-->
+                    <?php if( C('ORDER_SHIPPING') == TRUE ): ?>
+                    <div class="layui-form-item  items">
+                        <label class="form-text">运费模板：</label>
+                        <div class="form-right">
+                            <div class="layui-col-sm6">
+                                <div class="layui-col-sm6" style="width: 37%">
+                                    <div class="layui-input-inline three-select">
+                                        <select name="template_id" class="input-inf2" lay-verify="required"  lay-filter="template_id" id="template_id">
+                                            <option value="0">请选择</option>
+                                            <foreach name="info" item="vo">
+                                                <option value="{$vo.id}">{$vo.template_name}</option>
+                                            </foreach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div id="shipping_id">
+
+                                    </div>
+                                    <!--<button type="button" class="layui-btn" id="shipping_id" value=""  data-title='预览运费模板' data-iframe="__APP__/Radmin/Shipping/info?template_id=shipping_id">预览运费模板</button>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items" id="parameter">
+
+                        <label class="form-text"></label>
+
+                        <!--<label class="form-text">产品重量：</label>-->
+                        <div class="form-right">
+                            <input class="input-inf2" type="text" name="product_parameter" lay-verify="product_parameter" autocomplete="off" placeholder="请输入" class="layui-input" value="1">
+                            <span class="yuan"></span>
+                            <!--<span class="yuan">（kg）</span>-->
+                        </div>
+                    </div>
+                    <!--<div class="layui-form-item  items">
+                      <label class="form-text">产品重量：</label>
+                      <div class="form-right">
+                            <input class="input-inf2" type="text" name="product_parameter" lay-verify="product_parameter" autocomplete="off" placeholder="请输入" class="layui-input" value="1">
+                          <span class="yuan">（kg）</span>
+                        </div>
+                    </div>-->
+                    <?php endif;?>
+
+                    <!--<div class="layui-form-item  items">-->
+                    <!--<label class="form-text">积分：</label>-->
+                    <!--<div class="form-right">-->
+                    <!--<input class="input-inf2" type="number" name="score" lay-verify="price" autocomplete="off" placeholder="请输入产品积分" class="layui-input" value="{$row.score}">-->
+                    <!--<span style="color:#ff0000;">*经销商下单通过处理获得的积分</span>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <?php if( C('FUNCTION_MODULE')['STOCK_ORDER']): ?>
+                    <div class="layui-form-item  items">
+                        <label class="form-text">库存：</label>
+                        <div class="form-right">
+                            <input class="input-inf2" type="text" name="quantity" autocomplete="off" placeholder="库存" class="layui-input">
+                        </div>
+                    </div>
+                    <?php endif;?>
+                    
+                    <div class="layui-form-item  items price">
+                        <label class="form-text">原价格：</label>
+                        <div class="form-right">
+                            <input class="input-inf2" type="text" name="original_price" lay-verify="original_price" autocomplete="off" placeholder="请输入产品原价格" class="layui-input" >
+                            <span class="yuan">（元）</span>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item  items price">
+                        <label class="form-text" id="act-price">清仓价：</label>
+                        <div class="form-right">
+                            <input class="input-inf2" type="text" name="price" lay-verify="price" autocomplete="off" placeholder="请输入产品价格" class="layui-input">
+                            <span class="yuan">（元）</span>
+                        </div>
+                    </div>
+                    <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
+                        <div class="layui-form-item  items other">
+                            <label class="form-text">{$level_name[$key_left_num]}拿货价：</label>
+                            <div class="form-right">
+                                <input class="input-inf2" type="number" required="" name="price{$key_left_num}" lay-verify="" title="请输入价格" autocomplete="off" placeholder="请输入价格" class="layui-input">
+                                <span class="yuan">（元）</span>
+                            </div>
+                        </div>
+                    </foreach>
+                    <!-- <div class="layui-form-item  items">
+                      <label class="form-text">描述：</label>
+                      <div class="form-right">
+                        <textarea placeholder="请输入产品描述" class="layui-textarea" name="state"></textarea>
+                      </div>
+                    </div> -->
+                    <div class="layui-form-item  items">
+                        <label class="form-text">产品介绍：</label>
+                        <div class="form-right">
+                            <!--<textarea class="layui-textarea layui-hide" name="disc" lay-verify="disc" id="LAY_demo_editor"></textarea>-->
+                            <textarea id="editor" class="ueditors" name="disc"></textarea>
+                            <include file="Public/ueditor"/>
+                        </div>
+                    </div>
+                    <div class="layui-form-item  items">
+                        <label class="form-text"></label>
+                        <div class="form-right">
+                            <button class="layui-btn" lay-submit="" lay-filter="*">立即提交</button>
+                            <button class="layui-btn layui-btn-danger" type='button' id="btn2">取消</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
         </div>
-      </div>
-      <!--运费相关-->
-      <?php if( C('ORDER_SHIPPING') == TRUE ): ?>
-      <div class="layui-form-item  items">
-        <label class="form-text">运费模板：</label>
-        <div class="form-right">
-          <div class="layui-col-sm6">
-            <div class="layui-col-sm6" style="width: 37%">
-              <div class="layui-input-inline three-select">
-                <select name="template_id" class="input-inf2" lay-verify="required"  lay-filter="template_id" id="template_id">
-                  <option value="0">请选择</option>
-                  <foreach name="info" item="vo">
-                    <option value="{$vo.id}">{$vo.template_name}</option>
-                  </foreach>
-                </select>
-              </div>
-            </div>
-            <div>
-              <div id="shipping_id">
-
-              </div>
-              <!--<button type="button" class="layui-btn" id="shipping_id" value=""  data-title='预览运费模板' data-iframe="__APP__/Radmin/Shipping/info?template_id=shipping_id">预览运费模板</button>-->
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="layui-form-item  items" id="parameter">
-          
-        <label class="form-text"></label>
-        
-         <!--<label class="form-text">产品重量：</label>-->
-        <div class="form-right">
-          <input class="input-inf2" type="text" name="product_parameter" lay-verify="product_parameter" autocomplete="off" placeholder="请输入" class="layui-input" value="1">
-            <span class="yuan"></span>
-             <!--<span class="yuan">（kg）</span>-->
-        </div>
-      </div>
-      <!--<div class="layui-form-item  items">
-        <label class="form-text">产品重量：</label>
-        <div class="form-right">
-              <input class="input-inf2" type="text" name="product_parameter" lay-verify="product_parameter" autocomplete="off" placeholder="请输入" class="layui-input" value="1">
-            <span class="yuan">（kg）</span>
-          </div>
-      </div>-->
-      <?php endif;?>
-      
-      <?php if( !C('FUNCTION_MODULE')['STOCK_ORDER']): ?>
-      <!-- 属性 -->
-      <include file="sku"/>
-      <?php endif;?>
-
-      <!--<div class="layui-form-item  items">-->
-      <!--<label class="form-text">积分：</label>-->
-      <!--<div class="form-right">-->
-      <!--<input class="input-inf2" type="number" name="score" lay-verify="price" autocomplete="off" placeholder="请输入产品积分" class="layui-input" value="{$row.score}">-->
-      <!--<span style="color:#ff0000;">*经销商下单通过处理获得的积分</span>-->
-      <!--</div>-->
-      <!--</div>-->
-
-      <?php if( C('FUNCTION_MODULE')['STOCK_ORDER']): ?>
-      <div class="layui-form-item  items">
-        <label class="form-text">库存：</label>
-        <div class="form-right">
-          <input class="input-inf2" type="text" name="quantity" autocomplete="off" placeholder="库存" class="layui-input">
-        </div>
-      </div>
-      <?php endif;?>
-      
-      <div class="layui-form-item  items price">
-        <label class="form-text">价格：</label>
-        <div class="form-right">
-          <input class="input-inf2" type="text" name="price" lay-verify="price" autocomplete="off" placeholder="请输入产品价格" class="layui-input">
-          <span class="yuan">（元）</span>
-        </div>
-      </div>
-      <foreach name="Think.config.LEVEL_NAME" key="key_left_num" item="vo_left_name">
-        <div class="layui-form-item  items other">
-          <label class="form-text">{$level_name[$key_left_num]}拿货价：</label>
-          <div class="form-right">
-            <input class="input-inf2" type="number" required="" name="price{$key_left_num}" lay-verify="" title="请输入价格" autocomplete="off" placeholder="请输入价格" class="layui-input">
-            <span class="yuan">（元）</span>
-          </div>
-        </div>
-      </foreach>
-      <!-- <div class="layui-form-item  items">
-        <label class="form-text">描述：</label>
-        <div class="form-right">
-          <textarea placeholder="请输入产品描述" class="layui-textarea" name="state"></textarea>
-        </div>
-      </div> -->
-      <div class="layui-form-item  items">
-        <label class="form-text">产品介绍：</label>
-        <div class="form-right">
-          <!--<textarea class="layui-textarea layui-hide" name="disc" lay-verify="disc" id="LAY_demo_editor"></textarea>-->
-          <textarea id="editor" class="ueditors" name="disc"></textarea>
-          <include file="Public/ueditor"/>
-        </div>
-      </div>
-      <div class="layui-form-item  items">
-        <label class="form-text"></label>
-        <div class="form-right">
-          <button class="layui-btn" lay-submit="" lay-filter="*">立即提交</button>
-          <button class="layui-btn layui-btn-danger" type='button' id="btn2">取消</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-<script type="text/javascript">
-    var check_level = '__GROUP__/templet/get_product_ajax'
-    var get_level = '__GROUP__/templet/templet_category'
-    var get_son = '__GROUP__/templet/get_son_templet_category'
-    var param = window.location.search;
-    (function ($) {
-        $("#file0").change(function () {
-            var objUrl = getObjectURL(this.files[0]);
-            console.log("objUrl = " + objUrl);
-            if (objUrl) {
-                $("#img0").attr("src", objUrl);
-            }
-        });
-    })(jQuery);
-    //建立一個可存取到該file的url
-    function getObjectURL(file) {
-        var url = null;
-        if (window.createObjectURL != undefined) { // basic
-            url = window.createObjectURL(file);
-        } else if (window.URL != undefined) { // mozilla(firefox)
-            url = window.URL.createObjectURL(file);
-        } else if (window.webkitURL != undefined) { // webkit or chrome
-            url = window.webkitURL.createObjectURL(file);
-        }
-        return url;
-    }
-
-    $(function() {
-        var c_id = param.substring(param.indexOf('=') + 1, param.length)
-        $.ajax({url:get_level,async:false,type:'GET',success:function(data) {
-            if(data.code == 1) {
-                $.each(data.info, function(key, value) {
-                    var temp = new Array();
-                    var aim = $('#level_one');
-                    if(key!='one'||value==null){
-                        return
+        <script type="text/javascript">
+            var check_level = '__GROUP__/templet/get_product_ajax'
+            var get_level = '__GROUP__/templet/templet_category'
+            var get_son = '__GROUP__/templet/get_son_templet_category'
+            var param = window.location.search;
+            
+            layui.use('laydate', function () {
+                var laydate = layui.laydate;
+                laydate.render({
+                    elem: '#buy_limit_start_time'
+                    , type: 'datetime'
+                });
+                laydate.render({
+                    elem: '#buy_limit_end_time'
+                    , type: 'datetime'
+                });
+            })
+            $(function () {
+                //监听类型变化
+               form.on('select(product-type)', function (data) {
+                   if (data.value == 0) {
+                       //普通产品
+                        $('#buy-limit').hide();
+                        $('#buy-group').hide();
+                        $('#act-price').html('清仓价：');
+                        $('#act-img').html('(请上传尺寸合适的图片 图片大小为：375*300)');
+                    } else if (data.value == 1) {
+                        //秒杀产品
+                        $('#buy-limit').show();
+                        $('#buy-group').hide();
+                        $('#act-price').html('秒杀价：');
+                        $('#act-img').html('(请上传尺寸合适的图片 图片大小为：105*74)');
+                        
+                    } else if (data.value == 2) {
+                        //团购产品
+                        $('#buy-limit').hide();
+                        $('#buy-group').show();
+                        $('#act-price').html('拼团价：');
+                        $('#act-img').html('(请上传尺寸合适的图片 图片大小为：375*300)');
                     }
-                    $.each(value, function(k, val) {
-                        var html = '';
-                        html = '<option value="' + val.id + '">' + val.name + '</option>';
-                        temp.push(html)
-                    });
-                    if(aim != '') {
-                        aim.append(temp)
+               })
+           })
+            (function ($) {
+                $("#file0").change(function () {
+                    var objUrl = getObjectURL(this.files[0]);
+                    console.log("objUrl = " + objUrl);
+                    if (objUrl) {
+                        $("#img0").attr("src", objUrl);
                     }
                 });
-            } else {
-                layer.msg(data.msg);
+            })(jQuery);
+            //建立一個可存取到該file的url
+            function getObjectURL(file) {
+                var url = null;
+                if (window.createObjectURL != undefined) { // basic
+                    url = window.createObjectURL(file);
+                } else if (window.URL != undefined) { // mozilla(firefox)
+                    url = window.URL.createObjectURL(file);
+                } else if (window.webkitURL != undefined) { // webkit or chrome
+                    url = window.webkitURL.createObjectURL(file);
+                }
+                return url;
             }
-            form.render('select');
-        }});
-        form.on('select(level_one)', function(data){
-            var p_id = data.value;
-            if(p_id!='a'){
-                getTwo(p_id)
-            }else{
-                $('#level_two').empty().append('<option value="a">请选择</option>')
-                $('#level_three').empty().append('<option value="a">请选择</option>')
-            }
-        });
-        form.on('select(level_two)', function(data){
-            var p_id = data.value;
-            if(p_id!='a'){
-                getThree(p_id)
-            }else{
-                $('#level_three').empty().append('<option value="a">请选择</option>')
-            }
-        });
-    })
 
-    function getTwo(p_id){
-        $.ajax({url:get_son,data:{
-            pid:p_id
-        },async:'POST',success:function(data){
-            console.log(data)
-            if(data.code==1){
-                var aim = $('#level_two')
-                var temp = []
-                aim.empty().append('<option value="a">请选择</option>')
-                $.each(data.info, function(key,value) {
-                    if(key!='two'){
-                        return
-                    }
-                    if(value==null){
-                        return
-                    }
-                    $.each(value, function(k, val) {
-                        var html = '';
-                        html = '<option value="' + val.id + '">' + val.name + '</option>';
-                        temp.push(html)
-                    });
-                    if(aim != '') {
-                        aim.append(temp)
+            $(function () {
+                var c_id = param.substring(param.indexOf('=') + 1, param.length)
+                $.ajax({url: get_level, async: false, type: 'GET', success: function (data) {
+                        if (data.code == 1) {
+                            $.each(data.info, function (key, value) {
+                                var temp = new Array();
+                                var aim = $('#level_one');
+                                if (key != 'one' || value == null) {
+                                    return
+                                }
+                                $.each(value, function (k, val) {
+                                    var html = '';
+                                    html = '<option value="' + val.id + '">' + val.name + '</option>';
+                                    temp.push(html)
+                                });
+                                if (aim != '') {
+                                    aim.append(temp)
+                                }
+                            });
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                        form.render('select');
+                    }});
+                form.on('select(level_one)', function (data) {
+                    var p_id = data.value;
+                    if (p_id != 'a') {
+                        getTwo(p_id)
+                    } else {
+                        $('#level_two').empty().append('<option value="a">请选择</option>')
+                        $('#level_three').empty().append('<option value="a">请选择</option>')
                     }
                 });
-            }else{
-                layer.msg(data.msg)
-            }
-            form.render('select');
-        }});
-    }
-    function getThree(p_id){
-        $.post(get_son,{
-            pid:p_id
-        },function(data){
-            if(data.code==1){
-                var aim = $('#level_three')
-                var temp = []
-                aim.empty().append('<option value="a">请选择</option>')
-                $.each(data.info, function(key,value) {
-                    if(key!='two'){
-                        return
-                    }
-                    if(value==null){
-                        return
-                    }
-                    $.each(value, function(k, val) {
-                        var html = '';
-                        html = '<option value="' + val.id + '">' + val.name + '</option>';
-                        temp.push(html)
-                    });
-                    if(aim != '') {
-                        aim.append(temp)
+                form.on('select(level_two)', function (data) {
+                    var p_id = data.value;
+                    if (p_id != 'a') {
+                        getThree(p_id)
+                    } else {
+                        $('#level_three').empty().append('<option value="a">请选择</option>')
                     }
                 });
-            }else{
-                layer.msg(data.msg)
+            })
+
+            function getTwo(p_id) {
+                $.ajax({url: get_son, data: {
+                        pid: p_id
+                    }, async: 'POST', success: function (data) {
+                        console.log(data)
+                        if (data.code == 1) {
+                            var aim = $('#level_two')
+                            var temp = []
+                            aim.empty().append('<option value="a">请选择</option>')
+                            $.each(data.info, function (key, value) {
+                                if (key != 'two') {
+                                    return
+                                }
+                                if (value == null) {
+                                    return
+                                }
+                                $.each(value, function (k, val) {
+                                    var html = '';
+                                    html = '<option value="' + val.id + '">' + val.name + '</option>';
+                                    temp.push(html)
+                                });
+                                if (aim != '') {
+                                    aim.append(temp)
+                                }
+                            });
+                        } else {
+                            layer.msg(data.msg)
+                        }
+                        form.render('select');
+                    }});
             }
-            form.render('select');
-        });
-    }
+            function getThree(p_id) {
+                $.post(get_son, {
+                    pid: p_id
+                }, function (data) {
+                    if (data.code == 1) {
+                        var aim = $('#level_three')
+                        var temp = []
+                        aim.empty().append('<option value="a">请选择</option>')
+                        $.each(data.info, function (key, value) {
+                            if (key != 'two') {
+                                return
+                            }
+                            if (value == null) {
+                                return
+                            }
+                            $.each(value, function (k, val) {
+                                var html = '';
+                                html = '<option value="' + val.id + '">' + val.name + '</option>';
+                                temp.push(html)
+                            });
+                            if (aim != '') {
+                                aim.append(temp)
+                            }
+                        });
+                    } else {
+                        layer.msg(data.msg)
+                    }
+                    form.render('select');
+                });
+            }
 
 
-</script>
-<script>
-    var get_shipping_info = '__GROUP__/shipping/get_shipping_info';
-    $('#parameter').hide(1);
-    $("#btn2").on('click', function() {
-        layer.confirm("确定要取消吗？", function (index) {
-            layer.close(index);
-            window.history.back(-1);
-        });
-    });
+        </script>
+        <script>
+            var get_shipping_info = '__GROUP__/shipping/get_shipping_info';
+            $('#parameter').hide(1);
+            $("#btn2").on('click', function () {
+                layer.confirm("确定要取消吗？", function (index) {
+                    layer.close(index);
+                    window.history.back(-1);
+                });
+            });
 
-    form.on('select(template_id)',function(data){
-        change_type();
-        change_parameter(data.value);
-    })
-    function change_type(){
-        var type = $("#template_id").val();
-        if(type == 0 || type == null){
-            var html = '';
-            $('#shipping_id').html(html);
-        }else{
-            var html = '';
-            html = '<button style="margin-left:35px;" type="button" class="layui-btn" id="shipping_id" value=""  data-title="预览运费模板" data-iframe="__APP__/Radmin/Shipping/info?template_id= '+ type + '">'+' 预览运费模板</button>';
-        }
-       $('#shipping_id').html(html);
-    }
-    change_type();
-    function change_parameter(id){
-        $.post(get_shipping_info,{template_id:id},function(data){
-           if(data!=null&&data!=""&&data.code==1){
-               switch(data.info.template_row.price_way){
-                   case "1":
-                    $('#parameter').fadeOut();
-                    break;
-                   case "2":
-                    $('#parameter').fadeIn();
-                    $('#parameter').find('.form-text').text("产品重量：").siblings('.form-right').find('.yuan').text("（kg）");
-                    break;
-                   case "3":
-                    $('#parameter').fadeIn();
-                    $('#parameter').find('.form-text').text("产品体积：").siblings('.form-right').find('.yuan').text("（m³）");
-                    break;
-                   default:
-                    break;
-               }
-           }else{
-               $('#parameter').fadeOut();
-           }
-           form.render();
-        });
-    }
-</script>
-</body>
+            form.on('select(template_id)', function (data) {
+                change_type();
+                change_parameter(data.value);
+            })
+            function change_type() {
+                var type = $("#template_id").val();
+                if (type == 0 || type == null) {
+                    var html = '';
+                    $('#shipping_id').html(html);
+                } else {
+                    var html = '';
+                    html = '<button style="margin-left:35px;" type="button" class="layui-btn" id="shipping_id" value=""  data-title="预览运费模板" data-iframe="__APP__/Radmin/Shipping/info?template_id= ' + type + '">' + ' 预览运费模板</button>';
+                }
+                $('#shipping_id').html(html);
+            }
+            change_type();
+            function change_parameter(id) {
+                $.post(get_shipping_info, {template_id: id}, function (data) {
+                    if (data != null && data != "" && data.code == 1) {
+                        switch (data.info.template_row.price_way) {
+                            case "1":
+                                $('#parameter').fadeOut();
+                                break;
+                            case "2":
+                                $('#parameter').fadeIn();
+                                $('#parameter').find('.form-text').text("产品重量：").siblings('.form-right').find('.yuan').text("（kg）");
+                                break;
+                            case "3":
+                                $('#parameter').fadeIn();
+                                $('#parameter').find('.form-text').text("产品体积：").siblings('.form-right').find('.yuan').text("（m³）");
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        $('#parameter').fadeOut();
+                    }
+                    form.render();
+                });
+            }
+        </script>
+    </body>
 
 </html>

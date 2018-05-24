@@ -24,37 +24,44 @@ class CommonAction extends Action {
         
         $this->superids = [1,2];//超级管理员ID
         $this->aid = $_SESSION['aid'];
+        $this->store_id = $_SESSION['store_id'];//店铺id
         $admin_info = $admin_model->where(['id'=>$this->aid])->find();
         $this->admin_info = $admin_info;
         $this->admin_auth = explode(',',$admin_info['auth']);
         
-        
-        if( !in_array($this->aid, $this->superids) && !empty($this->admin_auth) ){
-            
-            import('Lib.Action.Admin','App');
-            $Admin = new Admin();
-            
-            $admin_auth_extra = $Admin->admin_auth_extra;
-            
-            if( !in_array($the_module_name, $admin_auth_extra) ){
-                $admin_auth_module = $Admin->admin_auth_module;
-            
-                $all_action_str = '';
-                foreach( $admin_auth_module as $auth_num => $action ){
-                    if( in_array($auth_num, $this->admin_auth) ){
-                        $all_action_str = $all_action_str.','.$action;
-                    }
-                }
-                $all_action = explode(',',$all_action_str);
-                $this->all_action = $all_action;
-                
-                if( !in_array($the_module_name, $all_action) ){
-    //                echo "<script>alert('请注意，该账号无权限使用改模块！');window.top.location.href ='" . __APP__ . "/Radmin/index';</script>";
-                    echo '权限不足';
-                    exit();
-                }
-            }
+        if(in_array($this->aid, $this->superids) ){
+            $this->is_super = TRUE;
         }
+        else{
+            $this->is_super = FALSE;
+        }
+        
+//        if( !in_array($this->aid, $this->superids) && !empty($this->admin_auth) ){
+//            
+//            import('Lib.Action.Admin','App');
+//            $Admin = new Admin();
+//            
+//            $admin_auth_extra = $Admin->admin_auth_extra;
+//            
+//            if( !in_array($the_module_name, $admin_auth_extra) ){
+//                $admin_auth_module = $Admin->admin_auth_module;
+//            
+//                $all_action_str = '';
+//                foreach( $admin_auth_module as $auth_num => $action ){
+//                    if( in_array($auth_num, $this->admin_auth) ){
+//                        $all_action_str = $all_action_str.','.$action;
+//                    }
+//                }
+//                $all_action = explode(',',$all_action_str);
+//                $this->all_action = $all_action;
+//                
+//                if( !in_array($the_module_name, $all_action) ){
+//    //                echo "<script>alert('请注意，该账号无权限使用改模块！');window.top.location.href ='" . __APP__ . "/Radmin/index';</script>";
+//                    echo '权限不足';
+//                    exit();
+//                }
+//            }
+//        }
         
         import('Lib.Action.User','App');
         $User = new User();

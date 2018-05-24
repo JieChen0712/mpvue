@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <style>
+            /*小屏幕样式*/
+            @media screen and (max-width: 768px) {
+                input.pull-right {
+                    margin-top: 10px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <section class="layui-container">
+            <div class="content">
+                <header class="header">
+                    <h3>优惠券列表</h3>
+                    <div class="pull-right">
+                        <input type="button" class="layui-btn" data-modal="__URL__/add" value="添加" data-title="添加优惠券"/>
+                    </div>
+                </header>
+
+
+                <div class="table-wrapper">
+                    <table class="layui-table" lay-skin="row" lay-size="sm">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>名称</th>
+                                <th>图片</th>
+                                <th>状态</th>
+                                <th>创建时间</th>
+                                <th>更新时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <empty name="list">
+                            <tr style="position: relative;">
+                                <td style="position: absolute;width: 97%;border-top: solid 1px #e6e6e6;">对不起,没有找到数据!</td>
+                            </tr>
+                            <else />
+                            <volist name="list" id="m">
+                                <tr>
+                                    <td>{$m.id}</td>
+                                    <td>{$m.name}</td>
+                                    <td><img src="{$m.img}"/></td>
+                                    <td>{$m.status_name}</td>
+                                    <td>{$m.created}</td>
+                                    <td>{$m.updated}</td>
+                                    <td><input type="button"  class="wz2 layui-btn layui-btn layui-btn-radius layui-btn-normal" value="编辑" data-title="编辑优惠券" data-modal="__URL__/edit?id={$m.id}"/>
+                                </tr>
+                            </volist>
+                        </empty>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+    </body>
+
+</html>
