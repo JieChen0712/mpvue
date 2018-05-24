@@ -10,9 +10,9 @@ Error: Invalid GBK character "\xE7"
 8: $red-border: red;  // 用于红色边框
 9: $thame-color: #ff3836; //主题文字颜色----红
 10: $thame-color-orange: #eb825e; // 主题文字颜色----橙
-11: $thame-color-pink: #fecccf; // 主题文字颜色----粉
+11: $thame-color-pink: #fb7f8a; // 主题文字颜色----粉
 12: $thame-color-grey: #6d6d6d; // 主题文字颜色----灰
-13: 
+13: $thame-color-darkpink: #fe4f72; // 主题文字颜色----深粉
 
 Backtrace:
 base.scss:8
@@ -37,4 +37,4 @@ C:/Ruby24-x64/bin/sass:22:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Invalid GBK character \"\xE7\"\A         on line 8 of base.scss\A \A 3: * @Date:   2018-03-30 14:08:04\A 4: * @Last Modified by:   jaxQin\A 5: * @Last Modified time: 2018-03-30 14:34:05\A 6: */\A 7: \A 8: $red-border: red;  // 用于红色边框\A 9: $thame-color: #ff3836; //主题文字颜色----红\A 10: $thame-color-orange: #eb825e; // 主题文字颜色----橙\A 11: $thame-color-pink: #fecccf; // 主题文字颜色----粉\A 12: $thame-color-grey: #6d6d6d; // 主题文字颜色----灰\A 13: "; }
+  content: "Error: Invalid GBK character \"\xE7\"\A         on line 8 of base.scss\A \A 3: * @Date:   2018-03-30 14:08:04\A 4: * @Last Modified by:   jaxQin\A 5: * @Last Modified time: 2018-03-30 14:34:05\A 6: */\A 7: \A 8: $red-border: red;  // 用于红色边框\A 9: $thame-color: #ff3836; //主题文字颜色----红\A 10: $thame-color-orange: #eb825e; // 主题文字颜色----橙\A 11: $thame-color-pink: #fb7f8a; // 主题文字颜色----粉\A 12: $thame-color-grey: #6d6d6d; // 主题文字颜色----灰\A 13: $thame-color-darkpink: #fe4f72; // 主题文字颜色----深粉"; }

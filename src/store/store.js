@@ -6,56 +6,34 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    slides: [],
-    news: [],
-    topics: []
+    AppID: 'wx676cc1d8509846aa',
+    AppSecret: '7076aeb26f564bf47c4690738f57eaa6',
+    appName: 'app mall',
+    openID: '',
+    avatar: '',
+    nickName: '123'
   },
   mutations: {
-    slides (state, data) {
-      state.slides = data
+    appName (state, name) {
+      state.appName = name
     },
-    news (state, data) {
-      state.news = data
+    avatar (state, avatar) {
+      state.avatar = avatar
     },
-    topics (state, data) {
-      state.topics = data
+    nickName (state, name) {
+      state.nickName = name
+    },
+    openID (state, openid) {
+      state.openID = openid
     }
   },
   actions: {
-    async getSlides ({ commit }) {
-      const slides = await api.getSlides()
-      if (!slides) return
-      const parsedSlides = xml2json(slides).rss.channel.item
-      const filtedSlides = parsedSlides.filter(
-        slide => slide.opentype['#text'] === '1'
-      )
-      const formatedSlides = filtedSlides.map(formatSlideList)
-      commit('slides', formatedSlides)
+    async getStore ({commit}) {
+      await api.getStore()
+    // commit('appName', formatedSlides)
     },
-    async getNewsList ({ state, commit }, init) {
-      const news = await api.getNewsList()
-      if (!news) return
-      const formatedNews = news.newslist.map(formatNewsList)
-      if (init) {
-        commit('news', formatedNews)
-      } else {
-        commit('news', state.news.concat(formatedNews))
-      }
-    },
-    async getTopics ({ state, commit }, init) {
-      let replytime = Date.now()
-      if (!init) {
-        const lastTopic = state.topics[state.topics.length - 1]
-        replytime = lastTopic.replytime.replace(/[^0-9]/ig, '')
-      }
-      const topics = await api.getTopics(replytime)
-      if (!topics) return
-      const formatedTopics = topics.map(formatTopicList)
-      if (init) {
-        commit('topics', formatedTopics)
-      } else {
-        commit('topics', state.topics.concat(formatedTopics))
-      }
+    changeNickName ({commit}, param) {
+      commit('nickName', param)
     }
   }
 })
