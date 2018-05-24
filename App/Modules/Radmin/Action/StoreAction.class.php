@@ -66,7 +66,7 @@ class StoreAction extends CommonAction
             }
         }
         
-        $this->list;
+        $this->list = $list;
         $this->display();
     }
     
@@ -75,19 +75,27 @@ class StoreAction extends CommonAction
         $id = I('id');
         $name = trim(I('name'));
         $appid = trim(I('appid'));
+        $appsecret = trim(I('appsecret'));
         
-        if( empty($name) || empty($appid) ){
-            $this->error('商城名称和appid不能为空！');
+        if( empty($name)  ){
+            $this->error('商城名称不能为空！');
+            return;
+        }
+        if( empty($appid) || empty($appsecret) ){
+            $this->error('appid和appsecret不能为空！');
             return;
         }
         
         $update_id = $id;
+        
+        
         
         //添加商城
         if( empty($id) ){
             $data = [
                 'name'  =>  $name,
                 'appid' =>  $appid,
+                'appsecret' =>  $appsecret,
                 'created'   =>  time(),
                 'updated'   =>  time(),
             ];
@@ -104,12 +112,18 @@ class StoreAction extends CommonAction
                 return;
             }
             
+            $condition = [
+                'id'    =>  $id,
+            ];
+            
             $data = [
                 'name'  =>  $name,
                 'appid' =>  $appid,
+                'appsecret' =>  $appsecret,
                 'updated'   =>  time(),
             ];
-            $result = $this->store_model->save($data);
+            $result = $this->store_model->where($condition)->save($data);
+            //$err = $this->store_model->getLastSql();//getDbError();
             $msg = '序号为'.$id.'的商城修改';
         }
         
