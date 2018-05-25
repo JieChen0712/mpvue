@@ -8,6 +8,7 @@ class UserAction extends CommonAction {
     public $store_obj;
     private $user_model;
     public function _initialize() {
+        parent::_initialize();
         import('Lib.Action.Wxapi', 'App');
         import('Lib.Action.Store', 'App');
         $this->store_obj = new Store();
@@ -22,8 +23,12 @@ class UserAction extends CommonAction {
     //用户登陆/注册
     public function login()
     {
-        if( !IS_AJAX ){
-            return FALSE;
+        if( !IS_POST ){
+            $return_result = [
+                'code' => -5,
+                'msg' => '请求方式错误'
+            ];
+            $this->ajaxReturn($return_result);
         }
         //请求接口参数
         $request_data = [
@@ -54,7 +59,7 @@ class UserAction extends CommonAction {
     }
     
     //注册
-    public function register($data) {
+    private function register($data) {
         $add = [
             'openid' => $data['openid'],
             'nickname' => $data['nickname'],

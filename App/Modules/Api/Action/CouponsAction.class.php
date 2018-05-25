@@ -34,8 +34,12 @@ class CouponsAction extends CommonAction {
     //获取优惠券api
     public function get_coupons()
     {
-        if( !IS_AJAX ){
-            return FALSE;
+        if( !IS_GET ){
+            $return_result = [
+                'code' => -5,
+                'msg' => '请求方式错误'
+            ];
+            $this->ajaxReturn($return_result);
         }
         //请求接口参数
         $request_data = [
@@ -65,8 +69,12 @@ class CouponsAction extends CommonAction {
     //获取优惠券api
     public function get_coupons_records()
     {
-        if( !IS_AJAX ){
-            return FALSE;
+        if( !IS_GET ){
+            $return_result = [
+                'code' => -5,
+                'msg' => '请求方式错误'
+            ];
+            $this->ajaxReturn($return_result);
         }
         //请求接口参数
         $request_data = [
@@ -90,7 +98,11 @@ class CouponsAction extends CommonAction {
     public function add_coupons()
     {
         if( !IS_POST ){
-            return FALSE;
+            $return_result = [
+                'code' => -5,
+                'msg' => '请求方式错误'
+            ];
+            $this->ajaxReturn($return_result);
         }
         //请求接口参数
         $request_data = [
