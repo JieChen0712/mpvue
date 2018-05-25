@@ -60,11 +60,11 @@ class Wxapi {
         curl_setopt($ch, CURLOPT_TIMEOUT, $second);
 
         //如果有配置代理这里就设置代理
-        if(WxPayConfig::CURL_PROXY_HOST != "0.0.0.0"
-            && WxPayConfig::CURL_PROXY_PORT != 0){
-            curl_setopt($ch,CURLOPT_PROXY, WxPayConfig::CURL_PROXY_HOST);
-            curl_setopt($ch,CURLOPT_PROXYPORT, WxPayConfig::CURL_PROXY_PORT);
-        }
+//        if(WxPayConfig::CURL_PROXY_HOST != "0.0.0.0"
+//            && WxPayConfig::CURL_PROXY_PORT != 0){
+//            curl_setopt($ch,CURLOPT_PROXY, WxPayConfig::CURL_PROXY_HOST);
+//            curl_setopt($ch,CURLOPT_PROXYPORT, WxPayConfig::CURL_PROXY_PORT);
+//        }
         curl_setopt($ch,CURLOPT_URL, $url);
         if(stripos($url,"https://")!==FALSE){
             curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1);
@@ -82,10 +82,10 @@ class Wxapi {
         if($useCert == true){
             //设置证书
             //使用证书：cert 与 key 分别属于两个.pem文件
-            curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
-            curl_setopt($ch,CURLOPT_SSLCERT, WxPayConfig::SSLCERT_PATH);
-            curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
-            curl_setopt($ch,CURLOPT_SSLKEY, WxPayConfig::SSLKEY_PATH);
+//            curl_setopt($ch,CURLOPT_SSLCERTTYPE,'PEM');
+//            curl_setopt($ch,CURLOPT_SSLCERT, WxPayConfig::SSLCERT_PATH);
+//            curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
+//            curl_setopt($ch,CURLOPT_SSLKEY, WxPayConfig::SSLKEY_PATH);
         }
         //post提交方式
         curl_setopt($ch, CURLOPT_POST, TRUE);
