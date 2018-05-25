@@ -107,6 +107,10 @@ class StoreAction extends CommonAction {
             $active = 1;
         }
         
+        if( $type != NULL ){
+            $condition['type']  =   $type;
+        }
+        
         $page_info['page_num'] = $page_num;
         if( $page_list_num != null && is_numeric($page_list_num) ){
             $page_info['page_list_num'] = $page_list_num;
