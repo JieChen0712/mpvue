@@ -1,10 +1,10 @@
 <template>
-  <div class="countDown">
-    <span>{{timeText}}123</span>
+  <div class="countdown">
+    <p>{{timeText}}</p>
   </div>
 </template>
 
-<script type="text/ecmascript">
+<script>
   export default {
     props: {
       startTime: Number,
@@ -18,20 +18,22 @@
       }
     },
     created () {
-      if(this.start){
-        console.log(this.startTime + ' : ' + this.endTime)
-        setCountDow(this.startTime, this.endTime);
+      if (this.start) {
+        this.setCountDow(Number(this.startTime) * 1000, Number(this.endTime) * 1000)
       }
     },
-    mounted () {},
     methods: {
+      checkTime (i) {
+        if (i < 10) {
+          i = '0' + i
+        }
+        return i
+      },
       freshTime (time, sectime) {
-        let endtime = time
+        let endtime = Number(time)
         let nowtime = new Date().valueOf()
-        let lefttime = parseInt(endtime - nowtime) // 这是毫秒，如果再/1000就是秒  
-        if(lefttime > 0) {
-          // 获取剩下的日、小时、分钟、秒钟  
-          // 一天有多少毫秒，一小时有多少毫秒，一分钟有多少毫秒，一秒钟有多少毫秒  
+        let lefttime = parseInt(endtime - nowtime)
+        if (lefttime > 0) {
           let dm = 24 * 60 * 60 * 1000
           let d = parseInt(lefttime / dm)
           let hm = 60 * 60 * 1000
@@ -39,74 +41,68 @@
           let mm = 60 * 1000
           let m = parseInt((lefttime / mm) % 60)
           let s = parseInt((lefttime / 1000) % 60)
-          m = checktime(m)
-          s = checktime(s)
-          let str = ""
-          if(d > 0) {
-            str = d + "天" + h + "小时" + m + "分钟"
+          m = this.checkTime(m)
+          s = this.checkTime(s)
+          let str = ''
+          if (d > 0) {
+            str = d + '天' + h + '小时' + m + '分钟'
           } else {
-            str = h + "小时" + m + "分钟" + s + "秒"
+            str = h + '小时' + m + '分钟' + s + '秒'
           }
           return str
-        } else if(lefttime <= 0) {
-          if(sectime !== undefined) {
-            setCountDow(time, sectime)
+        } else if (lefttime <= 0) {
+          if (sectime !== undefined) {
+            this.setCountDow(time, sectime)
           } else {
             return false
           }
         }
       },
-      checkTime (i) {
-        if(i < 10) {
-          i = "0" + i
-        } else {
-          i = i
-        }
-        return i
-      },
       setCountDow (startTime, endTime) {
         let txt = ''
         let _nowTime = new Date().valueOf()
-        if(_nowTime >= endTime && endTime != 0) {
+        let _that = this
+        console.log(_nowTime + ' : ' + endTime)
+        if (_nowTime >= endTime && endTime !== 0) {
           // 超过购买时间
-          this.timeText = "活动已结束"
+          this.timeText = '活动已结束1'
           this.saleStatus = 3
-        } else if((_nowTime > startTime && _nowTime < endTime) || (startTime == 0 && _nowTime < endTime)) {
+        } else if ((_nowTime > startTime && _nowTime < endTime) || (startTime === 0 && _nowTime < endTime)) {
           // 抢购中
           txt = '距结束：'
           this.saleStatus = 2
-          let timeStr = freshTime(endTime)
-          if(timeStr == false || timeStr == undefined) {
-            this.timeText = '活动已结束'
+          let timeStr = this.$options.methods.freshTime(endTime)
+          if (timeStr === false || timeStr === undefined) {
+            this.timeText = '活动已结束2'
             this.saleStatus = 3
           } else {
             this.timeText = txt + timeStr
           }
           let timer1
           timer1 = setInterval(() => {
-            let timeStr = freshTime(endTime)
-            if(timeStr == false || timeStr == undefined) {
-              this.timeText = '活动已结束'
-              this.saleStatus = 3
+            let timeStr = this.freshTime(endTime)
+            if (timeStr === false || timeStr === undefined) {
+              _that.timeText = '活动已结束3'
+              _that.saleStatus = 3
               clearInterval(timer1)
             } else {
-              this.timeText = txt + timeStr
+              _that.timeText = txt + timeStr
             }
           }, 1000)
-        } else if(_nowTime <= startTime) {
+        } else if (_nowTime <= startTime) {
           // 倒计时中
           txt = '距开始：'
           let timer2
           this.saleStatus = 1
           timer2 = setInterval(() => {
-            let timeStr = freshTime(startTime, endTime)
-            if(timeStr == false || timeStr == undefined) {
+            let timeStr = this.freshTime(startTime, endTime)
+            if (timeStr === false || timeStr === undefined) {
               clearInterval(timer2)
             } else {
-              this.timeText = txt + timeStr
+              _that.timeText = txt + timeStr
             }
           }, 1000)
-        } else if(_nowTime > startTime && endTime == 0) {
+        } else if (_nowTime > startTime && endTime === 0 && startTime !== 0) {
           this.saleStatus = 2
           this.timeText = '抢购中'
         }
@@ -116,5 +112,4 @@
 </script>
 
 <style lang="scss" scoped="" type="text/css">
-
 </style>

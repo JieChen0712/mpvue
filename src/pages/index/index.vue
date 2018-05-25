@@ -20,16 +20,20 @@
     </div>
     <div class="seckill">
       <p class="title">-限时秒杀-</p>
-      <scroll-view class="product-list" scroll-x="true" style="100%">
-        <view class="product-item" v-for="(item, index) in secTemplet">
+      <scroll-view class="product-list" @scrolltolower="lower" scroll-x="true" style="100%">
+        <view class="product-item" v-for="(item, index) in secTemplet" @click="buyGoods(item.saleStatus)">
           <div class="product-img">
             <img mode="widthFix" :src="'https://mall.wsxitong.cn'+item.image" />
             <span class="sec-title">剩余：{{item.quantity}}件</span>
+            <div class="mask" :class="{'active':item.saleStatus===1||item.saleStatus===3}">
+              <p>活动结束</p>
+            </div>
           </div>
           <div class="product-detail">
-            <p class="name" @click="showTarget"><span class="hot">HOT</span>{{item.name}}</p>
-            <p class="time">倒计时：00：00：00</p>
-            <progress percent="80" active activeColor="#fe0100" backgroundColor="transparent" class="progress" />
+            <p class="name" @click="showTarget"><span class="hot">HOT</span>{{item.name}}{{Number(item.quantity)}}</p>
+            <card :start="true" :startTime="item.buy_limit_start_time" :endTime="item.buy_limit_end_time" :index="index" @over="cantbuy"></card>
+            <!--<p class="time">倒计时：00：00：00</p>-->
+            <progress :percent="item.quantity" active activeColor="#fe0100" backgroundColor="transparent" class="progress"/>
             <p class="price">秒杀价：<span class="red">￥{{item.price}}</span><span class="del">￥{{item.original_price}}</span></p>
           </div>
         </view>
@@ -59,7 +63,8 @@
   // import { mapMutations } from 'vuex'
   import api from '@/utils/api'
   import swiper from '@/components/swiper'
-  import countDown from '@/components/countDown'
+  import countdown from '@/components/countdown'
+  import card from '@/components/card'
   export default {
     data () {
       return {
@@ -80,7 +85,8 @@
     },
     components: {
       swiper,
-      countDown
+      countdown,
+      card
     },
     created () {
       api.getStore()
@@ -100,7 +106,8 @@
         })
     },
     mounted () {
-      this.getSecTemplets()
+      this.getSecTemplets(1)
+      this.getSecTemplets(2)
       // let res = api.getStore()
       // console.log(res)
     },
@@ -110,13 +117,40 @@
       // 'avatar',
       // 'openID'
       // ]),
-      getSecTemplets () {
-        api.getTemplet(1, this.secPage, 1)
+      cantbuy (status, index) {
+        this.secTemplet[index]['saleStatus'] = status
+        console.log(status + ' : ' + index)
+      },
+      buyGoods (status) {
+        if (status === 2) {
+          console.log('buy')
+        } else {
+          return false
+        }
+      },
+      getSecTemplets (type) {
+        let page
+        if (type === 1) {
+          page = this.secPage
+        } else if (type === 2) {
+          page = this.couponPage
+        }
+        api.getTemplet(type, page, 1)
           .then(response => {
-            if (response.code === 1) {
-              this.secPage++
-              this.secTemplet = response.info.list
-              console.log(this.secTemplet)
+            if (response.code === 1 && response.info.list !== null) {
+              if (type === 1) {
+                this.secPage++
+                this.secTemplet = this.secTemplet.concat(response.info.list)
+              } else if (type === 2) {
+                this.couponPage++
+                this.couponTemplet = this.couponTemplet.concat(response.info.list)
+              }
+            } else if (response.info.list === null) {
+              wx.showToast({
+                title: '暂无更多商品',
+                icon: 'none',
+                duration: 2000
+              })
             } else {
               wx.showToast({
                 title: response.msg,
@@ -129,19 +163,16 @@
             console.log(error)
           })
       },
-      getCouTemplets () {
-        let _templet = api.getTemplet(2, this.couponPage)
-        if (_templet.code === 1) {
-          this.couponPage++
-          this.couponTemplet = _templet.list
-        }
-      },
       checkLogin () {
         wx.checkSession({
           success: () => {
             let openid = wx.getStorageSync('openid')
             if (!openid) {
               this.$options.methods.Login()
+            } else {
+              wx.navigateTo({
+                url: '/pages/coupon/main'
+              })
             }
           },
           fail: () => {
@@ -157,10 +188,10 @@
             wx.setStorageSync('resCode', resCode)
             wx.getUserInfo({
               success: (res) => {
-                console.log(res)
+                // console.log(res)
                 api.checkLogin(resCode, res.userInfo.nickName, res.userInfo.avatarUrl, res.userInfo.province, res.userInfo.city, res.userInfo.country)
                   .then(response => {
-                    console.log(response)
+                    // console.log(response)
                     if (response.code === 1) {
                       wx.setStorageSync('openid', response.info.openid)
                       wx.showToast({
@@ -195,6 +226,24 @@
           },
           fail: () => {}
         })
+      },
+      changePercent (num1, num2) {
+        num1 = Number(num1)
+        num2 = Number(num2)
+        let precent = (1 - num2 / (num1 + num2)) * 100
+        return isNaN(precent) ? 0 : precent
+      },
+      lower (e) {
+        this.getSecTemplets(1)
+      }
+    },
+    filters: {
+      isZero: (value) => {
+        if (Number(value) > 0) {
+          return true
+        } else {
+          return false
+        }
       }
     },
     onPullDownRefresh () {
@@ -263,6 +312,7 @@
           width: 50%;
           padding: 12px 10px;
           box-sizing: border-box;
+          vertical-align:top;
           .product-img {
             box-shadow: 0 0 5px;
             display: block;
@@ -283,6 +333,24 @@
               text-align: center;
               font-size: 12px;
               border-radius: 0 0 5px 5px;
+            }
+            .mask{
+              display: none;
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: rgba(0,0,0,.5);
+              z-index: 15;
+              &.active{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+              p{
+                color: white;
+              }
             }
           }
           .product-detail {
@@ -310,7 +378,7 @@
             .progress {
               border-radius: 50px;
               border: solid 1rpx $red-border;
-              margin-bottom: 5px;
+              margin: 5px 0;
             }
             .price {
               font-size: 16px;
@@ -327,8 +395,15 @@
                 margin-left: 5px;
                 text-decoration: line-through;
                 display: inline-block;
-                font-size: 16px;
+                font-size: 12px;
                 vertical-align: sub;
+              }
+            }
+            .countTime{
+              .time{
+                text-align: center;
+                font-size: 14px;
+                color: $thame-color;
               }
             }
           }

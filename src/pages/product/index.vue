@@ -16,11 +16,9 @@
 
 <script>
 export default {
-  components: {
-  },
+  components: {},
   data () {
-    return {
-    }
+    return {}
   },
   created () {}
 }
