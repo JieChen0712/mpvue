@@ -49,7 +49,7 @@ class StoreAction extends CommonAction {
             'id'  =>  $store_id,
         ];
         
-        $info = $this->store_model->field('name,appid')->where($condition)->find();
+        $info = $this->store_model->field('name,appid,qrcode')->where($condition)->find();
         
         if( empty($info) ){
             $result = [
