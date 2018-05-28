@@ -27,7 +27,7 @@ class Wxapi {
         $url = self::GET_OPENID_URL;//请求的地址
         //get请求的参数
         $param = 'appid='.$this->appid . '&secret='.$this->appsecret . '&js_code='.$code . '&grant_type=authorization_code';
-        $result =curl_snatch($url);
+        $result =curl_snatch($url, $param);
         $result = json_decode($result, true);
         
         if (isset($result['errcode'])) {
