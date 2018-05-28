@@ -14,8 +14,8 @@ class UserAction extends CommonAction {
         $this->store_obj = new Store();
         $this->user_model = M('user');
         $store = $this->store_obj->get_store([], ['id' => $this->store_id]);//获取店铺信息
-        $appid = $store['$list'][0]['appid'];
-        $appsecret = $store['$list'][0]['appsecret'];
+        $appid = $store['list'][0]['appid'];
+        $appsecret = $store['list'][0]['appsecret'];
         
         $this->wxapi_obj = new Wxapi($appid, $appsecret);
     }

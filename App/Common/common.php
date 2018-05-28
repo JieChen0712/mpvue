@@ -1,86 +1,9 @@
 <?php
 
-//检测是否登陆
-function checklogin() {
-    if (!isset($_SESSION['aname'])) {
-        $this->error('没有登录', '__APP__/Radmin/Login/index');
-    }
-}
-
-    //解码share
-function decode_share_link($share){
-        
-        $decode_share = tiriDecode($share);
-        $decode_share = unserialize($decode_share);
-            
-        return $decode_share;
-    
-    }
-
-
-//检测微信网页授权
-function checkAuth($action, $ct = "",$level="",$return_url="") {
-    $app_test = C('APP_TEST');
-    
-    if ( $app_test ) {
-//        return;
-    }
-    
-    if( !empty($return_url) ){
-        $return_url = base64_encode($return_url);
-    }
-    
-    
-    if ($action == 'index') {
-        if( $app_test ){
-            $m_url = __APP__ . "/Home/Wechat/getUserInfo?action=" . $action.'&return_url='.$return_url;
-        }
-        else{
-            $m_url = __APP__ . "/Home/Wechat/authJump?action=" . $action.'&return_url='.$return_url;
-        }
-        header("location:$m_url");
-        exit();
-    }
-    elseif ($action == 'getinfo') {
-        $m_url = __APP__ . "/Home/Wechat/authJump?action=" . $action.'&return_url='.$return_url;
-        header("location:$m_url");
-        exit();
-    }
-    elseif (session('login') != 'yes') {
-        $m_url = __APP__ . "/Home/Wechat/authJump?action=" . $action . "&ct=" . $ct.'&level='.$level.'&return_url='.$return_url;
-        header("location:$m_url");
-        exit();
-    }
-    elseif( $action == 'getsaleinfo' ){
-        if( $app_test ){
-            $m_url = __APP__ . "/Home/Wechat/getUserInfo?action=" . $action.'&return_url='.$return_url;
-        }
-        else{
-            $m_url = __APP__ . "/Home/Wechat/authJump?action=" . $action.'&return_url='.$return_url;
-        }    
-        
-        header("location:$m_url");
-        exit();
-    }
-    else{
-        
-        if( $app_test ){
-            $m_url = __APP__ . "/Home/Wechat/getUserInfo?action=" . $action . "&ct=" . $ct.'&level='.$level.'&return_url='.$return_url;
-        }
-        else{
-            $m_url = __APP__ . "/Home/Wechat/authJump?action=" . $action . "&ct=" . $ct.'&level='.$level.'&return_url='.$return_url;
-        }
-        
-        
-        header("location:$m_url");
-        exit();
-    }
-    
-}
-
 //数组打印函数
 function p($arr) {
     echo '<pre>' . print_r($arr, true) . '</pre>';
+    die;
 }
 
 function toValid($m_temp) {
@@ -88,6 +11,9 @@ function toValid($m_temp) {
 }
 
 function setLog($m_array, $prex = "") {
+    if (is_array($m_array)) {
+        $m_array = json_encode($m_array);
+    }
     import('Class.Logs', APP_PATH);
     $dir = "log/" . date("Y/m", time());
     if (!empty($prex)) {
@@ -185,45 +111,37 @@ function https_request($url, $data = null) {
 function curl_snatch($url,$data,$method='GET')
 {
    if( function_exists('curl_init') ){
-       $ch = curl_init();
+        $ch = curl_init();
 
-       if( $method=='GET'){
-           $url = $url.'?'.$data;
-       }
-       curl_setopt($ch, CURLOPT_URL,$url);
-       curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        if( $method=='GET'){
+            $url = $url.'?'.$data;
+        }
+        curl_setopt($ch, CURLOPT_URL,$url);
+        //设置头文件的信息作为数据流输出
+        curl_setopt($curl, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
 
-       curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+//        curl_setopt($ch, CURLOPT_SSLVERSION, 3);
 
-       //turning off the server and peer verification(TrustManager Concept).
-       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        //turning off the server and peer verification(TrustManager Concept).
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        
+        //设置获取的信息以文件流的形式返回，而不是直接输出。
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        if( $method=='POST' ){
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+        }
 
-       curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-       if( $method=='POST' ){
-           curl_setopt($ch, CURLOPT_POST, 1);
-           curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
-       }
+        $response = curl_exec($ch);
+        curl_close($ch);
 
-       $response = curl_exec($ch);
-       curl_close($ch);
-
-       return $response;
+        return $response;
    }
 
    return FALSE;
 }//end func curl_snatch
-
-//判断有没有审核
-function toStatus($status) {
-    if ($status == 0 || $status == 4) {
-        return '<span class="label label-danger">未审核</span>';
-    } else if ($status == 1) {
-        return '已审核';
-    } else if ($status == 2) {
-        return '<span class="label label-warning">待总部审核</span>';
-    }
-}
 
 function toDate($time, $format = 'Y-m-d H:i:s') {
     if (empty($time)) {
@@ -240,17 +158,6 @@ function dateLimit($format = 'Y-m-d', $time) {
     $format = str_replace('#', ':', $format);
     $time = $time + 3600 * 24 * 365;
     return date($format, $time);
-}
-
-function toName($templet_id) {
-    $name = D('Templet')->where(array('id' => $templet_id))->getField('name');
-    return $name;
-}
-
-function toAgent($agent_id) {
-    $agent_name = M('Distributor')->field('name,wechatnum')->where(array('id' => $agent_id))->find();
-    $agent = $agent_name['name']; //."<br>".$agent_name['wechatnum'];
-    return $agent;
 }
 
 function uploadImg($name, $url) {
@@ -299,14 +206,6 @@ function decode($string = '', $skey = 'cxphp') {
     return base64_decode(join('', $strArr));
 }
 
-function toHide($idennum) {
-    if (18 == strlen($idennum)) {
-        $idennum = substr($idennum, 0, 6) . '********' . substr($idennum, -4);
-        return $idennum;
-    }
-    return $idennum;
-}
-
 //获取jsapi_ticket
 function get_jsapi_ticket() {
     import('Wechat.Jssdk', APP_PATH);
@@ -348,553 +247,6 @@ function get_ip() {
     } 
     return $ip; 
 } 
-
-
-//获取快递100的快递公司代码
-function AllShipperCode(){
-        
-        $code = array(
-            "aae" => "aae全球专递",
-            "anjie" => "安捷快递",
-            "anxindakuaixi" => "安信达快递",
-            "annengwuliu"   =>  "安能物流",
-            "biaojikuaidi" => "彪记快递",
-            "bht" => "bht",
-            "baifudongfang" => "百福东方国际物流",
-            "coe" => "中国东方（COE）",
-            "changyuwuliu" => "长宇物流",
-            "datianwuliu" => "大田物流",
-            "debangwuliu" => "德邦物流",
-            "dhl" => "dhl",
-            "dpex" => "dpex",
-            "dsukuaidi" => "d速快递",
-            "disifang" => "递四方",
-            "ems" => "ems快递",
-            "fedex" => "fedex（国外）",
-            "feikangda" => "飞康达物流",
-            "fenghuangkuaidi" => "凤凰快递",
-            "feikuaida" => "飞快达",
-            "guotongkuaidi" => "国通快递",
-            "ganzhongnengda" => "港中能达物流",
-            "guangdongyouzhengwuliu" => "广东邮政物流",
-            "gongsuda" => "共速达",
-            "huitongkuaidi" => "汇通快运",
-            "hengluwuliu" => "恒路物流",
-            "huaxialongwuliu" => "华夏龙物流",
-            "haihongwangsong" => "海红",
-            "haiwaihuanqiu" => "海外环球",
-            "jiayiwuliu" => "佳怡物流",
-            "jinguangsudikuaijian" => "京广速递",
-            "jixianda" => "急先达",
-            "jjwl" => "佳吉物流",
-            "jymwl" => "加运美物流",
-            "jindawuliu" => "金大物流",
-            "jialidatong" => "嘉里大通",
-            "jykd" => "晋越快递",
-            "kuaijiesudi" => "快捷速递",
-            "lianb" => "联邦快递（国内）",
-            "lianhaowuliu" => "联昊通物流",
-            "longbanwuliu" => "龙邦物流",
-            "lijisong" => "立即送",
-            "lejiedi" => "乐捷递",
-            "minghangkuaidi" => "民航快递",
-            "meiguokuaidi" => "美国快递",
-            "menduimen" => "门对门",
-            "ocs" => "OCS",
-            "peisihuoyunkuaidi" => "配思货运",
-            "quanchenkuaidi" => "全晨快递",
-            "quanfengkuaidi" => "全峰快递",
-            "quanjitong" => "全际通物流",
-            "quanritongkuaidi" => "全日通快递",
-            "quanyikuaidi" => "全一快递",
-            "rufengda" => "如风达",
-            "santaisudi" => "三态速递",
-            "shenghuiwuliu" => "盛辉物流",
-            "shentong" => "申通",
-            "shunfeng" => "顺丰",
-            "sue" => "速尔物流",
-            "shengfeng" => "盛丰物流",
-            "saiaodi" => "赛澳递",
-            "tiandihuayu" => "天地华宇",
-            "tiantian" => "天天快递",
-            "tnt" => "tnt",
-            "ups" => "ups",
-            "wanjiawuliu" => "万家物流",
-            "wenjiesudi" => "文捷航空速递",
-            "wuyuan" => "伍圆",
-            "wxwl" => "万象物流",
-            "xinbangwuliu" => "新邦物流",
-            "xinfengwuliu" => "信丰物流",
-            "yafengsudi" => "亚风速递",
-            "yibangwuliu" => "一邦速递",
-            "youshuwuliu" => "优速物流",
-            "youzhengguonei" => "邮政包裹挂号信",
-            "youzhengguoji" => "邮政国际包裹挂号信",
-            "yuanchengwuliu" => "远成物流",
-            "yuantong" => "圆通速递",
-            "yuanweifeng" => "源伟丰快递",
-            "yuanzhijiecheng" => "元智捷诚快递",
-            "yunda" => "韵达快运",
-            "yuntongkuaidi" => "运通快递",
-            "yuefengwuliu" => "越丰物流",
-            "yad" => "源安达",
-            "yinjiesudi" => "银捷速递",
-            "zhaijisong" => "宅急送",
-            "zhongtiekuaiyun" => "中铁快运",
-            "zhongtong" => "中通速递",
-            "zhongyouwuliu" => "中邮物流",
-            "zhongxinda" => "忠信达",
-            "zhimakaimen" => "芝麻开门",
-        );
-        
-        return $code;
-}//end func AllShipperCode
-
-
-//快递鸟支持的快递
-function kdn_code(){
-    $all_code = Array
-        (
-            "SF" => "顺丰",
-            "HTKY" => "百世快递",
-            "ZTO" => "中通",
-            "STO" => "申通",
-            "YTO" => "圆通",
-            "YD" => "韵达",
-            "YZPY" => "邮政平邮",
-            "EMS" => "EMS",
-            "HHTT" => "天天",
-            "JD" => "京东",
-            "QFKD" => "全峰",
-            "GTO" => "国通",
-            "UC" => "优速",
-            "DBL" => "德邦",
-            "FAST" => "快捷",
-            "AMAZON" => "亚马逊",
-            "ZJS" => "宅急送",
-            "AJ" => "安捷快递",
-            "AMAZON" => "亚马逊物流",
-            "ANE" => "安能物流",
-            "AXD" => "安信达快递",
-            "AYCA" => "澳邮专线",
-            "BQXHM" => "北青小红帽",
-            "BFDF" => "百福东方",
-            "BTWL" => "百世快运",
-            "CCES" => "CCES快递",
-            "CITY100" => "城市100",
-            "CJKD" => "城际快递",
-            "CNPEX" => "CNPEX中邮快递",
-            "COE" => "COE东方快递",
-            "CSCY" => "长沙创一",
-            "CDSTKY" => "成都善途速运",
-            "CTG" => "联合运通",
-            "DSWL" => "D速物流",
-            "DTWL" => "大田物流",
-            "FAST" => "快捷速递",
-            "FEDEX" => "FEDEX联邦(国内件）",
-            "FEDEX_GJ" => "FEDEX联邦(国际件）",
-            "FKD" => "飞康达",
-            "GDEMS" => "广东邮政",
-            "GSD" => "共速达",
-            "GTO" => "国通快递",
-            "GTSD" => "高铁速递",
-            "HFWL" => "汇丰物流",
-            "HHTT" => "天天快递",
-            "HLWL" => "恒路物流",
-            "HOAU" => "天地华宇",
-            "HOTSCM" => "鸿桥供应链",
-            "HPTEX" => "海派通物流公司",
-            "hq568" => "华强物流",
-            "HXLWL" => "华夏龙物流",
-            "HYLSD" => "好来运快递",
-            "JGSD" => "京广速递",
-            "JIUYE" => "九曳供应链",
-            "JJKY" => "佳吉快运",
-            "JLDT" => "嘉里物流",
-            "JTKD" => "捷特快递",
-            "JXD" => "急先达",
-            "JYKD" => "晋越快递",
-            "JYM" => "加运美",
-            "JYWL" => "佳怡物流",
-            "KYSY" => "跨越速运",
-            "LB" => "龙邦快递",
-            "LHT" => "联昊通速递",
-            "MB" => "民邦快递",
-            "MHKD" => "民航快递",
-            "MLWL" => "明亮物流",
-//            "NF" => "南方",
-            "NEDA" => "能达速递",
-            "PADTF" => "平安达腾飞快递",
-            "PANEX" => "泛捷快递",
-            "PJ" => "品骏",
-            "PCA" => "PCA Express",
-            "QCKD" => "全晨快递",
-            "QFKD" => "全峰快递",
-            "QRT" => "全日通快递",
-            "QXT" => "全信通",
-            "RFEX" => "瑞丰速递",
-            "RFD" => "如风达",
-            "SAD" => "赛澳递",
-            "SAWL" => "圣安物流",
-            "SBWL" => "盛邦物流",
-            "SDWL" => "上大物流",
-            "SF" => "顺丰快递",
-            "SFWL" => "盛丰物流",
-            "SHWL" => "盛辉物流",
-            "ST" => "速通物流",
-            "STWL" => "速腾快递",
-            "SUBIDA" => "速必达物流",
-            "SURE" => "速尔快递",
-            "UAPEX" => "全一快递",
-            "UEQ" => "UEQ Express",
-            "UC" => "优速快递",
-            "WJWL" => "万家物流",
-            "WXWL" => "万象物流",
-            "XBWL" => "新邦物流",
-            "XFEX" => "信丰快递",
-            "XYT" => "希优特",
-            "XJ" => "新杰物流",
-            "YADEX" => "源安达快递",
-            "YCWL" => "远成物流",
-            "YD" => "韵达快递",
-            "YDH" => "义达国际物流",
-            "YFEX" => "越丰物流",
-            "YFHEX" => "原飞航物流",
-            "YFSD" => "亚风快递",
-            "YTKD" => "运通快递",
-            "YTO" => "圆通速递",
-            "YXKD" => "亿翔快递",
-            "YUNDX" => "运东西",
-            "YZPY" => "邮政平邮/小包",
-            "ZENY" => "增益快递",
-            "ZHQKD" => "汇强快递",
-            "ZTE" => "众通快递",
-            "ZTKY" => "中铁快运",
-            "ZTO" => "中通速递",
-            "ZTWL" => "中铁物流",
-            "ZYWL" => "中邮物流",
-            "AAE" => "AAE全球专递",
-            "ACS" => "ACS雅仕快递",
-            "ADP" => "ADP Express Tracking",
-            "ANGUILAYOU" => "安圭拉邮政",
-            "AOMENYZ" => "澳门邮政",
-            "APAC" => "APAC",
-            "ARAMEX" => "Aramex",
-            "AT" => "奥地利邮政",
-            "AUSTRALIA" => "Australia Post Tracking",
-            "BEL" => "比利时邮政",
-            "BHT" => "BHT快递",
-            "BILUYOUZHE" => "秘鲁邮政",
-            "BR" => "巴西邮政",
-            "BUDANYOUZH" => "不丹邮政",
-            "CA" => "加拿大邮政",
-            "D4PX" => "递四方速递",
-            "DHL" => "DHL",
-            "DHL_EN" => "DHL(英文版)",
-            "DHL_GLB" => "DHL全球",
-            "DHLGM" => "DHL Global Mail",
-            "DK" => "丹麦邮政",
-            "DPD" => "DPD",
-            "DPEX" => "DPEX",
-            "EMSGJ" => "EMS国际",
-            "ESHIPPER" => "EShipper",
-            "GJEYB" => "国际e邮宝",
-            "GJYZ" => "国际邮政包裹",
-            "GLS" => "GLS",
-            "IADLSQDYZ" => "安的列斯群岛邮政",
-            "IADLYYZ" => "澳大利亚邮政",
-            "IAEBNYYZ" => "阿尔巴尼亚邮政",
-            "IAEJLYYZ" => "阿尔及利亚邮政",
-            "IAFHYZ" => "阿富汗邮政",
-            "IAGLYZ" => "安哥拉邮政",
-            "IAGTYZ" => "阿根廷邮政",
-            "IAJYZ" => "埃及邮政",
-            "IALBYZ" => "阿鲁巴邮政",
-            "IALQDYZ" => "奥兰群岛邮政",
-            "IALYYZ" => "阿联酋邮政",
-            "IAMYZ" => "阿曼邮政",
-            "IASBJYZ" => "阿塞拜疆邮政",
-            "IASEBYYZ" => "埃塞俄比亚邮政",
-            "IASNYYZ" => "爱沙尼亚邮政",
-            "IASSDYZ" => "阿森松岛邮政",
-            "IBCWNYZ" => "博茨瓦纳邮政",
-            "IBDLGYZ" => "波多黎各邮政",
-            "IBDYZ" => "冰岛邮政",
-            "IBELSYZ" => "白俄罗斯邮政",
-            "IBHYZ" => "波黑邮政",
-            "IBJLYYZ" => "保加利亚邮政",
-            "IBJSTYZ" => "巴基斯坦邮政",
-            "IBLNYZ" => "黎巴嫩邮政",
-            "IBLSD" => "便利速递",
-            "IBLWYYZ" => "玻利维亚邮政",
-            "IBLYZ" => "巴林邮政",
-            "IBMDYZ" => "百慕达邮政",
-            "IBOLYZ" => "波兰邮政",
-            "IBTD" => "宝通达",
-            "IBYB" => "贝邮宝",
-            "ICKY" => "出口易",
-            "IDFWL" => "达方物流",
-            "IDGYZ" => "德国邮政",
-            "IE" => "爱尔兰邮政",
-            "IEGDEYZ" => "厄瓜多尔邮政",
-            "IELSYZ" => "俄罗斯邮政",
-            "IELTLYYZ" => "厄立特里亚邮政",
-            "IFTWL" => "飞特物流",
-            "IGDLPDEMS" => "瓜德罗普岛EMS",
-            "IGDLPDYZ" => "瓜德罗普岛邮政",
-            "IGJESD" => "俄速递",
-            "IGLBYYZ" => "哥伦比亚邮政",
-            "IGLLYZ" => "格陵兰邮政",
-            "IGSDLJYZ" => "哥斯达黎加邮政",
-            "IHGYZ" => "韩国邮政",
-            "IHHWL" => "华翰物流",
-            "IHLY" => "互联易",
-            "IHSKSTYZ" => "哈萨克斯坦邮政",
-            "IHSYZ" => "黑山邮政",
-            "IJBBWYZ" => "津巴布韦邮政",
-            "IJEJSSTYZ" => "吉尔吉斯斯坦邮政",
-            "IJKYZ" => "捷克邮政",
-            "IJNYZ" => "加纳邮政",
-            "IJPZYZ" => "柬埔寨邮政",
-            "IKNDYYZ" => "克罗地亚邮政",
-            "IKNYYZ" => "肯尼亚邮政",
-            "IKTDWEMS" => "科特迪瓦EMS",
-            "IKTDWYZ" => "科特迪瓦邮政",
-            "IKTEYZ" => "卡塔尔邮政",
-            "ILBYYZ" => "利比亚邮政",
-            "ILKKD" => "林克快递",
-            "ILMNYYZ" => "罗马尼亚邮政",
-            "ILSBYZ" => "卢森堡邮政",
-            "ILTWYYZ" => "拉脱维亚邮政",
-            "ILTWYZ" => "立陶宛邮政",
-            "ILZDSDYZ" => "列支敦士登邮政",
-            "IMEDFYZ" => "马尔代夫邮政",
-            "IMEDWYZ" => "摩尔多瓦邮政",
-            "IMETYZ" => "马耳他邮政",
-            "IMJLGEMS" => "孟加拉国EMS",
-            "IMLGYZ" => "摩洛哥邮政",
-            "IMLQSYZ" => "毛里求斯邮政",
-            "IMLXYEMS" => "马来西亚EMS",
-            "IMLXYYZ" => "马来西亚邮政",
-            "IMQDYZ" => "马其顿邮政",
-            "IMTNKEMS" => "马提尼克EMS",
-            "IMTNKYZ" => "马提尼克邮政",
-            "IMXGYZ" => "墨西哥邮政",
-            "INFYZ" => "南非邮政",
-            "INRLYYZ" => "尼日利亚邮政",
-            "INWYZ" => "挪威邮政",
-            "IPTYYZ" => "葡萄牙邮政",
-            "IQQKD" => "全球快递",
-            "IQTWL" => "全通物流",
-            "ISDYZ" => "苏丹邮政",
-            "ISEWDYZ" => "萨尔瓦多邮政",
-            "ISEWYYZ" => "塞尔维亚邮政",
-            "ISLFKYZ" => "斯洛伐克邮政",
-            "ISLWNYYZ" => "斯洛文尼亚邮政",
-            "ISNJEYZ" => "塞内加尔邮政",
-            "ISPLSYZ" => "塞浦路斯邮政",
-            "ISTALBYZ" => "沙特阿拉伯邮政",
-            "ITEQYZ" => "土耳其邮政",
-            "ITGYZ" => "泰国邮政",
-            "ITLNDHDBGE" => "特立尼达和多巴哥EMS",
-            "ITNSYZ" => "突尼斯邮政",
-            "ITSNYYZ" => "坦桑尼亚邮政",
-            "IWDMLYZ" => "危地马拉邮政",
-            "IWGDYZ" => "乌干达邮政",
-            "IWKLEMS" => "乌克兰EMS",
-            "IWKLYZ" => "乌克兰邮政",
-            "IWLGYZ" => "乌拉圭邮政",
-            "IWLYZ" => "文莱邮政",
-            "IWZBKSTEMS" => "乌兹别克斯坦EMS",
-            "IWZBKSTYZ" => "乌兹别克斯坦邮政",
-            "IXBYYZ" => "西班牙邮政",
-            "IXFLWL" => "小飞龙物流",
-            "IXGLDNYYZ" => "新喀里多尼亚邮政",
-            "IXJPEMS" => "新加坡EMS",
-            "IXJPYZ" => "新加坡邮政",
-            "IXLYYZ" => "叙利亚邮政",
-            "IXLYZ" => "希腊邮政",
-            "IXPSJ" => "夏浦世纪",
-            "IXPWL" => "夏浦物流",
-            "IXXLYZ" => "新西兰邮政",
-            "IXYLYZ" => "匈牙利邮政",
-            "IYDLYZ" => "意大利邮政",
-            "IYDNXYYZ" => "印度尼西亚邮政",
-            "IYDYZ" => "印度邮政",
-            "IYGYZ" => "英国邮政",
-            "IYLYZ" => "伊朗邮政",
-            "IYMNYYZ" => "亚美尼亚邮政",
-            "IYMYZ" => "也门邮政",
-            "IYNYZ" => "越南邮政",
-            "IYSLYZ" => "以色列邮政",
-            "IYTG" => "易通关",
-            "IYWWL" => "燕文物流",
-            "IZBLTYZ" => "直布罗陀邮政",
-            "IZLYZ" => "智利邮政",
-            "JP" => "日本邮政",
-            "NL" => "荷兰邮政",
-            "ONTRAC" => "ONTRAC",
-            "QQYZ" => "全球邮政",
-            "RDSE" => "瑞典邮政",
-            "SWCH" => "瑞士邮政",
-            "TAIWANYZ" => "台湾邮政",
-            "TNT" => "TNT快递",
-            "UPS" => "UPS",
-            "USPS" => "USPS美国邮政",
-            "YAMA" => "日本大和运输(Yamato)",
-            "YODEL" => "YODEL",
-            "YUEDANYOUZ" => "约旦邮政",
-            "BN" => "笨鸟国际",
-            "ZY_AG" => "爱购转运",
-            "ZY_AOZ" => "爱欧洲",
-            "ZY_AUSE" => "澳世速递",
-            "ZY_AXO" => "AXO",
-            "ZY_AZY" => "澳转运",
-            "ZY_BDA" => "八达网",
-            "ZY_BEE" => "蜜蜂速递",
-            "ZY_BH" => "贝海速递",
-            "ZY_BL" => "百利快递",
-            "ZY_BM" => "斑马物流",
-            "ZY_BOZ" => "败欧洲",
-            "ZY_BT" => "百通物流",
-            "ZY_BYECO" => "贝易购",
-            "ZY_CM" => "策马转运",
-            "ZY_CTM" => "赤兔马转运",
-            "ZY_CUL" => "CUL中美速递",
-            "ZY_DGHT" => "德国海淘之家",
-            "ZY_DYW" => "德运网",
-            "ZY_EFS" => "EFS POST",
-            "ZY_ESONG" => "宜送转运",
-            "ZY_ETD" => "ETD",
-            "ZY_FD" => "飞碟快递",
-            "ZY_FG" => "飞鸽快递",
-            "ZY_FLSD" => "风雷速递",
-            "ZY_FX" => "风行快递",
-            "ZY_FXSD" => "风行速递",
-            "ZY_FY" => "飞洋快递",
-            "ZY_HC" => "皓晨快递",
-            "ZY_HCYD" => "皓晨优递",
-            "ZY_HDB" => "海带宝",
-            "ZY_HFMZ" => "汇丰美中速递",
-            "ZY_HJSD" => "豪杰速递",
-            "ZY_HTAO" => "360hitao转运",
-            "ZY_HTCUN" => "海淘村",
-            "ZY_HTKE" => "365海淘客",
-            "ZY_HTONG" => "华通快运",
-            "ZY_HXKD" => "海星桥快递",
-            "ZY_HXSY" => "华兴速运",
-            "ZY_HYSD" => "海悦速递",
-            "ZY_IHERB" => "LogisticsY",
-            "ZY_JA" => "君安快递",
-            "ZY_JD" => "时代转运",
-            "ZY_JDKD" => "骏达快递",
-            "ZY_JDZY" => "骏达转运",
-            "ZY_JH" => "久禾快递",
-            "ZY_JHT" => "金海淘",
-            "ZY_LBZY" => "联邦转运FedRoad",
-            "ZY_LPZ" => "领跑者快递",
-            "ZY_LX" => "龙象快递",
-            "ZY_LZWL" => "量子物流",
-            "ZY_MBZY" => "明邦转运",
-            "ZY_MGZY" => "美国转运",
-            "ZY_MJ" => "美嘉快递",
-            "ZY_MST" => "美速通",
-            "ZY_MXZY" => "美西转运",
-            "ZY_MZ" => "168 美中快递",
-            "ZY_OEJ" => "欧e捷",
-            "ZY_OZF" => "欧洲疯",
-            "ZY_OZGO" => "欧洲GO",
-            "ZY_QMT" => "全美通",
-            "ZY_QQEX" => "QQ-EX",
-            "ZY_RDGJ" => "润东国际快线",
-            "ZY_RT" => "瑞天快递",
-            "ZY_RTSD" => "瑞天速递",
-            "ZY_SCS" => "SCS国际物流",
-            "ZY_SDKD" => "速达快递",
-            "ZY_SFZY" => "四方转运",
-            "ZY_SOHO" => "SOHO苏豪国际",
-            "ZY_SONIC" => "Sonic-Ex速递",
-            "ZY_ST" => "上腾快递",
-            "ZY_TCM" => "通诚美中快递",
-            "ZY_TJ" => "天际快递",
-            "ZY_TM" => "天马转运",
-            "ZY_TN" => "滕牛快递",
-            "ZY_TPAK" => "TrakPak",
-            "ZY_TPY" => "太平洋快递",
-            "ZY_TSZ" => "唐三藏转运",
-            "ZY_TTHT" => "天天海淘",
-            "ZY_TWC" => "TWC转运世界",
-            "ZY_TX" => "同心快递",
-            "ZY_TY" => "天翼快递",
-            "ZY_TZH" => "同舟快递",
-            "ZY_UCS" => "UCS合众快递",
-            "ZY_WDCS" => "文达国际DCS",
-            "ZY_XC" => "星辰快递",
-            "ZY_XDKD" => "迅达快递",
-            "ZY_XDSY" => "信达速运",
-            "ZY_XF" => "先锋快递",
-            "ZY_XGX" => "新干线快递",
-            "ZY_XIYJ" => "西邮寄",
-            "ZY_XJ" => "信捷转运",
-            "ZY_YGKD" => "优购快递",
-            "ZY_YJSD" => "友家速递(UCS)",
-            "ZY_YPW" => "云畔网",
-            "ZY_YQ" => "云骑快递",
-            "ZY_YQWL" => "一柒物流",
-            "ZY_YSSD" => "优晟速递",
-            "ZY_YSW" => "易送网",
-            "ZY_YTUSA" => "运淘美国",
-            "ZY_ZCSD" => "至诚速递",
-        );
-                
-        return $all_code;
-}
-
-//kd100快递公司对应kdn的编码
-function kd100_2_kdn(){
-    $code = array(
-        'shunfeng'  =>  'SF',
-        'ems'   =>  'EMS',
-        'zhaijisong'    =>  'ZJS',
-        'yuantong'  =>  'YTO',
-//        'HTKY'  =>  'HTKY',//百世快递
-        'zhongtong' =>  'ZTO',
-        'yunda' =>  'YD',
-        'shentong'  =>  'STO',
-        'debangwuliu'   =>  'DBL',
-        'youshuwuliu'   =>  'UC',
-//        'JD'    =>  'JD',//京东
-        'xinfengwuliu'  =>  'XFEX',
-        'quanfengkuaidi'    =>  'QFKD',
-//        'KYSY'  =>  'KYSY',//跨越速运
-//        'ANE'  =>   'ANE',//安能小包
-        'kuaijiesudi'   =>  'FAST',
-        'guotongkuaidi' =>  'GTO',
-        'tiantian'  =>  'HHTT',
-        'quanyikuaidi'  =>  'UAPEX',
-        'zhongtiekuaiyun'   =>  'ZTKY',
-    );
-    
-    return $code;
-}
-
-
-//快递鸟可以直接使用电子面单的快递公司编号
-function kdn_can_demo(){
-    $code = array(
-        'SF','EMS','FAST','ZJS','ZTKY','UAPEX','YD','HTKY','YTO'
-    );
-    return $code;
-}
-
-//快递鸟可用的电子面单
-function kdn_use_demo(){
-    $code = array(
-        'ZTO'
-    );
-    return $code;
-}
-
 
 /**
  * 错误提示页面
@@ -1067,27 +419,6 @@ function binarySearch(&$stage_data,$stage_num){
     }
     
     return $key;
-}
-
-//读取缓存团队
-function get_team_path_by_cache() {
-//    if (!F('team_path')) {
-//        $default_team = C('DEFAULT_TEAM');
-//        $where['is_lowest'] = 1;
-//        $users = M('distributor')->where($where)->field("id,$default_team")->select();
-//        F('team_path', $users);
-//    } else {
-//        $users = F('team_path');
-//    }
-    $default_team = C('DEFAULT_TEAM');
-    $where['is_lowest'] = 1;
-    $users = M('distributor')->where($where)->field("id,$default_team")->select();
-    return $users;
-}
-
-//清除团队缓存
-function clean_team_path_cache() {
-    F('team_path', NULL);
 }
 
 //自动给字符串标星号
