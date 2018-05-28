@@ -76,6 +76,7 @@ class StoreAction extends CommonAction
         $name = trim(I('name'));
         $appid = trim(I('appid'));
         $appsecret = trim(I('appsecret'));
+        $qrcode = I('qrcode');
         
         if( empty($name)  ){
             $this->error('商城名称不能为空！');
@@ -96,6 +97,7 @@ class StoreAction extends CommonAction
                 'name'  =>  $name,
                 'appid' =>  $appid,
                 'appsecret' =>  $appsecret,
+                'qrcode'    =>  $qrcode,
                 'created'   =>  time(),
                 'updated'   =>  time(),
             ];
@@ -217,6 +219,36 @@ class StoreAction extends CommonAction
             $this->add_active_log($log);
             $this->success('分配成功！');
         }
+    }
+    
+     /**
+     * +-------------------------------------------------
+     * 上传图片
+     * +-------------------------------------------------
+     * @param string $name
+     * +-------------------------------------------------
+     * @return string $info(中文提示)
+     * +-------------------------------------------------
+     */
+    public function upload()
+    {
+        import('ORG.Net.UploadFile');
+        $upload = new UploadFile();// 实例化上传类
+        $upload->maxSize = 3145728; // 设置附件上传大小 3M
+        $upload->allowExts = array('jpg', 'png', 'jpeg', 'bmp', 'pic'); // 设置附件上传类型
+
+        $upload->savePath = './upload/store/';// 设置附件上传目录
+
+        $upload->uploadReplace = false; //存在同名文件是否是覆盖
+        $upload->thumbRemoveOrigin = "true";//生成缩略图后是否删除原图
+        $upload->autoSub = true;    //是否以子目录方式保存
+        $upload->subType = 'date';  //可以设置为hash或date
+        $upload->dateFormat = 'Ymd';
+        $upload->upload();
+        $info = $upload->getUploadFileInfo();
+        $image = substr($info[0]['savepath'], 1) . $info[0]['savename'];
+        return $image;
+
     }
     
     

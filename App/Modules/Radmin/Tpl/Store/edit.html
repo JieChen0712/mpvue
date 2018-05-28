@@ -29,6 +29,16 @@
         }
     }
 </style>
+<script>
+    /**
+     * 使用图片上传接口需满足以下条件
+     * 1.容器选择器id=upload
+     * 2.设置name=image的input标签隐藏域
+     * 3.指定上传目录名称
+     */
+    //上传目录
+    var upload_dir_name = 'store';
+</script>
 <div class="modal-body">
     <div style='margin-left: 29px;margin-top: 15px;' class="reset">
     </div>
@@ -50,6 +60,19 @@
             <label class="layui-form-label">appsecret</label>
             <div class="layui-input-block">
                 <input type="text" autofocus name="appsecret" value='{$list.appsecret}' pattern="^\S{1,}$" required="" title="请输入appsecret" placeholder="请输入appid" class="layui-input">
+            </div>
+        </div>
+        
+        <div class="layui-form-item">
+            <label class="layui-form-label">支付二维码：</label>
+            <div class="layui-input-block">
+                <!--引入图片页面-->
+                <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
+                <if condition="$list.image neq ''">
+                    <include file="Public/image" image_name="qrcode" is_show="1" img_url="{$list.qrcode}" />
+                    <else/>
+                    <include file="Public/image" image_name="qrcode" is_show="0" img_url="{$list.qrcode}" />
+                </if>
             </div>
         </div>
         

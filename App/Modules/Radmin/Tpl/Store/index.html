@@ -33,6 +33,7 @@
                                 <th>名称</th>
                                 <th>appid</th>
                                 <th>appsecret</th>
+                                <th>支付二维码</th>
                                 <th>创建时间</th>
                                 <!--<th>修改时间</th>-->
                                 <th>操作</th>
@@ -50,6 +51,7 @@
                                     <td>{$m.name}</td>
                                     <td>{$m.appid}</td>
                                     <td>{$m.appsecret}</td>
+                                    <td><img src="__APP__/{$m.qrcode}"></td>
                                     <td>{$m.created|date="Y-m-d H:i",###}</td>
                                     <!--<td>{$m.updated|date="Y-m-d H:i",###}</td>-->
                                     <td class="operate">
