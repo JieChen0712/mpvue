@@ -26,7 +26,7 @@ export default {
       page: 1
     }
   },
-  created () {
+  onShow () {
     this.getCoupon()
   },
   methods: {
