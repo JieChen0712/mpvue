@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/about/main",
+    "pages/counter/main",
+    "pages/coupon/main",
+    "pages/detail/main",
+    "pages/logs/main",
+    "pages/product/main",
+    "pages/sale/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#6d6d6d",
+    "selectedColor": "#fe785a",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/main",
+        "text": "首页",
+        "iconPath": "static/index.png",
+        "selectedIconPath": "static/index_active.png"
+      },
+      {
+        "pagePath": "pages/product/main",
+        "text": "产品展示",
+        "iconPath": "static/product.png",
+        "selectedIconPath": "static/product_active.png"
+      },
+      {
+        "pagePath": "pages/sale/main",
+        "text": "促销",
+        "iconPath": "static/sell.png",
+        "selectedIconPath": "static/sell_active.png"
+      },
+      {
+        "pagePath": "pages/about/main",
+        "text": "联系我们",
+        "iconPath": "static/about.png",
+        "selectedIconPath": "static/about_active.png"
+      }
+    ]
+  }
+}

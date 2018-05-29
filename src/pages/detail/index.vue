@@ -2,7 +2,7 @@
   <div class="product-detail">
     <div class="header">
       <div class="swiper-wrapper">
-        <swiper :imgUrls="product[0].imgUrls" :indicatorDots=indicatorDots :interval=interval :duration=duration :swiperHeight=swiperHeight></swiper>
+        <swiper :imgUrls=product[0].many_image :indicatorDots=indicatorDots :interval=interval :duration=duration :swiperHeight=swiperHeight></swiper>
       </div>
       <div class="price-wrapper">
         <p class="price">￥{{product[0].price}}</p>
@@ -53,7 +53,7 @@ export default {
         disc: '<p>打造妙龄少女肌肤</p>',
         original_price: '279.00',
         sales: '1045',
-        imgUrls: [
+        many_image: [
           '../../../static/banner.png'
         ]
       }],
@@ -75,6 +75,7 @@ export default {
         .then(response => {
           if (response.list !== null) {
             this.product = response.list
+            this.product[0].many_image = this.product[0].many_image.split(',')
             console.log(this.product)
           } else {
             wx.showToast({

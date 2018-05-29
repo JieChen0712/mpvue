@@ -1,0 +1,2 @@
+@import "/static/css/vendor.wxss";
+.sale.data-v-2e145589{padding-top:16rpx;background-color:#ffdcdc;overflow:hidden}.sale .header-title.data-v-2e145589{line-height:80rpx;text-align:center;margin-bottom:44rpx;box-shadow:0 0 30rpx rgba(0,0,0,.5)}.sale .poster-list .poster-item.data-v-2e145589{margin:0 10rpx 60rpx;box-shadow:0 0 30rpx rgba(0,0,0,.5);font-size:0}.sale .poster-list .poster-item ._img.data-v-2e145589{width:100%}
