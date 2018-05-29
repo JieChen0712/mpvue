@@ -1,7 +1,7 @@
 import request from './request'
 
 /* jshint camelcase: true */
-const STOREID = 1
+const STOREID = 2
 
 request.config.headers = {
   'content-type': 'application/x-www-form-urlencoded'
@@ -38,7 +38,8 @@ const api = {
     openid: openid,
     coupons_id: couponid
   }),
-  getProductDetail: (id) => request.get(`/api/store/get_templet_detail?store_id=${STOREID}&id=${id}`)
+  getProductDetail: (id) => request.get(`/api/store/get_templet_detail?store_id=${STOREID}&id=${id}`),
+  getIndexBanner: () => request.post('/api/store/get_topmap', {store_id: STOREID})
 }
 
 export default api

@@ -75,7 +75,10 @@
     data () {
       return {
         imgUrls: [
-          '../../../static/banner.png'
+          '../../../static/banner.png',
+          'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+          'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+          'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
         ],
         indicatorDots: true,
         interval: 5000,
@@ -93,12 +96,25 @@
       card
     },
     created () {
+      api.getIndexBanner()
+        .then(response => {
+          if (response.code === 1) {
+            this.imgUrls = response.info.split(',')
+          }
+        })
+        .catch(error => {
+          wx.showToast({
+            title: error,
+            icon: 'none',
+            duration: 2000
+          })
+        })
       api.getStore()
         .then(response => {
           if (response.code === 1) {
             wx.setNavigationBarTitle({title: response.info.name})
             wx.setTopBarText({text: response.info.name})
-            wx.setStorageSync('qrcode')
+            wx.setStorageSync('qrcode', response.info.qrcode)
           } else {
             wx.showToast({
               title: response.msg,

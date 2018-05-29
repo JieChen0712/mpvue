@@ -14,8 +14,8 @@ const store = new Vuex.Store({
     nickName: '123',
     companyPhone: '400-080-5922',
     companyAddress: '广东省广州市高新技术产业开发区科学城科学大道182号创新大厦C2栋209',
-    companyLatitude: '23.1665600000',
-    companyLongitude: '113.4559900000'
+    companyLatitude: '23.1722422437',
+    companyLongitude: '113.4625729968'
   },
   mutations: {
     appName (state, name) {
