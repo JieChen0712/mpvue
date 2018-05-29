@@ -8,6 +8,7 @@ class StoreAction extends CommonAction {
     private $store_model;//商城
     private $templet_model;//产品
     private $templet_category_model;//产品分类
+    private $topmap_model;//首页顶部轮播图
 
     private $templet_obj;
     private $user_obj;
@@ -26,12 +27,17 @@ class StoreAction extends CommonAction {
         $this->store_model = M('store');
         $this->templet_model = M('templet');
         $this->templet_category_model = M('templet_category');
+        $this->topmap_model = M('topmap');
     }
     
     
     
     //获取商城信息
     public function get_store(){
+        if( !$this->isAjax() ){
+            return;
+        }
+        
         $store_id = trim(I('post.store_id'));
         
         //setLog('传值：'.print_r(I(),1),'get_store_error');
@@ -74,6 +80,10 @@ class StoreAction extends CommonAction {
     
     //获取产品信息
     public function get_templet(){
+        if( !$this->isAjax() ){
+            return;
+        }
+        
         $store_id = trim(I('post.store_id'));
         $active = trim(I('post.active'));
         $type = trim(I('post.type'));
@@ -143,6 +153,42 @@ class StoreAction extends CommonAction {
         $this->ajaxReturn($result);
     }
     
+    
+    //获取顶部轮播图
+    public function get_topmap(){
+        
+        if( !$this->isAjax() ){
+            return;
+        }
+        
+        $store_id = trim(I('post.store_id'));
+        
+        if( empty($store_id) ){
+            $result = [
+                'code'  =>  2,
+                'msg'   =>  '商城ID有误！',
+            ];
+
+            $this->ajaxReturn($result);
+        }
+        
+        
+        $condition = [
+            'store_id'  =>  $store_id,
+        ];
+        
+        $topmap_link = $this->topmap_model->where($condition)->getField('link');
+        
+        
+        $result = [
+            'code'  =>  1,
+            'msg'   =>  '获取成功！',
+            'info'  =>  $topmap_link,
+        ];
+        
+        $this->ajaxReturn($result);
+        
+    }
     
     
     
