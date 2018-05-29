@@ -1,7 +1,7 @@
 import request from './request'
 
 /* jshint camelcase: true */
-const STOREID = 1
+const STOREID = 2
 
 const baseUrlApi = 'https://mall.wsxitong.cn'
 const baseWeChat = 'https://api.weixin.qq.com'
