@@ -192,13 +192,13 @@ class StoreAction extends CommonAction {
             'store_id'  =>  $store_id,
         ];
         
-        $topmap_link = $this->topmap_model->where($condition)->getField('link');
+        $topmap_img = $this->topmap_model->where($condition)->getField('img');
         
         
         $result = [
             'code'  =>  1,
             'msg'   =>  '获取成功！',
-            'info'  =>  $topmap_link,
+            'info'  =>  $topmap_img,
         ];
         
         $this->ajaxReturn($result);
