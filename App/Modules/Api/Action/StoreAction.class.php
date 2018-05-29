@@ -80,9 +80,6 @@ class StoreAction extends CommonAction {
     
     //获取产品信息
     public function get_templet(){
-        if( !$this->isAjax() ){
-            return;
-        }
         
         $store_id = trim(I('post.store_id'));
         $active = trim(I('post.active'));
@@ -179,10 +176,6 @@ class StoreAction extends CommonAction {
     
     //获取顶部轮播图
     public function get_topmap(){
-        
-        if( !$this->isAjax() ){
-            return;
-        }
         
         $store_id = trim(I('post.store_id'));
         

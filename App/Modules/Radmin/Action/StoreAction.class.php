@@ -89,7 +89,8 @@ class StoreAction extends CommonAction
         
         $update_id = $id;
         
-        
+//        $domain = C('YM_DOMAIN');
+//        $qrcode_url = $domain.$qrcode;
         
         //添加商城
         if( empty($id) ){
