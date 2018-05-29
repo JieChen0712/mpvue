@@ -16,8 +16,8 @@ class StoreAction extends CommonAction {
     /**
      * 架构函数
      */
-    public function __construct() {
-        
+    public function _initialize() {
+        parent::_initialize();
         import('Lib.Action.Templet', 'App');
         $this->templet_obj = new Templet();
         
@@ -166,9 +166,6 @@ class StoreAction extends CommonAction {
             'store_id' => $request_data['store_id'],
             'active' => 1,
         ];
-        $page_info = array(
-            'page_num' => $request_data['page'],
-        );
         $result = $this->templet_obj->get_templet([], $condition);
         $this->ajaxReturn($result, 'json');
     }
