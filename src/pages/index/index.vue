@@ -47,7 +47,7 @@
     </div>
     <div class="team-buy" v-show="couponTemplet.length > 0">
       <p class="title">-热门团购-</p>
-      <div class="team-product" v-for="(item, index) in couponTemplet" :key="index">
+      <div class="team-product" v-for="(item, index) in couponTemplet" :key="index" @click="buyGoods(2,item.id)">
         <img mode="widthFix" :src="'https://mall.wsxitong.cn'+item.image" />
         <div class="text-left">
           <p class="title2">{{item.name}}</p>
@@ -75,9 +75,7 @@
     data () {
       return {
         imgUrls: [
-          '../../../static/banner.png',
-          'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-          'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+          '../../../static/banner.png'
         ],
         indicatorDots: true,
         interval: 5000,

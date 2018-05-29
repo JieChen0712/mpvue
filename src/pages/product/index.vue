@@ -6,7 +6,7 @@
           <img mode="widthFix" :src="'https://mall.wsxitong.cn'+item.image" />
           <div class="text-top">
             <p class="title">{{item.name}}</p>
-            <p class="desc">{{item.disc}}</p>
+            <!--<p class="desc">{{item.disc}}</p>-->
             <p class="talk">立即资讯</p>
           </div>
           <p class="more">查看更多></p>

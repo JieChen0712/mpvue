@@ -2,7 +2,7 @@
   <div class="product-detail">
     <div class="header">
       <div class="swiper-wrapper">
-        <swiper :imgUrls=imgUrls :indicatorDots=indicatorDots :interval=interval :duration=duration :swiperHeight=swiperHeight></swiper>
+        <swiper :imgUrls="product[0].imgUrls" :indicatorDots=indicatorDots :interval=interval :duration=duration :swiperHeight=swiperHeight></swiper>
       </div>
       <div class="price-wrapper">
         <p class="price">￥{{product[0].price}}</p>
@@ -42,11 +42,6 @@ import swiper from '@/components/swiper'
 export default {
   data () {
     return {
-      imgUrls: [
-        '../../../static/banner.png',
-        'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-        'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-      ],
       indicatorDots: true,
       interval: 5000,
       duration: 1000,
@@ -57,7 +52,10 @@ export default {
         price: '179.00',
         disc: '<p>打造妙龄少女肌肤</p>',
         original_price: '279.00',
-        sales: '1045'
+        sales: '1045',
+        imgUrls: [
+          '../../../static/banner.png'
+        ]
       }],
       qrcode:'',
       showCode: false
@@ -75,9 +73,9 @@ export default {
     } else {
       api.getProductDetail(this.productID)
         .then(response => {
-          if (response.code === 1 && response.list !== null) {
-            console.log(response)
-            this.poroduct = response.list
+          if (response.list !== null) {
+            this.product = response.list
+            console.log(this.product)
           } else {
             wx.showToast({
               title: response.msg,
