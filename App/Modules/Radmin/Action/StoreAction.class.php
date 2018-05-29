@@ -122,6 +122,7 @@ class StoreAction extends CommonAction
                 'name'  =>  $name,
                 'appid' =>  $appid,
                 'appsecret' =>  $appsecret,
+                'qrcode'    =>  $qrcode,
                 'updated'   =>  time(),
             ];
             $result = $this->store_model->where($condition)->save($data);
