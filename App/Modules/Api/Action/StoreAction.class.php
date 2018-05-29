@@ -34,10 +34,6 @@ class StoreAction extends CommonAction {
     
     //获取商城信息
     public function get_store(){
-        if( !$this->isAjax() ){
-            return;
-        }
-        
         $store_id = trim(I('post.store_id'));
         
         //setLog('传值：'.print_r(I(),1),'get_store_error');
