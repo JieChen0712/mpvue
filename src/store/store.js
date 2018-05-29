@@ -8,10 +8,14 @@ const store = new Vuex.Store({
   state: {
     AppID: 'wx676cc1d8509846aa',
     AppSecret: '7076aeb26f564bf47c4690738f57eaa6',
-    appName: 'app mall',
+    appName: 'miniProgram',
     openID: '',
     avatar: '',
-    nickName: '123'
+    nickName: '123',
+    companyPhone: '400-080-5922',
+    companyAddress: '广东省广州市高新技术产业开发区科学城科学大道182号创新大厦C2栋209',
+    companyLatitude: '23.1665600000',
+    companyLongitude: '113.4559900000'
   },
   mutations: {
     appName (state, name) {

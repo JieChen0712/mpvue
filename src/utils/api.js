@@ -5,7 +5,6 @@ const STOREID = 1
 
 const baseUrlApi = 'https://mall.wsxitong.cn'
 const baseWeChat = 'https://api.weixin.qq.com'
-const baseUrlQuan = 'https://apiquan.ithome.com'
 
 const api = {
   getStore: () => request.post('/api/store/get_store', {store_id: STOREID}, {
@@ -24,23 +23,21 @@ const api = {
     baseURL: baseUrlApi,
     headers: {'content-type': 'application/x-www-form-urlencoded'}
   }),
-  getTopics: (r) => request.get('/api/post', {
-    categoryid: 0,
-    type: 0,
-    orderTime: r,
-    visistCount: '',
-    pageLength: ''
+  getCoupon: (openid, page) => request.get('/api/coupons/get_coupons', {
+    openid: openid,
+    page: page,
+    store_id: STOREID
   }, {
-    baseURL: baseUrlQuan
+    baseURL: baseUrlApi,
+    headers: {'content-type': 'application/x-www-form-urlencoded'}
   }),
-  getTopic: (id) => request.get(`/api/post/${id}`, null, {
-    baseURL: baseUrlQuan
+  recCoupon: (openid, couponid) => request.post('/api/coupons/add_coupons', {store_id: STOREID, openid: openid, coupons_id: couponid}, {
+    baseURL: baseUrlApi,
+    headers: {'content-type': 'application/x-www-form-urlencoded'}
   }),
-  getTopicComments: (id, last) => request.get('/api/reply', {
-    postid: id,
-    replyidlessthan: last
-  }, {
-    baseURL: baseUrlQuan
+  getProductDetail: (id) => request.get(`/api/store/get_templet_detail?store_id=${STOREID}&id=${id}`, null, {
+    baseURL: baseUrlApi,
+    headers: {'content-type': 'application/x-www-form-urlencoded'}
   })
 }
 

@@ -5,11 +5,17 @@
     </div>
     <div class="entry">
       <ul class="entry-list">
-        <li class="list-item"><img src="../../../static/product_icon.png" alt="" />
-          <p>产品展示</p>
+        <li class="list-item">
+          <a href="/pages/product/main" open-type="switchTab">
+            <img src="../../../static/product_icon.png" alt="" />
+            <p>产品展示</p>
+          </a>
         </li>
-        <li class="list-item"><img src="../../../static/sale_icon.png" alt="" />
-          <p>促销</p>
+        <li class="list-item">
+          <a href="/pages/sale/main" open-type="switchTab">
+            <img src="../../../static/sale_icon.png" alt="" />
+            <p>促销</p>
+          </a>
         </li>
         <li class="list-item">
           <a @click="checkLogin"><img src="../../../static/coupon_icon.png" alt="" />
@@ -21,7 +27,7 @@
     <div class="seckill">
       <p class="title">-限时秒杀-</p>
       <scroll-view class="product-list" @scrolltolower="lower" scroll-x="true" style="100%">
-        <view class="product-item" v-for="(item, index) in secTemplet" @click="buyGoods(item.saleStatus)">
+        <view class="product-item" v-for="(item, index) in secTemplet" @click="buyGoods(item.saleStatus, item.id)" :key="index">
           <div class="product-img">
             <img mode="widthFix" :src="'https://mall.wsxitong.cn'+item.image" />
             <span class="sec-title">剩余：{{item.quantity}}件</span>
@@ -39,18 +45,18 @@
         </view>
       </scroll-view>
     </div>
-    <div class="team-buy">
+    <div class="team-buy" v-show="couponTemplet.length > 0">
       <p class="title">-热门团购-</p>
-      <div class="team-product">
-        <img mode="widthFix" src="../../../static/product1.png" />
+      <div class="team-product" v-for="(item, index) in couponTemplet" :key="index">
+        <img mode="widthFix" :src="'https://mall.wsxitong.cn'+item.image" />
         <div class="text-left">
-          <p class="title2">遇（yu）粉底套装版</p>
-          <p class="desc">打造妙龄少女肌粉饰你的美</p>
-          <p class="price"><span class="hot">拼团价</span>￥179.00</p>
+          <p class="title2">{{item.name}}</p>
+          <p class="desc">{{item.disc}}</p>
+          <p class="price"><span class="hot">拼团价</span>￥{{item.price}}</p>
           <p class="red">立即拼团</p>
         </div>
         <div class="text-right">
-          <p>1,504<span class="desc">件已售</span></p>
+          <p>{{item.sales}}<span class="desc">件已售</span></p>
         </div>
         <p class="more">查看更多></p>
       </div>
@@ -59,7 +65,7 @@
 </template>
 
 <script>
-  // import store from '@/store/store'
+  import store from '@/store/store'
   // import { mapMutations } from 'vuex'
   import api from '@/utils/api'
   import swiper from '@/components/swiper'
@@ -69,7 +75,7 @@
     data () {
       return {
         imgUrls: [
-          'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+          '../../../static/banner.png',
           'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
           'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
         ],
@@ -92,7 +98,9 @@
       api.getStore()
         .then(response => {
           if (response.code === 1) {
+            wx.setNavigationBarTitle({title: response.info.name})
             wx.setTopBarText({text: response.info.name})
+            wx.setStorageSync('qrcode')
           } else {
             wx.showToast({
               title: response.msg,
@@ -119,11 +127,13 @@
       // ]),
       cantbuy (status, index) {
         this.secTemplet[index]['saleStatus'] = status
-        console.log(status + ' : ' + index)
       },
-      buyGoods (status) {
+      buyGoods (status, id) {
         if (status === 2) {
           console.log('buy')
+          wx.navigateTo({
+            url: '/pages/detail/main?id=' + id
+          })
         } else {
           return false
         }
@@ -259,12 +269,14 @@
       }, 1000)
     },
     onReachBottom () {
-      wx.showToast({
-        title: 'bottom',
-        icon: 'none',
-        duration: 600
-      })
-    }
+      this.getSecTemplets(2)
+      // wx.showToast({
+      // title: 'bottom',
+      // icon: 'none',
+      // duration: 600
+      // })
+    },
+    store
   }
 </script>
 

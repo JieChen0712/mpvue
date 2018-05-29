@@ -3,34 +3,99 @@
     <div class="adv-img">
       <img mode="widthFix" src="../../../static/product1.png" alt="" />
     </div>
-    <div class="coupon-list">
+    <div class="coupon-list" v-show="couponList.length>0" v-for="(item, index) in couponList" :key="index">
       <div class="coupon-item">
         <div class="img-wrapper">
-        	<img mode="widthFix" src="../../../static/product1.png" alt="" />
-        	<div class="mask">
-            <p>已领取完，下次再来哦</p>
+        	<img @click="receiveCoupon(index, item.id)" mode="widthFix" :src="'https://mall.wsxitong.cn'+item.img" alt="" />
+        	<div class="mask" v-if="item.is_get">
+            <p v-show="item.is_get">已领取</p>
           </div>
         </div>
-        <p class="count">剩余：860张</p>
+        <!--<p class="count">剩余：860张</p>-->
       </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript">
+import api from '@/utils/api'
 export default {
   data () {
-    return {}
+    return {
+      couponList: [],
+      page: 1
+    }
   },
-  created () {},
-  mounted () {},
-  methods: {}
+  created () {
+    this.getCoupon()
+  },
+  methods: {
+    getCoupon () {
+      let openid = wx.getStorageSync('openid')
+      if (openid) {
+        api.getCoupon(openid, this.page)
+          .then(response => {
+            if (response.code === 1 && response.list !== null) {
+              this.page++
+              this.couponList = response.list
+            } else {
+              wx.showToast({
+                title: '暂无更多优惠券',
+                icon: 'none',
+                duration: 2000
+              })
+            }
+          })
+          .catch(error => {
+            wx.showToast({
+              title: error,
+              icon: 'none',
+              duration: 2000
+            })
+          })
+      } else {
+        wx.navigateTo({
+          url: '/pages/index/main'
+        })
+      }
+    },
+    receiveCoupon (index, id) {
+      let openid = wx.getStorageSync('openid')
+      api.recCoupon(openid, id)
+        .then(response => {
+          if (response.code === 1) {
+            this.couponList[index].is_get = true
+            console.log(this.couponList)
+            wx.showToast({
+              title: response.msg,
+              icon: 'success',
+              duration: 2000
+            })
+          } else {
+            wx.showToast({
+              title: response.msg,
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        })
+        .catch(error => {
+          wx.showToast({
+            title: error,
+            icon: 'none',
+            duration: 2000
+          })
+        })
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped="" type="text/css">
 .coupon{
   background-color:$thame-bgcolor-pink;
+  height: 100%;
+  overflow: hidden;
   .adv-img{
     margin-top: 5px;
     img{
@@ -51,11 +116,8 @@ export default {
           width: 100%;
         }
         .mask{
-          &.active{
-            display: flex;
-          }
           position: absolute;
-          display: none;
+          display: flex;
           align-items: center;
           justify-content: center;
           background-color: rgba(0,0,0,.6);
