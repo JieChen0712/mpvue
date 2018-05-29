@@ -17,7 +17,7 @@ class Templet extends Common{
     
     
     //商城信息
-    public function get_temple($page_info=array(),$condition=array()){
+    public function get_templet($page_info=array(),$condition=array()){
         import('ORG.Util.Page');
         
         

@@ -129,7 +129,7 @@ class StoreAction extends CommonAction {
         
         $condition['active'] = $active;
         
-        $info = $this->templet_obj->get_temple($page_info,$condition);
+        $info = $this->templet_obj->get_templet($page_info,$condition);
         
         
         if( empty($info) ){
@@ -151,6 +151,29 @@ class StoreAction extends CommonAction {
         ];
         
         $this->ajaxReturn($result);
+    }
+    
+    
+    
+    
+    //获取产品详情
+    public function get_templet_detail(){
+        //请求接口参数
+        $request_data = [
+            'store_id' => $this->store_id,//店铺id
+            'id' => trim(I('id')),//产品id
+        ];
+        
+        $condition = [
+            'id' => $request_data['id'],
+            'store_id' => $request_data['store_id'],
+            'active' => 1,
+        ];
+        $page_info = array(
+            'page_num' => $request_data['page'],
+        );
+        $result = $this->templet_obj->get_templet([], $condition);
+        $this->ajaxReturn($result, 'json');
     }
     
     
@@ -189,10 +212,6 @@ class StoreAction extends CommonAction {
         $this->ajaxReturn($result);
         
     }
-    
-    
-    
-    
     
     
     
