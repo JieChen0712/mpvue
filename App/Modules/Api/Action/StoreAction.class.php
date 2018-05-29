@@ -9,6 +9,7 @@ class StoreAction extends CommonAction {
     private $templet_model;//产品
     private $templet_category_model;//产品分类
     private $topmap_model;//首页顶部轮播图
+    private $contact_model;//联系方式
 
     private $templet_obj;
     private $user_obj;
@@ -28,6 +29,7 @@ class StoreAction extends CommonAction {
         $this->templet_model = M('templet');
         $this->templet_category_model = M('templet_category');
         $this->topmap_model = M('topmap');
+        $this->contact_model = M('contact');
     }
     
     
@@ -202,7 +204,37 @@ class StoreAction extends CommonAction {
     }
     
     
-    
+    //获取顶部轮播图
+    public function get_contact(){
+        
+        $store_id = trim(I('post.store_id'));
+        
+        if( empty($store_id) ){
+            $result = [
+                'code'  =>  2,
+                'msg'   =>  '商城ID有误！',
+            ];
+
+            $this->ajaxReturn($result);
+        }
+        
+        
+        $condition = [
+            'store_id'  =>  $store_id,
+        ];
+        
+        $info = $this->contact_model->where($condition)->find();
+        
+        
+        $result = [
+            'code'  =>  1,
+            'msg'   =>  '获取成功！',
+            'info'  =>  $info,
+        ];
+        
+        $this->ajaxReturn($result);
+        
+    }
     
 }
 
