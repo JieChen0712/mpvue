@@ -31,9 +31,6 @@
                             <tr>
                                 <th>序号</th>
                                 <th>商城ID</th>
-                                <th>appid</th>
-                                <th>appsecret</th>
-                                <th>支付二维码</th>
                                 <th>创建时间</th>
                                 <!--<th>修改时间</th>-->
                                 <th>操作</th>
@@ -48,16 +45,12 @@
                             <volist name="list" id="m">
                                 <tr>
                                     <td>{$m.id}</td>
-                                    <td>{$m.name}</td>
-                                    <td>{$m.appid}</td>
-                                    <td>{$m.appsecret}</td>
-                                    <td><img src="https://{$Think.config.YM_DOMAIN}/{$m.qrcode}"></td>
+                                    <td>{$m.store_id}</td>
                                     <td>{$m.created|date="Y-m-d H:i",###}</td>
                                     <!--<td>{$m.updated|date="Y-m-d H:i",###}</td>-->
                                     <td class="operate">
                                         <span data-tips-text="修改" data-modal="__URL__/edit?id=<?PHP echo $m['id'] ?>" data-title='修改'></span>
                                         <?php if( $is_super ):?>
-                                        <span data-tips-text="分配管理员" data-modal="__URL__/dealing_admin?id=<?PHP echo $m['id'] ?>" data-title='分配管理员'></span>
                                         <span data-tips-text="删除" data-title='删除' onclick="return adminDelete('<?PHP echo $m['id'] ?>')"></span>
                                         <?php endif;?>
                                     </td>
@@ -84,9 +77,9 @@
             })
 
             function adminDelete(id) {
-                layer.confirm('警告：确定删除该商城？请注意删除后无法找回！', function(){
+                layer.confirm('警告：确定删除该轮播图信息？请注意删除后无法找回！', function(){
                     $.ajax({
-                        url: '__GROUP__/store/del_store',
+                        url: '__GROUP__/topmap/del_topmap',
                         data: {
                             id: id
                         },
