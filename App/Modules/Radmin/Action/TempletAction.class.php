@@ -266,6 +266,7 @@ class TempletAction extends CommonAction
             'price' => $price,
             'original_price' => $original_price,
             'store_id' => $this->store_id,
+            'sales' => trim(I('post.sales')),
         );
 
 
@@ -452,6 +453,7 @@ class TempletAction extends CommonAction
             'price' => $price,
             'original_price' => $original_price,
             'store_id' => $this->store_id,
+            'sales' => trim(I('post.sales')),
         );
 //        if (isset($_POST['price'])) {
 //            $data['price'] = $_POST['price'];
