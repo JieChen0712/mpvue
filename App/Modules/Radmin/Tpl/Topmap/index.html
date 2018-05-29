@@ -16,7 +16,7 @@
         <section class="layui-container">
             <div class="content">
                 <header class="header">
-                    <h3>首页轮播图</h3>
+                    <h3>轮播图</h3>
                     <?php if( $is_super ):?>
                     <div class="pull-right">
                         <input type="button" class="layui-btn" data-modal="__URL__/edit" value="添加" data-title="添加商城"/>
@@ -29,8 +29,8 @@
                     <table class="layui-table" lay-skin="row" lay-size="sm">
                         <thead>
                             <tr>
-                                <th>商城标识</th>
-                                <th>名称</th>
+                                <th>序号</th>
+                                <th>商城ID</th>
                                 <th>appid</th>
                                 <th>appsecret</th>
                                 <th>支付二维码</th>
@@ -51,7 +51,7 @@
                                     <td>{$m.name}</td>
                                     <td>{$m.appid}</td>
                                     <td>{$m.appsecret}</td>
-                                    <td><img src="__APP__/{$m.qrcode}"></td>
+                                    <td><img src="https://{$Think.config.YM_DOMAIN}/{$m.qrcode}"></td>
                                     <td>{$m.created|date="Y-m-d H:i",###}</td>
                                     <!--<td>{$m.updated|date="Y-m-d H:i",###}</td>-->
                                     <td class="operate">

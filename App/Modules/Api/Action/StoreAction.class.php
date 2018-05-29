@@ -66,6 +66,8 @@ class StoreAction extends CommonAction {
             $this->ajaxReturn($result);
         }
         
+        $info['qrcode'] = 'https://'.C('YM_DOMAIN').$info['qrcode'];
+        
         $result = [
             'code'  =>  1,
             'msg'   =>  '获取成功！',
