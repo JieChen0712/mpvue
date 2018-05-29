@@ -98,7 +98,7 @@
           if (response.code === 1) {
             wx.setNavigationBarTitle({title: response.info.name})
             wx.setTopBarText({text: response.info.name})
-            wx.setStorageSync('qrcode')
+            wx.setStorageSync('qrcode', response.info.qrcode)
           } else {
             wx.showToast({
               title: response.msg,
