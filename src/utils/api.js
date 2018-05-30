@@ -39,7 +39,8 @@ const api = {
     coupons_id: couponid
   }),
   getProductDetail: (id) => request.get(`/api/store/get_templet_detail?store_id=${STOREID}&id=${id}`),
-  getIndexBanner: () => request.post('/api/store/get_topmap', {store_id: STOREID})
+  getIndexBanner: () => request.post('/api/store/get_topmap', {store_id: STOREID}),
+  getCompanyMsg: () => request.post('/api/store/get_contact', {store_id: STOREID})
 }
 
 export default api
