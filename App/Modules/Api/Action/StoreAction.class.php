@@ -202,7 +202,13 @@ class StoreAction extends CommonAction {
             if( empty($v) ){
                 continue;
             }
-            $new_topmap_img = $piex.$v.','.$new_topmap_img;
+            if( empty($new_topmap_img) ){
+                $new_topmap_img = $piex.$v;
+            }
+            else{
+                $new_topmap_img = $piex.$v.','.$new_topmap_img;
+            }
+            
         }
         
         
