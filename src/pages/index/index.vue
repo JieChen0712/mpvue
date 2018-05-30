@@ -99,7 +99,8 @@
       api.getIndexBanner()
         .then(response => {
           if (response.code === 1) {
-            this.imgUrls = response.info.split(',')
+            let imgString = response.info.replace(/,$/, '')
+            this.imgUrls = imgString.split(',')
           }
         })
         .catch(error => {
