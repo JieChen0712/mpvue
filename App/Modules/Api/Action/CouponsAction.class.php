@@ -60,7 +60,7 @@ class CouponsAction extends CommonAction {
         $coupons_ids = [];//被领取过的ids
         $coupons_records = $this->coupons_records_model->where(['uid'=>$this->uid, 'store_id'=>$request_data['store_id']])->select();
         foreach ($coupons_records as $records) {
-            $coupons_ids[] = $records['$coupons_id'];
+            $coupons_ids[] = $records['coupons_id'];
         }
         $result = $this->coupons_obj->get_coupons($page_info, $condition, $coupons_ids);
         setLog('获取优惠券'.  json_encode($result),'wxapi');
