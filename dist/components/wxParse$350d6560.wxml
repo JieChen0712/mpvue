@@ -1,1 +1,0 @@
-<import src="wxParseTemplate0$8b1a7650" /><template name="wxParse$350d6560"><view class="_div data-v-3f184284 wxParse {{className}}"><block wx:key="node.index" key="{{node.index}}" wx:for="{{nodes}}" wx:for-index="index" wx:for-item="node"><template data="{{...$root[$kk+'0-'+index], $root}}" is="wxParseTemplate0$8b1a7650"></template></block></view></template>

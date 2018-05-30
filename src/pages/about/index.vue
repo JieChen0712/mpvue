@@ -40,7 +40,7 @@
         }]
       }
     },
-    created () {
+    onLoad: function(options) {
       api.getCompanyMsg()
         .then(response => {
           if (response.code === 1) {

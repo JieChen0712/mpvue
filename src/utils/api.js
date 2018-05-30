@@ -19,11 +19,12 @@ const api = {
     type: type,
     page: page
   }),
-  checkLogin: (code, nickname, headimgurl, province, city, county) => request.post('/api/user/login', {
+  checkLogin: (code, nickname, headimgurl, sex, province, city, county) => request.post('/api/user/login', {
     store_id: STOREID,
     code: code,
     nickname: nickname,
     headimgurl: headimgurl,
+    sex: sex,
     province: province,
     city: city,
     area: county

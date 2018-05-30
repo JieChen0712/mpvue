@@ -26,7 +26,7 @@
     </div>
     <div class="seckill">
       <p class="title">-限时秒杀-</p>
-      <scroll-view class="product-list" @scrolltolower="lower" scroll-x="true" style="100%">
+      <scroll-view class="product-list" :class="isMiddle" @scrolltolower="lower" scroll-x="true" style="100%">
         <view class="product-item" v-for="(item, index) in secTemplet" @click="buyGoods(item.saleStatus, item.id)" :key="index">
           <div class="product-img">
             <img mode="widthFix" :src="'https://mall.wsxitong.cn'+item.image" />
@@ -213,8 +213,7 @@
             wx.setStorageSync('resCode', resCode)
             wx.getUserInfo({
               success: (res) => {
-                // console.log(res)
-                api.checkLogin(resCode, res.userInfo.nickName, res.userInfo.avatarUrl, res.userInfo.province, res.userInfo.city, res.userInfo.country)
+                api.checkLogin(resCode, res.userInfo.nickName, res.userInfo.avatarUrl, res.userInfo.gender, res.userInfo.province, res.userInfo.city, res.userInfo.country)
                   .then(response => {
                     // console.log(response)
                     if (response.code === 1) {
@@ -269,6 +268,11 @@
         } else {
           return false
         }
+      }
+    },
+    computed: {
+      isMiddle () {
+        return this.secTemplet.length > 1 ? '' : 'active'
       }
     },
     onPullDownRefresh () {
@@ -334,6 +338,9 @@
         white-space: nowrap;
         display: flex;
         width: 100%;
+        &.active{
+          text-align: center;
+        }
         .product-item {
           display: inline-block;
           width: 50%;
