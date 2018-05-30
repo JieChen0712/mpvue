@@ -29,6 +29,18 @@ const store = new Vuex.Store({
     },
     openID (state, openid) {
       state.openID = openid
+    },
+    companyPhone (state, phone) {
+      state.companyPhone = phone
+    },
+    companyAddress (state, address) {
+      state.companyAddress = address
+    },
+    companyLatitude (state, latitude) {
+      state.companyLatitude = latitude
+    },
+    companyLongitude (state, longitude) {
+      state.companyLongitude = longitude
     }
   },
   actions: {

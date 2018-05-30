@@ -17,6 +17,7 @@
 
 <script type="text/ecmascript">
   import store from '@/store/store'
+  import { mapMutations } from 'vuex'
   export default {
     data () {
       return {
@@ -38,9 +39,32 @@
         }]
       }
     },
-    created () {},
-    mounted () {},
-    methods: {},
+    created () {
+      api.getCompanyMsg()
+        .then(response => {
+          if (response.code === 1) {
+            this.companyPhone(response.info.phone)
+            this.companyAddress(response.info.address)
+            this.companyLatitude(response.info.latitude)
+            this.companyLongitude(response.info.longitude)
+          }
+        })
+        .catch(error => {
+          wx.showToast({
+            icon: 'none',
+            title: error,
+            duration: 2000
+          })
+        })
+    },
+    methods: {
+      ...mapMutations([  
+        'companyPhone',
+        'companyAddress',
+        'companyLatitude',
+        'companyLongitude'
+      ]),
+    },
     store
   }
 </script>
