@@ -192,6 +192,18 @@ class StoreAction extends CommonAction {
         
         $topmap_img = $this->topmap_model->where($condition)->getField('img');
         
+        $piex = 'https://'.C('YM_DOMAIN');
+        
+        $topmap_img_arr = explode(',', $topmap_img);
+        
+        $new_topmap_img = '';
+        foreach( $topmap_img_arr as $v ){
+            if( empty($v) ){
+                continue;
+            }
+            $new_topmap_img = $piex.$v.','.$new_topmap_img;
+        }
+        
         
         $result = [
             'code'  =>  1,
