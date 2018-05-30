@@ -176,6 +176,7 @@ class StoreAction extends CommonAction {
         
         $store_id = trim(I('post.store_id'));
         
+//        $store_id = 116;
         if( empty($store_id) ){
             $result = [
                 'code'  =>  2,
@@ -208,7 +209,7 @@ class StoreAction extends CommonAction {
         $result = [
             'code'  =>  1,
             'msg'   =>  '获取成功！',
-            'info'  =>  $topmap_img,
+            'info'  =>  $new_topmap_img,
         ];
         
         $this->ajaxReturn($result);
