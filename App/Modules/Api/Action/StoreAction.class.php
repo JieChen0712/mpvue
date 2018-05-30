@@ -174,7 +174,7 @@ class StoreAction extends CommonAction {
     //获取顶部轮播图
     public function get_topmap(){
         
-        $store_id = trim(I('post.store_id'));
+        $store_id = trim(I('store_id'));
         
 //        $store_id = 116;
         if( empty($store_id) ){

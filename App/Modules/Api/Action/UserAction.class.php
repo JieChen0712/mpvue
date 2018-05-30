@@ -50,6 +50,14 @@ class UserAction extends CommonAction {
         $user = $this->user_model->where(['openid' => $openid])->find();
         if ($user) {
             //已经注册
+            $wx_result = [
+                'code' => 1,
+                'msg' => '已注册',
+                'info' => [
+                    'openid' => $user['openid'],
+                ],
+            ];
+            setLog('登陆成功'.json_encode($wx_result),'wxapi');
             $this->ajaxReturn($wx_result);
         } else {
             //注册
@@ -77,12 +85,14 @@ class UserAction extends CommonAction {
                     'openid' => $data['openid'],
                 ],
             ];
+            setLog('注册成功'.json_encode($return_result),'wxapi');
         } else {
             setLog('注册失败：'.json_encode($add), 'wxapi');
             $return_result = [
                 'code' => -3,
                 'msg' => '注册失败',
             ];
+            setLog('注册失败'.json_encode($return_result),'wxapi');
         }
         return $return_result;
     }

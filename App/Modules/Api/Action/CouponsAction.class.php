@@ -63,6 +63,7 @@ class CouponsAction extends CommonAction {
             $coupons_ids[] = $records['$coupons_id'];
         }
         $result = $this->coupons_obj->get_coupons($page_info, $condition, $coupons_ids);
+        setLog('获取优惠券'.  json_encode($result),'wxapi');
         $this->ajaxReturn($result);
     }
     
