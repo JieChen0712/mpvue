@@ -16,6 +16,7 @@
 </template>
 
 <script type="text/ecmascript">
+  import api from '@/utils/api'
   import store from '@/store/store'
   import { mapMutations } from 'vuex'
   export default {
@@ -43,8 +44,19 @@
       api.getCompanyMsg()
         .then(response => {
           if (response.code === 1) {
+            this.phone = response.info.phone
+            this.address = response.info.addres
+            this.longitude = response.info.latitude
+            this.latitude = response.info.longitude
+            this.markers[0].latitude = response.info.latitude
+            this.markers[0].longitude = response.info.longitude
+            this.markers[0].name = response.info.addres
+            this.covers[0].latitude = response.info.latitude
+            this.covers[0].longitude = response.info.longitude
+            this.covers[0].name = response.info.addres
+            
             this.companyPhone(response.info.phone)
-            this.companyAddress(response.info.address)
+            this.companyAddress(response.info.addres)
             this.companyLatitude(response.info.latitude)
             this.companyLongitude(response.info.longitude)
           }
@@ -70,9 +82,13 @@
 </script>
 
 <style lang="scss" scoped="" type="text/css">
+page{
+  height: 100%;
+}
 .about{
   background-color: $thame-bgcolor-pink;
   font-size: 0;
+  height: 100%;
   overflow: hidden;
   .top-banner{
     width: 100%;
@@ -93,7 +109,7 @@
       margin: 5px auto 0;
     }
     .detail{
-      box-shadow:0 5px 15px rgba(0,0,0,.2);
+      box-shadow:0 5px 5px rgba(0,0,0,.2);
       margin-bottom:5px;
     }
   }
