@@ -40,35 +40,6 @@
         }]
       }
     },
-    onLoad: function(options) {
-      api.getCompanyMsg()
-        .then(response => {
-          if (response.code === 1) {
-            this.phone = response.info.phone
-            this.address = response.info.addres
-            this.longitude = response.info.latitude
-            this.latitude = response.info.longitude
-            this.markers[0].latitude = response.info.latitude
-            this.markers[0].longitude = response.info.longitude
-            this.markers[0].name = response.info.addres
-            this.covers[0].latitude = response.info.latitude
-            this.covers[0].longitude = response.info.longitude
-            this.covers[0].name = response.info.addres
-            
-            this.companyPhone(response.info.phone)
-            this.companyAddress(response.info.addres)
-            this.companyLatitude(response.info.latitude)
-            this.companyLongitude(response.info.longitude)
-          }
-        })
-        .catch(error => {
-          wx.showToast({
-            icon: 'none',
-            title: error,
-            duration: 2000
-          })
-        })
-    },
     methods: {
       ...mapMutations([  
         'companyPhone',
