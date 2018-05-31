@@ -415,6 +415,7 @@
               margin: 5px 0;
             }
             .price {
+              text-align: center;
               font-size: 16px;
               word-wrap: break-word;
               word-break: break-all;
