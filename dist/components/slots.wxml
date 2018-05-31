@@ -1,24 +1,17 @@
-<<<<<<< HEAD
-<import src="swiper$2874836a" /><import src="card$34c4cefc" />
-<import src="swiper$2874836a" />
 
 <import src="card$34c4cefc" />
-=======
-
-<import src="swiper$dc5c7ec8" /><import src="card$772c7a34" />
-<import src="card$772c7a34" />
-<import src="swiper$dc5c7ec8" /><import src="wxParse$38aff26e" />
-<import src="wxParseTemplate0$eeab8234" />
-<import src="wxParseTemplate1$ee8f5332" /><import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
-<import src="wxParseTemplate2$ee732430" /><import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
-<import src="wxParseTemplate3$ee56f52e" /><import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
-<import src="wxParseTemplate4$ee3ac62c" /><import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
-<import src="wxParseTemplate5$ee1e972a" /><import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
-<import src="wxParseTemplate6$ee026828" /><import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
-<import src="wxParseTemplate7$ede63926" /><import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
-<import src="wxParseTemplate8$edca0a24" /><import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
-<import src="wxParseTemplate9$edaddb22" /><import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
-<import src="wxParseTemplate10$e3641e4e" /><import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
-<import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
-<import src="wxParseTemplate11$e347ef4c" /><import src="wxParseVideo$3f3531eb" /><import src="wxParseImg$8efff19a" />
->>>>>>> 888231c785b959480ca15f0b0d83ff47e1af73e7
+<import src="swiper$2874836a" /><import src="card$34c4cefc" />
+<import src="swiper$2874836a" /><import src="wxParse$350d6560" />
+<import src="wxParseTemplate0$8b1a7650" />
+<import src="wxParseTemplate1$8afe474e" /><import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />
+<import src="wxParseTemplate2$8ae2184c" /><import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />
+<import src="wxParseTemplate3$8ac5e94a" /><import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />
+<import src="wxParseTemplate4$8aa9ba48" /><import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />
+<import src="wxParseTemplate5$8a8d8b46" /><import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />
+<import src="wxParseTemplate6$8a715c44" /><import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />
+<import src="wxParseTemplate7$8a552d42" /><import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />
+<import src="wxParseTemplate8$8a38fe40" /><import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />
+<import src="wxParseTemplate9$8a1ccf3e" /><import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />
+<import src="wxParseTemplate10$d4d3adb2" /><import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />
+<import src="wxParseTemplate11$d4b77eb0" /><import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />
+<import src="wxParseVideo$71fafe46" /><import src="wxParseImg$164f2ab6" />

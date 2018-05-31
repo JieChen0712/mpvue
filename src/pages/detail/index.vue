@@ -79,12 +79,7 @@ export default {
           if (response.list !== null) {
             this.product = response.list
             this.product[0].many_image = this.product[0].many_image
-<<<<<<< HEAD
-            console.log(this.product)
-=======
             this.product[0].disc = this.product[0].disc.replace(/\<img src\=\"/g,'<img src="' + this.$store.state.baseUrl)
-            console.log(this.product[0].disc)
->>>>>>> 888231c785b959480ca15f0b0d83ff47e1af73e7
           } else {
             wx.showToast({
               title: response.msg,

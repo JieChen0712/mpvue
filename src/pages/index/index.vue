@@ -51,7 +51,7 @@
         <img mode="widthFix" :src="'https://mall.wsxitong.cn'+item.image" />
         <div class="text-left">
           <p class="title2">{{item.name}}</p>
-          <p class="desc">{{item.disc}}</p>
+          <!--<p class="desc">{{item.disc}}</p>-->
           <p class="price"><span class="hot">拼团价</span>￥{{item.price}}</p>
           <p class="red">立即拼团</p>
         </div>
