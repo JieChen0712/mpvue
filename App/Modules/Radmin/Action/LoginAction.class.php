@@ -204,6 +204,7 @@ class LoginAction extends Action {
             session('aname', $admin['username']);
             session('did', $admin['did']);
             session('auth', explode(',',$admin['auth']));
+            session('store_id', $admin['store_id']);//店铺id
 //            //开启SESSION时间
 //            session('session_start_time', time());
 //

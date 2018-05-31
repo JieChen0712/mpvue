@@ -41,6 +41,18 @@ class Templet extends Common{
             else{
                 $list = $this->model->where($condition)->order('id desc')->select();
             }
+            //拼接图片绝对路径
+            $piex = 'https://'.C('YM_DOMAIN');
+            foreach ($list as $k=>$v) {
+                $many = [];
+                if ($v['many_image']) {
+                    $images = explode('', $v['many_image']);
+                    foreach ($images as $image) {
+                        $many[] = $piex.$image;
+                    }
+                    $list[$k]['many_image'] = $many;
+                }
+            }
 
             //-----整理添加相应其它表的信息-----
             

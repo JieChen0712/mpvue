@@ -8,6 +8,7 @@ class StoreAction extends CommonAction
     
     private $admin_model;
     private $store_model;
+    private $Store;
 
     public function _initialize()
     {

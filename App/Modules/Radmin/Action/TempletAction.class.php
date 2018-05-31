@@ -143,6 +143,13 @@ class TempletAction extends CommonAction
     public function product_add()
     {
         import('Lib.Action.Common', 'App');
+        import('Lib.Action.Store', 'App');
+        $store_obj = new Store();
+        
+        //所有店铺
+        $page_info = [ 'page_list_num' => 100000];
+        $stores = $store_obj->get_store($page_info, []);
+        
         $common_obj = new Common();
         $this->level_num = C('LEVEL_NUM');
         $this->level_name = C('LEVEL_NAME');
@@ -163,6 +170,8 @@ class TempletAction extends CommonAction
         $this->properties = M('templet_property')->select();
         $this->product = [];
         $this->propertyPrices = [];
+        
+        $this->stores = $stores['list'];
 
         $this->display();
     }
@@ -187,7 +196,15 @@ class TempletAction extends CommonAction
         } else {
             $category_id = $category_id3;
         }
-
+        
+        $store_id = trim(I('store_id'));
+        if($this->is_super){
+            if (empty($store_id)) {
+                $this->error('请选择商城');
+            }
+        } else {
+            $store_id = $this->store_id;
+        }
         //属性
         $has_property = 0;
         $templet = json_decode($_POST['ProductForm'], true);
@@ -265,7 +282,7 @@ class TempletAction extends CommonAction
             'buy_group_yet_num' => $buy_group_yet_num,
             'price' => $price,
             'original_price' => $original_price,
-            'store_id' => $this->store_id,
+            'store_id' => $store_id,
             'sales' => trim(I('post.sales')),
         );
 
@@ -452,7 +469,6 @@ class TempletAction extends CommonAction
             'buy_group_yet_num' => $buy_group_yet_num,
             'price' => $price,
             'original_price' => $original_price,
-            'store_id' => $this->store_id,
             'sales' => trim(I('post.sales')),
         );
 //        if (isset($_POST['price'])) {

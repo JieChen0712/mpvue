@@ -36,6 +36,14 @@ class CommonAction extends Action {
             $this->is_super = FALSE;
         }
         
+        //检查是否符合身份
+        if ($this->is_super && $this->store_id) {
+            $this->error('超级管理员不能进入店铺');
+        }
+        if (!$this->is_super && !$this->store_id) {
+            $this->error('该管理员未分配店铺');
+        }
+        
 //        if( !in_array($this->aid, $this->superids) && !empty($this->admin_auth) ){
 //            
 //            import('Lib.Action.Admin','App');

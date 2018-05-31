@@ -39,7 +39,7 @@
                 <select name="aid" lay-verify="required" lay-search="" >
                     <option value=""></option>
                     <?php foreach( $admin_info as $info ){?>
-                    <option <?php echo $info['store_id']==$id?'selected="selected"':'';?> value="{$info.id}">{$info.username}</option>
+                    <option <?php echo $info['store_id']==$id?'selected="selected"':'';?> value="<?php echo $info['id'];?>"><?php echo $info['username'];?></option>
                     <?php };?>
                 </select>
             </div>
