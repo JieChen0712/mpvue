@@ -24,7 +24,9 @@
     </div>
     <div class="product-wrapper">
       <h1 class="title">—— 商品详情 ——</h1>
-      <div class="all_detail" v-html="product[0].disc"></div>
+      <div class="all_detail">
+        <wxParse :content="product[0].disc"/>
+      </div>
     </div>
     <div class="btn-wrapper">
       <button class="btn-buy" @click="showQrcode">立即咨询</button>
@@ -39,6 +41,7 @@
 import store from '@/store/store'
 import api from '@/utils/api'
 import swiper from '@/components/swiper'
+import wxParse from 'mpvue-wxparse'
 export default {
   data () {
     return {
@@ -75,8 +78,9 @@ export default {
         .then(response => {
           if (response.list !== null) {
             this.product = response.list
-            this.product[0].many_image = this.product[0].many_image.split(',')
-            console.log(this.product)
+            this.product[0].many_image = this.product[0].many_image
+            this.product[0].disc = this.product[0].disc.replace(/\<img src\=\"/g,'<img src="' + this.$store.state.baseUrl)
+            console.log(this.product[0].disc)
           } else {
             wx.showToast({
               title: response.msg,
@@ -96,7 +100,8 @@ export default {
   },
   created () {},
   components: {
-    swiper
+    swiper,
+    wxParse
   },
   methods: {
     showQrcode () {
@@ -111,6 +116,7 @@ export default {
 </script>
 
 <style lang="scss" scoped="" type="text/css">
+@import url("~mpvue-wxparse/src/wxParse.css");
 .product-detail{
   background-color: $thame-bgcolor-pink;
   overflow: hidden;
@@ -165,6 +171,7 @@ export default {
     }
     .all_detail{
       padding: 10px;
+      margin-bottom: 60px;
     }
   }
   .btn-wrapper{

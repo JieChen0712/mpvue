@@ -5,7 +5,7 @@
       <img class="icon" mode="widthFix" src="../../../static/localtion.png">
       <p class="title">联系地址:</p>
       <p class="detail">{{address}}</p>
-      <map id="myMap" scale="18" style="width: 100%; height: 170px;" :latitude="latitude" :longitude="longitude" markers="{{markers}}" covers="{{covers}}" show-location></map>
+      <map id="myMap" scale="18" style="width: 100%; height: 170px;" :latitude="latitude" :longitude="longitude" markers="{{markers}}" covers="{{covers}}" show-location v-if="showMap"></map>
     </div>
     <div class="phone">
       <img class="icon" mode="widthFix" src="../../../static/phone.png" alt="" />
@@ -22,23 +22,58 @@
   export default {
     data () {
       return {
-        latitude: this.$store.state.companyLatitude,
-        longitude: this.$store.state.companyLongitude,
-        address: this.$store.state.companyAddress,
-        phone: this.$store.state.companyPhone,
-        markers: [{
-          id: 1,
-          latitude: this.$store.state.companyLatitude,
-          longitude: this.$store.state.companyLongitude,
-          name: this.$store.state.companyAddress
-        }],
-        covers: [{
-          latitude: this.$store.state.companyLatitude,
-          longitude: this.$store.state.companyLongitude,
-          iconPath: '',
-          name: this.$store.state.companyAddress
-        }]
+        latitude: '',
+        longitude: '',
+        address: '',
+        phone: '',
+        markers: [],
+        covers: [],
+        showMap: false
       }
+    },
+    created () {
+      api.getCompanyMsg()
+        .then(response => {
+          if (response.code === 1 && response.info !== null) {
+            let _longitude = response.info.longitude
+            let _latitude = response.info.latitude
+            this.phone = response.info.phone
+            this.address = response.info.addres
+            this.markers = [{
+              id: 1,
+              latitude: _latitude,
+              longitude: _longitude,
+              name: response.info.addres,
+              iconPath: ''
+            }]
+            this.covers = [{
+              latitude: _latitude,
+              longitude: _longitude,
+              name: response.info.addres
+            }] 
+            this.longitude = _longitude
+            this.latitude = _latitude
+            this.showMap = true
+          } else {
+            this.phone = this.$store.state.companyPhone
+            this.address = this.$store.state.companyAddress
+            this.markers = [{
+              latitude: this.$store.state.companyLongitude,
+              longitude: this.$store.state.companyLatitude,
+              name: this.$store.state.companyAddress,
+              iconPath: ''
+            }]
+            this.covers = [{
+              latitude: this.$store.state.companyLongitude,
+              longitude: this.$store.state.companyLatitude,
+              name: this.$store.state.companyAddress
+            }]
+            this.longitude = this.$store.state.companyLongitude
+            this.latitude = this.$store.state.companyLatitude
+            this.showMap = true
+          }
+        })
+        .catch(error => {})
     },
     methods: {
       ...mapMutations([  

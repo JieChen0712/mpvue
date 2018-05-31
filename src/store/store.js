@@ -15,7 +15,8 @@ const store = new Vuex.Store({
     companyPhone: '400-080-5922',
     companyAddress: '广东省广州市高新技术产业开发区科学城科学大道182号创新大厦C2栋209',
     companyLatitude: '23.1782600000',
-    companyLongitude: '113.2690500000'
+    companyLongitude: '113.2690500000',
+    baseUrl: 'https://mall.wsxitong.cn'
   },
   mutations: {
     appName (state, name) {
