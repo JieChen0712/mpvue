@@ -46,7 +46,7 @@ class Templet extends Common{
             foreach ($list as $k=>$v) {
                 $many = [];
                 if ($v['many_image']) {
-                    $images = explode('', $v['many_image']);
+                    $images = explode(',', $v['many_image']);
                     foreach ($images as $image) {
                         $many[] = $piex.$image;
                     }
