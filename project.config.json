@@ -9,8 +9,8 @@
 	},
 	"miniprogramRoot": "./dist/",
 	"compileType": "miniprogram",
-	"appid": "wx4294631646c83142",
-	"projectname": "mall",
+	"appid": "touristappid",
+	"projectname": "mall-test",
 	"condition": {
 		"search": {
 			"current": -1,
