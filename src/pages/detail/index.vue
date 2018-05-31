@@ -75,7 +75,7 @@ export default {
         .then(response => {
           if (response.list !== null) {
             this.product = response.list
-            this.product[0].many_image = this.product[0].many_image.split(',')
+            this.product[0].many_image = this.product[0].many_image
             console.log(this.product)
           } else {
             wx.showToast({
