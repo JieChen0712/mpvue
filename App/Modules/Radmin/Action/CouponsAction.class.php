@@ -24,9 +24,8 @@ class CouponsAction extends CommonAction {
     //优惠券
     public function index()
     {
-        $condition = [
-            'store_id' => $this->store_id
-        ];
+        $condition = $this->condition;
+        
         $page_info = [
             'page_num' => I('get.p'),
         ];
@@ -46,12 +45,20 @@ class CouponsAction extends CommonAction {
             halt('页面不存在！');
         }
         if (IS_POST) {
+            $store_id = trim(I('store_id'));
+            if($this->is_super){
+                if (empty($store_id)) {
+                    $this->error('请选择商城');
+                }
+            } else {
+                $store_id = $this->store_id;
+            }
             $data = [
                 'name' => trim(I('name')),
                 'img' => trim(I('img')),
                 'status' => trim(I('status')),
                 'created' => time(),
-                'store_id' => $this->store_id,
+                'store_id' => $store_id,
             ];
             $res = $this->coupons_model->add($data);
             if ($res) {
@@ -98,9 +105,7 @@ class CouponsAction extends CommonAction {
     //优惠券领取记录
     public function records()
     {
-        $condition = [
-            'store_id' => $this->store_id
-        ];
+        $condition = $this->condition;
         $page_info = [
             'page_num' => I('get.p'),
         ];

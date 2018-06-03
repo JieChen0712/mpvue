@@ -28,9 +28,7 @@ class ContactAction extends CommonAction
             'page_num' =>  I('get.p'),
         );
         
-        if( !$this->is_super ){
-            $condition['store_id'] = $this->store_id;
-        }
+        $condition = $this->condition;
         
         $result = $this->Store->get_contact($page_info,$condition);
 //        print_r($result);return;
@@ -84,8 +82,12 @@ class ContactAction extends CommonAction
         
         //添加商城
         if( empty($id) ){
-            if( empty($store_id) ){
-                $this->error('商城必须要选择！');
+            if($this->is_super){
+                if (empty($store_id)) {
+                    $this->error('请选择商城');
+                }
+            } else {
+                $store_id = $this->store_id;
             }
             
             $data = [
