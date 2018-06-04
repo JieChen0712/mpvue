@@ -39,34 +39,35 @@
     //上传目录
     var upload_dir_name = 'store';
 </script>
-<div class="modal-body">
-    <div style='margin-left: 29px;margin-top: 15px;' class="reset">
-    </div>
-    <form class="layui-form layui-box" action="__URL__/edit_post" data-auto="false" method="post">
+<div class="container-fluid edit-wrapper layui-container">
+    <div class="layui-content">
+    <form class="layui-form layui-box" action="__URL__/edit_post" data-auto="false" method="post" style="padding:25px 30px 20px 0">
         
         <?php if( empty($list) ):?>
-        <div class="layui-form-item">
-            <label class="layui-form-label" for="store_id">商城</label>
-            <div class="input-wrapper">
+        <div class="layui-form-item items">
+            <label class="form-text" for="store_id">商城</label>
+            <div class="form-right">
+              <div class="layui-input-inline three-select">
                 <select name="store_id" id="store_id" lay-verify="required">
                     <option value="">选择商城</option>
                     <?php foreach( $store_info as $v_store ):?>
                     <option value="{$v_store.id}">{$v_store.name}</option>
                     <?php endforeach;?>
                 </select>
+                </div>
             </div>
         </div>
         <?php endif;?>
         
-        <div class="layui-form-item">
-            <label class="layui-form-label">首页轮播图：</label>
-            <div class="layui-input-block" style="width:90%;">
+        <div class="layui-form-item items">
+            <label class="form-text">首页轮播图：</label>
+            <div class="form-right" style="width:90%;">
                 <!--引入图片页面-->
                 <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
                 <if condition="$list.image neq ''">
-                    <include file="Public/images" data-name="img[]" row_image="{$list.img}" />
+                    <include file="Public/images" is_show="1" data-name="img[]" row_image="{$list.img}" row_arr="{$list.img}" />
                     <else/>
-                    <include file="Public/images" data-name="img[]" row_image="{$list.img}" />
+                    <include file="Public/images" is_show="0" data-name="img[]" row_image="{$list.img}" row_arr="{$list.img}"/>
                 </if>
             </div>
         </div>
@@ -79,6 +80,7 @@
                 <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消修改</button>
             </div>
     </form>
+    </div>
 </div>
 
 <script type="text/javascript">

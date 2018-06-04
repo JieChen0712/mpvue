@@ -19,7 +19,7 @@
                     <h3>商城列表</h3>
                     <?php if( $is_super ):?>
                     <div class="pull-right">
-                        <input type="button" class="layui-btn" data-modal="__URL__/edit" value="添加" data-title="添加商城"/>
+                        <input type="button" class="layui-btn" data-open="__URL__/edit" value="添加" data-title="添加商城"/>
                     </div>
                     <?php endif;?>
                 </header>
@@ -55,7 +55,7 @@
                                     <td>{$m.created|date="Y-m-d H:i",###}</td>
                                     <!--<td>{$m.updated|date="Y-m-d H:i",###}</td>-->
                                     <td class="operate">
-                                        <span data-tips-text="修改" data-modal="__URL__/edit?id=<?PHP echo $m['id'] ?>" data-title='修改'></span>
+                                        <span data-tips-text="修改" data-open="__URL__/edit?id=<?PHP echo $m['id'] ?>" data-title='修改'></span>
                                         <?php if( $is_super ):?>
                                         <span data-tips-text="分配管理员" data-modal="__URL__/dealing_admin?id=<?PHP echo $m['id'] ?>" data-title='分配管理员'></span>
                                         <span data-tips-text="删除" data-title='删除' onclick="return adminDelete('<?PHP echo $m['id'] ?>')"></span>

@@ -102,6 +102,12 @@ class StoreAction extends CommonAction
                 'qrcode'    =>  $qrcode,
                 'created'   =>  time(),
                 'updated'   =>  time(),
+                'first_column_name' => I('kind_hor_name'),
+                'first_column_font' => I('font-hor'),
+                'first_column_color' => I('hor_color'),
+                'second_column_name' => I('kind_ver_name'),
+                'second_column_font' => I('font-ver'),
+                'second_column_color' => I('ver_color'),
             ];
             
             $result = $this->store_model->add($data);
@@ -126,6 +132,12 @@ class StoreAction extends CommonAction
                 'appsecret' =>  $appsecret,
                 'qrcode'    =>  $qrcode,
                 'updated'   =>  time(),
+                'first_column_name' => I('kind_hor_name'),
+                'first_column_font' => I('font-hor'),
+                'first_column_color' => I('hor_color'),
+                'second_column_name' => I('kind_ver_name'),
+                'second_column_font' => I('font-ver'),
+                'second_column_color' => I('ver_color'),
             ];
             $result = $this->store_model->where($condition)->save($data);
             //$err = $this->store_model->getLastSql();//getDbError();

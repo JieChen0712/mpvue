@@ -38,7 +38,6 @@ layui.use('upload', function() {
 
 $(function() {
 if(!!imgList&&img_show==1){
-
       $.each(imgList2,function(key,value){
         $('.layui-upload-lists').append('<li><img src="' + value + '" class="layui-upload-img"><i class="layui-icon delete">&#xe640;</i><input type="hidden" class="imgUrl" name="'+image_name+'" value="'+imgList[key]+'"></li>')
     });
