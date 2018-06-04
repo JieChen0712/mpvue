@@ -40,7 +40,7 @@
             <card :start="true" :startTime="item.buy_limit_start_time" :endTime="item.buy_limit_end_time" :index="index" @over="cantbuy"></card>
             <!--<p class="time">倒计时：00：00：00</p>-->
             <progress :percent="item.quantity" active activeColor="#fe0100" backgroundColor="transparent" class="progress"/>
-            <p class="price">秒杀价：<span class="red">￥{{item.price}}</span><span class="del">￥{{item.original_price}}</span></p>
+            <p class="price">{{first_column_price}}：<span class="red">￥{{item.price}}</span><span class="del">￥{{item.original_price}}</span></p>
           </div>
         </view>
       </scroll-view>
@@ -52,7 +52,7 @@
         <div class="text-left">
           <p class="title2">{{item.name}}</p>
           <!--<p class="desc">{{item.disc}}</p>-->
-          <p class="price"><span class="hot">拼团价</span>￥{{item.price}}</p>
+          <p class="price"><span class="hot">{{second_column_price}}</span>￥{{item.price}}</p>
           <p class="red">立即拼团</p>
         </div>
         <div class="text-right">
@@ -91,9 +91,11 @@
         first_column_name: '限时秒杀',
         first_column_color: '',
         first_column_font: '',
+        first_column_price: '秒杀价',
         second_column_name: '热门团购',
         second_column_color: '',
-        second_column_font: ''
+        second_column_font: '',
+        second_column_price: '拼团价'
       }
     },
     components: {
@@ -140,6 +142,12 @@
             }
             if (_date.second_column_font !== '' && _date.second_column_font !== undefined && _date.second_column_font !== null) {
               this.second_column_font = _date.second_column_font
+            }
+            if (_date.first_column_price !== '' && _date.first_column_price !== undefined && _date.first_column_price !== null) {
+              this.first_column_price = _date.first_column_price
+            }
+            if (_date.second_column_price !== '' && _date.second_column_price !== undefined && _date.second_column_price !== null) {
+              this.second_column_price = _date.second_column_price
             }
           } else {
             wx.showToast({
