@@ -64,10 +64,10 @@
             <div class="form-right" style="width:90%;">
                 <!--引入图片页面-->
                 <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
-                <if condition="$list.image neq ''">
-                    <include file="Public/images" is_show="1" data-name="img[]" row_image="{$list.img}" row_arr="{$list.img}" />
+                <if condition="$list.img neq ''">
+                    <include file="Public/images" is_show="1" data-name="img[]" row_image="{$arr}" row_arr="{$arr}" />
                     <else/>
-                    <include file="Public/images" is_show="0" data-name="img[]" row_image="{$list.img}" row_arr="{$list.img}"/>
+                    <include file="Public/images" is_show="0" data-name="img[]" row_image="{$arr}" row_arr="{$arr}"/>
                 </if>
             </div>
         </div>

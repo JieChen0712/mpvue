@@ -31,8 +31,8 @@
                             <tr>
                                 <th>序号</th>
                                 <th>商城ID</th>
+                                <th>轮播图</th>
                                 <th>创建时间</th>
-                                <!--<th>修改时间</th>-->
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -45,7 +45,12 @@
                             <volist name="list" id="m">
                                 <tr>
                                     <td>{$m.id}</td>
-                                    <td>{$m.store_id}</td>
+                                    <td>{$m.store_id}{$m.img}</td>
+                                    <td>
+                                      <foreach name="m[img]" item="vo">
+                                        <img src="__ROOT__{$vo}" alt="" style="width:80px;">  
+                                      </foreach>
+                                    </td>
                                     <td>{$m.created|date="Y-m-d H:i",###}</td>
                                     <!--<td>{$m.updated|date="Y-m-d H:i",###}</td>-->
                                     <td class="operate">

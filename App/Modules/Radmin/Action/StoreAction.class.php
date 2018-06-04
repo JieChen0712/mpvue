@@ -105,9 +105,11 @@ class StoreAction extends CommonAction
                 'first_column_name' => I('kind_hor_name'),
                 'first_column_font' => I('font-hor'),
                 'first_column_color' => I('hor_color'),
+                'first_column_price' => I('price_name_hor'),
                 'second_column_name' => I('kind_ver_name'),
                 'second_column_font' => I('font-ver'),
                 'second_column_color' => I('ver_color'),
+                'second_column_price' => I('price_name_ver'),
             ];
             
             $result = $this->store_model->add($data);
@@ -135,9 +137,11 @@ class StoreAction extends CommonAction
                 'first_column_name' => I('kind_hor_name'),
                 'first_column_font' => I('font-hor'),
                 'first_column_color' => I('hor_color'),
+                'first_column_price' => I('price_name_hor'),
                 'second_column_name' => I('kind_ver_name'),
                 'second_column_font' => I('font-ver'),
                 'second_column_color' => I('ver_color'),
+                'second_column_price' => I('price_name_ver'),
             ];
             $result = $this->store_model->where($condition)->save($data);
             //$err = $this->store_model->getLastSql();//getDbError();

@@ -77,11 +77,11 @@
       </div>
 
       <div class="layui-form-item items">
-        <label class="form-text">支付二维码：</label>
+        <label class="form-text">咨询二维码：</label>
         <div class="form-right">
           <!--引入图片页面-->
           <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
-          <if condition="$list.image neq ''">
+          <if condition="$list.qrcode neq ''">
             <include file="Public/image" image_name="qrcode" is_show="1" img_url="{$list.qrcode}" />
             <else/>
             <include file="Public/image" image_name="qrcode" is_show="0" img_url="{$list.qrcode}" />
@@ -110,6 +110,9 @@
             <input type="color" name="hor_color" class="color_select" id="hor_color" value="{$list.first_column_color}">
             <input type="text" name="color_text" class="color_text layui-input" placeholder="选择字体颜色" value="{$list.first_column_color}">
           </div>
+          <div class="layui-input-inline three-select">
+            <input type="text" name="price_name_hor" class="price_name_hor layui-input" placeholder="请填写价格名称" value="{$list.first_column_price}">
+          </div>
         </div>
       </div>
       <div class="layui-form-item items">
@@ -132,6 +135,9 @@
           <div class="layui-input-inline three-select">
             <input type="color" name="ver_color" class="color_select" id="ver_color" value="{$list.second_column_color}">
             <input type="text" name="color_text" class="color_text layui-input" placeholder="选择字体颜色" value="{$list.second_column_color}">
+          </div>
+          <div class="layui-input-inline three-select">
+            <input type="text" name="price_name_ver" class="price_name_ver layui-input" placeholder="请填写价格名称" value="{$list.second_column_price}">
           </div>
         </div>
       </div>

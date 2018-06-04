@@ -34,6 +34,9 @@ class TopmapAction extends CommonAction
         
         $result = $this->Store->get_topmap($page_info,$condition);
 //        print_r($result);return;
+        foreach($result['list'] as $k => $v ){
+          $result['list'][$k]['img'] = explode(',',$result['list'][$k]['img']);
+        }
         
         $this->list = $result['list'];
         $this->count = $result['count'];
@@ -64,7 +67,17 @@ class TopmapAction extends CommonAction
         else{
             $store_info = M('store')->field('id,name')->select();
         }
+        $row_image = $list['img'];
         
+        //在每个前面加上__ROOT__,用在编辑时本机显示图片
+        array_walk(
+            $row_image,
+            function (&$s, $k, $prefix = '__ROOT__') {
+                $s = str_pad($s, strlen($prefix) + strlen($s), $prefix, STR_PAD_LEFT);
+            }
+        );
+        $row_image = implode(",",$row_image);
+        $this->arr = $row_image;
         $this->store_info = $store_info;
         $this->list = $list;
         $this->display();
