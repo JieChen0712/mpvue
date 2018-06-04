@@ -29,7 +29,7 @@ class TempletAction extends CommonAction
         $common_obj = new Common();
 
         $condition = array();
-
+        $condition = $this->condition;
         $name = trim(I('get.name'));
         $price = trim(I('get.price'));
         $category_id1 = I('get.category_id1');
@@ -83,6 +83,7 @@ class TempletAction extends CommonAction
 
             //联表查询
             $category_info = [];
+            $store = [];
             //将id取出来
             foreach ($list as $v) {
                 if (!isset($ids[$v['template_id']])) {
@@ -95,8 +96,16 @@ class TempletAction extends CommonAction
             foreach ($cats as $v) {
                 $category_info[$v['id']] = $v;
             }
+            if ($this->is_super) {
+                foreach ($this->stores as $v) {
+                    $store[$v['id']] = $v;
+                }
+            } else {
+                $store[$this->store_id] = M('store')->find($this->store_id);
+            }
             foreach ($list as $k => $v) {
                 $list[$k]['template_name'] = $category_info[$v['template_id']]['template_name'];
+                $list[$k]['store_name'] = $store[$v['store_id']]['name'];
             }
 
             //联表查询
@@ -117,7 +126,6 @@ class TempletAction extends CommonAction
                 $list[$k]['category_name'] = $category_info_two[$v['category_id']]['name'];
             }
             $list=$this->get_related_data($list,'shipping_goods_shipping_template','template_id');
-
             $this->assign('list', $list);
 
             $this->assign("page", $page);
@@ -143,13 +151,6 @@ class TempletAction extends CommonAction
     public function product_add()
     {
         import('Lib.Action.Common', 'App');
-        import('Lib.Action.Store', 'App');
-        $store_obj = new Store();
-        
-        //所有店铺
-        $page_info = [ 'page_list_num' => 100000];
-        $stores = $store_obj->get_store($page_info, []);
-        
         $common_obj = new Common();
         $this->level_num = C('LEVEL_NUM');
         $this->level_name = C('LEVEL_NAME');
@@ -170,9 +171,6 @@ class TempletAction extends CommonAction
         $this->properties = M('templet_property')->select();
         $this->product = [];
         $this->propertyPrices = [];
-        
-        $this->stores = $stores['list'];
-
         $this->display();
     }
 

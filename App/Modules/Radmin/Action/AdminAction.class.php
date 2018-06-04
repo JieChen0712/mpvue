@@ -110,8 +110,14 @@ class AdminAction extends CommonAction {
         $condition = array();
         $list = array();
 
-        if (!empty($aid)) {
-            $condition['aid'] = $aid;
+        if ($this->is_super) {
+            if (!empty($aid)) {
+                $condition['aid'] = $aid;
+            } else {
+                $condition['aid'] = ['gt', 0];
+            }
+        } else {
+            $condition['aid'] = $this->aid;
         }
         
         if( !empty($log) ){

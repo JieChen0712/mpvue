@@ -4,6 +4,7 @@
  * 	用户登录控制
  */
 class CommonAction extends Action {
+    public $condition = [];//公共筛选店铺条件
 
     public function _initialize() {
         $admin_model = M('admin');
@@ -42,6 +43,27 @@ class CommonAction extends Action {
         }
         if (!$this->is_super && !$this->store_id) {
             $this->error('该管理员未分配店铺');
+        }
+        
+        //超级管理员店铺列表
+        if ($this->is_super) {
+            import('Lib.Action.Store', 'App');
+            $store_obj = new Store();
+            //所有店铺
+            $page_info = [ 'page_list_num' => 100000];
+            $this->stores = $store_obj->get_store($page_info, [])['list'];
+        }
+        
+        //公共筛选店铺条件
+        if ($this->is_super) {
+            $store_id = trim(I('store_id'));
+            if (!$store_id) {
+                $this->condition['store_id'] = ['gt', 0];
+            } else {
+                $this->condition['store_id'] = $store_id;
+            }
+        } else {
+            $this->condition['store_id'] = $this->store_id; 
         }
         
 //        if( !in_array($this->aid, $this->superids) && !empty($this->admin_auth) ){

@@ -24,9 +24,9 @@
 <div class="container-fluid edit-wrapper layui-container">
     <div class="layui-content">
         <form class="layui-form layui-box " style='padding:25px 30px 20px 0' action="__URL__/add" data-auto="false" method="post">
-            <div class="layui-form-item items">
-                <label class="form-text">名称</label>
-                <div class="form-right">
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <div class="layui-input-block">
                     <input type="text" name="name" required="" title="请输入名称" placeholder="请输入名称" class="input-inf2">
                 </div>
             </div>
@@ -46,10 +46,30 @@
                     </div>
                 </div>
             </div>
+            
+            <notempty name='is_super'>
+            <div class="layui-form-item">
+                <label class="layui-form-label">选择商城</label>
+                <div class="form-right">
+                    <div class="layui-col-sm6">
+                        <div class="layui-col-sm6">
+                            <div class="layui-input-inline three-select">
+                                <select name="store_id" class="input-inf2" lay-verify="required" lay-search="">
+                                    <option value="">请选择商城</option>
+                                    <volist name='stores' id='store'>
+                                    <option value="{$store.id}">{$store.name}</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </notempty>
 
             <div class="layui-form-item items">
-                <label class="form-text">图片：</label>
-                <div class="form-right">
+                <label class="layui-form-label">图片</label>
+                <div>
                     <script src="__PUBLIC__/Radmin_v3/js/img_upload.js"></script>
                     <include file="Public/image" image_name="img" is_show="1" img_url="{$row.img}" />
                     <small class="orange-text">（*请上传尺寸合适的图片 图片大小为：356*122）</small>
