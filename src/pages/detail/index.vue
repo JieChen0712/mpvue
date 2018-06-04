@@ -11,9 +11,9 @@
         <!--<p class="desc"></p>-->
       </div>
       <div class="other-detail">
-        <div class="flex1">
+        <!--<div class="flex1">
           <p class="text">快递：免运费</p>
-        </div>
+        </div>-->
         <div class="flex1">
           <p class="text">月销：{{product[0].sales}}笔</p>
         </div>
@@ -32,7 +32,7 @@
       <button class="btn-buy" @click="showQrcode">立即咨询</button>
     </div>
     <div class="mask" @click="hideCode" v-show="showCode">
-      <img :src="qrcode" class="qrcode" mode="widthFix"/>
+      <img :src="qrcode" class="qrcode" mode="widthFix" @tap="previewImage"/>
     </div>
   </div>
 </template>
@@ -108,8 +108,14 @@ export default {
     },
     hideCode () {
       this.showCode = false
+    },
+    previewImage: function (e) {
+      wx.previewImage({
+        urls: this.qrcode.split(',')
+      })
     }
   },
+  onShareAppMessage: function (res) {},
   store
 }
 </script>

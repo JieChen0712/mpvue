@@ -25,7 +25,7 @@
       </ul>
     </div>
     <div class="seckill">
-      <p class="title">-限时秒杀-</p>
+      <p class="title" style="color:{{second_column_color}};font-family: {{first_column_font}};">-{{first_column_name}}-</p>
       <scroll-view class="product-list" :class="isMiddle" @scrolltolower="lower" scroll-x="true" style="100%">
         <view class="product-item" v-for="(item, index) in secTemplet" @click="buyGoods(item.saleStatus, item.id)" :key="index">
           <div class="product-img">
@@ -46,7 +46,7 @@
       </scroll-view>
     </div>
     <div class="team-buy" v-show="couponTemplet.length > 0">
-      <p class="title">-热门团购-</p>
+      <p class="title" style="color:{{second_column_color}};font-family: {{second_column_font}};">-{{second_column_name}}-</p>
       <div class="team-product" v-for="(item, index) in couponTemplet" :key="index" @click="buyGoods(2,item.id)">
         <img mode="widthFix" :src="'https://mall.wsxitong.cn'+item.image" />
         <div class="text-left">
@@ -87,7 +87,13 @@
         secPage: 1,
         couponPage: 1,
         secTemplet: [],
-        couponTemplet: []
+        couponTemplet: [],
+        first_column_name: '限时秒杀',
+        first_column_color: '',
+        first_column_font: '',
+        second_column_name: '热门团购',
+        second_column_color: '',
+        second_column_font: ''
       }
     },
     components: {
@@ -113,9 +119,28 @@
       api.getStore()
         .then(response => {
           if (response.code === 1) {
-            wx.setNavigationBarTitle({title: response.info.name})
-            wx.setTopBarText({text: response.info.name})
-            wx.setStorageSync('qrcode', response.info.qrcode)
+            let _date = response.info
+            wx.setNavigationBarTitle({title: _date.name})
+            wx.setTopBarText({text: _date.name})
+            wx.setStorageSync('qrcode', _date.qrcode)
+            if (_date.first_column_name !== '' && _date.first_column_name !== undefined && _date.first_column_name !== null) {
+              this.first_column_name = _date.first_column_name
+            }
+            if (_date.first_column_color !== '' && _date.first_column_color !== undefined && _date.first_column_color !== null) {
+              this.first_column_color = _date.first_column_color
+            }
+            if (_date.first_column_font !== '' && _date.first_column_font !== undefined && _date.first_column_font !== null) {
+              this.first_column_font = _date.first_column_font
+            }
+            if (_date.second_column_name !== '' && _date.second_column_name !== undefined && _date.second_column_name !== null) {
+              this.second_column_name = _date.second_column_name
+            }
+            if (_date.second_column_color !== '' && _date.second_column_color !== undefined && _date.second_column_color !== null) {
+              this.second_column_color = _date.second_column_color
+            }
+            if (_date.second_column_font !== '' && _date.second_column_font !== undefined && _date.second_column_font !== null) {
+              this.second_column_font = _date.second_column_font
+            }
           } else {
             wx.showToast({
               title: response.msg,
@@ -295,6 +320,7 @@
       // duration: 600
       // })
     },
+    onShareAppMessage: function (res) {},
     store
   }
 </script>

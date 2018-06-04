@@ -83,6 +83,7 @@
         'companyLongitude'
       ]),
     },
+    onShareAppMessage: function (res) {},
     store
   }
 </script>
@@ -118,6 +119,9 @@ page{
       box-shadow:0 5px 5px rgba(0,0,0,.2);
       margin-bottom:5px;
     }
+  }
+  .phone{
+    margin-bottom: 150px;
   }
 }
 </style>

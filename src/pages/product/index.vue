@@ -1,6 +1,7 @@
 <template>
   <div class="product">
     <div class="product-list">
+      <p v-show="product.length<=0" class="empty">暂无商品</p>
       <div class="product-item" v-for="(item, index) in product" v-show="product.length>0" :key="index">
         <a :href="'/pages/detail/main?id='+item.id">
           <img mode="widthFix" :src="'https://mall.wsxitong.cn'+item.image" />
@@ -51,7 +52,11 @@
             })
           })
       }
-    }
+    },
+    onReachBottom () {
+      this.getTemplet()
+    },
+    onShareAppMessage: function (res) {}
   }
 </script>
 
@@ -60,6 +65,9 @@
     background-color: $thame-bgcolor-pink;
     overflow:hidden;
     .product-list {
+      .empty{
+        text-align: center;
+      }
       .product-item {
         position: relative;
         margin: 5px 0;
