@@ -191,23 +191,31 @@ class StoreAction extends CommonAction {
             'store_id'  =>  $store_id,
         ];
         
-        $topmap_img = $this->topmap_model->where($condition)->getField('img');
+        $topmap_img = $this->topmap_model->where($condition)->select('img');
+        
         
         $piex = 'https://'.C('YM_DOMAIN');
         
         $topmap_img_arr = explode(',', $topmap_img);
         
         $new_topmap_img = '';
-        foreach( $topmap_img_arr as $v ){
+        foreach( $topmap_img as $k => $v ){
+            
             if( empty($v) ){
                 continue;
             }
-            if( empty($new_topmap_img) ){
-                $new_topmap_img = $piex.$v;
+            if(!empty($topmap_img[$k+1])){
+              $new_topmap_img += $piex.$v['img'].',';
+            }else{
+              $new_topmap_img += $piex.$v['img'];
             }
-            else{
-                $new_topmap_img = $piex.$v.','.$new_topmap_img;
-            }
+            
+//          if( empty($new_topmap_img) ){
+//              $new_topmap_img = $piex.$v;
+//          }
+//          else{
+//              $new_topmap_img = $piex.$v.','.$new_topmap_img;
+//          }
             
         }
         
