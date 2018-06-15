@@ -188,15 +188,15 @@ class StoreAction extends CommonAction {
         
         
         $condition = [
-            'store_id'  =>  $store_id,
+            'store_id'  =>  2,
         ];
         
-        $topmap_img = $this->topmap_model->where($condition)->select('img');
-        
-        
+        $topmap_img = $this->topmap_model->where($condition)->field('img')->select();
+//      var_dump($topmap_img);die;
+//      var_dump($this->topmap_model->getLastSql());die;
         $piex = 'https://'.C('YM_DOMAIN');
         
-        $topmap_img_arr = explode(',', $topmap_img);
+        
         
         $new_topmap_img = '';
         foreach( $topmap_img as $k => $v ){
@@ -205,11 +205,11 @@ class StoreAction extends CommonAction {
                 continue;
             }
             if(!empty($topmap_img[$k+1])){
-              $new_topmap_img += $piex.$v['img'].',';
+              $new_topmap_img = $new_topmap_img.$piex.$v['img'].',';
             }else{
-              $new_topmap_img += $piex.$v['img'];
+              $new_topmap_img = $new_topmap_img.$piex.$v['img'];
             }
-            
+//          var_dump($piex.$v['img']);die;
 //          if( empty($new_topmap_img) ){
 //              $new_topmap_img = $piex.$v;
 //          }
